@@ -5,8 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import net.member.dto.MemberBean;
+import net.member.dto.MemberInvestCompanyVO;
+import net.member.dto.MemberInvestPageVO;
+import net.member.dto.MemberInvestVO;
 import net.member.dto.Member_header;
 
 
@@ -775,5 +779,103 @@ public class MemberDAO {
 			
 			return null;
 		}
-//////////태훈추가 //////////		
+//////////태훈추가 //////////	
+		// 윤식 추가/////////////////////////////////////////////////
+		public MemberInvestPageVO getMyPageInvestment(int cp_idx, String id) {
+			String sql = "select B.mi_idx AS mi_idx, A.mb_idx AS mb_idx, B.mi_name AS mi_name, B.mi_point AS mi_point, B.cp_idx AS cp_idx, B.mi_hoiling_stock AS mi_hoiling_stock, B.mi_stock_value AS mi_stock_value, B.mi_monthly_profit AS mi_monthly_profit, B.mi_cumulative_profit AS mi_cumulative_profit, C.cp_number AS cp_number,C.cp_name AS cp_name ,C.cp_manager AS cp_manager,C.cp_name AS cp_capital , C.cp_add_ch AS cp_add_ch, cf.cf_certificate AS cf_certificate, cf.cf_estate_contract AS cf_estate_contract, cf.cf_registration AS cf_registration, cf.cf_financial AS cf_financial  from member A, member_invest B, company C,company_file cf WHERE A.mb_idx = B.mb_idx AND B.cp_idx = ? AND A.mb_id = ? AND cf.cp_idx = ?";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			System.out.println("mypageInvest 실행 : " + id);
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, cp_idx);
+				pstmt.setString(2, id);
+				pstmt.setInt(3, cp_idx);
+				rs = pstmt.executeQuery();
+				System.out.println(pstmt);
+
+				if (rs.next()) {
+					MemberInvestPageVO memberInvestVO = new MemberInvestPageVO();
+					memberInvestVO.setMi_idx(rs.getInt("mi_idx"));
+					memberInvestVO.setMb_idx(rs.getInt("mb_idx"));
+					memberInvestVO.setMi_name(rs.getString("mi_name"));
+					memberInvestVO.setMi_point(rs.getString("mi_point"));
+					memberInvestVO.setCp_idx(rs.getInt("cp_idx"));
+					memberInvestVO.setMi_hoiling_stock(rs.getString("mi_hoiling_stock"));
+					memberInvestVO.setMi_cumulative_profit(rs.getString("mi_cumulative_profit"));
+					memberInvestVO.setMi_stock_value(rs.getString("mi_stock_value"));
+					memberInvestVO.setMi_monthly_profit(rs.getString("mi_monthly_profit"));				
+					memberInvestVO.setCp_number(rs.getString("cp_number"));
+					memberInvestVO.setCp_capital(rs.getString("cp_capital"));
+					memberInvestVO.setCp_add_ch(rs.getString("cp_add_ch"));
+					memberInvestVO.setCp_name(rs.getString("cp_name"));
+					memberInvestVO.setCp_manager(rs.getString("cp_manager"));
+					memberInvestVO.setCf_certificate(rs.getString("cf_certificate"));
+					memberInvestVO.setCf_estate_contract(rs.getString("cf_estate_contract"));
+					memberInvestVO.setCf_registration(rs.getString("cf_registration"));
+					memberInvestVO.setCf_financial(rs.getString("cf_financial"));
+					
+					return memberInvestVO;
+				}
+
+			} catch (Exception ex) {
+
+				System.out.println("get_Find_pin 에러: " + ex);
+
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("해제 실패 : " + e.getMessage());
+				}
+			}
+
+			return null;
+		}
+		// 윤식 END GAME /////////////////////////////////////////////////
+		
+		// 박신규 시작~ ///////////////////////////////////////////////////
+		//투자 회사 리스트 뽑깅
+		public ArrayList<MemberInvestCompanyVO> getInvestmentCompanyList(String mb_id) {
+			String sql = "select cp.cp_idx, cp.cp_name, mi.mb_idx, mi.mb_id from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_id = ?";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				pstmt = conn.prepareStatement(sql);			
+				pstmt.setString(1, mb_id);
+				rs = pstmt.executeQuery();			
+				ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = new ArrayList<MemberInvestCompanyVO>();
+				while (rs.next()) {
+					MemberInvestCompanyVO memberInvestCompanyVO = new MemberInvestCompanyVO();
+					memberInvestCompanyVO.setCp_idx(rs.getInt("cp_idx"));
+					memberInvestCompanyVO.setCp_name(rs.getString("cp_name"));
+					memberInvestCompanyVO.setMb_idx(rs.getInt("mb_idx"));
+					memberInvestCompanyVO.setMb_id(rs.getString("mb_id"));
+					memberInvestCompanyVOList.add(memberInvestCompanyVO);
+				}
+				return memberInvestCompanyVOList;
+
+			} catch (Exception ex) {
+
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("해제 실패 : " + e.getMessage());
+				}
+			}
+
+			return null;
+		}
+		// 박신규 끝~ ///////////////////////////////////////////////////
 }
