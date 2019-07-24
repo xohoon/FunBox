@@ -12,6 +12,7 @@ import net.member.dto.MemberInvestCompanyVO;
 import net.member.dto.MemberInvestPageVO;
 import net.member.dto.MemberInvestVO;
 import net.member.dto.Member_header;
+import net.member.dto.Member_likebox;
 
 
 public class MemberDAO {
@@ -692,7 +693,7 @@ public class MemberDAO {
 		
 		///////////////////////유정 추가 end///////////////////////
 		
-//////////태훈추가 //////////
+		//////////////////////////////태훈추가 start//////////////////////////////
 		// 보유 토큰, 포인트, 누적수익
 		public Member_header Member_accumulate(String mb_idx) throws Exception{
 			PreparedStatement pstmt = null;
@@ -779,7 +780,56 @@ public class MemberDAO {
 			
 			return null;
 		}
-//////////태훈추가 //////////	
+		
+		// 찜목록
+		public Member_likebox LikeboxInfo(String mb_idx) throws Exception{
+			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			Member_likebox box = new Member_likebox();
+			
+			try {
+				// 쿼리
+				String sql ="SELECT a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, c.iv_goal_amount, c.iv_current_amount "
+						+ "FROM member_likebox as a "
+						+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
+						+ "JOIN company_invest as c ON b.cp_idx = c.cp_idx";
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, mb_idx);
+				rs = pstmt.executeQuery();
+				System.out.println(pstmt);
+
+				if (rs.next()) {
+					box.setLike_cp_name(rs.getString("like_cp_name"));
+					box.setCp_monthly_profit(rs.getString("cp_monthly_profit"));
+					box.setCp_branch(rs.getString("cp_branch"));
+					box.setCp_sector(rs.getString("cp_sector"));
+					box.setIv_goal_amount(rs.getString("iv_goal_amount"));
+					box.setIv_current_amount(rs.getString("iv_current_amount"));
+				}
+				
+				return box;
+			} catch (Exception ex) {
+				System.out.println("LikeboxInfo ERROR: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+			
+			return null;
+		}
+		//////////////////////////////태훈추가 end//////////////////////////////
+		
+		
 		// 윤식 추가/////////////////////////////////////////////////
 		public MemberInvestPageVO getMyPageInvestment(int cp_idx, String id) {
 			String sql = "select B.mi_idx AS mi_idx, A.mb_idx AS mb_idx, B.mi_name AS mi_name, B.mi_point AS mi_point, B.cp_idx AS cp_idx, B.mi_hoiling_stock AS mi_hoiling_stock, B.mi_stock_value AS mi_stock_value, B.mi_monthly_profit AS mi_monthly_profit, B.mi_cumulative_profit AS mi_cumulative_profit, C.cp_number AS cp_number,C.cp_name AS cp_name ,C.cp_manager AS cp_manager,C.cp_name AS cp_capital , C.cp_add_ch AS cp_add_ch, cf.cf_certificate AS cf_certificate, cf.cf_estate_contract AS cf_estate_contract, cf.cf_registration AS cf_registration, cf.cf_financial AS cf_financial  from member A, member_invest B, company C,company_file cf WHERE A.mb_idx = B.mb_idx AND B.cp_idx = ? AND A.mb_id = ? AND cf.cp_idx = ?";
