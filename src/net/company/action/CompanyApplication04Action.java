@@ -1,5 +1,6 @@
 package net.company.action;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,11 +62,12 @@ public class CompanyApplication04Action implements Action {
 		CompanyDAO companyDAO1 = new CompanyDAO();
 		// company 기본경로 + 폴더 이름 -> 폴더 경로에 파일삽입위해서
 		String real_path = companyDAO1.getUploadFilePath("company_path") + "/" + company_path;
+		
 		// 파일디렉토리
-		/*
-		 * File fileSaveDir = new File(savePath); if (!fileSaveDir.exists()) {
-		 * fileSaveDir.mkdir(); }
-		 */
+		File fileSaveDir = new File(real_path);
+		if (!fileSaveDir.exists()) {
+			fileSaveDir.mkdir();
+		}
 
 		// 받아온 파일들을 담는 ArrayList
 		ArrayList<String> app_cp_image_list = new ArrayList<String>();
@@ -130,12 +132,12 @@ public class CompanyApplication04Action implements Action {
 		company.setApp_cp_introduction(app_cp_introduction);
 		company.setApp_cp_purpose(app_cp_purpose);
 		company.setApp_cp_point(app_cp_point);
-		
+
 		// page4 company에 데이터 추가
 		company.setApp_cp_images(app_cp_image_list);
 		company.setApp_cp_other_documents(app_cp_image_list);
 		company.setApp_cp_real_path(real_path);
-		
+
 		CompanyDAO companyDAO2 = new CompanyDAO();
 
 		companyDAO2.insertApp(company);

@@ -299,12 +299,16 @@ $(document).ready(function() {
 			alert('기타 제출 서류는 5장을 넘을 수 없습니다.');
 			return;
 		}
-		limit_storage_single('app_cp_registrantion',MB_10);
-		limit_storage_single('app_cp_financial',MB_10);
-		limit_storage_single('app_cp_estate_contract',MB_10);
-		limit_storage_multi('app_cp_images',MB_50);
-		limit_storage_multi('app_cp_other_documents',MB_50);
+//		limit_storage_single('app_cp_registrantion',MB_10);
+//		limit_storage_single('app_cp_financial',MB_10);
+//		limit_storage_single('app_cp_estate_contract',MB_10);
+//		limit_storage_multi('app_cp_images',MB_50);
+//		limit_storage_multi('app_cp_other_documents',MB_50);
 		
+		if (!$("#app18").is(":checked")) {
+			alert('[필수]정보제공 동의 체크 해주세요.');
+			return;
+		}
   		$('#form').submit();
   	});
 
