@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 import net.member.action.MemberIDCheckAction;
+import net.member.action.MemberInvestmentListAction;
 import net.member.action.MemberJoinAction;
 import net.member.action.MemberLoginAction;
 import net.member.action.MemberLoginCheckAction;
@@ -179,7 +180,16 @@ public class MemberController extends HttpServlet implements Servlet {
 			
 		///////////////////////유정 추가 end///////////////////////
 		
-		
+		/*박신규 시작*/
+		else if (command.equals("/MemberInvestmentList.mb")) {
+			action = new MemberInvestmentListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		/*박신규 끝*/
 		
 		
 		

@@ -25,7 +25,6 @@
         $('footer').load('./footer/footer.jsp')
         $('.like_box').load('./member/like_box.jsp')
     });	 
-    alert('ddd');
   </script>
 
 </head>
