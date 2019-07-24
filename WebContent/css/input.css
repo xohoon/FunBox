@@ -1,0 +1,81 @@
+@charset "utf-8";
+
+#coin_send{
+	width:100%;
+	max-width:400px;
+	background:#fff;
+	border:1px solid #73a6d6;
+	padding:24px;
+	position:relative;
+	font-size:16px;
+}
+#coin_send label{
+	display:block;
+	color:#555;
+	margin-bottom:8px;
+}
+#coin_send input[type="text"], #coin_send input[type="password"]{
+	width:60%;
+	height:32px;
+	border-radius:4px;
+	border:1px solid #999;
+	text-indent:8px;
+}
+#coin_send input[type="text"]:focus, #coin_send input[type="password"]:focus{
+	border:1px solid #ff9124;
+}
+#coin_send form div{
+	margin-bottom:16px;
+}
+#coin_send.point #pin{
+	margin:0;
+}
+#coin_send #ph-group{
+	margin-bottom:8px;
+}
+#coin_send input[type="button"]{
+	height:32px;
+	background:#fff;
+	border-radius:4px;
+	border:1px solid #73a6d6;
+	color:#73a6d6;
+	vertical-align:top;
+	outline:0;
+	cursor:pointer;
+	transition:all 0.2s;
+}
+#coin_send input[type="button"]:hover{
+	background:#73a6d6;
+	color:#fff;
+}
+#coin_send .submit{
+	width:100%;
+}
+#coin_send .letter, #coin_send .num_ch{
+	width:calc(40% - 8px);
+}
+#coin_send button{
+	width:24px;
+	height:24px;
+	position:absolute;
+	top:24px;
+	right:24px;
+	background:none;
+	border:0;
+	outline:0;
+}
+button span{
+	display:block;
+	width:16px;
+	height:2px;
+	background:#999;
+    position:absolute;
+    top:50%;
+    left:4px;
+}
+button span:first-child{
+	transform:rotate(45deg);
+}
+button span:nth-child(2){
+	transform:rotate(135deg);
+}
