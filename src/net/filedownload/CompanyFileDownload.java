@@ -2,6 +2,7 @@ package net.filedownload;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -33,9 +34,9 @@ public class CompanyFileDownload extends HttpServlet {
 		//String saveDir = "C:/Users/user/Desktop/download_test";
 		
 		
-		File file = new File(saveDir + "/" + fileName);
+		File file = new File(saveDir + fileName);
 		System.out.println("파일명 : " + fileName);
-		System.out.println(saveDir+"/"+fileName);
+		System.out.println(saveDir+fileName);
 
 		// ③ MIMETYPE 설정하기
 		String mimeType = getServletContext().getMimeType(file.toString());
@@ -55,19 +56,23 @@ public class CompanyFileDownload extends HttpServlet {
 		response.setHeader("Content-Disposition", "attachment;filename=\"" + downName + "\";");
 
 		// ⑥ 요청된 파일을 읽어서 클라이언트쪽으로 저장한다.
-		FileInputStream fileInputStream = new FileInputStream(file);
-		ServletOutputStream servletOutputStream = response.getOutputStream();
+		try {
+			FileInputStream fileInputStream = new FileInputStream(file);
+			ServletOutputStream servletOutputStream = response.getOutputStream();
 
-		byte b[] = new byte[1024];
-		int data = 0;
+			byte b[] = new byte[1024];
+			int data = 0;
 
-		while ((data = (fileInputStream.read(b, 0, b.length))) != -1) {
-			servletOutputStream.write(b, 0, data);
+			while ((data = (fileInputStream.read(b, 0, b.length))) != -1) {
+				servletOutputStream.write(b, 0, data);
+			}
+
+			servletOutputStream.flush();
+			servletOutputStream.close();
+			fileInputStream.close();
+		}catch(Exception e  ) {
+			System.out.println(e+"잘못된 파일 다운로드 접근");
 		}
-
-		servletOutputStream.flush();
-		servletOutputStream.close();
-		fileInputStream.close();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -201,21 +201,66 @@ function application4_check(){
 		f.submit();
 	}
 }*/
+var MB_10 = 10485760;
+var MB_10_str = '10MB';
+var MB_50 = 52428800;
 
 $(document).ready(function() {
-
+	function limit_storage_single(id,storage){
+		var size = document.getElementById(id).files[0].size;
+		if (size > storage) {
+			if (storage == MB_10) {
+				alert('10MB 이하의 파일을 업로드 해주세요.');
+			}else if (storage == MB_50) {
+				alert('50MB 이하의 파일을 업로드 해주세요.');				
+			}
+			document.getElementById(id).value = "";
+		}
+		
+	}
+	
+	function limit_storage_multi(id,storage){
+		var total_storage = 0;
+		var file_length = document.getElementById(id).files.length;
+		for (var i = 0; i < file_length; i++) {
+			total_storage += document.getElementById(id).files[i].size;
+		}
+		if (total_storage > storage) {
+			if (storage == MB_10) {
+				alert('10MB 이하의 파일을 업로드 해주세요.');
+			}else if (storage == MB_50) {
+				alert('50MB 이하의 파일을 업로드 해주세요.');				
+			}
+			document.getElementById(id).value = "";
+		}
+		
+	}
+	$('#app_cp_registrantion').change(function(){
+		limit_storage_single("app_cp_registrantion",MB_10);
+	});
+	
+	$('#app_cp_financial').change(function(){
+		limit_storage_single("app_cp_financial",MB_10);
+	});
+	
+	$('#app_cp_estate_contract').change(function(){
+		limit_storage_single("app_cp_estate_contract",MB_10);
+	});
+	
+	
 	$("#app_cp_images").change(function() {
-
+		
 		var fileInput = document.getElementById("app_cp_images");
 
 		var files = fileInput.files;
-		var file;
 
 		if (files.length > 5 || files.length < 3) {
 			alert('매장 사진 파일은 최소 3장 최대 5장 입니다.');
 			$('#app_cp_images').val('');
 			return;
 		}
+		
+		limit_storage_multi("app_cp_images",MB_50);
 
 	});
 	
@@ -224,14 +269,13 @@ $(document).ready(function() {
 		var fileInput = document.getElementById("app_cp_other_documents");
 
 		var files = fileInput.files;
-		var file;
-
+		
 		if (files.length > 5 ) {
 			alert('기타 제출 서류는 5장을 넘을 수 없습니다.');
 			$('#app_cp_images').val('');
 			return;
 		}
-
+		limit_storage_multi("app_cp_other_documents",MB_50);
 	});
 	
 	$('.submit').on('click',function(){
@@ -255,6 +299,12 @@ $(document).ready(function() {
 			alert('기타 제출 서류는 5장을 넘을 수 없습니다.');
 			return;
 		}
+		limit_storage_single('app_cp_registrantion',MB_10);
+		limit_storage_single('app_cp_financial',MB_10);
+		limit_storage_single('app_cp_estate_contract',MB_10);
+		limit_storage_multi('app_cp_images',MB_50);
+		limit_storage_multi('app_cp_other_documents',MB_50);
+		
   		$('#form').submit();
   	});
 
