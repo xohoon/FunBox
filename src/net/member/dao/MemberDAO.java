@@ -768,7 +768,7 @@ public class MemberDAO {
 				box.setCp_monthly_profit(rs.getString("cp_monthly_profit"));
 				box.setCp_branch(rs.getString("cp_branch"));
 				box.setCp_sector(rs.getString("cp_sector"));
-				// 현재 투자률 계산
+				// 현재 투자율 계산
 				box.setCp_like_percent(rs.getString("c.iv_current_amount/c.iv_goal_amount*100"));
 
 				boxs.add(box);
@@ -840,7 +840,7 @@ public class MemberDAO {
 
 			try {
 				// 쿼리 기업 idx필요
-				String sql = "SELECT cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, (cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount "
+				String sql = "SELECT cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount "
 						+ "FROM company as cp, company_invest as cp_iv "
 						+ "ORDER BY cp_iv_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
 				

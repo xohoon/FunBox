@@ -1,5 +1,9 @@
+<%@page import="net.member.dto.Main_LikeVO"%>
+<%@page import="net.member.dto.Main_SlideVO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -24,6 +28,10 @@
 </head>
 
 <body>
+<%
+	List<Main_SlideVO> slideVO = (List<Main_SlideVO>)request.getAttribute("slideVO");
+	List<Main_LikeVO> likeVO = (List<Main_LikeVO>)request.getAttribute("likeVO");
+%>
 
   <div id="wrap">
     <header></header>
@@ -34,40 +42,18 @@
     <section id="sec1">
       <div class="inner">
         <div class="regular slider">
-        
+        <c:forEach var="slideVO" items="${slideVO }">
           <div>
             <div class="slide slide1">
               <div class="owop"></div>
               <div class="txtbox">
-                <h2>바른생선회</h2>
-                <h4>해운대점</h4>
-                <p>여기는 간딴 기업소개 택스트 자리</p>
+                <h2>${slideVO.sl_cp_name }</h2>
+                <h4>${slideVO.sl_cp_branch }</h4>
+                <p>${slideVO.sl_cp_content }</p>
               </div>
             </div>
           </div>
-          <!-- 
-          <div>
-            <div class="slide slide2">
-              <div class="owop"></div>
-              <div class="txtbox">
-                <h2>바른생선회</h2>
-                <h4>해운대점</h4>
-                <p>여기는 간딴 기업소개 택스트 자리</p>
-              </div>
-            </div>
-          </div>
-          
-          <div>
-            <div class="slide slide3">
-              <div class="owop"></div>
-              <div class="txtbox">
-                <h2>바른생선회</h2>
-                <h4>해운대점</h4>
-                <p>여기는 간딴 기업소개 택스트 자리</p>
-              </div>
-            </div>
-          </div>
-           -->
+        </c:forEach>
         </div>
         <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
         <script src="./js/slick.min.js" type="text/javascript" charset="utf-8"></script>
@@ -144,102 +130,32 @@
 
     <section id="sec2">
       <div class="inner">
+      <c:forEach var="likeVO" items="${likeVO }">
         <div class="corp_box">
           <div class="c_img">
             <img src="./img/row1_anotherminae.jpg" alt="">
           </div>
           <div class="c_txt">
-            <p>카페</p>
-            <h5>어나더 미네스 <span>추천</span></h5>
-            <p>부산 남산점</p>
+            <p>${likeVO.lk_cp_sector }</p>
+            <h5>${likeVO.lk_cp_name }<span>추천</span></h5>
+            <p>${likeVO.lk_cp_branch }</p>
           </div>
           <div class="gage">
-            <div class="per"><span>87</span>%</div>
+            <div class="per"><span>${likeVO.lk_cp_percent }</span>%</div>
             <div class="gage_full">
               <div class="gage_fill"></div>
             </div>
             <div>
-              <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
+              <span class="p_amt"><span>${likeVO.lk_cp_current_amount }</span> / <span>${likeVO.lk_cp_goal_amount }</span> P</span>
               <span class="d_day">D-<span>27</span></span>
             </div>
           </div>
           <div class="reward_per">
             수익률
-            <span>5%</span>
+            <span>${likeVO.lk_cp_profit }</span>
           </div>
         </div>
-        <div class="corp_box">
-          <div class="c_img">
-            <img src="./img/row1_soinsoo.jpg" alt="">
-          </div>
-          <div class="c_txt">
-            <p>주점</p>
-            <h5>소인수분해 <span>추천</span></h5>
-            <p>부산 금사점</p>
-          </div>
-          <div class="gage">
-            <div class="per"><span>43</span>%</div>
-            <div class="gage_full">
-              <div class="gage_fill"></div>
-            </div>
-            <div>
-              <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-              <span class="d_day">D-<span>27</span></span>
-            </div>
-          </div>
-          <div class="reward_per">
-            수익률
-            <span>5%</span>
-          </div>
-        </div>
-        <div class="corp_box">
-          <div class="c_img">
-            <img src="./img/row2_moon.jpg" alt="">
-          </div>
-          <div class="c_txt">
-            <p>일반음식점</p>
-            <h5>문 토스트 <span>추천</span></h5>
-            <p>부산 해운대점</p>
-          </div>
-          <div class="gage">
-            <div class="per"><span>82</span>%</div>
-            <div class="gage_full">
-              <div class="gage_fill"></div>
-            </div>
-            <div>
-              <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-              <span class="d_day">D-<span>27</span></span>
-            </div>
-          </div>
-          <div class="reward_per">
-            수익률
-            <span>5%</span>
-          </div>
-        </div>
-        <div class="corp_box">
-          <div class="c_img">
-            <img src="./img/row2_myeonchaeum.jpg" alt="">
-          </div>
-          <div class="c_txt">
-            <p>일반음식점</p>
-            <h5>면채움 <span>추천</span></h5>
-            <p>부산 광안점</p>
-          </div>
-          <div class="gage">
-            <div class="per"><span>31</span>%</div>
-            <div class="gage_full">
-              <div class="gage_fill"></div>
-            </div>
-            <div>
-              <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-              <span class="d_day">D-<span>27</span></span>
-            </div>
-          </div>
-          <div class="reward_per">
-            수익률
-            <span>5%</span>
-          </div>
-        </div>
+      </c:forEach>
       </div>
     </section>
 
