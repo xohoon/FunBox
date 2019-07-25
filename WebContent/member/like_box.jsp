@@ -8,18 +8,11 @@
 
 <%
 	String idx = (String)session.getAttribute("idx");
+	// 회원 idx
 	idx = "1";
 	MemberDAO memberDAO = new MemberDAO();
 	List<Member_likebox> boxs = memberDAO.LikeboxInfo(idx);
-	/* 
-	double current_amount = Double.parseDouble(box.getIv_current_amount());
-	double goal_amount = Double.parseDouble(box.getIv_goal_amount());
-	double result = current_amount/goal_amount*100;
-	percent = (int)result;
-	*/
-	System.out.println("jsp>>>");
 	request.setAttribute("boxs", boxs);
-	int percent;
 %>
 <!--<div class="info">
     		<div>
