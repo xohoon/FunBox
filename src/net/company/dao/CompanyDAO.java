@@ -305,6 +305,8 @@ public class CompanyDAO {
 				company.setCp_business_risk(rs.getString("cp_business_risk"));
 				company.setCp_company_risk(rs.getString("cp_company_risk"));
 				company.setCp_other_risks(rs.getString("cp_other_risks"));
+				company.setCp_recommand(rs.getBoolean("cp_recommand"));
+				company.setCp_best(rs.getBoolean("cp_best"));
 				
 				// InvestVO
 				company.setIv_goal_amount(rs.getString("iv_goal_amount"));
@@ -430,6 +432,8 @@ public class CompanyDAO {
 				company.setCp_business_risk(rs.getString("cp_business_risk"));
 				company.setCp_company_risk(rs.getString("cp_company_risk"));
 				company.setCp_other_risks(rs.getString("cp_other_risks"));
+				company.setCp_recommand(rs.getBoolean("cp_recommand"));
+				company.setCp_best(rs.getBoolean("cp_best"));
 				
 				// InvestVO
 				// 태훈 추가 - 투자율
@@ -636,7 +640,7 @@ public class CompanyDAO {
 
 			try {
 				
-				String sql = "SELECT cp_idx, cp_name FROM company";
+				String sql = "SELECT cp_idx, cp_name,cp_recommand,cp_best FROM company";
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				
@@ -644,10 +648,10 @@ public class CompanyDAO {
 					CompanyListVO companyListVO = new CompanyListVO();
 					companyListVO.setCp_idx(rs.getInt("cp_idx"));
 					companyListVO.setCp_name(rs.getString("cp_name"));
+					companyListVO.setCp_recommand(rs.getBoolean("cp_recommand"));
+					companyListVO.setCp_best(rs.getBoolean("cp_best"));
 					
 					leftCompanyList.add(companyListVO);
-					//System.out.println(companyListVO.toString());
-					
 				}
 				return leftCompanyList;
 				

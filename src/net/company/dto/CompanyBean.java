@@ -7,7 +7,7 @@ public class CompanyBean {
 
 	// 유정 추가
 	// 투자하기 뷰에서 select할 때 모든 기업 관련 정보 한번에 가져오는 빈
-	
+
 	// CompanyVO
 	private int cp_idx;
 	private String cp_name;
@@ -34,7 +34,9 @@ public class CompanyBean {
 	private String cp_business_risk;
 	private String cp_company_risk;
 	private String cp_other_risks;
-	
+	private boolean cp_recommand;
+	private boolean cp_best;
+
 	// InvestVO
 	// 태훈 추가
 	private String iv_percent;					// 현재 투자율
@@ -47,7 +49,7 @@ public class CompanyBean {
 	private String iv_contraction_during;		// 투자계약기간
 	private String iv_possible_amount;			// 투자 가능 금액
 	private String iv_current_participants;		// 현재 참여 인원
-	
+
 	// Company_pay_scheduleVO
 	private String cp_pay_count;
 	private String cp_pay_expected_payment_date;
@@ -56,7 +58,7 @@ public class CompanyBean {
 	private String cp_pay_fees;
 	private String cp_pay_actual_payment_amout;
 	private String cp_pay_actual_rate_return;
-	
+
 	// Company_revenueVO
 	private int cp_pre_sales;
 	private int cp_pre_stuff;
@@ -71,7 +73,7 @@ public class CompanyBean {
 	private int cp_pre_avg_monthly;
 	private int cp_pre_net_profit_ratio;
 	private int cp_pre_interest_rate;
-	
+
 	// CompanyFileVO
 	private String cf_registration;
 	private String cf_financial;
@@ -87,14 +89,20 @@ public class CompanyBean {
 	private String cf_image6;
 	private String cp_branch;
 	private String cp_intro_headline;
-	
-	
-	
-	public String getIv_percent() {
-		return iv_percent;
+
+
+
+	public boolean isCp_recommand() {
+		return cp_recommand;
 	}
-	public void setIv_percent(String iv_percent) {
-		this.iv_percent = iv_percent;
+	public void setCp_recommand(boolean cp_recommand) {
+		this.cp_recommand = cp_recommand;
+	}
+	public boolean isCp_best() {
+		return cp_best;
+	}
+	public void setCp_best(boolean cp_best) {
+		this.cp_best = cp_best;
 	}
 	public String getCp_branch() {
 		return cp_branch;
@@ -531,7 +539,7 @@ public class CompanyBean {
 				+ ", cf_image6=" + cf_image6 + ", cp_branch=" + cp_branch + ", cp_intro_headline=" + cp_intro_headline
 				+ "]";
 	}
-	
-	
-	
+
+
+
 }
