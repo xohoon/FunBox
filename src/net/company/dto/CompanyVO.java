@@ -37,8 +37,15 @@ public class CompanyVO {
 	private String cp_intro_headline;
 	private boolean cp_recommand;
 	private boolean cp_best;
+	private boolean cp_open_status;
 	
 	
+	public boolean isCp_open_status() {
+		return cp_open_status;
+	}
+	public void setCp_open_status(boolean cp_open_status) {
+		this.cp_open_status = cp_open_status;
+	}
 	public boolean isCp_recommand() {
 		return cp_recommand;
 	}

@@ -36,7 +36,8 @@ public class CompanyBean {
 	private String cp_other_risks;
 	private boolean cp_recommand;
 	private boolean cp_best;
-
+	private boolean cp_open_status;
+	
 	// InvestVO
 	// 태훈 추가
 	private String iv_percent;					// 현재 투자율
@@ -91,7 +92,13 @@ public class CompanyBean {
 	private String cp_intro_headline;
 
 
-
+	
+	public boolean isCp_open_status() {
+		return cp_open_status;
+	}
+	public void setCp_open_status(boolean cp_open_status) {
+		this.cp_open_status = cp_open_status;
+	}
 	public String getIv_percent() {
 		return iv_percent;
 	}

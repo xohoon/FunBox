@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.common.action.Action;
 import net.common.action.ActionForward;
+import net.member.action.MainAction;
 import net.member.action.MemberIDCheckAction;
 import net.member.action.MemberInvestmentListAction;
 import net.member.action.MemberJoinAction;
@@ -40,10 +41,13 @@ public class MemberController extends HttpServlet implements Servlet {
 		
 		
 		///////////////////////유정 추가 start///////////////////////
-		if (command.equals("/Index.mb")) {
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("./index.jsp");
+		if (command.equals("/Main.mb")) {
+			action = new MainAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}else if (command.equals("/LoginPage.mb")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
