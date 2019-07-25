@@ -381,6 +381,7 @@ public class CompanyDAO {
 	
 	
 	// 투자하기 - 모든 기업 정보 불러오기
+	// 태훈 - 투자하기 필요한 정보 JOIN활용 불러오기
 	public CompanyBean getCompanyInfo2(int idx) throws Exception {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -388,7 +389,14 @@ public class CompanyDAO {
 
 		try {
 			// 쿼리
-			String sql = "SELECT *,concat(b.cf_directory,b.cf_image1) as cf_directory_image1,concat(b.cf_directory,b.cf_image2) as cf_directory_image2,concat(b.cf_directory,b.cf_image3) as cf_directory_image3,concat(b.cf_directory,b.cf_image4) as cf_directory_image4,concat(b.cf_directory,b.cf_image5) as cf_directory_image5,concat(b.cf_directory,b.cf_image6) as cf_directory_image6 FROM company as a JOIN company_file as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? JOIN company_invest as c ON a.cp_idx = c.cp_idx JOIN company_lease as d ON a.cp_idx = d.cp_idx JOIN company_pay_schedule as e ON a.cp_idx = e.cp_idx JOIN company_pre_revenue as f ON a.cp_idx = f.cp_idx";
+			String sql = "SELECT *,"
+					+ "concat(b.cf_directory,b.cf_image1) as cf_directory_image1,concat(b.cf_directory,b.cf_image2) as cf_directory_image2,concat(b.cf_directory,b.cf_image3) as cf_directory_image3,concat(b.cf_directory,b.cf_image4) as cf_directory_image4,concat(b.cf_directory,b.cf_image5) as cf_directory_image5,concat(b.cf_directory,b.cf_image6) as cf_directory_image6 , c.iv_current_amount/iv_goal_amount*100 "
+					+ "FROM company as a "
+					+ "JOIN company_file as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
+					+ "JOIN company_invest as c ON a.cp_idx = c.cp_idx "
+					+ "JOIN company_lease as d ON a.cp_idx = d.cp_idx "
+					+ "JOIN company_pay_schedule as e ON a.cp_idx = e.cp_idx "
+					+ "JOIN company_pre_revenue as f ON a.cp_idx = f.cp_idx";
 			pstm = conn.prepareStatement(sql);
 			pstm.setInt(1, idx);
 			rs = pstm.executeQuery();
@@ -428,6 +436,8 @@ public class CompanyDAO {
 				company.setCp_best(rs.getBoolean("cp_best"));
 				
 				// InvestVO
+				// 태훈 추가 - 투자율
+				company.setIv_percent(rs.getString("c.iv_current_amount/iv_goal_amount*100"));
 				company.setIv_goal_amount(rs.getString("iv_goal_amount"));
 				company.setIv_current_amount(rs.getString("iv_current_amount"));
 				company.setIv_min_amount(rs.getString("iv_min_amount"));
@@ -501,7 +511,7 @@ public class CompanyDAO {
 	
 	// 투자하기 insert
 	public boolean MemberInvest(MemberInvestVO member_invest) {
-		String sql = "insert into member_invest(mb_idx,mb_id,mi_name,mi_branch,mi_point,mi_hoiling_stock,cp_idx,mi_reg_date_time) values (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
+		String sql = "insert into member_invest(mb_idx,mb_id,mi_category,mi_name,mi_branch,mi_point,mi_hoiling_stock,cp_idx,mi_reg_date_time) values (?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -509,11 +519,12 @@ public class CompanyDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, member_invest.getMi_idx());
 			pstmt.setString(2, member_invest.getMb_id());
-			pstmt.setString(3, member_invest.getName());
-			pstmt.setString(4, member_invest.getMi_branch());
-			pstmt.setString(5, member_invest.getPoint());
-			pstmt.setString(6, member_invest.getHoiling_stock());
-			pstmt.setInt(7, member_invest.getCp_idx());
+			pstmt.setString(3, member_invest.getMi_category());
+			pstmt.setString(4, member_invest.getName());
+			pstmt.setString(5, member_invest.getMi_branch());
+			pstmt.setString(6, member_invest.getPoint());
+			pstmt.setString(7, member_invest.getHoiling_stock());
+			pstmt.setInt(8, member_invest.getCp_idx());
 			result = pstmt.executeUpdate();
 			System.out.println(pstmt);
 			if (result != 0) {
@@ -535,6 +546,87 @@ public class CompanyDAO {
 		}
 
 		return false;
+	}
+	
+	
+	//투자현황 - 투자내역 불러오기
+	public ArrayList<MemberInvestVO> getInvestment(String id, int startRow, int endRow) {// 시작페이지, 끝 페이지
+		String sql = "select mi_category,mi_name,mi_point,mi_reg_date_time,mi_note from member_invest where mb_id=? order by mi_idx desc limit "
+								+ startRow + ", " + endRow;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<MemberInvestVO> member_invest_list = new ArrayList<MemberInvestVO>();
+		System.out.println("getInvestment 실행 : "+ id);
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+			
+			while(rs.next()) {
+				
+				MemberInvestVO member_invest = new MemberInvestVO();
+				member_invest.setMi_category(rs.getString("mi_category"));
+				member_invest.setName(rs.getString("mi_name"));
+				member_invest.setPoint(rs.getString("mi_point"));
+				member_invest.setMi_reg_date_time(rs.getTimestamp("mi_reg_date_time"));
+				member_invest.setMi_note(rs.getString("mi_note"));
+				
+				member_invest_list.add(member_invest);
+
+			}
+
+			return member_invest_list;
+			
+		} catch (Exception ex) {
+			System.out.println("getInvestment 에러: " + ex);
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+		}
+
+		return null;
+	}
+	
+	
+	// 투자 내역 수 구하기
+	public int getInvestmentCount(String id) {
+		int total = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+
+			String sql = "select count(*) from member_invest where mb_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				total = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+		}
+		return total;
 	}
 	// 유정 추가 end ////////////////////////////
 	

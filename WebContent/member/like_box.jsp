@@ -1,19 +1,18 @@
+<%@page import="java.util.List"%>
 <%@page import="net.member.dao.MemberDAO"%>
 <%@page import="net.member.dto.Member_likebox"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href="css/like_box.css" rel="stylesheet">
 
 <%
 	String idx = (String)session.getAttribute("idx");
+	// 회원 idx
 	idx = "1";
 	MemberDAO memberDAO = new MemberDAO();
-	Member_likebox box = memberDAO.LikeboxInfo(idx);
-	double current_amount = Double.parseDouble(box.getIv_current_amount());
-	double goal_amount = Double.parseDouble(box.getIv_goal_amount());
-	double result = current_amount/goal_amount*100;
-	int percent;
-	percent = (int)result;
+	List<Member_likebox> boxs = memberDAO.LikeboxInfo(idx);
+	request.setAttribute("boxs", boxs);
 %>
 <!--<div class="info">
     		<div>
@@ -39,24 +38,26 @@
     	<div class="fav">
     		<h6><i class="fas fa-star"></i> 내가 찜한 BOX</h6>
     		<ul>
-    			<li>
-    				<a href="#" class="delete"><i class="fas fa-times-circle"></i></a>
-                        <div class="img">
-					    <img src="img/row1_anotherminae.jpg" alt="미네스">
-					    </div>
-					    <div class="txt_box">
-						<span><%=box.getCp_sector() %></span>
-						<h6><%=box.getLike_cp_name() %><span><%=box.getCp_branch() %></span></h6>
-						<div class="gage">
-							<div class="per"><span><%=percent %></span>%</div>
-							<p>수익률 <%=box.getCp_monthly_profit()%></p>
-							<div class="gage_full">
-							  <div class="gage_fill"></div>
-							</div>
-						 </div>
-						 <span class="d_day">D-<span>27</span></span>
-                        </div>
-    			</li>
+    			<c:forEach var="boxs" items="${boxs }">
+	    			<li>
+	    				<a href="#" class="delete"><i class="fas fa-times-circle"></i></a>
+	                        <div class="img">
+						    <img src="img/row1_anotherminae.jpg" alt="미네스">
+						    </div>
+						    <div class="txt_box">
+							<span>${boxs.getCp_sector() }</span>
+							<h6>${boxs.getLike_cp_name() }<span>${boxs.getCp_branch() }</span></h6>
+							<div class="gage">
+								<div class="per"><span>${boxs.getCp_like_percent() }</span>%</div>
+								<p>수익률 ${boxs.getCp_monthly_profit() }</p>
+								<div class="gage_full">
+								  <div class="gage_fill"></div>
+								</div>
+							 </div>
+							 <span class="d_day">D-<span>27</span></span>
+	                        </div>
+	    			</li>
+    			</c:forEach>
     		</ul>
     	</div><!--.fav-->
     	<script src="js/jquery.mousewheel.js"></script>

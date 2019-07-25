@@ -64,10 +64,6 @@ public class MemberController extends HttpServlet implements Servlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/find_pin.jsp");
-		}else if (command.equals("/Mypage1.mb")) {
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("./member/mypage1.jsp");
 		}else if (command.equals("/Mypage2_1.mb")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
