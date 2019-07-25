@@ -20,7 +20,7 @@ public class CorporationAction implements Action {
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		ActionForward forward = new ActionForward();
 
-		System.out.println("CorporationAction OK!");
+//		System.out.println("CorporationAction OK!");
 		
 		CompanyBean company = new CompanyBean();
 		CompanyListVO List = new CompanyListVO();
@@ -38,7 +38,7 @@ public class CorporationAction implements Action {
 		leftCompanyList = company_dao2.getCompanyList();
 		request.setAttribute("leftCompanyList", leftCompanyList);
 		
-		System.out.println(leftCompanyList.toString());
+//		System.out.println(leftCompanyList.toString());
 		
 		forward.setRedirect(false);
 		forward.setPath("./company/corporation.jsp");

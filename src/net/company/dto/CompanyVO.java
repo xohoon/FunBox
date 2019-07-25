@@ -35,7 +35,22 @@ public class CompanyVO {
 	private int status;
 	private String cp_branch;
 	private String cp_intro_headline;
+	private boolean cp_recommand;
+	private boolean cp_best;
 	
+	
+	public boolean isCp_recommand() {
+		return cp_recommand;
+	}
+	public void setCp_recommand(boolean cp_recommand) {
+		this.cp_recommand = cp_recommand;
+	}
+	public boolean isCp_best() {
+		return cp_best;
+	}
+	public void setCp_best(boolean cp_best) {
+		this.cp_best = cp_best;
+	}
 	public String getCp_branch() {
 		return cp_branch;
 	}

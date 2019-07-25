@@ -34,6 +34,8 @@ public class CompanyBean {
 	private String cp_business_risk;
 	private String cp_company_risk;
 	private String cp_other_risks;
+	private boolean cp_recommand;
+	private boolean cp_best;
 	
 	// InvestVO
 	private String iv_goal_amount;				// 투자 - 목표금액
@@ -88,6 +90,18 @@ public class CompanyBean {
 	
 	
 	
+	public boolean isCp_recommand() {
+		return cp_recommand;
+	}
+	public void setCp_recommand(boolean cp_recommand) {
+		this.cp_recommand = cp_recommand;
+	}
+	public boolean isCp_best() {
+		return cp_best;
+	}
+	public void setCp_best(boolean cp_best) {
+		this.cp_best = cp_best;
+	}
 	public String getCp_branch() {
 		return cp_branch;
 	}

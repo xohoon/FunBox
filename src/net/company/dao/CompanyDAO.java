@@ -305,6 +305,8 @@ public class CompanyDAO {
 				company.setCp_business_risk(rs.getString("cp_business_risk"));
 				company.setCp_company_risk(rs.getString("cp_company_risk"));
 				company.setCp_other_risks(rs.getString("cp_other_risks"));
+				company.setCp_recommand(rs.getBoolean("cp_recommand"));
+				company.setCp_best(rs.getBoolean("cp_best"));
 				
 				// InvestVO
 				company.setIv_goal_amount(rs.getString("iv_goal_amount"));
@@ -422,6 +424,8 @@ public class CompanyDAO {
 				company.setCp_business_risk(rs.getString("cp_business_risk"));
 				company.setCp_company_risk(rs.getString("cp_company_risk"));
 				company.setCp_other_risks(rs.getString("cp_other_risks"));
+				company.setCp_recommand(rs.getBoolean("cp_recommand"));
+				company.setCp_best(rs.getBoolean("cp_best"));
 				
 				// InvestVO
 				company.setIv_goal_amount(rs.getString("iv_goal_amount"));
