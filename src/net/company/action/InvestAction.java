@@ -23,6 +23,7 @@ public class InvestAction implements Action {
 		
 		int mb_idx = Integer.parseInt(request.getParameter("mb_idx"));
 		String mb_id = request.getParameter("mb_id");
+		String mi_category = request.getParameter("mi_category");
 		String cp_name = request.getParameter("cp_name");
 		String cp_branch = request.getParameter("cp_branch");
 		String mi_point = request.getParameter("point");
@@ -31,6 +32,7 @@ public class InvestAction implements Action {
 
 		member_invest.setMi_idx(mb_idx);
 		member_invest.setMb_id(mb_id);
+		member_invest.setMi_category(mi_category);
 		member_invest.setName(cp_name);
 		member_invest.setMi_branch(cp_branch);
 		member_invest.setPoint(mi_point);
@@ -58,7 +60,7 @@ public class InvestAction implements Action {
 		PrintWriter out = response.getWriter();
 		out.println("<script>");
 		out.println("alert('투자가 완료되었습니다.');");
-		out.println("location.href='./Mypage1.mb';");
+		out.println("location.href='./MemberInvestmentList.mb';");
 		out.println("</script>");
 		out.close();
 		

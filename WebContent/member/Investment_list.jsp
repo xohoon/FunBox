@@ -2,9 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="net.member.dto.MemberInvestPageVO"%>
+<%@page import="net.member.dto.MemberInvestVO"%>
+<%@ page import="java.util.ArrayList"%>
 <%
 	request.setCharacterEncoding("utf-8"); // 한글처리
 	MemberInvestPageVO memberInvestVO = (MemberInvestPageVO)request.getAttribute("memberInvestVO");
+	ArrayList<MemberInvestVO> member_invest_list = (ArrayList<MemberInvestVO>)request.getAttribute("member_invest_list");
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -271,14 +274,21 @@
         <td>날짜</td>
         <td>비고</td>
     </tr>
+    <%
+    	if(member_invest_list != null){
+    		for(int i=0; i<member_invest_list.size(); i++){
+    %>
     <tr>
-        <td class="minus">투자</td>
-        <td>바른생선회</td>
-        <td class="minus">-1,000,000P</td>
-        <td>2019.06.14<br>16:29:49</td>
-        <td></td>
+        <td class="minus"><%=member_invest_list.get(i).getMi_category() %></td>
+        <td><%=member_invest_list.get(i).getName() %></td>
+        <td class="minus"><%=member_invest_list.get(i).getPoint() %></td>
+        <td><%=member_invest_list.get(i).getMi_reg_date_time() %></td>
     </tr>
-    <tr>
+    <%
+    		}
+    	}
+    %>
+    <!-- <tr>
         <td class="plus">이자</td>
         <td>바른생선회</td>
         <td class="plus">+50,000P</td>
@@ -291,15 +301,48 @@
         <td class="plus">+5,000,000P</td>
         <td>2019.06.14<br>16:29:49</td>
         <td></td>
-    </tr>
+    </tr> -->
   </table>
-  <a href="#" class="prev"><i class="fas fa-caret-left"></i></a>
+  <!-- <a href="#" class="prev"><i class="fas fa-caret-left"></i></a>
   <ul class="pager">
     <li class="on">1</li>
     <li>2</li>
     <li>3</li>
   </ul>
-  <a href="#" class="next"><i class="fas fa-caret-right"></i></a>
+  <a href="#" class="next"><i class="fas fa-caret-right"></i></a> -->
+  <c:if test="${count > 0}">
+		<c:set var="pageCount" value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />
+		<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
+		<c:set var="endPage" value="${startPage + pageGroupSize-1}" />
+
+		<c:if test="${endPage > pageCount}">
+			<c:set var="endPage" value="${pageCount}" />
+		</c:if>
+		
+		<c:if test="${numPageGroup > 1}">
+			<a href="./MemberInvestmentList.mb?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">
+			<i class="fas fa-caret-left"></i></a>
+		</c:if>
+		
+		<ul class="pager">
+			<c:forEach var="i" begin="${startPage}" end="${endPage}">
+				<c:choose>
+					<c:when test="${currentPage == i}">
+						<li><a href="./MemberInvestmentList.mb?pageNum=${i}">${i}</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="./MemberInvestmentList.mb?pageNum=${i}">${i}</a></li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</ul>
+									
+		<c:if test="${numPageGroup < pageGroupCount}">
+			<a href="./MemberInvestmentList.mb?pageNum=${numPageGroup*pageGroupSize+1}" class="next">
+			<i class="fas fa-caret-right"></i></a>
+		</c:if>
+	</c:if>
+	</div>
 </div>
    
 <script src="js/jquery-3.1.1.min.js"></script>
