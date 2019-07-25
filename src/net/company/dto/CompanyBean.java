@@ -36,6 +36,8 @@ public class CompanyBean {
 	private String cp_other_risks;
 	
 	// InvestVO
+	// 태훈 추가
+	private String iv_percent;					// 현재 투자율
 	private String iv_goal_amount;				// 투자 - 목표금액
 	private String iv_current_amount;			// 투자 - 현재투자된 금액
 	private String iv_min_amount;				// 투자 - 최소금액(1구좌 금액)
@@ -44,7 +46,7 @@ public class CompanyBean {
 	private Date iv_appl_stop_date_time;		// 기업 투자 모집 end
 	private String iv_contraction_during;		// 투자계약기간
 	private String iv_possible_amount;			// 투자 가능 금액
-	private String iv_current_participants;	// 현재 참여 인원
+	private String iv_current_participants;		// 현재 참여 인원
 	
 	// Company_pay_scheduleVO
 	private String cp_pay_count;
@@ -88,6 +90,12 @@ public class CompanyBean {
 	
 	
 	
+	public String getIv_percent() {
+		return iv_percent;
+	}
+	public void setIv_percent(String iv_percent) {
+		this.iv_percent = iv_percent;
+	}
 	public String getCp_branch() {
 		return cp_branch;
 	}
@@ -501,24 +509,27 @@ public class CompanyBean {
 				+ ", cp_intro_content=" + cp_intro_content + ", cp_purpose=" + cp_purpose + ", cp_point_comment="
 				+ cp_point_comment + ", cp_update_datetime=" + cp_update_datetime + ", cp_business_risk="
 				+ cp_business_risk + ", cp_company_risk=" + cp_company_risk + ", cp_other_risks=" + cp_other_risks
-				+ ", iv_goal_amount=" + iv_goal_amount + ", iv_current_amount=" + iv_current_amount + ", iv_min_amount="
-				+ iv_min_amount + ", iv_balance_stock=" + iv_balance_stock + ", iv_appl_start_date_time="
-				+ iv_appl_start_date_time + ", iv_appl_stop_date_time=" + iv_appl_stop_date_time
-				+ ", iv_contraction_during=" + iv_contraction_during + ", iv_possible_amount=" + iv_possible_amount
-				+ ", iv_current_participants=" + iv_current_participants + ", cp_pay_count=" + cp_pay_count
-				+ ", cp_pay_expected_payment_date=" + cp_pay_expected_payment_date + ", cp_pay_principal="
-				+ cp_pay_principal + ", cp_pay_interest_paid=" + cp_pay_interest_paid + ", cp_pay_fees=" + cp_pay_fees
-				+ ", cp_pay_actual_payment_amout=" + cp_pay_actual_payment_amout + ", cp_pay_actual_rate_return="
-				+ cp_pay_actual_rate_return + ", cp_pre_sales=" + cp_pre_sales + ", cp_pre_stuff=" + cp_pre_stuff
-				+ ", cp_pre_costs_person=" + cp_pre_costs_person + ", cp_pre_lease_expenses=" + cp_pre_lease_expenses
-				+ ", cp_pre_operating_expenses=" + cp_pre_operating_expenses + ", cp_pre_net_income="
-				+ cp_pre_net_income + ", cp_pre_cash_dividend_ratio=" + cp_pre_cash_dividend_ratio + ", cp_pre_share="
-				+ cp_pre_share + ", cp_pre_platform=" + cp_pre_platform + ", cp_pre_proceeds=" + cp_pre_proceeds
+				+ ", iv_percent=" + iv_percent + ", iv_goal_amount=" + iv_goal_amount + ", iv_current_amount="
+				+ iv_current_amount + ", iv_min_amount=" + iv_min_amount + ", iv_balance_stock=" + iv_balance_stock
+				+ ", iv_appl_start_date_time=" + iv_appl_start_date_time + ", iv_appl_stop_date_time="
+				+ iv_appl_stop_date_time + ", iv_contraction_during=" + iv_contraction_during + ", iv_possible_amount="
+				+ iv_possible_amount + ", iv_current_participants=" + iv_current_participants + ", cp_pay_count="
+				+ cp_pay_count + ", cp_pay_expected_payment_date=" + cp_pay_expected_payment_date
+				+ ", cp_pay_principal=" + cp_pay_principal + ", cp_pay_interest_paid=" + cp_pay_interest_paid
+				+ ", cp_pay_fees=" + cp_pay_fees + ", cp_pay_actual_payment_amout=" + cp_pay_actual_payment_amout
+				+ ", cp_pay_actual_rate_return=" + cp_pay_actual_rate_return + ", cp_pre_sales=" + cp_pre_sales
+				+ ", cp_pre_stuff=" + cp_pre_stuff + ", cp_pre_costs_person=" + cp_pre_costs_person
+				+ ", cp_pre_lease_expenses=" + cp_pre_lease_expenses + ", cp_pre_operating_expenses="
+				+ cp_pre_operating_expenses + ", cp_pre_net_income=" + cp_pre_net_income
+				+ ", cp_pre_cash_dividend_ratio=" + cp_pre_cash_dividend_ratio + ", cp_pre_share=" + cp_pre_share
+				+ ", cp_pre_platform=" + cp_pre_platform + ", cp_pre_proceeds=" + cp_pre_proceeds
 				+ ", cp_pre_avg_monthly=" + cp_pre_avg_monthly + ", cp_pre_net_profit_ratio=" + cp_pre_net_profit_ratio
 				+ ", cp_pre_interest_rate=" + cp_pre_interest_rate + ", cf_registration=" + cf_registration
 				+ ", cf_financial=" + cf_financial + ", cf_estate_contract=" + cf_estate_contract + ", cf_image1="
 				+ cf_image1 + ", cf_image2=" + cf_image2 + ", cf_image3=" + cf_image3 + ", cf_image4=" + cf_image4
-				+ ", cf_image5=" + cf_image5 + ", cf_etc=" + cf_etc + "]";
+				+ ", cf_image5=" + cf_image5 + ", cf_etc=" + cf_etc + ", cf_certificate=" + cf_certificate
+				+ ", cf_image6=" + cf_image6 + ", cp_branch=" + cp_branch + ", cp_intro_headline=" + cp_intro_headline
+				+ "]";
 	}
 	
 	
