@@ -24,6 +24,7 @@
 </head>
 
 <body>
+
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div>
@@ -33,6 +34,7 @@
     <section id="sec1">
       <div class="inner">
         <div class="regular slider">
+        
           <div>
             <div class="slide slide1">
               <div class="owop"></div>
@@ -43,6 +45,7 @@
               </div>
             </div>
           </div>
+          <!-- 
           <div>
             <div class="slide slide2">
               <div class="owop"></div>
@@ -53,6 +56,7 @@
               </div>
             </div>
           </div>
+          
           <div>
             <div class="slide slide3">
               <div class="owop"></div>
@@ -63,6 +67,7 @@
               </div>
             </div>
           </div>
+           -->
         </div>
         <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
         <script src="./js/slick.min.js" type="text/javascript" charset="utf-8"></script>

@@ -41,14 +41,15 @@ public class MemberController extends HttpServlet implements Servlet {
 		
 		
 		///////////////////////유정 추가 start///////////////////////
-		if (command.equals("/Main.mb")) {
+		if (command.equals("/Index.mb")) {
+			System.out.println(">>>");
 			action = new MainAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else if (command.equals("/LoginPage.mb")) {
+		} else if (command.equals("/LoginPage.mb")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/login.jsp");
