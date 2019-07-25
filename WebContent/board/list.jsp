@@ -86,39 +86,47 @@
                 <h2>지역</h2>
                 <span>
                   <input type="checkbox" id="con2_all">
-                  <label for="con2_all">전체</label>
+                  <label for="con2_all">서울</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con2_1">
-                  <label for="con2_1">조건1</label>
+                  <label for="con2_1">경기</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con2_2">
-                  <label for="con2_2">조건2</label>
+                  <label for="con2_2">인천</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con2_3">
-                  <label for="con2_3">조건3</label>
+                  <label for="con2_3">강원</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con2_4">
-                  <label for="con2_4">조건4</label>
+                  <label for="con2_4">대전/충천</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con2_5">
-                  <label for="con2_5">조건5</label>
+                  <label for="con2_5">대구</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con2_6">
-                  <label for="con2_6">조건5</label>
+                  <label for="con2_6">부산</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con2_7">
-                  <label for="con2_7">조건5</label>
+                  <label for="con2_7">울산</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con2_8">
-                  <label for="con2_8">조건5</label>
+                  <label for="con2_8">경상</label>
+                </span>
+                <span>
+                  <input type="checkbox" id="con2_8">
+                  <label for="con2_8">광주/전라</label>
+                </span>
+                <span>
+                  <input type="checkbox" id="con2_8">
+                  <label for="con2_8">제주</label>
                 </span>
               </div>
 

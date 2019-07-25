@@ -59,6 +59,14 @@
     <servlet-name>NewTxSms</servlet-name>
     <url-pattern>/NewTxSms</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CompanyFileDownload</servlet-name>
+    <url-pattern>/CompanyFileDownload</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CompanyFileDownload</servlet-name>
+    <servlet-class>net.filedownload.CompanyFileDownload</servlet-class>
+  </servlet>
   <resource-ref>
     <description>DB Connection</description>
     <res-ref-name>jdbc/mysql</res-ref-name>
