@@ -379,6 +379,7 @@ public class CompanyDAO {
 	
 	
 	// 투자하기 - 모든 기업 정보 불러오기
+	// 태훈 - 투자하기 필요한 정보 JOIN활용 불러오기
 	public CompanyBean getCompanyInfo2(int idx) throws Exception {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -386,7 +387,14 @@ public class CompanyDAO {
 
 		try {
 			// 쿼리
-			String sql = "SELECT *,concat(b.cf_directory,b.cf_image1) as cf_directory_image1,concat(b.cf_directory,b.cf_image2) as cf_directory_image2,concat(b.cf_directory,b.cf_image3) as cf_directory_image3,concat(b.cf_directory,b.cf_image4) as cf_directory_image4,concat(b.cf_directory,b.cf_image5) as cf_directory_image5,concat(b.cf_directory,b.cf_image6) as cf_directory_image6 FROM company as a JOIN company_file as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? JOIN company_invest as c ON a.cp_idx = c.cp_idx JOIN company_lease as d ON a.cp_idx = d.cp_idx JOIN company_pay_schedule as e ON a.cp_idx = e.cp_idx JOIN company_pre_revenue as f ON a.cp_idx = f.cp_idx";
+			String sql = "SELECT *,"
+					+ "concat(b.cf_directory,b.cf_image1) as cf_directory_image1,concat(b.cf_directory,b.cf_image2) as cf_directory_image2,concat(b.cf_directory,b.cf_image3) as cf_directory_image3,concat(b.cf_directory,b.cf_image4) as cf_directory_image4,concat(b.cf_directory,b.cf_image5) as cf_directory_image5,concat(b.cf_directory,b.cf_image6) as cf_directory_image6 , c.iv_current_amount/iv_goal_amount*100 "
+					+ "FROM company as a "
+					+ "JOIN company_file as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
+					+ "JOIN company_invest as c ON a.cp_idx = c.cp_idx "
+					+ "JOIN company_lease as d ON a.cp_idx = d.cp_idx "
+					+ "JOIN company_pay_schedule as e ON a.cp_idx = e.cp_idx "
+					+ "JOIN company_pre_revenue as f ON a.cp_idx = f.cp_idx";
 			pstm = conn.prepareStatement(sql);
 			pstm.setInt(1, idx);
 			rs = pstm.executeQuery();
@@ -424,6 +432,8 @@ public class CompanyDAO {
 				company.setCp_other_risks(rs.getString("cp_other_risks"));
 				
 				// InvestVO
+				// 태훈 추가 - 투자율
+				company.setIv_percent(rs.getString("c.iv_current_amount/iv_goal_amount*100"));
 				company.setIv_goal_amount(rs.getString("iv_goal_amount"));
 				company.setIv_current_amount(rs.getString("iv_current_amount"));
 				company.setIv_min_amount(rs.getString("iv_min_amount"));

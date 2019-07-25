@@ -142,10 +142,10 @@
               </div>
             </div>
             <div class="gage-bar">
-              <p>50%</p>
+              <p><%=companyBean.getIv_percent() %>%</p>
               <div class="gage">
                 <div>
-                  <span>50</span>%
+                  <span><%=companyBean.getIv_percent() %></span>
                 </div>
               </div>
               <div>

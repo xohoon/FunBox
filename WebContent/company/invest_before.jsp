@@ -25,11 +25,6 @@
 <body>
 <%
 	CompanyBean companyBean = (CompanyBean)request.getAttribute("company");
-	double current_amount = Double.parseDouble(companyBean.getIv_current_amount());
-	double goal_amount = Double.parseDouble(companyBean.getIv_goal_amount());
-	double result = current_amount/goal_amount*100;
-	int percent;
-	percent = (int)result;
 %>
   <div id="wrap">
     <header></header>
@@ -70,7 +65,7 @@
             <p><%=companyBean.getCp_intro_content() %></p>
             
             <div class="gage">
-              <div class="per"><span><%=percent %></span>%</div>
+              <div class="per"><span><%=companyBean.getIv_percent() %></span>%</div>
               <div class="gage_full">
                 <div class="gage_fill"></div>
               </div>

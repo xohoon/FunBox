@@ -790,7 +790,7 @@ public class MemberDAO {
 			List<Member_likebox> boxs = new ArrayList<Member_likebox>();
 			
 			try {
-				// 쿼리
+				// 쿼리 기업 idx필요
 				String sql ="SELECT a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, c.iv_current_amount/c.iv_goal_amount*100 "
 						+ "FROM member_likebox as a "
 						+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
