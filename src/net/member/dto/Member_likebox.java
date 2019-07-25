@@ -1,13 +1,14 @@
 package net.member.dto;
 
+////////// 태훈 - 찜목록 리스트 //////////
 public class Member_likebox {
 	
-	private String like_cp_name;
-	private String cp_monthly_profit;
-	private String cp_branch;
-	private String cp_sector;
-	private String iv_goal_amount;
-	private String iv_current_amount;
+	private String like_cp_name;		// 회사이름
+	private String cp_monthly_profit;	// 수익률
+	private String cp_branch;			// 지점
+	private String cp_sector;			// 업종
+	private String cp_like_percent;		// 현재 투자률(sql 계산)
+	
 	public String getLike_cp_name() {
 		return like_cp_name;
 	}
@@ -32,26 +33,18 @@ public class Member_likebox {
 	public void setCp_sector(String cp_sector) {
 		this.cp_sector = cp_sector;
 	}
-	public String getIv_goal_amount() {
-		return iv_goal_amount;
+	public String getCp_like_percent() {
+		return cp_like_percent;
 	}
-	public void setIv_goal_amount(String iv_goal_amount) {
-		this.iv_goal_amount = iv_goal_amount;
-	}
-	public String getIv_current_amount() {
-		return iv_current_amount;
-	}
-	public void setIv_current_amount(String iv_current_amount) {
-		this.iv_current_amount = iv_current_amount;
+	public void setCp_like_percent(String cp_like_percent) {
+		this.cp_like_percent = cp_like_percent;
 	}
 	@Override
 	public String toString() {
 		return "Member_likebox [like_cp_name=" + like_cp_name + ", cp_monthly_profit=" + cp_monthly_profit
-				+ ", cp_branch=" + cp_branch + ", cp_sector=" + cp_sector + ", iv_goal_amount=" + iv_goal_amount
-				+ ", iv_current_amount=" + iv_current_amount + "]";
+				+ ", cp_branch=" + cp_branch + ", cp_sector=" + cp_sector + ", cp_like_percent=" + cp_like_percent
+				+ "]";
 	}
-	
-	
 	
 	
 }
