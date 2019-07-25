@@ -45,6 +45,7 @@ public class MemberInvestmentListAction implements Action {
 		
 		boolean flag = false;		
 		MemberDAO memberDAO = new MemberDAO();
+		
 		ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = memberDAO.getInvestmentCompanyList(mb_id);
 		for (MemberInvestCompanyVO memberInvestVO : memberInvestCompanyVOList ) {
 			if (cp_idx_string == null) {

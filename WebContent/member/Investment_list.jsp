@@ -4,6 +4,7 @@
 <%@page import="net.member.dto.MemberInvestPageVO"%>
 <%@page import="net.member.dto.MemberInvestVO"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	request.setCharacterEncoding("utf-8"); // 한글처리
 	MemberInvestPageVO memberInvestVO = (MemberInvestPageVO)request.getAttribute("memberInvestVO");
@@ -281,8 +282,8 @@
     <tr>
         <td class="minus"><%=member_invest_list.get(i).getMi_category() %></td>
         <td><%=member_invest_list.get(i).getName() %></td>
-        <td class="minus"><%=member_invest_list.get(i).getPoint() %></td>
-        <td><%=member_invest_list.get(i).getMi_reg_date_time() %></td>
+        <td class="minus"><fmt:formatNumber value="<%=member_invest_list.get(i).getPoint() %>" pattern="#,###"/></td>
+        <td><fmt:formatDate value="<%=member_invest_list.get(i).getMi_reg_date_time() %>" pattern="yyyy-MM-dd"/></td>
     </tr>
     <%
     		}
