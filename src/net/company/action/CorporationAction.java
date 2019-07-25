@@ -22,8 +22,7 @@ public class CorporationAction implements Action {
 
 //		System.out.println("CorporationAction OK!");
 		
-		CompanyBean company = new CompanyBean();
-		CompanyListVO List = new CompanyListVO();
+		CompanyBean company = new CompanyBean();		
 		ArrayList<CompanyListVO> leftCompanyList = new ArrayList<CompanyListVO>();
 		
 //		int idx = Integer.parseInt(request.getParameter("idx"));

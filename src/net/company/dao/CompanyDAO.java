@@ -548,7 +548,7 @@ public class CompanyDAO {
 
 			try {
 				
-				String sql = "SELECT cp_idx, cp_name FROM company";
+				String sql = "SELECT cp_idx, cp_name,cp_recommand,cp_best FROM company";
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				
@@ -556,10 +556,10 @@ public class CompanyDAO {
 					CompanyListVO companyListVO = new CompanyListVO();
 					companyListVO.setCp_idx(rs.getInt("cp_idx"));
 					companyListVO.setCp_name(rs.getString("cp_name"));
+					companyListVO.setCp_recommand(rs.getBoolean("cp_recommand"));
+					companyListVO.setCp_best(rs.getBoolean("cp_best"));
 					
 					leftCompanyList.add(companyListVO);
-					//System.out.println(companyListVO.toString());
-					
 				}
 				return leftCompanyList;
 				
