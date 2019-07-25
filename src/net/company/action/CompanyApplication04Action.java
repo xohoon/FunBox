@@ -95,8 +95,7 @@ public class CompanyApplication04Action implements Action {
 			default:
 				break;
 			}
-			// 서버에 파일 저장하기~~
-			// part.write(real_path + File.separator + fileName);
+			 part.write(real_path + "/" + fileName);
 		}
 
 		// 빈 파일들에 null 을 넣어준다.
