@@ -73,19 +73,19 @@
      <div class="step4">
 	 	<div id="app16-group" class="group cf">
 			<label>필수 제출 서류</label>
-			<span>사업자 등록증</span>
+			<span>사업자 등록증 (파일 크기 10MB 이하)</span>
 			<input type="file" name="app_cp_registrantion" id="app_cp_registrantion">
-			<span>재무제표</span>
+			<span>재무제표 (파일 크기 10MB 이하)</span>
 			<input type="file" name="app_cp_financial" id="app_cp_financial">
-			<span>부동산 계약서</span>
+			<span>부동산 계약서 (파일 크기 10MB 이하)</span>
 			<input type="file" name="app_cp_estate_contract" id="app_cp_estate_contract">
-			<span>매장사진(최소 3장,최대 5장)</span>
+			<span>매장사진(최소 3장,최대 5장) (총 파일 크기 50MB 이하)</span>
 			<input type="file" multiple name="app_cp_images" id="app_cp_images">
 			<p>* 오픈 예정 매장일 경우, 본 프랜차이즈 매장 중 영업 및 입지조건이 비슷한 타 가맹점 최소 2개의 가맹점 자료 첨부</p>
 		  </div><!--#app8-->
 		  <div id="app17-group" class="group cf">
 			<label>기타 제출 서류</label>
-			<span>결산장부, 법인등기부등본, 정관, 주주명부 등 (최대 5장)</span>
+			<span>결산장부, 법인등기부등본, 정관, 주주명부 등 (최대 5장) (총 파일 크기 50MB 이하)</span>
 			<input type="file" multiple name="app_cp_other_documents" id="app_cp_other_documents">
 			<p>* 기타서류 제출 시 심사에 반영됩니다.</p>
 		  </div><!--#app8-->

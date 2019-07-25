@@ -21,7 +21,7 @@ import net.company.action.InvestAction;
 import net.company.action.Invest_beforeAction;
 import net.company.action.Invest_pointAction;
 
-@MultipartConfig(maxFileSize = 1024 * 1024 * 2)
+@MultipartConfig(maxFileSize = 136314880)
 public class CompanyController extends HttpServlet implements Servlet {
 	static final long serialVersionUID = 1L;
 

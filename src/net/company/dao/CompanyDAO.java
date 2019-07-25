@@ -386,12 +386,7 @@ public class CompanyDAO {
 
 		try {
 			// 쿼리
-			String sql = "SELECT * FROM company as a "
-					+ "JOIN company_file as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
-					+ "JOIN company_invest as c ON a.cp_idx = c.cp_idx "
-					+ "JOIN company_lease as d ON a.cp_idx = d.cp_idx "
-					+ "JOIN company_pay_schedule as e ON a.cp_idx = e.cp_idx "
-					+ "JOIN company_pre_revenue as f ON a.cp_idx = f.cp_idx";
+			String sql = "SELECT *,concat(b.cf_directory,b.cf_image1) as cf_directory_image1,concat(b.cf_directory,b.cf_image2) as cf_directory_image2,concat(b.cf_directory,b.cf_image3) as cf_directory_image3,concat(b.cf_directory,b.cf_image4) as cf_directory_image4,concat(b.cf_directory,b.cf_image5) as cf_directory_image5,concat(b.cf_directory,b.cf_image6) as cf_directory_image6 FROM company as a JOIN company_file as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? JOIN company_invest as c ON a.cp_idx = c.cp_idx JOIN company_lease as d ON a.cp_idx = d.cp_idx JOIN company_pay_schedule as e ON a.cp_idx = e.cp_idx JOIN company_pre_revenue as f ON a.cp_idx = f.cp_idx";
 			pstm = conn.prepareStatement(sql);
 			pstm.setInt(1, idx);
 			rs = pstm.executeQuery();
@@ -467,11 +462,12 @@ public class CompanyDAO {
 				company.setCf_registration(rs.getString("cf_registration"));
 				company.setCf_financial(rs.getString("cf_financial"));
 				company.setCf_estate_contract(rs.getString("cf_estate_contract"));
-				company.setCf_image1(rs.getString("cf_image1"));
-				company.setCf_image2(rs.getString("cf_image2"));
-				company.setCf_image3(rs.getString("cf_image3"));
-				company.setCf_image4(rs.getString("cf_image4"));
-				company.setCf_image5(rs.getString("cf_image5"));
+				company.setCf_image1(rs.getString("cf_directory_image1"));
+				company.setCf_image2(rs.getString("cf_directory_image2"));
+				company.setCf_image3(rs.getString("cf_directory_image3"));
+				company.setCf_image4(rs.getString("cf_directory_image4"));
+				company.setCf_image5(rs.getString("cf_directory_image5"));
+				company.setCf_image5(rs.getString("cf_directory_image6"));
 				company.setCf_etc(rs.getString("cf_etc"));
 				
 			} else {
