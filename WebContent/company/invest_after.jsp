@@ -42,6 +42,7 @@
           <form class="inv_intxt" name="invest_after_form" action="./InvestAction.cp" method="post">
             <input type="hidden" name="mb_idx" value="${sessionScope.idx}">
             <input type="hidden" name="mb_id" value="${sessionScope.id}">
+            <input type="hidden" name="mi_category" value="투자">
             <input type="hidden" name="amount" value="<%=invest_point.getInvest_amount() %>">
             <input type="hidden" name="point" value="<%=invest_point.getInvest_point() %>">
             <input type="hidden" name="cp_name" value="<%=companyBean.getCp_name() %>">

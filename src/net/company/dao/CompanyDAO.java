@@ -501,7 +501,7 @@ public class CompanyDAO {
 	
 	// 투자하기 insert
 	public boolean MemberInvest(MemberInvestVO member_invest) {
-		String sql = "insert into member_invest(mb_idx,mb_id,mi_name,mi_branch,mi_point,mi_hoiling_stock,cp_idx,mi_reg_date_time) values (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
+		String sql = "insert into member_invest(mb_idx,mb_id,mi_category,mi_name,mi_branch,mi_point,mi_hoiling_stock,cp_idx,mi_reg_date_time) values (?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -509,11 +509,12 @@ public class CompanyDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, member_invest.getMi_idx());
 			pstmt.setString(2, member_invest.getMb_id());
-			pstmt.setString(3, member_invest.getName());
-			pstmt.setString(4, member_invest.getMi_branch());
-			pstmt.setString(5, member_invest.getPoint());
-			pstmt.setString(6, member_invest.getHoiling_stock());
-			pstmt.setInt(7, member_invest.getCp_idx());
+			pstmt.setString(3, member_invest.getMi_category());
+			pstmt.setString(4, member_invest.getName());
+			pstmt.setString(5, member_invest.getMi_branch());
+			pstmt.setString(6, member_invest.getPoint());
+			pstmt.setString(7, member_invest.getHoiling_stock());
+			pstmt.setInt(8, member_invest.getCp_idx());
 			result = pstmt.executeUpdate();
 			System.out.println(pstmt);
 			if (result != 0) {
@@ -535,6 +536,87 @@ public class CompanyDAO {
 		}
 
 		return false;
+	}
+	
+	
+	//투자현황 - 투자내역 불러오기
+	public ArrayList<MemberInvestVO> getInvestment(String id, int startRow, int endRow) {// 시작페이지, 끝 페이지
+		String sql = "select mi_category,mi_name,mi_point,mi_reg_date_time,mi_note from member_invest where mb_id=? order by mi_idx desc limit "
+								+ startRow + ", " + endRow;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<MemberInvestVO> member_invest_list = new ArrayList<MemberInvestVO>();
+		System.out.println("getInvestment 실행 : "+ id);
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+			
+			while(rs.next()) {
+				
+				MemberInvestVO member_invest = new MemberInvestVO();
+				member_invest.setMi_category(rs.getString("mi_category"));
+				member_invest.setName(rs.getString("mi_name"));
+				member_invest.setPoint(rs.getString("mi_point"));
+				member_invest.setMi_reg_date_time(rs.getTimestamp("mi_reg_date_time"));
+				member_invest.setMi_note(rs.getString("mi_note"));
+				
+				member_invest_list.add(member_invest);
+
+			}
+
+			return member_invest_list;
+			
+		} catch (Exception ex) {
+			System.out.println("getInvestment 에러: " + ex);
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+		}
+
+		return null;
+	}
+	
+	
+	// 투자 내역 수 구하기
+	public int getInvestmentCount(String id) {
+		int total = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+
+			String sql = "select count(*) from member_invest where mb_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				total = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+		}
+		return total;
 	}
 	// 유정 추가 end ////////////////////////////
 	
