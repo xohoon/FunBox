@@ -280,9 +280,26 @@
     		for(int i=0; i<member_invest_list.size(); i++){
     %>
     <tr>
-        <td class="minus"><%=member_invest_list.get(i).getMi_category() %></td>
+       	<c:set var="category" value="<%=member_invest_list.get(i).getMi_category() %>" />
+       	<c:choose>
+       		<c:when test="${category == '투자'}">
+		        <td class="minus"><%=member_invest_list.get(i).getMi_category() %></td>
+	        </c:when>
+	        <c:otherwise>
+	        	<td class="plus"><%=member_invest_list.get(i).getMi_category() %></td>
+	        </c:otherwise>
+       	</c:choose>
+    	
         <td><%=member_invest_list.get(i).getName() %></td>
-        <td class="minus"><fmt:formatNumber value="<%=member_invest_list.get(i).getPoint() %>" pattern="#,###"/></td>
+        
+        <c:choose>
+	        <c:when test="${category == '투자'}">
+		        <td class="minus">-<fmt:formatNumber value="<%=member_invest_list.get(i).getPoint() %>" pattern="#,###"/></td>
+	        </c:when>
+	        <c:otherwise>
+	        	<td class="plus">+<fmt:formatNumber value="<%=member_invest_list.get(i).getPoint() %>" pattern="#,###"/></td>
+	        </c:otherwise>
+        </c:choose>
         <td><fmt:formatDate value="<%=member_invest_list.get(i).getMi_reg_date_time() %>" pattern="yyyy-MM-dd"/></td>
     </tr>
     <%
