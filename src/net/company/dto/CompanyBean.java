@@ -92,6 +92,12 @@ public class CompanyBean {
 
 
 
+	public String getIv_percent() {
+		return iv_percent;
+	}
+	public void setIv_percent(String iv_percent) {
+		this.iv_percent = iv_percent;
+	}
 	public boolean isCp_recommand() {
 		return cp_recommand;
 	}
