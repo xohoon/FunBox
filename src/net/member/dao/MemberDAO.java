@@ -669,7 +669,8 @@ public class MemberDAO {
 
 		try {
 			// 쿼리
-			String sql = "SELECT a.mb_token, a.mb_point, sum(b.mi_cumulative_profit) " + "FROM member as a "
+			String sql = "SELECT a.mb_token, a.mb_point, sum(b.mi_cumulative_profit) "
+					+ "FROM member as a "
 					+ "JOIN member_invest as b " + "ON a.mb_idx = b.mb_idx " + "WHERE a.mb_idx = ?";
 
 			pstmt = conn.prepareStatement(sql);
@@ -842,6 +843,7 @@ public class MemberDAO {
 			try {
 				String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount "
 						+ "FROM company as cp, company_invest as cp_iv "
+						+ "WHERE cp.cp_idx = cp_iv.cp_idx "
 						+ "ORDER BY cp_iv_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
 				
 				pstmt = conn.prepareStatement(sql);

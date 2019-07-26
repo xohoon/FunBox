@@ -246,6 +246,7 @@ public class BoardDAO {
 		try {
 			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount "
 					+ "FROM company as cp, company_invest as cp_iv "
+					+ "WHERE cp.cp_idx = cp_iv.cp_idx "
 					+ "ORDER BY cp_reg_datetime DESC";
 
 			pstmt = conn.prepareStatement(sql);
