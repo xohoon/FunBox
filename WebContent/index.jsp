@@ -1,9 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="net.member.dto.Main_CityVO"%>
 <%@page import="net.member.dto.Main_LikeVO"%>
 <%@page import="net.member.dto.Main_SlideVO"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="net.page.dto.MainPageDateOfOpenVO"%>
 <%@page import="net.page.dto.MainPageDeadLineVO"%>
@@ -11,7 +11,10 @@
 
 <%
 	ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = (ArrayList<MainPageDateOfOpenVO>)request.getAttribute("mainPageDateOfOpenVOs");
-	ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = (ArrayList<MainPageDeadLineVO>)request.getAttribute("mainPageDeadLineVOs");	
+	ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = (ArrayList<MainPageDeadLineVO>)request.getAttribute("mainPageDeadLineVOs");
+	List<Main_SlideVO> slideVO = (List<Main_SlideVO>)request.getAttribute("slideVO");
+	List<Main_LikeVO> likeVO = (List<Main_LikeVO>)request.getAttribute("likeVO");
+	Main_CityVO cityVO = (Main_CityVO)request.getAttribute("cityVO");
 %>
 
 <!DOCTYPE html>
@@ -38,12 +41,6 @@
 </head>
 
 <body>
-<%
-	List<Main_SlideVO> slideVO = (List<Main_SlideVO>)request.getAttribute("slideVO");
-	List<Main_LikeVO> likeVO = (List<Main_LikeVO>)request.getAttribute("likeVO");
-	Main_CityVO cityVO = (Main_CityVO)request.getAttribute("cityVO");
-%>
-
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div>
