@@ -1,7 +1,7 @@
 package net.member.dto;
 
 ////////// 태훈 - 찜목록 리스트 //////////
-public class Member_likebox {
+public class Member_likeboxVO {
 	
 	private String like_cp_name;		// 회사이름
 	private String cp_monthly_profit;	// 수익률

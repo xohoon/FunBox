@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="net.member.dto.Main_CityVO"%>
+<%@page import="net.member.dto.Main_LikeVO"%>
+<%@page import="net.member.dto.Main_SlideVO"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="net.page.dto.MainPageDateOfOpenVO"%>
+<%@page import="net.page.dto.MainPageDeadLineVO"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+	ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = (ArrayList<MainPageDateOfOpenVO>)request.getAttribute("mainPageDateOfOpenVOs");
+	ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = (ArrayList<MainPageDeadLineVO>)request.getAttribute("mainPageDeadLineVOs");
+	List<Main_SlideVO> slideVO = (List<Main_SlideVO>)request.getAttribute("slideVO");
+	List<Main_LikeVO> likeVO = (List<Main_LikeVO>)request.getAttribute("likeVO");
+	Main_CityVO cityVO = (Main_CityVO)request.getAttribute("cityVO");
+%>
+
 <!DOCTYPE html>
 <html lang="kr">
 <%
@@ -35,36 +52,20 @@
     <section id="sec1">
       <div class="inner">
         <div class="regular slider">
-          <div>
-            <div class="slide slide1">
-              <div class="owop"></div>
-              <div class="txtbox">
-                <h2>바른생선회</h2>
-                <h4>해운대점</h4>
-                <p>여기는 간딴 기업소개 택스트 자리</p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide slide2">
-              <div class="owop"></div>
-              <div class="txtbox">
-                <h2>바른생선회</h2>
-                <h4>해운대점</h4>
-                <p>여기는 간딴 기업소개 택스트 자리</p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="slide slide3">
-              <div class="owop"></div>
-              <div class="txtbox">
-                <h2>바른생선회</h2>
-                <h4>해운대점</h4>
-                <p>여기는 간딴 기업소개 택스트 자리</p>
-              </div>
-            </div>
-          </div>
+        <c:forEach var="slideVO" items="${slideVO }">
+	        <a href="./CorporationAction.cp?cp_idx=${slideVO.sl_cp_idx }">
+	          <div>
+	            <div class="slide slide1">
+	              <div class="owop"></div>
+	              <div class="txtbox">
+	                <h2>${slideVO.sl_cp_name }</h2>
+	                <h4>${slideVO.sl_cp_branch }</h4>
+	                <p>${slideVO.sl_cp_content }</p>
+	              </div>
+	            </div>
+	          </div>
+	        </a>
+        </c:forEach>
         </div>
         <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
         <script src="./js/slick.min.js" type="text/javascript" charset="utf-8"></script>
@@ -141,102 +142,32 @@
 
     <section id="sec2">
       <div class="inner">
-        <div class="corp_box">
-          <div class="c_img">
-            <img src="./img/row1_anotherminae.jpg" alt="">
-          </div>
-          <div class="c_txt">
-            <p>카페</p>
-            <h5>어나더 미네스 <span>추천</span></h5>
-            <p>부산 남산점</p>
-          </div>
-          <div class="gage">
-            <div class="per"><span>87</span>%</div>
-            <div class="gage_full">
-              <div class="gage_fill"></div>
-            </div>
-            <div>
-              <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-              <span class="d_day">D-<span>27</span></span>
-            </div>
-          </div>
-          <div class="reward_per">
-            수익률
-            <span>5%</span>
-          </div>
-        </div>
-        <div class="corp_box">
-          <div class="c_img">
-            <img src="./img/row1_soinsoo.jpg" alt="">
-          </div>
-          <div class="c_txt">
-            <p>주점</p>
-            <h5>소인수분해 <span>추천</span></h5>
-            <p>부산 금사점</p>
-          </div>
-          <div class="gage">
-            <div class="per"><span>43</span>%</div>
-            <div class="gage_full">
-              <div class="gage_fill"></div>
-            </div>
-            <div>
-              <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-              <span class="d_day">D-<span>27</span></span>
-            </div>
-          </div>
-          <div class="reward_per">
-            수익률
-            <span>5%</span>
-          </div>
-        </div>
-        <div class="corp_box">
-          <div class="c_img">
-            <img src="./img/row2_moon.jpg" alt="">
-          </div>
-          <div class="c_txt">
-            <p>일반음식점</p>
-            <h5>문 토스트 <span>추천</span></h5>
-            <p>부산 해운대점</p>
-          </div>
-          <div class="gage">
-            <div class="per"><span>82</span>%</div>
-            <div class="gage_full">
-              <div class="gage_fill"></div>
-            </div>
-            <div>
-              <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-              <span class="d_day">D-<span>27</span></span>
-            </div>
-          </div>
-          <div class="reward_per">
-            수익률
-            <span>5%</span>
-          </div>
-        </div>
-        <div class="corp_box">
-          <div class="c_img">
-            <img src="./img/row2_myeonchaeum.jpg" alt="">
-          </div>
-          <div class="c_txt">
-            <p>일반음식점</p>
-            <h5>면채움 <span>추천</span></h5>
-            <p>부산 광안점</p>
-          </div>
-          <div class="gage">
-            <div class="per"><span>31</span>%</div>
-            <div class="gage_full">
-              <div class="gage_fill"></div>
-            </div>
-            <div>
-              <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-              <span class="d_day">D-<span>27</span></span>
-            </div>
-          </div>
-          <div class="reward_per">
-            수익률
-            <span>5%</span>
-          </div>
-        </div>
+      <c:forEach var="likeVO" items="${likeVO }">
+	        <div class="corp_box" onclick="location.href='./CorporationAction.cp?cp_idx=${likeVO.lk_cp_idx }'">
+	          <div class="c_img">
+	            <img src="./img/row1_anotherminae.jpg" alt="">
+	          </div>
+	          <div class="c_txt">
+	            <p>${likeVO.lk_cp_sector }</p>
+	            <h5>${likeVO.lk_cp_name }<span>추천</span></h5>
+	            <p>${likeVO.lk_cp_branch }</p>
+	          </div>
+	          <div class="gage">
+	            <div class="per"><span>${likeVO.lk_cp_percent }</span>%</div>
+	            <div class="gage_full">
+	              <div class="gage_fill"></div>
+	            </div>
+	            <div>
+	              <span class="p_amt"><span>${likeVO.lk_cp_current_amount }</span> / <span>${likeVO.lk_cp_goal_amount }</span> P</span>
+	              <span class="d_day">D-<span>27</span></span>
+	            </div>
+	          </div>
+	          <div class="reward_per">
+	            수익률
+	            <span>${likeVO.lk_cp_profit }</span>
+	          </div>
+	        </div>
+      </c:forEach>
       </div>
     </section>
 
@@ -250,6 +181,7 @@
             </form>
             <div class="map"></div>
             <ul>
+
               <li class="local01"><a href="javascript:goPage('서울');">서울(10)</a></li>
               <li class="local02"><a href="javascript:goPage('경기');">경기(4)</a></li>
               <li class="local03"><a href="javascript:goPage('인천');">인천(6)</a></li>
@@ -261,15 +193,28 @@
               <li class="local09"><a href="javascript:goPage('경상');">경상(7)</a></li>
               <li class="local10"><a href="javascript:goPage('광주');">광주·전라(4)</a></li>
               <li class="local11"><a href="javascript:goPage('제주');">제주(5)</a></li>
+
+              <li class="local01" onclick="location.href='./List.bd'">서울(${cityVO.seoul })</li>
+              <li class="local02">경기(${cityVO.gyeonggi })</li>
+              <li class="local03">인천(${cityVO.incheon })</li>
+              <li class="local04">강원(${cityVO.gangwon })</li>
+              <li class="local05">대전·충청(${cityVO.daejeonNchungcheong })</li>
+              <li class="local06">대구(${cityVO.daegu })</li>
+              <li class="local07">부산(${cityVO.busan })</li>
+              <li class="local08">울산(${cityVO.ulsan })</li>
+              <li class="local09">경상(${cityVO.gyeongsang })</li>
+              <li class="local10">광주·전라(${cityVO.gwangjuNjeonla })</li>
+              <li class="local11">제주(${cityVO.jeju })</li>
+
             </ul>
           </div>
         </div>
 
         <div class="inright"> 
           <div class="comingsoon_box">
-
             <div class="sec3_box1 slider">
-              <div>
+
+             <!--  <div>
                 <div class="slide slide1">
                   <img src="./img/side_2_portana.jpg" alt="">
                   <div class="cb_inbox">
@@ -286,7 +231,20 @@
                     <p><span>우리동네 골목대장 감성포차</span> 퇴근하고 매일 가고싶은 분위기 갑 주점</p>
                   </div>
                 </div>
-              </div>
+              </div> -->
+
+            <c:forEach var="mainPageDateOfOpenVO" items="${mainPageDateOfOpenVOs}" varStatus="status">
+            	<div>
+            		<div class="slide slide${status.count}" onclick="location.href = './Coporation.cp?cp_idx=${mainPageDateOfOpenVO.cp_idx}';">
+            			<img src="./img/side_${status.count}_portana.jpg" alt="">
+            			<div class="cb_inbox">
+		                    <h4>${mainPageDateOfOpenVO.cp_name } <span>${mainPageDateOfOpenVO.cp_open_datetime }오픈예정</span></h4>
+		                    <p><span>${mainPageDateOfOpenVO.cp_intro_headline }</span>${mainPageDateOfOpenVO.cp_intro_content }</p>
+		                </div>
+            		</div>
+            	</div>
+            </c:forEach>
+            
             </div>
             <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
             <script src="./js/slick.min.js" type="text/javascript" charset="utf-8"></script>
@@ -304,7 +262,91 @@
           </div>
 
           <aritcle class="corp_boxwrap">
+          <c:forEach var="mainPageDeadLineVO" items="${mainPageDeadLineVOs}">
+          	<div class="corp_box" onclick="location.href = './Coporation.cp?cp_idx=${mainPageDeadLineVO.cp_idx}';">
+          		<div class="c_img">
+                	<img src="./img/row3_noodle.jpg" alt="">
+              	</div>
+              	<div class="c_txt">
+	                <p>${mainPageDeadLineVO.cp_sector }</p>
+	                <h5>${mainPageDeadLineVO.cp_name } <span>마감임박</span></h5>
+	                <p>${mainPageDeadLineVO.cp_branch }</p>
+              	</div>
+              	<div class="gage">
+              		<div class="per"><span>${mainPageDeadLineVO.persent }</span>%
+              			<ul id="timer_${mainPageDeadLineVO.cp_idx }">
+              				<li><span id="days"></span>일</li>
+		                    <li><span id="hours"></span> :</li>
+		                    <li><span id="minutes"></span> :</li>
+		                    <li><span id="seconds"></span></li>		                    
+              			</ul>
+              			<div class="gage_full">
+                  			<div class="gage_fill"></div>
+                		</div>
+                		<div>
+		                  <span class="p_amt"><span>${mainPageDeadLineVO.iv_current_amount }</span> / <span>${mainPageDeadLineVO.iv_goal_amount }</span> P</span>
+		                  <span class="d_day">D-<span id="DDay_${mainPageDeadLineVO.cp_idx }">1</span></span>
+		                </div>
+              		</div>
+              	</div>
+              	<div class="reward_per">
+              		수익률<span>${mainPageDeadLineVO.cp_monthly_profit}</span>
+	            </div>
+          	</div>
+          </c:forEach>
+          <!-- 
             <div class="corp_box">
+              <div class="c_img">
+                <img src="./img/row3_noodle.jpg" alt="">
+              </div>
+              <div class="c_txt">
+                <p>일반음식점</p>
+                <h5>면식가 <span>마감임박</span></h5>
+                <p>부산 대연점</p>
+              </div>
+              <div class="gage">
+                <div class="per"><span>95</span>%
+                  <ul>
+                    <li><span id="days"></span>일</li>
+                    <li><span id="hours"></span> :</li>
+                    <li><span id="minutes"></span> :</li>
+                    <li><span id="seconds"></span></li>
+                    <script>
+                      $(document).ready(function() {
+                        const second = 1000,
+                          minute = second * 60,
+                          hour = minute * 60,
+                          day = hour * 24;
+
+                        let countDown = new Date('June 30, 2019 00:00:00').getTime(),
+                          x = setInterval(function() {
+
+                            let now = new Date().getTime(),
+                              distance = countDown - now;
+
+                             document.getElementById('days').innerText = Math.floor(distance / (day)),
+                              document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
+                              document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
+                              document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+                          }, second)
+                      });
+                    </script>
+                  </ul>
+                </div>
+                <div class="gage_full">
+                  <div class="gage_fill"></div>
+                </div>
+                <div>
+                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
+                  <span class="d_day">D-<span>1</span></span>
+                </div>
+              </div>
+              <div class="reward_per">
+                수익률
+                <span>10%</span>
+              </div>
+            </div>
+             <div class="corp_box">
               <div class="c_img">
                 <img src="./img/row3_noodle.jpg" alt="">
               </div>
@@ -457,11 +499,11 @@
                 <span>9%</span>
               </div>
             </div>
+            -->
           </aritcle>
         </div>
       </div>
     </section>
-
     <footer></footer>
   </div>
 
@@ -551,6 +593,56 @@
     	f.method = "post"
     	f.submit();
     }
+  </script>
+  <script>
+	  /*  $(document).ready(function() {
+	    const second = 1000,
+	      minute = second * 60,
+	      hour = minute * 60,
+	      day = hour * 24;
+	
+	    let countDown = new Date('2019-08-23 11:27:27').getTime(),
+	      x = setInterval(function() {
+	
+	        let now = new Date().getTime(),
+	          distance = countDown - now;
+	
+	         document.getElementById('days').innerText = Math.floor(distance / (day)),
+	          document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
+	          document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
+	          document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+	      }, second)
+	  }); */
+	  const second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
+	  
+	  $(document).ready(function(){
+	      <c:forEach var="mainPageDeadLineVO" items="${mainPageDeadLineVOs}">
+	      	setCountDown('${mainPageDeadLineVO.cp_idx}','${mainPageDeadLineVO.iv_appl_stop_date_time}');
+	      </c:forEach>
+	  });
+	  
+	  function setCountDown(cp_idx,stopDate){
+		  var timer_day = document.getElementById('timer_'+cp_idx).childNodes.item(1).childNodes.item(0);
+		  var timer_hour = document.getElementById('timer_'+cp_idx).childNodes.item(3).childNodes.item(0);
+		  var timer_minute = document.getElementById('timer_'+cp_idx).childNodes.item(5).childNodes.item(0);
+		  var timer_second = document.getElementById('timer_'+cp_idx).childNodes.item(7).childNodes.item(0);
+		  var DDay = document.getElementById('DDay_'+cp_idx);
+		  let countDown = new Date(stopDate).getTime(),
+		  
+		  x = setInterval(function() {
+			  let now = new Date().getTime(),
+			  distance = countDown - now;
+			  timer_day.innerText = Math.floor(distance / (day)),
+			  timer_hour.innerText = Math.floor((distance % (day)) / (hour)),
+			  timer_minute.innerText = Math.floor((distance % (hour)) / (minute)),
+			  timer_second.innerText = Math.floor((distance % (minute)) / second),
+			  DDay.innerText= Math.floor(distance / (day))
+			  
+			  }, second)
+	  };
   </script>
 
 </body></html>
