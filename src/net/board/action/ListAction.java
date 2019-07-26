@@ -22,11 +22,13 @@ public class ListAction implements Action{
 		/// 태훈 추가 - 기업 리스트 전체 뿌려주기
 		BoardDAO boardDAO = new BoardDAO();
 		ArrayList<Board_Search_ListVO> searchVO = boardDAO.Search_ListInfo();
-		String cityName = (String)request.getAttribute("cityName");
 		System.out.println(">>>>>>>>>>>>>>>>>>>>"+searchVO);
 		
 		/// 태훈 추가 - 기업 리스트 전체 뿌려주기
 		request.setAttribute("searchVO", searchVO);
+		
+		
+		String cityName = (String)request.getParameter("cityName");
 		request.setAttribute("cityName", cityName);
 		
 		forward.setRedirect(false);
