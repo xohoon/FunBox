@@ -229,49 +229,6 @@ public class BoardDAO {
 			
 			return null;
 		}
-		
-		
-		// 유정 추가 - 메인 페이지 지도에서 지역 선택하면 해당 지역의 기업 리스트 불러오기
-		public List<CompanyBean> getCompanyList(String location) throws Exception {
-			String sql = "SELECT cp_name,cp_branch,cp_monthly_profit FROM `company` where left(`cp_add_ch`, 2)=?";
-			
-			List<CompanyBean> compnay_list = new ArrayList<CompanyBean>();
-			PreparedStatement pstm = null;
-			ResultSet rs = null;
 
-			try {
-				pstm = conn.prepareStatement(sql);
-				pstm.setString(1, location);
-				rs = pstm.executeQuery();
-
-				if(rs.next()) {
-					CompanyBean company = new CompanyBean();
-					
-					company.setCp_name(rs.getString("cp_name"));
-					company.setCp_branch(rs.getString("cp_branch"));;
-					company.setCp_monthly_profit(rs.getString("cp_monthly_profit"));
-					compnay_list.add(company);
-				}
-				return compnay_list;
-				
-
-			} catch (Exception ex) {
-				
-				System.out.println("getCompanyList 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstm != null)
-						pstm.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
-			}
-			
-			return null;
-		}
 	///////////////////////유정 추가 end///////////////////////
 }
