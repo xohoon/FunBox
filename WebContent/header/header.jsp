@@ -25,16 +25,13 @@
   </div>
   </c:when>
 
-
-  
-
   <c:otherwise>
   <%
   	String idx = (String)session.getAttribute("idx");
     	System.out.println(">>>>>>>>>"+idx);
     	
     	MemberDAO memberDAO = new MemberDAO();
-  	Member_headerVO member = memberDAO.Member_accumulate(idx);
+  	Member_headerVO member = (Member_headerVO)memberDAO.Member_accumulate(idx);
   	System.out.println("point>>"+member.getMb_point()+"token"+member.getMb_token()+"누적"+member.getMb_accumulate());
   %>
 
@@ -208,10 +205,4 @@
       });
       
     });
-<<<<<<< HEAD
-   
-=======
-   /*링크 루트 이해를 위한 임시링크제이쿼리 - 개발자분들 작업하실 때 삭제 해주시면 됩니다*/
-   /*링크 루트 이해를 위한 임시링크제이쿼리 - 개발자분들 작업하실 때 삭제 해주시면 됩니다*/
->>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
   </script>

@@ -181,31 +181,17 @@
             </form>
             <div class="map"></div>
             <ul>
-
-              <li class="local01"><a href="javascript:goPage('서울');">서울(10)</a></li>
-              <li class="local02"><a href="javascript:goPage('경기');">경기(4)</a></li>
-              <li class="local03"><a href="javascript:goPage('인천');">인천(6)</a></li>
-              <li class="local04"><a href="javascript:goPage('강원');">강원(2)</a></li>
-              <li class="local05"><a href="javascript:goPage('대전');">대전·충청(4)</a></li>
-              <li class="local06"><a href="javascript:goPage('대구');">대구(3)</a></li>
-              <li class="local07"><a href="javascript:goPage('부산');">부산(0)</a></li>
-              <li class="local08"><a href="javascript:goPage('울산');">울산(12)</a></li>
-              <li class="local09"><a href="javascript:goPage('경상');">경상(7)</a></li>
-              <li class="local10"><a href="javascript:goPage('광주');">광주·전라(4)</a></li>
-              <li class="local11"><a href="javascript:goPage('제주');">제주(5)</a></li>
-
-              <li class="local01" onclick="location.href='./List.bd'">서울(${cityVO.seoul })</li>
-              <li class="local02">경기(${cityVO.gyeonggi })</li>
-              <li class="local03">인천(${cityVO.incheon })</li>
-              <li class="local04">강원(${cityVO.gangwon })</li>
-              <li class="local05">대전·충청(${cityVO.daejeonNchungcheong })</li>
-              <li class="local06">대구(${cityVO.daegu })</li>
-              <li class="local07">부산(${cityVO.busan })</li>
-              <li class="local08">울산(${cityVO.ulsan })</li>
-              <li class="local09">경상(${cityVO.gyeongsang })</li>
-              <li class="local10">광주·전라(${cityVO.gwangjuNjeonla })</li>
-              <li class="local11">제주(${cityVO.jeju })</li>
-
+              <li class="local01"><a href="javascript:goPage('서울');">서울(${cityVO.seoul })</a></li>
+              <li class="local02"><a href="javascript:goPage('경기');">경기(${cityVO.gyeonggi })</a></li>
+              <li class="local03"><a href="javascript:goPage('인천');">인천(${cityVO.incheon })</a></li>
+              <li class="local04"><a href="javascript:goPage('강원');">강원(${cityVO.gangwon })</a></li>
+              <li class="local05"><a href="javascript:goPage('대전');">대전·충청(${cityVO.daejeonNchungcheong })</a></li>
+              <li class="local06"><a href="javascript:goPage('대구');">대구((${cityVO.daegu })</a></li>
+              <li class="local07"><a href="javascript:goPage('부산');">부산(${cityVO.busan })</a></li>
+              <li class="local08"><a href="javascript:goPage('울산');">울산(${cityVO.ulsan })</a></li>
+              <li class="local09"><a href="javascript:goPage('경상');">경상(${cityVO.gyeongsang })</a></li>
+              <li class="local10"><a href="javascript:goPage('광주');">광주·전라(${cityVO.gwangjuNjeonla })</a></li>
+              <li class="local11"><a href="javascript:goPage('제주');">제주(${cityVO.jeju })</a></li>
             </ul>
           </div>
         </div>
@@ -213,29 +199,9 @@
         <div class="inright"> 
           <div class="comingsoon_box">
             <div class="sec3_box1 slider">
-
-             <!--  <div>
-                <div class="slide slide1">
-                  <img src="./img/side_2_portana.jpg" alt="">
-                  <div class="cb_inbox">
-                    <h4>포르타나 <span>2019. 08. 24 오픈예정</span></h4>
-                    <p><span>우리동네 골목대장 감성포차</span> 퇴근하고 매일 가고싶은 분위기 갑 주점</p>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="slide slide2">
-                  <img src="./img/side_2_portana.jpg" alt="">
-                  <div class="cb_inbox">
-                    <h4>포르타나 <span>2019. 08. 24 오픈예정</span></h4>
-                    <p><span>우리동네 골목대장 감성포차</span> 퇴근하고 매일 가고싶은 분위기 갑 주점</p>
-                  </div>
-                </div>
-              </div> -->
-
             <c:forEach var="mainPageDateOfOpenVO" items="${mainPageDateOfOpenVOs}" varStatus="status">
             	<div>
-            		<div class="slide slide${status.count}" onclick="location.href = './Coporation.cp?cp_idx=${mainPageDateOfOpenVO.cp_idx}';">
+            		<div class="slide slide${status.count}" onclick="location.href = './CorporationAction.cp?cp_idx=${mainPageDateOfOpenVO.cp_idx}';">
             			<img src="./img/side_${status.count}_portana.jpg" alt="">
             			<div class="cb_inbox">
 		                    <h4>${mainPageDateOfOpenVO.cp_name } <span>${mainPageDateOfOpenVO.cp_open_datetime }오픈예정</span></h4>
@@ -244,7 +210,6 @@
             		</div>
             	</div>
             </c:forEach>
-            
             </div>
             <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
             <script src="./js/slick.min.js" type="text/javascript" charset="utf-8"></script>
@@ -260,10 +225,9 @@
               });
             </script>
           </div>
-
           <aritcle class="corp_boxwrap">
           <c:forEach var="mainPageDeadLineVO" items="${mainPageDeadLineVOs}">
-          	<div class="corp_box" onclick="location.href = './Coporation.cp?cp_idx=${mainPageDeadLineVO.cp_idx}';">
+          	<div class="corp_box" onclick="location.href = './CorporationAction.cp?cp_idx=${mainPageDeadLineVO.cp_idx}';">
           		<div class="c_img">
                 	<img src="./img/row3_noodle.jpg" alt="">
               	</div>
@@ -294,212 +258,6 @@
 	            </div>
           	</div>
           </c:forEach>
-          <!-- 
-            <div class="corp_box">
-              <div class="c_img">
-                <img src="./img/row3_noodle.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>일반음식점</p>
-                <h5>면식가 <span>마감임박</span></h5>
-                <p>부산 대연점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>95</span>%
-                  <ul>
-                    <li><span id="days"></span>일</li>
-                    <li><span id="hours"></span> :</li>
-                    <li><span id="minutes"></span> :</li>
-                    <li><span id="seconds"></span></li>
-                    <script>
-                      $(document).ready(function() {
-                        const second = 1000,
-                          minute = second * 60,
-                          hour = minute * 60,
-                          day = hour * 24;
-
-                        let countDown = new Date('June 30, 2019 00:00:00').getTime(),
-                          x = setInterval(function() {
-
-                            let now = new Date().getTime(),
-                              distance = countDown - now;
-
-                             document.getElementById('days').innerText = Math.floor(distance / (day)),
-                              document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
-                              document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
-                              document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
-                          }, second)
-                      });
-                    </script>
-                  </ul>
-                </div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>1</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>10%</span>
-              </div>
-            </div>
-             <div class="corp_box">
-              <div class="c_img">
-                <img src="./img/row3_noodle.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>일반음식점</p>
-                <h5>면식가 <span>마감임박</span></h5>
-                <p>부산 대연점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>95</span>%
-                  <ul>
-                    <li><span id="days"></span>일</li>
-                    <li><span id="hours"></span> :</li>
-                    <li><span id="minutes"></span> :</li>
-                    <li><span id="seconds"></span></li>
-                    <script>
-                      $(document).ready(function() {
-                        const second = 1000,
-                          minute = second * 60,
-                          hour = minute * 60,
-                          day = hour * 24;
-
-                        let countDown = new Date('June 30, 2019 00:00:00').getTime(),
-                          x = setInterval(function() {
-
-                            let now = new Date().getTime(),
-                              distance = countDown - now;
-
-                             document.getElementById('days').innerText = Math.floor(distance / (day)),
-                              document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
-                              document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
-                              document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
-                          }, second)
-                      });
-                    </script>
-                  </ul>
-                </div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>1</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>10%</span>
-              </div>
-            </div>
-            <div class="corp_box">
-              <div class="c_img">
-                <img src="./img/row1_anotherminae.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>카페</p>
-                <h5>어나더 미네스 <span>마감임박</span></h5>
-                <p>부산 남산점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>82</span>%
-                  <ul>
-                    <li><span id="days2"></span>일</li>
-                    <li><span id="hours2"></span> :</li>
-                    <li><span id="minutes2"></span> :</li>
-                    <li><span id="seconds2"></span></li>
-                    <script>
-                      $(document).ready(function() {
-                        const second = 1000,
-                          minute = second * 60,
-                          hour = minute * 60,
-                          day = hour * 24;
-
-                        let countDown = new Date('June 30, 2019 00:00:00').getTime(),
-                          x = setInterval(function() {
-
-                            let now = new Date().getTime(),
-                              distance = countDown - now;
-
-                            document.getElementById('days2').innerText = Math.floor(distance / (day)),
-                              document.getElementById('hours2').innerText = Math.floor((distance % (day)) / (hour)),
-                              document.getElementById('minutes2').innerText = Math.floor((distance % (hour)) / (minute)),
-                              document.getElementById('seconds2').innerText = Math.floor((distance % (minute)) / second);
-                          }, second)
-                      });
-                    </script>
-                  </ul>
-                </div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>4</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>7%</span>
-              </div>
-            </div>
-            <div class="corp_box">
-              <div class="c_img">
-                <img src="./img/row1_anotherminae.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>카페</p>
-                <h5>어나더 미네스 <span>마감임박</span></h5>
-                <p>부산 남산점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>98</span>%
-                  <ul>
-                    <li><span id="days3"></span>일</li>
-                    <li><span id="hours3"></span> :</li>
-                    <li><span id="minutes3"></span> :</li>
-                    <li><span id="seconds3"></span></li>
-                    <script>
-                      $(document).ready(function() {
-                        const second = 1000,
-                          minute = second * 60,
-                          hour = minute * 60,
-                          day = hour * 24;
-
-                        let countDown = new Date('June 30, 2019 00:00:00').getTime(),
-                          x = setInterval(function() {
-
-                            let now = new Date().getTime(),
-                              distance = countDown - now;
-
-                            document.getElementById('days3').innerText = Math.floor(distance / (day)),
-                              document.getElementById('hours3').innerText = Math.floor((distance % (day)) / (hour)),
-                              document.getElementById('minutes3').innerText = Math.floor((distance % (hour)) / (minute)),
-                              document.getElementById('seconds3').innerText = Math.floor((distance % (minute)) / second);
-                          }, second)
-                      });
-                    </script>
-                  </ul>
-                </div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>3</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>9%</span>
-              </div>
-            </div>
-            -->
           </aritcle>
         </div>
       </div>
@@ -595,24 +353,6 @@
     }
   </script>
   <script>
-	  /*  $(document).ready(function() {
-	    const second = 1000,
-	      minute = second * 60,
-	      hour = minute * 60,
-	      day = hour * 24;
-	
-	    let countDown = new Date('2019-08-23 11:27:27').getTime(),
-	      x = setInterval(function() {
-	
-	        let now = new Date().getTime(),
-	          distance = countDown - now;
-	
-	         document.getElementById('days').innerText = Math.floor(distance / (day)),
-	          document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
-	          document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
-	          document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
-	      }, second)
-	  }); */
 	  const second = 1000,
       minute = second * 60,
       hour = minute * 60,
