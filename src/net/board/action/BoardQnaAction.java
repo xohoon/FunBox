@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.board.dao.QnaDAO;
+import net.board.dao.BoardDAO;
 import net.board.dto.QnaVO;
 import net.common.action.Action;
 import net.common.action.ActionForward;
@@ -49,7 +49,7 @@ public class BoardQnaAction implements Action{
 		qna.setMobile_chk(ag_p);
 		
 		
-		QnaDAO qna_dao = new QnaDAO();
+		BoardDAO qna_dao = new BoardDAO();
 		result = qna_dao.insertQna(qna);
 		
 		

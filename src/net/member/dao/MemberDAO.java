@@ -692,6 +692,40 @@ public class MemberDAO {
 			return null;
 		}
 		
+		/*
+		// 유정 추가 - 메인페이지 지도에서 지역별로 매장 개수 가져오기
+		public int getLocationCount(String location) {
+			String sql = "SELECT count(*) FROM `company` where left(`cp_add_ch`, 2)=?";
+			int count = 0;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			System.out.println("getLocationCount 실행 : "+ location);
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, location);
+				rs = pstmt.executeQuery();
+				System.out.println(pstmt);
+				if(rs.next()) {
+					count=rs.getInt(1);
+				}
+			} catch (Exception ex) {
+				System.out.println("getLocationCount 에러: " + ex);
+			} finally {
+				if (rs != null)
+					try {
+						rs.close();
+					} catch (SQLException ex) {
+					}
+				if (pstmt != null)
+					try {
+						pstmt.close();
+					} catch (SQLException ex) {
+					}
+			}
+
+			return count;
+		}
+		*/
 		///////////////////////유정 추가 end///////////////////////
 		
 		//////////////////////////////태훈추가 start//////////////////////////////

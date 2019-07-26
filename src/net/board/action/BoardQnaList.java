@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.board.dao.QnaDAO;
+import net.board.dao.BoardDAO;
 import net.board.dto.QnaVO;
 import net.common.action.Action;
 import net.common.action.ActionForward;
@@ -59,19 +59,19 @@ public class BoardQnaList implements Action{
 		int number = 0;
 
 		List<QnaVO> qna_list = null;
-		QnaDAO qna_dao = new QnaDAO();
+		BoardDAO qna_dao = new BoardDAO();
 		count = qna_dao.qnaCount();// 전체 글의 수 불러오기
 		
 
 		if (count > 0) {
 			if (endRow > count)
 				endRow = count;
-			QnaDAO qna_dao2 = new QnaDAO();
+			BoardDAO qna_dao2 = new BoardDAO();
 			qna_list = qna_dao2.getQnaList(id, startRow - 1, pageSize);// 현재 페이지에 해당하는 글 목록불러오기
 			
 
 		} else {
-			QnaDAO qna_dao2 = new QnaDAO();
+			BoardDAO qna_dao2 = new BoardDAO();
 			qna_list = qna_dao2.getQnaList(id, startRow - 1, pageSize);
 		}
 

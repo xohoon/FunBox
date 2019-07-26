@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="kr">
-
+<%
+	//int count = (Integer)request.getAttribute("count");
+%>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
@@ -243,24 +245,27 @@
         <div class="inleft">
           <div class="location">
             <h5>지역별 현황</h5>
+            <form name="locationForm">
+            <input type="hidden" name="location"/>
+            </form>
             <div class="map"></div>
             <ul>
-              <li class="local01">서울(10)</li>
-              <li class="local02">경기(4)</li>
-              <li class="local03">인천(6)</li>
-              <li class="local04">강원(2)</li>
-              <li class="local05">대전·충청(4)</li>
-              <li class="local06">대구(3)</li>
-              <li class="local07">부산(24)</li>
-              <li class="local08">울산(12)</li>
-              <li class="local09">경상(7)</li>
-              <li class="local10">광주·전라(4)</li>
-              <li class="local11">제주(5)</li>
+              <li class="local01"><a href="javascript:goPage('서울');">서울(10)</a></li>
+              <li class="local02"><a href="javascript:goPage('경기');">경기(4)</a></li>
+              <li class="local03"><a href="javascript:goPage('인천');">인천(6)</a></li>
+              <li class="local04"><a href="javascript:goPage('강원');">강원(2)</a></li>
+              <li class="local05"><a href="javascript:goPage('대전');">대전·충청(4)</a></li>
+              <li class="local06"><a href="javascript:goPage('대구');">대구(3)</a></li>
+              <li class="local07"><a href="javascript:goPage('부산');">부산(0)</a></li>
+              <li class="local08"><a href="javascript:goPage('울산');">울산(12)</a></li>
+              <li class="local09"><a href="javascript:goPage('경상');">경상(7)</a></li>
+              <li class="local10"><a href="javascript:goPage('광주');">광주·전라(4)</a></li>
+              <li class="local11"><a href="javascript:goPage('제주');">제주(5)</a></li>
             </ul>
           </div>
         </div>
 
-        <div class="inright">
+        <div class="inright"> 
           <div class="comingsoon_box">
 
             <div class="sec3_box1 slider">
@@ -533,6 +538,19 @@
       });
     });
     //지도
+    
+    //유정 - 지역 클릭 시 li 값 action으로 넘겨주기 
+    function goPage(location){
+
+    	var f = document.locationForm;
+    	
+    	f.location.value = location;
+    	
+    	f.action = "./ListAction.bd"
+    	
+    	f.method = "post"
+    	f.submit();
+    }
   </script>
 
 </body></html>
