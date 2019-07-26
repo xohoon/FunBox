@@ -84,6 +84,7 @@ public class BoardController extends HttpServlet implements Servlet{
 			}
 			
 		}
+		
 		///////////////////////유정 추가 end///////////////////////
 		
 		if (forward != null) {

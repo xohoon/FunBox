@@ -168,7 +168,7 @@
             <h5>지역별 현황</h5>
             <div class="map"></div>
             <ul>
-              <li class="local01">서울(${cityVO.seoul })</li>
+              <li class="local01" onclick="location.href='./List.bd'">서울(${cityVO.seoul })</li>
               <li class="local02">경기(${cityVO.gyeonggi })</li>
               <li class="local03">인천(${cityVO.incheon })</li>
               <li class="local04">강원(${cityVO.gangwon })</li>

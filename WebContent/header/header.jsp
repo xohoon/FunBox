@@ -209,13 +209,5 @@
       
     });
    /*링크 루트 이해를 위한 임시링크제이쿼리 - 개발자분들 작업하실 때 삭제 해주시면 됩니다*/
-   $(function(){
-     $('.corp_box, .slider .slide, .live_chart li').click(function(){
-       location.href="./corporation.html"
-     });
-     $('.location li').click(function(){
-       location.href="./list.html"
-     });
-   });
    /*링크 루트 이해를 위한 임시링크제이쿼리 - 개발자분들 작업하실 때 삭제 해주시면 됩니다*/
   </script>
