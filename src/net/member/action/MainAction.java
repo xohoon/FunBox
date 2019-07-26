@@ -34,12 +34,12 @@ public class MainAction implements Action {
 		companyDAO = new CompanyDAO();
 		ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = companyDAO.getCompanyDeadLine();
 		
-		ActionForward forward = new ActionForward();
-		
+		ActionForward forward = new ActionForward();		
 		request.setAttribute("likeVO", likeVO);
 		request.setAttribute("slideVO", slideVO);
 		request.setAttribute("mainPageDateOfOpenVOs", mainPageDateOfOpenVOs);
 		request.setAttribute("mainPageDeadLineVOs", mainPageDeadLineVOs);
+		System.out.println(mainPageDeadLineVOs.toString());
 		
 		forward.setRedirect(false);
 		forward.setPath("./index.jsp");

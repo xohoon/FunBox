@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="net.page.dto.MainPageDateOfOpenVO"%>
+<%@page import="net.page.dto.MainPageDeadLineVO"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+	ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = (ArrayList<MainPageDateOfOpenVO>)request.getAttribute("mainPageDateOfOpenVOs");
+	ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = (ArrayList<MainPageDeadLineVO>)request.getAttribute("mainPageDeadLineVOs");	
+%>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -267,9 +276,9 @@
 
         <div class="inright">
           <div class="comingsoon_box">
-
             <div class="sec3_box1 slider">
-              <div>
+
+             <!--  <div>
                 <div class="slide slide1">
                   <img src="./img/side_2_portana.jpg" alt="">
                   <div class="cb_inbox">
@@ -286,7 +295,20 @@
                     <p><span>우리동네 골목대장 감성포차</span> 퇴근하고 매일 가고싶은 분위기 갑 주점</p>
                   </div>
                 </div>
-              </div>
+              </div> -->
+
+            <c:forEach var="mainPageDateOfOpenVO" items="${mainPageDateOfOpenVOs}" varStatus="status">
+            	<div>
+            		<div class="slide slide${status.count}" onclick="location.href = './Coporation.cp?cp_idx=${mainPageDateOfOpenVO.cp_idx}';">
+            			<img src="./img/side_${status.count}_portana.jpg" alt="">
+            			<div class="cb_inbox">
+		                    <h4>${mainPageDateOfOpenVO.cp_name } <span>${mainPageDateOfOpenVO.cp_open_datetime }오픈예정</span></h4>
+		                    <p><span>${mainPageDateOfOpenVO.cp_intro_headline }</span>${mainPageDateOfOpenVO.cp_intro_content }</p>
+		                </div>
+            		</div>
+            	</div>
+            </c:forEach>
+            
             </div>
             <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
             <script src="./js/slick.min.js" type="text/javascript" charset="utf-8"></script>
@@ -304,7 +326,91 @@
           </div>
 
           <aritcle class="corp_boxwrap">
+          <c:forEach var="mainPageDeadLineVO" items="${mainPageDeadLineVOs}">
+          	<div class="corp_box" onclick="location.href = './Coporation.cp?cp_idx=${mainPageDeadLineVO.cp_idx}';">
+          		<div class="c_img">
+                	<img src="./img/row3_noodle.jpg" alt="">
+              	</div>
+              	<div class="c_txt">
+	                <p>${mainPageDeadLineVO.cp_sector }</p>
+	                <h5>${mainPageDeadLineVO.cp_name } <span>마감임박</span></h5>
+	                <p>${mainPageDeadLineVO.cp_branch }</p>
+              	</div>
+              	<div class="gage">
+              		<div class="per"><span>${mainPageDeadLineVO.persent }</span>%
+              			<ul id="timer_${mainPageDeadLineVO.cp_idx }">
+              				<li><span id="days"></span>일</li>
+		                    <li><span id="hours"></span> :</li>
+		                    <li><span id="minutes"></span> :</li>
+		                    <li><span id="seconds"></span></li>		                    
+              			</ul>
+              			<div class="gage_full">
+                  			<div class="gage_fill"></div>
+                		</div>
+                		<div>
+		                  <span class="p_amt"><span>${mainPageDeadLineVO.iv_current_amount }</span> / <span>${mainPageDeadLineVO.iv_goal_amount }</span> P</span>
+		                  <span class="d_day">D-<span id="DDay_${mainPageDeadLineVO.cp_idx }">1</span></span>
+		                </div>
+              		</div>
+              	</div>
+              	<div class="reward_per">
+              		수익률<span>${mainPageDeadLineVO.cp_monthly_profit}</span>
+	            </div>
+          	</div>
+          </c:forEach>
+          <!-- 
             <div class="corp_box">
+              <div class="c_img">
+                <img src="./img/row3_noodle.jpg" alt="">
+              </div>
+              <div class="c_txt">
+                <p>일반음식점</p>
+                <h5>면식가 <span>마감임박</span></h5>
+                <p>부산 대연점</p>
+              </div>
+              <div class="gage">
+                <div class="per"><span>95</span>%
+                  <ul>
+                    <li><span id="days"></span>일</li>
+                    <li><span id="hours"></span> :</li>
+                    <li><span id="minutes"></span> :</li>
+                    <li><span id="seconds"></span></li>
+                    <script>
+                      $(document).ready(function() {
+                        const second = 1000,
+                          minute = second * 60,
+                          hour = minute * 60,
+                          day = hour * 24;
+
+                        let countDown = new Date('June 30, 2019 00:00:00').getTime(),
+                          x = setInterval(function() {
+
+                            let now = new Date().getTime(),
+                              distance = countDown - now;
+
+                             document.getElementById('days').innerText = Math.floor(distance / (day)),
+                              document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
+                              document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
+                              document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+                          }, second)
+                      });
+                    </script>
+                  </ul>
+                </div>
+                <div class="gage_full">
+                  <div class="gage_fill"></div>
+                </div>
+                <div>
+                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
+                  <span class="d_day">D-<span>1</span></span>
+                </div>
+              </div>
+              <div class="reward_per">
+                수익률
+                <span>10%</span>
+              </div>
+            </div>
+             <div class="corp_box">
               <div class="c_img">
                 <img src="./img/row3_noodle.jpg" alt="">
               </div>
@@ -457,11 +563,11 @@
                 <span>9%</span>
               </div>
             </div>
+            -->
           </aritcle>
         </div>
       </div>
     </section>
-
     <footer></footer>
   </div>
 
@@ -538,6 +644,56 @@
       });
     });
     //지도
+  </script>
+  <script>
+	  /*  $(document).ready(function() {
+	    const second = 1000,
+	      minute = second * 60,
+	      hour = minute * 60,
+	      day = hour * 24;
+	
+	    let countDown = new Date('2019-08-23 11:27:27').getTime(),
+	      x = setInterval(function() {
+	
+	        let now = new Date().getTime(),
+	          distance = countDown - now;
+	
+	         document.getElementById('days').innerText = Math.floor(distance / (day)),
+	          document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
+	          document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
+	          document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+	      }, second)
+	  }); */
+	  const second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
+	  
+	  $(document).ready(function(){
+	      <c:forEach var="mainPageDeadLineVO" items="${mainPageDeadLineVOs}">
+	      	setCountDown('${mainPageDeadLineVO.cp_idx}','${mainPageDeadLineVO.iv_appl_stop_date_time}');
+	      </c:forEach>
+	  });
+	  
+	  function setCountDown(cp_idx,stopDate){
+		  var timer_day = document.getElementById('timer_'+cp_idx).childNodes.item(1).childNodes.item(0);
+		  var timer_hour = document.getElementById('timer_'+cp_idx).childNodes.item(3).childNodes.item(0);
+		  var timer_minute = document.getElementById('timer_'+cp_idx).childNodes.item(5).childNodes.item(0);
+		  var timer_second = document.getElementById('timer_'+cp_idx).childNodes.item(7).childNodes.item(0);
+		  var DDay = document.getElementById('DDay_'+cp_idx);
+		  let countDown = new Date(stopDate).getTime(),
+		  
+		  x = setInterval(function() {
+			  let now = new Date().getTime(),
+			  distance = countDown - now;
+			  timer_day.innerText = Math.floor(distance / (day)),
+			  timer_hour.innerText = Math.floor((distance % (day)) / (hour)),
+			  timer_minute.innerText = Math.floor((distance % (hour)) / (minute)),
+			  timer_second.innerText = Math.floor((distance % (minute)) / second),
+			  DDay.innerText= Math.floor(distance / (day))
+			  
+			  }, second)
+	  };
   </script>
 
 </body></html>

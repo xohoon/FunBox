@@ -249,9 +249,9 @@ public class CompanyDAO {
 		return null;
 	}
 
-	// 오픈예정일 기업 이미지 들고오깅
+	// Main page 에 필요한 오픈예정일 기업 들고오깅 
 	public ArrayList<MainPageDateOfOpenVO> getCompanyDateOfOpen() {
-		String sql = "select cp_f.cp_idx,cp_f.cf_image6 from company_file cp_f,company cp  where cp.cp_idx = cp_f.cp_idx and cp.cp_open_status = 0 limit 3";
+		String sql = "select cp_f.cp_idx,cp.cp_name,cp.cp_intro_headline,cp.cp_intro_content,cp.cp_open_datetime,concat(cp_f.cf_directory,cp_f.cf_image6) as cf_image6 from company_file cp_f,company cp where cp.cp_idx = cp_f.cp_idx and cp.cp_open_status = 0 limit 3";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = new ArrayList<MainPageDateOfOpenVO>();
@@ -264,6 +264,10 @@ public class CompanyDAO {
 
 				MainPageDateOfOpenVO mainPageDateOfOpenVO = new MainPageDateOfOpenVO();
 				mainPageDateOfOpenVO.setCp_idx(rs.getInt("cp_idx"));
+				mainPageDateOfOpenVO.setCp_name(rs.getString("cp_name"));
+				mainPageDateOfOpenVO.setCp_intro_headline(rs.getString("cp_intro_headline"));
+				mainPageDateOfOpenVO.setCp_intro_content(rs.getString("cp_intro_content"));
+				mainPageDateOfOpenVO.setCp_open_datetime(rs.getDate("cp_open_datetime"));
 				mainPageDateOfOpenVO.setBanner_image(rs.getString("cf_image6"));
 				mainPageDateOfOpenVOs.add(mainPageDateOfOpenVO);
 
@@ -290,7 +294,7 @@ public class CompanyDAO {
 	}
 	
 	public ArrayList<MainPageDeadLineVO> getCompanyDeadLine() {
-		String sql = "select cp.cp_idx, cp.cp_monthly_profit, cp.cp_sector, cp.cp_name, cp.cp_branch,cp_i.iv_current_amount, cp_i.iv_goal_amount, cp_i.iv_appl_stop_date_time,cp_f.cf_image5,(iv_current_amount/iv_goal_amount)*100 as persent from company cp, company_file cp_f, company_invest cp_i where cp.cp_open_status = true AND cp.cp_idx = cp_i.cp_idx AND cp.cp_idx = cp_f.cp_idx order by cp_i.iv_appl_stop_date_time asc limit 3";
+		String sql = "select cp.cp_idx, cp.cp_monthly_profit, cp.cp_sector, cp.cp_name, cp.cp_branch,cp_i.iv_current_amount, cp_i.iv_goal_amount, cp_i.iv_appl_stop_date_time,cp_f.cf_image5,round((iv_current_amount/iv_goal_amount)*100) as persent from company cp, company_file cp_f, company_invest cp_i where cp.cp_open_status = true AND cp.cp_idx = cp_i.cp_idx AND cp.cp_idx = cp_f.cp_idx order by cp_i.iv_appl_stop_date_time asc limit 3";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = new ArrayList<MainPageDeadLineVO>();
