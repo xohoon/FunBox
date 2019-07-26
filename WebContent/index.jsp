@@ -45,16 +45,18 @@
       <div class="inner">
         <div class="regular slider">
         <c:forEach var="slideVO" items="${slideVO }">
-          <div>
-            <div class="slide slide1">
-              <div class="owop"></div>
-              <div class="txtbox">
-                <h2>${slideVO.sl_cp_name }</h2>
-                <h4>${slideVO.sl_cp_branch }</h4>
-                <p>${slideVO.sl_cp_content }</p>
-              </div>
-            </div>
-          </div>
+	        <a href="./CorporationAction.cp?cp_idx=${slideVO.sl_cp_idx }">
+	          <div>
+	            <div class="slide slide1">
+	              <div class="owop"></div>
+	              <div class="txtbox">
+	                <h2>${slideVO.sl_cp_name }</h2>
+	                <h4>${slideVO.sl_cp_branch }</h4>
+	                <p>${slideVO.sl_cp_content }</p>
+	              </div>
+	            </div>
+	          </div>
+	        </a>
         </c:forEach>
         </div>
         <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
@@ -133,30 +135,30 @@
     <section id="sec2">
       <div class="inner">
       <c:forEach var="likeVO" items="${likeVO }">
-        <div class="corp_box">
-          <div class="c_img">
-            <img src="./img/row1_anotherminae.jpg" alt="">
-          </div>
-          <div class="c_txt">
-            <p>${likeVO.lk_cp_sector }</p>
-            <h5>${likeVO.lk_cp_name }<span>추천</span></h5>
-            <p>${likeVO.lk_cp_branch }</p>
-          </div>
-          <div class="gage">
-            <div class="per"><span>${likeVO.lk_cp_percent }</span>%</div>
-            <div class="gage_full">
-              <div class="gage_fill"></div>
-            </div>
-            <div>
-              <span class="p_amt"><span>${likeVO.lk_cp_current_amount }</span> / <span>${likeVO.lk_cp_goal_amount }</span> P</span>
-              <span class="d_day">D-<span>27</span></span>
-            </div>
-          </div>
-          <div class="reward_per">
-            수익률
-            <span>${likeVO.lk_cp_profit }</span>
-          </div>
-        </div>
+	        <div class="corp_box" onclick="location.href='./CorporationAction.cp?cp_idx=${likeVO.lk_cp_idx }'">
+	          <div class="c_img">
+	            <img src="./img/row1_anotherminae.jpg" alt="">
+	          </div>
+	          <div class="c_txt">
+	            <p>${likeVO.lk_cp_sector }</p>
+	            <h5>${likeVO.lk_cp_name }<span>추천</span></h5>
+	            <p>${likeVO.lk_cp_branch }</p>
+	          </div>
+	          <div class="gage">
+	            <div class="per"><span>${likeVO.lk_cp_percent }</span>%</div>
+	            <div class="gage_full">
+	              <div class="gage_fill"></div>
+	            </div>
+	            <div>
+	              <span class="p_amt"><span>${likeVO.lk_cp_current_amount }</span> / <span>${likeVO.lk_cp_goal_amount }</span> P</span>
+	              <span class="d_day">D-<span>27</span></span>
+	            </div>
+	          </div>
+	          <div class="reward_per">
+	            수익률
+	            <span>${likeVO.lk_cp_profit }</span>
+	          </div>
+	        </div>
       </c:forEach>
       </div>
     </section>
