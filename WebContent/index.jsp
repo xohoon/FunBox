@@ -1,3 +1,4 @@
+<%@page import="net.member.dto.Main_CityVO"%>
 <%@page import="net.member.dto.Main_LikeVO"%>
 <%@page import="net.member.dto.Main_SlideVO"%>
 <%@page import="java.util.List"%>
@@ -31,6 +32,7 @@
 <%
 	List<Main_SlideVO> slideVO = (List<Main_SlideVO>)request.getAttribute("slideVO");
 	List<Main_LikeVO> likeVO = (List<Main_LikeVO>)request.getAttribute("likeVO");
+	Main_CityVO cityVO = (Main_CityVO)request.getAttribute("cityVO");
 %>
 
   <div id="wrap">
@@ -166,17 +168,17 @@
             <h5>지역별 현황</h5>
             <div class="map"></div>
             <ul>
-              <li class="local01">서울(10)</li>
-              <li class="local02">경기(4)</li>
-              <li class="local03">인천(6)</li>
-              <li class="local04">강원(2)</li>
-              <li class="local05">대전·충청(4)</li>
-              <li class="local06">대구(3)</li>
-              <li class="local07">부산(24)</li>
-              <li class="local08">울산(12)</li>
-              <li class="local09">경상(7)</li>
-              <li class="local10">광주·전라(4)</li>
-              <li class="local11">제주(5)</li>
+              <li class="local01">서울(${cityVO.seoul })</li>
+              <li class="local02">경기(${cityVO.gyeonggi })</li>
+              <li class="local03">인천(${cityVO.incheon })</li>
+              <li class="local04">강원(${cityVO.gangwon })</li>
+              <li class="local05">대전·충청(${cityVO.daejeonNchungcheong })</li>
+              <li class="local06">대구(${cityVO.daegu })</li>
+              <li class="local07">부산(${cityVO.busan })</li>
+              <li class="local08">울산(${cityVO.ulsan })</li>
+              <li class="local09">경상(${cityVO.gyeongsang })</li>
+              <li class="local10">광주·전라(${cityVO.gwangjuNjeonla })</li>
+              <li class="local11">제주(${cityVO.jeju })</li>
             </ul>
           </div>
         </div>

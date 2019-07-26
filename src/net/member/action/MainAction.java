@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 import net.member.dao.MemberDAO;
+import net.member.dto.Main_CityVO;
 import net.member.dto.Main_LikeVO;
 import net.member.dto.Main_SlideVO;
 import net.company.dao.CompanyDAO;
@@ -27,6 +28,8 @@ public class MainAction implements Action {
 		List<Main_SlideVO> slideVO = slideDAO.Main_SlideInfo();
 		MemberDAO likeDAO = new MemberDAO();
 		List<Main_LikeVO> likeVO = likeDAO.Main_LikeInfo();
+		MemberDAO cityDAO = new MemberDAO();
+		Main_CityVO cityVO = cityDAO.Main_CityInfo();
 		
 		// 신규 추가
 		CompanyDAO companyDAO = new CompanyDAO();
@@ -36,6 +39,8 @@ public class MainAction implements Action {
 		
 		ActionForward forward = new ActionForward();
 		
+		
+		request.setAttribute("cityVO", cityVO);
 		request.setAttribute("likeVO", likeVO);
 		request.setAttribute("slideVO", slideVO);
 		request.setAttribute("mainPageDateOfOpenVOs", mainPageDateOfOpenVOs);

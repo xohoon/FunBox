@@ -1,6 +1,6 @@
 package net.member.dto;
 
-public class Member_header {
+public class Member_headerVO {
 	
 	private String mb_token;
 	private String mb_point;

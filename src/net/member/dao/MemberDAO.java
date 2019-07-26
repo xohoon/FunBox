@@ -8,14 +8,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.member.dto.Main_CityVO;
 import net.member.dto.Main_LikeVO;
 import net.member.dto.Main_SlideVO;
 import net.member.dto.MemberBean;
 import net.member.dto.MemberInvestCompanyVO;
 import net.member.dto.MemberInvestPageVO;
 import net.member.dto.MemberInvestVO;
-import net.member.dto.Member_header;
-import net.member.dto.Member_likebox;
+import net.member.dto.Member_headerVO;
+import net.member.dto.Member_likeboxVO;
 
 public class MemberDAO {
 
@@ -660,11 +661,12 @@ public class MemberDAO {
 	/////////////////////// 유정 추가 end///////////////////////
 
 	////////////////////////////// 태훈추가 start//////////////////////////////
+	
 	// 보유 토큰, 포인트, 누적수익
-	public Member_header Member_accumulate(String mb_idx) throws Exception {
+	public Member_headerVO Member_accumulate(String mb_idx) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Member_header member = new Member_header();
+		Member_headerVO member = new Member_headerVO();
 
 		try {
 			// 쿼리
@@ -743,11 +745,11 @@ public class MemberDAO {
 	}
 
 	// 찜목록 리스트
-	public List<Member_likebox> LikeboxInfo(String mb_idx) throws Exception {
+	public List<Member_likeboxVO> LikeboxInfo(String mb_idx) throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Member_likebox> boxs = new ArrayList<Member_likebox>();
+		List<Member_likeboxVO> boxs = new ArrayList<Member_likeboxVO>();
 
 		try {
 			// 쿼리 기업 idx필요
@@ -762,7 +764,7 @@ public class MemberDAO {
 			System.out.println(pstmt);
 
 			while (rs.next()) {
-				Member_likebox box = new Member_likebox();
+				Member_likeboxVO box = new Member_likeboxVO();
 
 				box.setLike_cp_name(rs.getString("like_cp_name"));
 				box.setCp_monthly_profit(rs.getString("cp_monthly_profit"));
@@ -874,7 +876,69 @@ public class MemberDAO {
 			}
 			return LikeVO;
 		}
+		
+		// 메인페이지에 지역별로  기업 count
+		public Main_CityVO Main_CityInfo() throws Exception {
+			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			Main_CityVO cityVO = new Main_CityVO();
 
+			try {
+				// 쿼리
+				String sql = "SELECT BusanCity.busan, SeoulCity.seoul, GyeonggiCity.gyeonggi, IncheonCity.incheon, GangwonCity.gangwon, DaeguCity.daegu, UlsanCity.ulsan, GyeongsangCity.gyeongsang, JejuCity.jeju, DaejeonCity.daejeon+ChungcheongCity.chungcheong as daejeonNchungcheong, GwangjuCity.gwangju+JeonlaCity.jeonla as gwangjuNjeonla "
+						+ "FROM"
+						+ "(SELECT count(*) busan FROM company WHERE left(`cp_add_ch`, 2) = \"부산\") BusanCity, "
+						+ "(SELECT count(*) seoul FROM company WHERE left(`cp_add_ch`, 2) = \"서울\") SeoulCity, "
+						+ "(SELECT count(*) gyeonggi FROM company WHERE left(`cp_add_ch`, 2) = \"경기\") GyeonggiCity, "
+						+ "(SELECT count(*) incheon FROM company WHERE left(`cp_add_ch`, 2) = \"인천\") IncheonCity, "
+						+ "(SELECT count(*) gangwon FROM company WHERE left(`cp_add_ch`, 2) = \"강원\") GangwonCity, "
+						+ "(SELECT count(*) daegu FROM company WHERE left(`cp_add_ch`, 2) = \"대구\") DaeguCity, "
+						+ "(SELECT count(*) ulsan FROM company WHERE left(`cp_add_ch`, 2) = \"울산\") UlsanCity, "
+						+ "(SELECT count(*) gyeongsang FROM company WHERE left(`cp_add_ch`, 2) = \"경상\") GyeongsangCity, "
+						+ "(SELECT count(*) jeju FROM company WHERE left(`cp_add_ch`, 2) = \"제주\") JejuCity, "
+						+ "(SELECT count(*) daejeon FROM company WHERE left(`cp_add_ch`, 2) = \"대전\") DaejeonCity, "
+						+ "(SELECT count(*) chungcheong FROM company WHERE left(`cp_add_ch`, 2) = \"충청\") ChungcheongCity, "
+						+ "(SELECT count(*) gwangju FROM company WHERE left(`cp_add_ch`, 2) = \"광주\") GwangjuCity, "
+						+ "(SELECT count(*) jeonla FROM company WHERE left(`cp_add_ch`, 2) = \"전라\") JeonlaCity";
+
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				System.out.println(pstmt);
+
+				if (rs.next()) {
+					cityVO.setSeoul(rs.getString("seoul"));
+					cityVO.setBusan(rs.getString("busan"));
+					cityVO.setGyeonggi(rs.getString("gyeonggi"));
+					cityVO.setIncheon(rs.getString("incheon"));
+					cityVO.setGangwon(rs.getString("gangwon"));
+					cityVO.setDaejeonNchungcheong(rs.getString("daejeonNchungcheong"));
+					cityVO.setDaegu(rs.getString("daegu"));
+					cityVO.setUlsan(rs.getString("ulsan"));
+					cityVO.setGyeongsang(rs.getString("gyeongsang"));
+					cityVO.setGwangjuNjeonla(rs.getString("gwangjuNjeonla"));
+					cityVO.setJeju(rs.getString("jeju"));
+				}
+
+				return cityVO;
+			} catch (Exception ex) {
+				System.out.println("Main_CityInfo ERROR: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return null;
+		}
+			
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
 	// 윤식 추가/////////////////////////////////////////////////

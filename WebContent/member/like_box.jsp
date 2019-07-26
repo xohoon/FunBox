@@ -1,6 +1,6 @@
 <%@page import="java.util.List"%>
 <%@page import="net.member.dao.MemberDAO"%>
-<%@page import="net.member.dto.Member_likebox"%>
+<%@page import="net.member.dto.Member_likeboxVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,7 +11,7 @@
 	// 회원 idx
 	idx = "1";
 	MemberDAO memberDAO = new MemberDAO();
-	List<Member_likebox> boxs = memberDAO.LikeboxInfo(idx);
+	List<Member_likeboxVO> boxs = memberDAO.LikeboxInfo(idx);
 	request.setAttribute("boxs", boxs);
 %>
 <!--<div class="info">
