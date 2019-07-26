@@ -16,7 +16,7 @@ public class ListAction implements Action{
 		ActionForward forward = new ActionForward();
 		
 		
-		String cityName = (String)request.getAttribute("cityName");
+		String cityName = (String)request.getParameter("cityName");
 		request.setAttribute("cityName", cityName);
 		
 		forward.setRedirect(false);

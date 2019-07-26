@@ -91,47 +91,47 @@
               <div class="f_list_type2">
                 <h2>지역</h2>
                 <span>
-                  <input type="checkbox" id="con2_all">
+                  <input type="checkbox" name="10">
                   <label for="con2_all">서울</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_1">
+                  <input type="checkbox" name="11">
                   <label for="con2_1">경기</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_2">
+                  <input type="checkbox" name="12">
                   <label for="con2_2">인천</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_3">
+                  <input type="checkbox" name="13">
                   <label for="con2_3">강원</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_4">
+                  <input type="checkbox" name="14">
                   <label for="con2_4">대전/충천</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_5">
+                  <input type="checkbox" name="15">
                   <label for="con2_5">대구</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_6">
+                  <input type="checkbox" name="16">
                   <label for="con2_6">부산</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_7">
+                  <input type="checkbox" name="17">
                   <label for="con2_7">울산</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_8">
+                  <input type="checkbox" name="18">
                   <label for="con2_8">경상</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_8">
+                  <input type="checkbox" name="19">
                   <label for="con2_8">광주/전라</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_8">
+                  <input type="checkbox" name="20">
                   <label for="con2_8">제주</label>
                 </span>
               </div>
@@ -490,6 +490,16 @@
         }, randomnum);
       });
 
+    });
+    
+    $(document).ready(function(){
+    	
+    	$("input[name$='"+<%=cityName%>+"']").prop("checked", true);
+    	
+    	var cityName = <%=cityName%>
+    	if(cityName != null){
+	    	$('.search_bar').toggleClass('on');
+    	}
     });
   </script>
 </body></html>
