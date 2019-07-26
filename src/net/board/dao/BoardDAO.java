@@ -8,10 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.board.dto.Board_Search_ListVO;
 import net.board.dto.QnaReplyVO;
 import net.board.dto.QnaVO;
 import net.company.dto.CompanyBean;
 import net.company.dto.CompanyVO;
+import net.member.dto.Main_CityVO;
 
 public class BoardDAO {
 
@@ -231,4 +233,56 @@ public class BoardDAO {
 		}
 
 	///////////////////////유정 추가 end///////////////////////
+		
+	//////////////////// 태훈 추가 start ////////////////////////
+		
+	// 태훈 - 기업 리스트(전체 리스트 가져오기)
+	public ArrayList<Board_Search_ListVO> Search_ListInfo() throws Exception {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Board_Search_ListVO> Search_list = new ArrayList<Board_Search_ListVO>();
+
+		try {
+			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount "
+					+ "FROM company as cp, company_invest as cp_iv "
+					+ "ORDER BY cp_reg_datetime DESC";
+
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+
+			while (rs.next()) {
+				Board_Search_ListVO listVO = new Board_Search_ListVO();
+				
+				listVO.setSearch_cp_branch(rs.getString("cp_branch"));
+				listVO.setSearch_cp_current_amount(rs.getString("iv_current_amount"));
+				listVO.setSearch_cp_goal_amount(rs.getString("iv_goal_amount"));
+				listVO.setSearch_cp_idx(rs.getString("cp_idx"));
+				listVO.setSearch_cp_name(rs.getString("cp_name"));
+				listVO.setSearch_cp_percent(rs.getString("percent"));
+				listVO.setSearch_cp_profit(rs.getString("cp_monthly_profit"));
+				listVO.setSearch_cp_sector(rs.getString("cp_sector"));
+				
+				Search_list.add(listVO);
+			}
+			
+		} catch (Exception ex) {
+			System.out.println("Board_Search_ListVO ERROR: " + ex);
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+		}
+		return Search_list;
+	}
+		
+	//////////////////// 태훈 추가 end //////////////////////////
 }

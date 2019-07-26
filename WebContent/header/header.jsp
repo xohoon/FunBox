@@ -78,7 +78,7 @@
         <ul>
           <li>투자하기
             <ul>
-              <li onclick="location.href='./List.bd'">프랜차이즈</li>
+              <li onclick="location.href='./ListAction.bd'">프랜차이즈</li>
             </ul>
           </li>
           <li>기업신청
