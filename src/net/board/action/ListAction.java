@@ -15,6 +15,10 @@ public class ListAction implements Action{
 		
 		ActionForward forward = new ActionForward();
 		
+		
+		String cityName = (String)request.getAttribute("cityName");
+		request.setAttribute("cityName", cityName);
+		
 		forward.setRedirect(false);
 		forward.setPath("./board/list.jsp");
 		return forward;

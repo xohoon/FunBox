@@ -23,6 +23,11 @@
 </head>
 
 <body>
+
+<%
+	String cityName = (String)request.getAttribute("cityName");
+	System.out.println(">>>"+cityName);
+%>
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div>
