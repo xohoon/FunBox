@@ -4,10 +4,6 @@
 <%@page import="net.company.dto.CompanyBean"%>
 <!DOCTYPE html>
 <html lang="kr">
-<%
-	request.setCharacterEncoding("utf-8"); // 한글처리
-	List<CompanyBean> company_list = (List<CompanyBean>)request.getAttribute("company_list");
-%>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
@@ -168,19 +164,14 @@
       <div class="inner">
         <div class="mom_box">
           <div class="boxwrap">
-
-    <%
-    	if(company_list != null){
-    		for(int i=0; i<company_list.size(); i++){
-    %>
             <div class="corp_box" onclick="location.href='./CorporationAction.cp'">
               <div class="c_img">
                 <img src="./img/row1_anotherminae.jpg" alt="">
               </div>
               <div class="c_txt">
                 <p>카페</p>
-                <h5><%=company_list.get(i).getCp_name() %> <span>추천</span></h5>
-                <p><%=company_list.get(i).getCp_branch() %></p>
+                <h5>어나더 미네스 <span>추천</span></h5>
+                <p>부산 남산점</p>
               </div>
               <div class="gage">
                 <div class="per"><span>87</span>%</div>
@@ -194,13 +185,180 @@
               </div>
               <div class="reward_per">
                 수익률
-                <span><%=company_list.get(i).getCp_monthly_profit() %></span>
+                <span>5%</span>
               </div>
             </div>
-    <%
-    		}
-    	}
-    %>
+            <div class="corp_box">
+              <div class="c_img">
+                <img src="./img/row1_soinsoo.jpg" alt="">
+              </div>
+              <div class="c_txt">
+                <p>주점</p>
+                <h5>소인수분해 <span>추천</span></h5>
+                <p>부산 금사점</p>
+              </div>
+              <div class="gage">
+                <div class="per"><span>43</span>%</div>
+                <div class="gage_full">
+                  <div class="gage_fill"></div>
+                </div>
+                <div>
+                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
+                  <span class="d_day">D-<span>27</span></span>
+                </div>
+              </div>
+              <div class="reward_per">
+                수익률
+                <span>5%</span>
+              </div>
+            </div>
+            <div class="corp_box">
+              <div class="c_img">
+                <img src="./img/row2_moon.jpg" alt="">
+              </div>
+              <div class="c_txt">
+                <p>일반음식점</p>
+                <h5>문 토스트 <span>추천</span></h5>
+                <p>부산 해운대점</p>
+              </div>
+              <div class="gage">
+                <div class="per"><span>82</span>%</div>
+                <div class="gage_full">
+                  <div class="gage_fill"></div>
+                </div>
+                <div>
+                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
+                  <span class="d_day">D-<span>27</span></span>
+                </div>
+              </div>
+              <div class="reward_per">
+                수익률
+                <span>5%</span>
+              </div>
+            </div>
+            <div class="corp_box">
+              <div class="c_img">
+                <img src="./img/row2_myeonchaeum.jpg" alt="">
+              </div>
+              <div class="c_txt">
+                <p>일반음식점</p>
+                <h5>면채움 <span>추천</span></h5>
+                <p>부산 광안점</p>
+              </div>
+              <div class="gage">
+                <div class="per"><span>31</span>%</div>
+                <div class="gage_full">
+                  <div class="gage_fill"></div>
+                </div>
+                <div>
+                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
+                  <span class="d_day">D-<span>27</span></span>
+                </div>
+              </div>
+              <div class="reward_per">
+                수익률
+                <span>5%</span>
+              </div>
+            </div>
+
+
+            <div class="corp_box">
+              <div class="c_img">
+                <img src="./img/row1_soinsoo.jpg" alt="">
+              </div>
+              <div class="c_txt">
+                <p>주점</p>
+                <h5>소인수분해 <span>추천</span></h5>
+                <p>부산 금사점</p>
+              </div>
+              <div class="gage">
+                <div class="per"><span>43</span>%</div>
+                <div class="gage_full">
+                  <div class="gage_fill"></div>
+                </div>
+                <div>
+                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
+                  <span class="d_day">D-<span>27</span></span>
+                </div>
+              </div>
+              <div class="reward_per">
+                수익률
+                <span>5%</span>
+              </div>
+            </div>
+
+            <div class="corp_box">
+              <div class="c_img">
+                <img src="./img/row2_myeonchaeum.jpg" alt="">
+              </div>
+              <div class="c_txt">
+                <p>일반음식점</p>
+                <h5>면채움 <span>추천</span></h5>
+                <p>부산 광안점</p>
+              </div>
+              <div class="gage">
+                <div class="per"><span>31</span>%</div>
+                <div class="gage_full">
+                  <div class="gage_fill"></div>
+                </div>
+                <div>
+                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
+                  <span class="d_day">D-<span>27</span></span>
+                </div>
+              </div>
+              <div class="reward_per">
+                수익률
+                <span>5%</span>
+              </div>
+            </div>
+            <div class="corp_box">
+              <div class="c_img">
+                <img src="./img/row1_anotherminae.jpg" alt="">
+              </div>
+              <div class="c_txt">
+                <p>카페</p>
+                <h5>어나더 미네스 <span>추천</span></h5>
+                <p>부산 남산점</p>
+              </div>
+              <div class="gage">
+                <div class="per"><span>87</span>%</div>
+                <div class="gage_full">
+                  <div class="gage_fill"></div>
+                </div>
+                <div>
+                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
+                  <span class="d_day">D-<span>27</span></span>
+                </div>
+              </div>
+              <div class="reward_per">
+                수익률
+                <span>5%</span>
+              </div>
+            </div>
+            <div class="corp_box">
+              <div class="c_img">
+                <img src="./img/row2_moon.jpg" alt="">
+              </div>
+              <div class="c_txt">
+                <p>일반음식점</p>
+                <h5>문 토스트 <span>추천</span></h5>
+                <p>부산 해운대점</p>
+              </div>
+              <div class="gage">
+                <div class="per"><span>82</span>%</div>
+                <div class="gage_full">
+                  <div class="gage_fill"></div>
+                </div>
+                <div>
+                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
+                  <span class="d_day">D-<span>27</span></span>
+                </div>
+              </div>
+              <div class="reward_per">
+                수익률
+                <span>5%</span>
+              </div>
+            </div>
  
           </div>
         </div>

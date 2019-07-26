@@ -176,22 +176,19 @@
         <div class="inleft">
           <div class="location">
             <h5>지역별 현황</h5>
-            <form name="locationForm">
-            <input type="hidden" name="location"/>
-            </form>
             <div class="map"></div>
             <ul>
-              <li class="local01"><a href="javascript:goPage('서울');">서울(${cityVO.seoul })</a></li>
-              <li class="local02"><a href="javascript:goPage('경기');">경기(${cityVO.gyeonggi })</a></li>
-              <li class="local03"><a href="javascript:goPage('인천');">인천(${cityVO.incheon })</a></li>
-              <li class="local04"><a href="javascript:goPage('강원');">강원(${cityVO.gangwon })</a></li>
-              <li class="local05"><a href="javascript:goPage('대전');">대전·충청(${cityVO.daejeonNchungcheong })</a></li>
-              <li class="local06"><a href="javascript:goPage('대구');">대구((${cityVO.daegu })</a></li>
-              <li class="local07"><a href="javascript:goPage('부산');">부산(${cityVO.busan })</a></li>
-              <li class="local08"><a href="javascript:goPage('울산');">울산(${cityVO.ulsan })</a></li>
-              <li class="local09"><a href="javascript:goPage('경상');">경상(${cityVO.gyeongsang })</a></li>
-              <li class="local10"><a href="javascript:goPage('광주');">광주·전라(${cityVO.gwangjuNjeonla })</a></li>
-              <li class="local11"><a href="javascript:goPage('제주');">제주(${cityVO.jeju })</a></li>
+              <li class="local01">서울(${cityVO.seoul })</li>
+              <li class="local02">경기(${cityVO.gyeonggi })</li>
+              <li class="local03">인천(${cityVO.incheon })</li>
+              <li class="local04">강원(${cityVO.gangwon })</li>
+              <li class="local05">대전·충청(${cityVO.daejeonNchungcheong })</li>
+              <li class="local06">대구((${cityVO.daegu })</li>
+              <li class="local07">부산(${cityVO.busan })</li>
+              <li class="local08">울산(${cityVO.ulsan })</li>
+              <li class="local09">경상(${cityVO.gyeongsang })</li>
+              <li class="local10">광주·전라(${cityVO.gwangjuNjeonla })</li>
+              <li class="local11">제주(${cityVO.jeju })</li>
             </ul>
           </div>
         </div>
@@ -338,19 +335,6 @@
       });
     });
     //지도
-    
-    //유정 - 지역 클릭 시 li 값 action으로 넘겨주기 
-    function goPage(location){
-
-    	var f = document.locationForm;
-    	
-    	f.location.value = location;
-    	
-    	f.action = "./ListAction.bd"
-    	
-    	f.method = "post"
-    	f.submit();
-    }
   </script>
   <script>
 	  const second = 1000,
