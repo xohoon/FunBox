@@ -12,10 +12,9 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		CompanyDAO companyDAO = new CompanyDAO();
-		ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = companyDAO.getCompanyDateOfOpen();
-		ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = companyDAO.getCompanyDeadLine();
+		String real_path = companyDAO.getUploadFilePath("company_path") + "/" + "sssssss";
 		try {
-			System.out.println(mainPageDeadLineVOs.toString());
+			System.out.println(real_path);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

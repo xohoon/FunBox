@@ -52,7 +52,7 @@
     <section id="sec1">
       <div class="inner">
         <div class="regular slider">
-        <c:forEach var="slideVO" items="${slideVO }">
+        <c:forEach var="slideVO" items="${slideVO}">
 	        <a href="./CorporationAction.cp?cp_idx=${slideVO.sl_cp_idx }">
 	          <div>
 	            <div class="slide slide1">

@@ -64,10 +64,7 @@ public class CompanyApplication04Action implements Action {
 		String real_path = companyDAO1.getUploadFilePath("company_path") + "/" + company_path;
 		
 		// 파일디렉토리
-		File fileSaveDir = new File(real_path);
-		if (!fileSaveDir.exists()) {
-			fileSaveDir.mkdir();
-		}
+		File fileSaveDir = new File(real_path); if (!fileSaveDir.exists()) { fileSaveDir.mkdir(); }
 
 		// 받아온 파일들을 담는 ArrayList
 		ArrayList<String> app_cp_image_list = new ArrayList<String>();
@@ -95,7 +92,7 @@ public class CompanyApplication04Action implements Action {
 			default:
 				break;
 			}
-			 part.write(real_path + "/" + fileName);
+			part.write(real_path + "/" + fileName);
 		}
 
 		// 빈 파일들에 null 을 넣어준다.

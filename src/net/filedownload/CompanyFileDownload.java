@@ -35,9 +35,6 @@ public class CompanyFileDownload extends HttpServlet {
 		
 		
 		File file = new File(saveDir + fileName);
-		System.out.println("파일명 : " + fileName);
-		System.out.println(saveDir+fileName);
-
 		// ③ MIMETYPE 설정하기
 		String mimeType = getServletContext().getMimeType(file.toString());
 		if (mimeType == null) {

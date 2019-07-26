@@ -1,10 +1,15 @@
-<%@page import="net.company.dto.CompanyBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="net.company.dto.CompanyListVO"%>
-<%@page import="mapperController.mapper"%>
 <%@page import="java.util.ArrayList"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@page import="net.company.dto.CompanyListVO"%>
+<%@page import="net.company.dto.CompanyBean"%>
+<%@page import="mapperController.mapper"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%
+	CompanyBean companyBean = (CompanyBean)request.getAttribute("companyBean");
+	ArrayList<CompanyListVO> leftCompanyList = (ArrayList<CompanyListVO>)request.getAttribute("leftCompanyList");
+	mapper mapper = new mapper();
+%>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -25,12 +30,6 @@
 </head>
 
 <body>
-
-<%
-	CompanyBean companyBean = (CompanyBean)request.getAttribute("company");
-	ArrayList<CompanyListVO> leftCompanyList = (ArrayList<CompanyListVO>)request.getAttribute("leftCompanyList");
-	mapper mapper = new mapper();
-%>
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div>
@@ -40,26 +39,46 @@
       <div class="inner">
         <div class="content">
           <div class="list" id="list-p">
-            <h3>투자기업 목록${companyBean.cp_idx }</h3>
+            <h3>투자기업 목록</h3>
             <ul>
-       
               <c:forEach var="company" items="${leftCompanyList}">
     			<c:choose>
     				<c:when test="${company.cp_idx eq companyBean.cp_idx }">
-    					<li class="on">${company.cp_name }<div class="recommend ">추천</div><div class="best">BEST</div></li>
+    					<c:choose>
+    						<c:when test="${company.cp_recommand and company.cp_best}">
+    							<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="recommend ">추천</div><div class="best">BEST</div></li>
+		    				</c:when>
+		    				<c:when test="${company.cp_idx eq companyBean.cp_idx and company.cp_recommand}">
+								<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="recommend ">추천</div></li>
+							</c:when>
+							<c:when test="${company.cp_idx eq companyBean.cp_idx and company.cp_best}">
+								<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="best ">BEST</div></li>
+							</c:when>
+							<c:otherwise>
+								<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }</li>
+							</c:otherwise>
+    					</c:choose>
     				</c:when>
     				<c:otherwise>
-    					<li>${company.cp_name }</li>
+    					<c:choose>
+    						<c:when test="${ company.cp_recommand and company.cp_best}">
+    							<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="recommend ">추천</div><div class="best">BEST</div></li>
+    						</c:when>
+    						<c:when test="${ company.cp_recommand}">
+    							<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="recommend ">추천</div></li>
+    						</c:when>
+    						<c:when test="${ company.cp_best}">
+    							<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="best ">BEST</div></li>
+    						</c:when>
+    						<c:otherwise>
+								<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }</li>
+							</c:otherwise>
+    					</c:choose>
     				</c:otherwise>
     			</c:choose>    				
-			  </c:forEach>
-			  
-              <li>바른생선회<div class="recommend ">${companyBean.cp_idx }</div><div class="best">BEST</div></li>
-              <li>바른생선회<div class="best">BEST</div></li>              
-               
+			  </c:forEach>         
             </ul>
           </div>
-
           <!--.list-->
           <div class="info">
             <h2 class="logo"></h2>
@@ -70,12 +89,12 @@
                 <div>
                   <i><img src="img/corpor_icon1.png"></i>
                   <p>월 수익률</p>
-                  <p><%=companyBean.getCp_monthly_profit() %></p>
+                  <p>${companyBean.cp_monthly_profit}</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon2.png"></i>
                   <p>투자계약기간</p>
-                  <p><span>펀딩종료부터</span><%=companyBean.getIv_contraction_during() %></p>
+                  <p><span>펀딩종료부터</span>${companyBean.iv_contraction_during}</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon3.png"></i>
@@ -149,10 +168,10 @@
               </div>
             </div>
             <div class="gage-bar">
-              <p><%=companyBean.getIv_percent() %>%</p>
+              <p>${companyBean.iv_percent}%</p>
               <div class="gage">
                 <div>
-                  <span><%=companyBean.getIv_percent() %></span>
+                  <span>${companyBean.iv_percent}</span>
                 </div>
               </div>
               <div>
@@ -161,14 +180,6 @@
               </div>
             </div>
             <div class="bg">
-            <!-- 
-              <p><span>싱싱한 회한접시에 소주한잔?</span><br>
-                '바른생선횟집'은 생선회가 비싸다는 편견을 파괴하며 다양한 해산물 및 밑찬제공으로 퀄리티 있는 서비스를 제공합니다.<br>
-                수족관을 관림함으로써 드는 비용절감, 생선의 관리 미필요로 인한 인건비 절감, 수족관에서 생선재고 관리가 없어짐으로서<br>
-                생선관리 비용 절감이 가능합니다.저렴한 가격으로 깨끗한 식사 환경으로 만족도 상승하여 누구나 즐길 수 있습니다!<br>
-                매장네 포장판매 및 배달로 집에서도 싱싱한 회를 즐겨보세요.
-              </p>
-             -->
              <p>
              	<span><%=companyBean.getCp_intro_headline()%></span><br>
              	<%=companyBean.getCp_intro_content()%>
@@ -444,48 +455,11 @@
     <!--.bodyWrap-->
     <footer></footer>
   </div>
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3fd911319378df3f4ed86e94c8737483"></script>
-  <script type="text/javascript">
-	  $(function() {
-		  var lng = <%=companyBean.getCp_lng()%>;
-		  var lat = <%=companyBean.getCp_lat()%>;
-		  
-		  initMap(lat,lng);
-	  });
-	  
-	  function initMap(cp_lat,cp_lng){
-		  var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-		  var mapWidth = $('.corpor-location').innerWidth();
-		  var mapHeight = $('.corpor-location').innerHeight();
-		  $('#map').width = mapWidth;
-		  $('#map').height = mapHeight;
-		  
-		  var options = { //지도를 생성할 때 필요한 기본 옵션
-		  	center: new kakao.maps.LatLng(cp_lat, cp_lng), //지도의 중심좌표.
-		  	level: 3 //지도의 레벨(확대, 축소 정도)
-		  };
-		  
-		  var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-		  var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		    mapOption = { 
-		        center: new kakao.maps.LatLng(cp_lat, cp_lng), // 지도의 중심좌표
-		        level: 3 // 지도의 확대 레벨
-		    };
-
-			var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-		
-			// 마커가 표시될 위치입니다 
-			var markerPosition  = new kakao.maps.LatLng(cp_lat, cp_lng); 
-		
-			// 마커를 생성합니다
-			var marker = new kakao.maps.Marker({
-			    position: markerPosition
-			});
-		
-			// 마커가 지도 위에 표시되도록 설정합니다
-			marker.setMap(map);
-	  }
-  </script>
+  <input type="hidden" value="${companyBean.cp_add_ch }" name="cp_add_ch" id="cp_add_ch">
+  <input type="hidden" value="${companyBean.cp_name }" name="cp_name" id="cp_name">
+  </body>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3fd911319378df3f4ed86e94c8737483&libraries=services,clusterer,drawing"></script>
+  <script type="text/javascript" src="company/js/map.js"></script>
   <script>
     $(function() {
       $('header').load('./header/header.jsp')
@@ -557,7 +531,7 @@
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-  <script charset="UTF-8">
+  <!-- <script charset="UTF-8">
     var mapWidth = $('.corpor-location').innerWidth();
     var mapHeight = $('.corpor-location').innerHeight();
 
@@ -567,5 +541,5 @@
       "mapWidth": mapWidth,
       "mapHeight": mapHeight
     }).render();
-  </script>
-</body></html>
+  </script> -->
+  </html>

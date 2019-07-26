@@ -30,14 +30,14 @@ public class CorporationAction implements Action {
 		CompanyDAO company_dao = new CompanyDAO();
 		
 		company = company_dao.getCompanyInfo2(1);		
-		request.setAttribute("company", company);
+		request.setAttribute("companyBean", company);
 		
 		CompanyDAO company_dao2 = new CompanyDAO();
 		
 		leftCompanyList = company_dao2.getCompanyList();
 		request.setAttribute("leftCompanyList", leftCompanyList);
 		
-//		System.out.println(leftCompanyList.toString());
+		System.out.println(leftCompanyList.size());
 		
 		forward.setRedirect(false);
 		forward.setPath("./company/corporation.jsp");

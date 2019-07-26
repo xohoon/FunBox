@@ -6,7 +6,6 @@ public class CompanyListVO {
 	private String cp_name;
 	private boolean cp_recommand;
 	private boolean cp_best;
-	
 	public int getCp_idx() {
 		return cp_idx;
 	}
@@ -31,6 +30,8 @@ public class CompanyListVO {
 	public void setCp_best(boolean cp_best) {
 		this.cp_best = cp_best;
 	}
+	
+	
 	
 }
 
