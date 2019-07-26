@@ -751,7 +751,7 @@ public class MemberDAO {
 
 		try {
 			// 쿼리 기업 idx필요
-			String sql = "SELECT a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, c.iv_current_amount/c.iv_goal_amount*100 "
+			String sql = "SELECT a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
 					+ "FROM member_likebox as a " 
 					+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
 					+ "JOIN company_invest as c ON b.cp_idx = c.cp_idx";
@@ -769,7 +769,7 @@ public class MemberDAO {
 				box.setCp_branch(rs.getString("cp_branch"));
 				box.setCp_sector(rs.getString("cp_sector"));
 				// 현재 투자율 계산
-				box.setCp_like_percent(rs.getString("c.iv_current_amount/c.iv_goal_amount*100"));
+				box.setCp_like_percent(rs.getString("percent"));
 
 				boxs.add(box);
 			}
@@ -799,7 +799,6 @@ public class MemberDAO {
 		List<Main_SlideVO> slidVO = new ArrayList<Main_SlideVO>();
 
 		try {
-			// 쿼리 기업 idx필요
 			String sql = "SELECT cp_name, cp_branch, cp_intro_content FROM company ORDER BY RAND() LIMIT 3";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -839,7 +838,6 @@ public class MemberDAO {
 			List<Main_LikeVO> LikeVO = new ArrayList<Main_LikeVO>();
 
 			try {
-				// 쿼리 기업 idx필요
 				String sql = "SELECT cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount "
 						+ "FROM company as cp, company_invest as cp_iv "
 						+ "ORDER BY cp_iv_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
