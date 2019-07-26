@@ -1,7 +1,15 @@
+<%@page import="net.board.dto.Board_Search_ListVO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@page import="net.company.dto.CompanyBean"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+	ArrayList<Board_Search_ListVO> searchVO = (ArrayList<Board_Search_ListVO>)request.getAttribute("searchVO");
+	System.out.println("list>>>>>"+searchVO);
+	String cityName = (String)request.getAttribute("cityName");
+%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -63,70 +71,82 @@
                 </span>
                 <span>
                   <input type="checkbox" id="con1_1">
-                  <label for="con1_1">조건1</label>
+                  <label for="con1_1">한식</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con1_2">
-                  <label for="con1_2">조건2</label>
+                  <label for="con1_2">분식</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con1_3">
-                  <label for="con1_3">조건3</label>
+                  <label for="con1_3">일식</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con1_4">
-                  <label for="con1_4">조건4</label>
+                  <label for="con1_4">중식</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con1_5">
-                  <label for="con1_5">조건5</label>
+                  <label for="con1_5">양식</label>
+                </span>
+                <span>
+                  <input type="checkbox" id="con1_6">
+                  <label for="con1_5">카페</label>
+                </span>
+                <span>
+                  <input type="checkbox" id="con1_7">
+                  <label for="con1_5">치킨</label>
+                </span>
+                <span>
+                  <input type="checkbox" id="con1_8">
+                  <label for="con1_5">기타</label>
                 </span>
               </div>
 
               <div class="f_list_type2">
                 <h2>지역</h2>
                 <span>
-                  <input type="checkbox" id="con2_all">
+                  <input type="checkbox" name="10">
                   <label for="con2_all">서울</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_1">
+                  <input type="checkbox" name="11">
                   <label for="con2_1">경기</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_2">
+                  <input type="checkbox" name="12">
                   <label for="con2_2">인천</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_3">
+                  <input type="checkbox" name="13">
                   <label for="con2_3">강원</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_4">
+                  <input type="checkbox" name="14">
                   <label for="con2_4">대전/충천</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_5">
+                  <input type="checkbox" name="15">
                   <label for="con2_5">대구</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_6">
+                  <input type="checkbox" name="16">
                   <label for="con2_6">부산</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_7">
+                  <input type="checkbox" name="17">
                   <label for="con2_7">울산</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_8">
+                  <input type="checkbox" name="18">
                   <label for="con2_8">경상</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_8">
+                  <input type="checkbox" name="19">
                   <label for="con2_8">광주/전라</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con2_8">
+                  <input type="checkbox" name="20">
                   <label for="con2_8">제주</label>
                 </span>
               </div>
@@ -139,19 +159,27 @@
                 </span>
                 <span>
                   <input type="checkbox" id="con3_1">
-                  <label for="con3_1">조건1</label>
+                  <label for="con3_1">대기중</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con3_2">
-                  <label for="con3_2">조건2</label>
+                  <label for="con3_2">펀딩중</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con3_3">
-                  <label for="con3_3">조건3</label>
+                  <label for="con3_3">펀딩완료</label>
                 </span>
                 <span>
                   <input type="checkbox" id="con3_4">
-                  <label for="con3_4">조건4</label>
+                  <label for="con3_4">수익 분배중</label>
+                </span>
+                <span>
+                  <input type="checkbox" id="con3_4">
+                  <label for="con3_4">수익 분배완료</label>
+                </span>
+                <span>
+                  <input type="checkbox" id="con3_4">
+                  <label for="con3_4">연체중</label>
                 </span>
               </div>
             </form>
@@ -162,206 +190,36 @@
 
     <section id="sec2">
       <div class="inner">
-        <div class="mom_box">
-          <div class="boxwrap">
-            <div class="corp_box" onclick="location.href='./CorporationAction.cp'">
-              <div class="c_img">
-                <img src="./img/row1_anotherminae.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>카페</p>
-                <h5>어나더 미네스 <span>추천</span></h5>
-                <p>부산 남산점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>87</span>%</div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>27</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>5%</span>
-              </div>
-            </div>
-            <div class="corp_box">
-              <div class="c_img">
-                <img src="./img/row1_soinsoo.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>주점</p>
-                <h5>소인수분해 <span>추천</span></h5>
-                <p>부산 금사점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>43</span>%</div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>27</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>5%</span>
-              </div>
-            </div>
-            <div class="corp_box">
-              <div class="c_img">
-                <img src="./img/row2_moon.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>일반음식점</p>
-                <h5>문 토스트 <span>추천</span></h5>
-                <p>부산 해운대점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>82</span>%</div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>27</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>5%</span>
-              </div>
-            </div>
-            <div class="corp_box">
-              <div class="c_img">
-                <img src="./img/row2_myeonchaeum.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>일반음식점</p>
-                <h5>면채움 <span>추천</span></h5>
-                <p>부산 광안점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>31</span>%</div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>27</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>5%</span>
-              </div>
-            </div>
-
-
-            <div class="corp_box">
-              <div class="c_img">
-                <img src="./img/row1_soinsoo.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>주점</p>
-                <h5>소인수분해 <span>추천</span></h5>
-                <p>부산 금사점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>43</span>%</div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>27</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>5%</span>
-              </div>
-            </div>
-
-            <div class="corp_box">
-              <div class="c_img">
-                <img src="./img/row2_myeonchaeum.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>일반음식점</p>
-                <h5>면채움 <span>추천</span></h5>
-                <p>부산 광안점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>31</span>%</div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>27</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>5%</span>
-              </div>
-            </div>
-            <div class="corp_box">
-              <div class="c_img">
-                <img src="./img/row1_anotherminae.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>카페</p>
-                <h5>어나더 미네스 <span>추천</span></h5>
-                <p>부산 남산점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>87</span>%</div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>27</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>5%</span>
-              </div>
-            </div>
-            <div class="corp_box">
-              <div class="c_img">
-                <img src="./img/row2_moon.jpg" alt="">
-              </div>
-              <div class="c_txt">
-                <p>일반음식점</p>
-                <h5>문 토스트 <span>추천</span></h5>
-                <p>부산 해운대점</p>
-              </div>
-              <div class="gage">
-                <div class="per"><span>82</span>%</div>
-                <div class="gage_full">
-                  <div class="gage_fill"></div>
-                </div>
-                <div>
-                  <span class="p_amt"><span>157,000</span> / <span>200,000</span> P</span>
-                  <span class="d_day">D-<span>27</span></span>
-                </div>
-              </div>
-              <div class="reward_per">
-                수익률
-                <span>5%</span>
-              </div>
-            </div>
- 
-          </div>
-        </div>
+	        <div class="mom_box">
+	          <div class="boxwrap">
+        <c:forEach var="searchVO" items="${searchVO }">
+	            <div class="corp_box" onclick="location.href='./CorporationAction.cp'">
+	              <div class="c_img">
+	                <img src="./img/row1_anotherminae.jpg" alt="">
+	              </div>
+	              <div class="c_txt">
+	                <p>${searchVO.search_cp_sector }</p>
+	                <h5>${searchVO.search_cp_name } <span>추천</span></h5>
+	                <p>${searchVO.search_cp_branch }</p>
+	              </div>
+	              <div class="gage">
+	                <div class="per"><span>${searchVO.search_cp_percent }</span>%</div>
+	                <div class="gage_full">
+	                  <div class="gage_fill"></div>
+	                </div>
+	                <div>
+	                  <span class="p_amt"><span>${searchVO.search_cp_current_amount }</span> / <span>${searchVO.search_cp_goal_amount }</span> P</span>
+	                  <span class="d_day">D-<span>27</span></span>
+	                </div>
+	              </div>
+	              <div class="reward_per">
+	                수익률
+	                <span>${searchVO.search_cp_profit }</span>
+	              </div>
+	            </div>
+        </c:forEach>
+	          </div>
+	        </div>
 
         <div class="scrolload">
           <div class="loader">
@@ -485,6 +343,16 @@
         }, randomnum);
       });
 
+    });
+    
+    $(document).ready(function(){
+    	
+    	$("input[name$='"+<%=cityName%>+"']").prop("checked", true);
+    	
+    	var cityName = <%=cityName%>
+    	if(cityName != null){
+	    	$('.search_bar').toggleClass('on');
+    	}
     });
   </script>
 </body></html>

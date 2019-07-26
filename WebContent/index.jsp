@@ -178,17 +178,17 @@
             <h5>지역별 현황</h5>
             <div class="map"></div>
             <ul>
-              <li class="local01">서울(${cityVO.seoul })</li>
-              <li class="local02">경기(${cityVO.gyeonggi })</li>
-              <li class="local03">인천(${cityVO.incheon })</li>
-              <li class="local04">강원(${cityVO.gangwon })</li>
-              <li class="local05">대전·충청(${cityVO.daejeonNchungcheong })</li>
-              <li class="local06">대구((${cityVO.daegu })</li>
-              <li class="local07">부산(${cityVO.busan })</li>
-              <li class="local08">울산(${cityVO.ulsan })</li>
-              <li class="local09">경상(${cityVO.gyeongsang })</li>
-              <li class="local10">광주·전라(${cityVO.gwangjuNjeonla })</li>
-              <li class="local11">제주(${cityVO.jeju })</li>
+              <li class="local01" onclick="location.href='./ListAction.bd?cityName=10'">서울(${cityVO.seoul })</li>
+              <li class="local02" onclick="location.href='./ListAction.bd?cityName=11'">경기(${cityVO.gyeonggi })</li>
+              <li class="local03" onclick="location.href='./ListAction.bd?cityName=12'">인천(${cityVO.incheon })</li>
+              <li class="local04" onclick="location.href='./ListAction.bd?cityName=13'">강원(${cityVO.gangwon })</li>
+              <li class="local05" onclick="location.href='./ListAction.bd?cityName=14'">대전·충청(${cityVO.daejeonNchungcheong })</li>
+              <li class="local06" onclick="location.href='./ListAction.bd?cityName=15'">대구((${cityVO.daegu })</li>
+              <li class="local07" onclick="location.href='./ListAction.bd?cityName=16'">부산(${cityVO.busan })</li>
+              <li class="local08" onclick="location.href='./ListAction.bd?cityName=17'">울산(${cityVO.ulsan })</li>
+              <li class="local09" onclick="location.href='./ListAction.bd?cityName=18'">경상(${cityVO.gyeongsang })</li>
+              <li class="local10" onclick="location.href='./ListAction.bd?cityName=19'">광주·전라(${cityVO.gwangjuNjeonla })</li>
+              <li class="local11" onclick="location.href='./ListAction.bd?cityName=20'">제주(${cityVO.jeju })</li>
             </ul>
           </div>
         </div>
@@ -335,7 +335,9 @@
       });
     });
     //지도
-  </script>
+    
+
+    </script>
   <script>
 	  const second = 1000,
       minute = second * 60,
