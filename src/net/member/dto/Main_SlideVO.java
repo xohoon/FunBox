@@ -3,6 +3,7 @@ package net.member.dto;
 ////////// 태훈 추가 - 메인페이지 슬라이드 기업 리스트 //////////
 public class Main_SlideVO {
 
+	private int sl_cp_idx;				// 기업 식별자
 //	private String sl_image;		 기업 이미지
 	private String sl_cp_name;		// 기업 이름
 	private String sl_cp_branch;	// 기업 지점
@@ -11,6 +12,14 @@ public class Main_SlideVO {
 	 * public String getSl_image() { return sl_image; } public void
 	 * setSl_image(String sl_image) { this.sl_image = sl_image; }
 	 */
+	
+	
+	public int getSl_cp_idx() {
+		return sl_cp_idx;
+	}
+	public void setSl_cp_idx(int sl_cp_idx) {
+		this.sl_cp_idx = sl_cp_idx;
+	}
 	public String getSl_cp_name() {
 		return sl_cp_name;
 	}

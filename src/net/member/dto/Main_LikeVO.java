@@ -4,6 +4,7 @@ package net.member.dto;
 // 태훈 - (추천)인원, 수익율 순서 불러오기
 public class Main_LikeVO {
 	
+	private int lk_cp_idx;						// 기업 식별자
 //	private String image;					// 기업 사진
 	private String lk_cp_name;				// 기업 이름
 	private String lk_cp_sector;			// 기업 업종
@@ -16,8 +17,15 @@ public class Main_LikeVO {
 	 * public String getImage() { return image; } public void setImage(String image)
 	 * { this.image = image; }
 	 */
+	
 	public String getLk_cp_name() {
 		return lk_cp_name;
+	}
+	public int getLk_cp_idx() {
+		return lk_cp_idx;
+	}
+	public void setLk_cp_idx(int lk_cp_idx) {
+		this.lk_cp_idx = lk_cp_idx;
 	}
 	public void setLk_cp_name(String lk_cp_name) {
 		this.lk_cp_name = lk_cp_name;
