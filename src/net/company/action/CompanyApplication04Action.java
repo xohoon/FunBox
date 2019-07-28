@@ -62,9 +62,12 @@ public class CompanyApplication04Action implements Action {
 		CompanyDAO companyDAO1 = new CompanyDAO();
 		// company 기본경로 + 폴더 이름 -> 폴더 경로에 파일삽입위해서
 		String real_path = companyDAO1.getUploadFilePath("company_path") + "/" + company_path;
-		
+
 		// 파일디렉토리
-		File fileSaveDir = new File(real_path); if (!fileSaveDir.exists()) { fileSaveDir.mkdir(); }
+		File fileSaveDir = new File(real_path);
+		if (!fileSaveDir.exists()) {
+			fileSaveDir.mkdir();
+		}
 
 		// 받아온 파일들을 담는 ArrayList
 		ArrayList<String> app_cp_image_list = new ArrayList<String>();
@@ -72,27 +75,31 @@ public class CompanyApplication04Action implements Action {
 
 		// view 에서 들고온 파일들을 VO에 저장하는 단계
 		for (Part part : request.getParts()) {
-			String fileName = extractFileName(part);
-			switch (part.getName()) {
-			case "app_cp_registrantion":
-				company.setApp_cp_registrantion(fileName);
-				break;
-			case "app_cp_financial":
-				company.setApp_cp_financial(fileName);
-				break;
-			case "app_cp_estate_contract":
-				company.setApp_cp_estate_contract(fileName);
-				break;
-			case "app_cp_images":
-				app_cp_image_list.add(fileName);
-				break;
-			case "app_cp_other_documents":
-				app_cp_document_list.add(fileName);
-				break;
-			default:
-				break;
+			if (part.getContentType() != null) {
+				String fileName = extractFileName(part);
+				switch (part.getName()) {
+				case "app_cp_registrantion":
+					company.setApp_cp_registrantion(fileName);
+					break;
+				case "app_cp_financial":
+					company.setApp_cp_financial(fileName);
+					break;
+				case "app_cp_estate_contract":
+					company.setApp_cp_estate_contract(fileName);
+					break;
+				case "app_cp_images":
+					app_cp_image_list.add(fileName);
+					break;
+				case "app_cp_other_documents":
+					app_cp_document_list.add(fileName);
+					break;
+				default:
+					break;
+				}
+				if (!fileName.equals("")) {
+					part.write(real_path + "/" + fileName);
+				}
 			}
-			part.write(real_path + "/" + fileName);
 		}
 
 		// 빈 파일들에 null 을 넣어준다.
@@ -136,7 +143,7 @@ public class CompanyApplication04Action implements Action {
 
 		CompanyDAO companyDAO2 = new CompanyDAO();
 
-		companyDAO2.insertApp(company);
+		 companyDAO2.insertApp(company);
 
 		return null;
 	}
