@@ -65,7 +65,7 @@
       </div>
       <div>
         <p><img src="./img/icon_reward.svg" alt="포인트수량">누적 수익</p>
-        <span><%=mapper.stringnumberChange(mapper.removecoma(member.getMb_accumulate()))%></span> P
+        <span><%=member.getMb_accumulate() %></span> P
       </div>
       <button onclick="location.href='./Mypage4_1.mb'">자산관리 바로가기</button>
     </div>
