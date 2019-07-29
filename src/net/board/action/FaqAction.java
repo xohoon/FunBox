@@ -19,11 +19,18 @@ public class FaqAction implements Action{
 		System.out.println("FaqAction OK");
 		ActionForward forward = new ActionForward();
 		
-		BoardDAO bd_dao = new BoardDAO();
-		ArrayList<FaqVO> faq = bd_dao.getFaq(1);
-		System.out.println("faq>>>"+faq);
+		BoardDAO bd_dao1 = new BoardDAO();
+		ArrayList<FaqVO> faq1 = bd_dao1.getFaq(1);
 		
-		request.setAttribute("faq", faq);
+		BoardDAO bd_dao2 = new BoardDAO();
+		ArrayList<FaqVO> faq2 = bd_dao2.getFaq(2);
+		
+		BoardDAO bd_dao3 = new BoardDAO();
+		ArrayList<FaqVO> faq3 = bd_dao3.getFaq(3);
+		
+		request.setAttribute("faq1", faq1);
+		request.setAttribute("faq2", faq2);
+		request.setAttribute("faq3", faq3);
 		
 		forward.setRedirect(false);
 		forward.setPath("./board/faq.jsp");

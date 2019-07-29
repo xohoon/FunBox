@@ -25,18 +25,17 @@ public class mapper{
 	    
 	}
 	
-	//콤바 뒤로 제거
-	public String removecoma(String number){
-		 
-        String convert = number;
-        
-        int search = convert.indexOf(".");        
-        String trans = convert.substring(0, search);
-        
-      
-        System.out.println("transNumber : "+trans);
-
-       return trans;
-	}
-
+	/*
+	 * //콤바 뒤로 제거 public String removecoma(String number){
+	 * 
+	 * String convert = number;
+	 * 
+	 * int search = convert.indexOf("."); String trans = convert.substring(0,
+	 * search);
+	 * 
+	 * 
+	 * System.out.println("transNumber : "+trans);
+	 * 
+	 * return trans; }
+	 */
 } 

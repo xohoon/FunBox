@@ -7,7 +7,9 @@
 <!DOCTYPE html>
 <html lang="kr">
 <%
-	ArrayList<FaqVO> faq = (ArrayList<FaqVO>)request.getAttribute("faq");
+	ArrayList<FaqVO> faq1 = (ArrayList<FaqVO>)request.getAttribute("faq1");
+	ArrayList<FaqVO> faq2 = (ArrayList<FaqVO>)request.getAttribute("faq2");
+	ArrayList<FaqVO> faq3 = (ArrayList<FaqVO>)request.getAttribute("faq3");
 %>
 <head>
   <meta charset="UTF-8">
@@ -50,6 +52,7 @@
 	  });
 	  
 	  $(function(){
+		  var f = document.faqForm;
 		  $('.faq > button').on('click',function(){
 			  $('.faq > button').removeClass('on');
 			  $(this).addClass('on');
@@ -84,7 +87,6 @@
 			  });
 		  });
 	  });
-	  
   </script>
 
 </head>
@@ -101,12 +103,11 @@
 			<h5>FUNBOX 고객지원 서비스입니다</h5>
 		</div><!--sub_title-->
 		
-		
 		<div class="faq">
 			<h4>FAQ</h4>
 			<h5>궁금한 점이 있다면 여기서 먼저 찾아보세요</h5>
 			<button class="on">전체FAQ</button>
-			<button>입출금관련FAQ</button>
+			<button id="button1">입출금관련FAQ</button>
 			<button>투자관련FAQ</button>
 			<button>기타FAQ</button>
 			<div class="sch">
@@ -115,39 +116,38 @@
 				<input type="button">
 			</div><!--.sch-->
 			<div class="table">
-			<input type="hidden" id="category">
-				<c:forEach var="faq" items="${faq }">
+				<c:forEach var="faq1" items="${faq1 }">
 				<div class="btn1">
 					<p class="depth1">
-						<span>${faq.title }</span>
+						<span>${faq1.title }</span>
 					</p>
 					<p class="depth2">
 						<span>
-							${faq.content }
+							${faq1.content }
 						</span>
 					</p>
 				</div>
 				</c:forEach>
-				<c:forEach var="faq" items="${faq }">
+				<c:forEach var="faq2" items="${faq2 }">
 				<div class="btn2">
 					<p class="depth1">
-						<span>${faq.title }</span>
+						<span>${faq2.title }</span>
 					</p>
 					<p class="depth2">
 						<span>
-							${faq.content }
+							${faq2.content }
 						</span>
 					</p>
 				</div>
 				</c:forEach>
-				<c:forEach var="faq" items="${faq }">
+				<c:forEach var="faq3" items="${faq3 }">
 				<div class="btn3">
 					<p class="depth1">
-						<span>${faq.title }</span>
+						<span>${faq3.title }</span>
 					</p>
 					<p class="depth2">
 						<span>
-							${faq.content }
+							${faq3.content }
 						</span>
 					</p>
 				</div>
