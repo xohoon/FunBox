@@ -285,5 +285,13 @@ public class BoardDAO {
 		return Search_list;
 	}
 		
+	
+	public String Faq_Search(String key_word) throws Exception {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		return null;
+	}
 	//////////////////// 태훈 추가 end //////////////////////////
 }

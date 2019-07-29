@@ -27,7 +27,7 @@
 
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="js/jquery.scrollstop.js"></script>
-
+  <script src="board/js/list_function.js"></script>
 </head>
 
 <body>
@@ -70,35 +70,35 @@
                   <label for="con1_all">전체</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con1_1">
+                  <input type="checkbox" id="con1_1" class="sector_ckbox">
                   <label for="con1_1">한식</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con1_2">
+                  <input type="checkbox" id="con1_2" class="sector_ckbox">
                   <label for="con1_2">분식</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con1_3">
+                  <input type="checkbox" id="con1_3" class="sector_ckbox">
                   <label for="con1_3">일식</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con1_4">
+                  <input type="checkbox" id="con1_4" class="sector_ckbox">
                   <label for="con1_4">중식</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con1_5">
+                  <input type="checkbox" id="con1_5" class="sector_ckbox">
                   <label for="con1_5">양식</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con1_6">
+                  <input type="checkbox" id="con1_6" class="sector_ckbox">
                   <label for="con1_5">카페</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con1_7">
+                  <input type="checkbox" id="con1_7" class="sector_ckbox">
                   <label for="con1_5">치킨</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con1_8">
+                  <input type="checkbox" id="con1_8" class="sector_ckbox">
                   <label for="con1_5">기타</label>
                 </span>
               </div>
@@ -106,48 +106,52 @@
               <div class="f_list_type2">
                 <h2>지역</h2>
                 <span>
-                  <input type="checkbox" name="10">
-                  <label for="con2_all">서울</label>
+                  <input type="checkbox" id="con2_all">
+                  <label for="con2_all">전체</label>
                 </span>
                 <span>
-                  <input type="checkbox" name="11">
-                  <label for="con2_1">경기</label>
+                  <input type="checkbox" name="10" id="con2_1" class="city_ckbox">
+                  <label for="con2_1">서울</label>
                 </span>
                 <span>
-                  <input type="checkbox" name="12">
-                  <label for="con2_2">인천</label>
+                  <input type="checkbox" name="11" id="con2_2" class="city_ckbox">
+                  <label for="con2_2">경기</label>
                 </span>
                 <span>
-                  <input type="checkbox" name="13">
-                  <label for="con2_3">강원</label>
+                  <input type="checkbox" name="12" id="con2_3" class="city_ckbox">
+                  <label for="con2_3">인천</label>
                 </span>
                 <span>
-                  <input type="checkbox" name="14">
-                  <label for="con2_4">대전/충천</label>
+                  <input type="checkbox" name="13" id="con2_4" class="city_ckbox">
+                  <label for="con2_4">강원</label>
                 </span>
                 <span>
-                  <input type="checkbox" name="15">
-                  <label for="con2_5">대구</label>
+                  <input type="checkbox" name="14" id="con2_5" class="city_ckbox">
+                  <label for="con2_5">대전/충천</label>
                 </span>
                 <span>
-                  <input type="checkbox" name="16">
-                  <label for="con2_6">부산</label>
+                  <input type="checkbox" name="15" id="con2_6" class="city_ckbox">
+                  <label for="con2_6">대구</label>
                 </span>
                 <span>
-                  <input type="checkbox" name="17">
-                  <label for="con2_7">울산</label>
+                  <input type="checkbox" name="16" id="con2_7" class="city_ckbox">
+                  <label for="con2_7">부산</label>
                 </span>
                 <span>
-                  <input type="checkbox" name="18">
-                  <label for="con2_8">경상</label>
+                  <input type="checkbox" name="17" id="con2_8" class="city_ckbox">
+                  <label for="con2_8">울산</label>
                 </span>
                 <span>
-                  <input type="checkbox" name="19">
-                  <label for="con2_8">광주/전라</label>
+                  <input type="checkbox" name="18" id="con2_9" class="city_ckbox">
+                  <label for="con2_9">경상</label>
                 </span>
                 <span>
-                  <input type="checkbox" name="20">
-                  <label for="con2_8">제주</label>
+                  <input type="checkbox" name="19" id="con2_10" class="city_ckbox">
+                  <label for="con2_10">광주/전라</label>
+                </span>
+                <span>
+                  <input type="checkbox" name="20" id="con2_11" class="city_ckbox">
+                  <label for="con2_11">제주</label>
                 </span>
               </div>
 
@@ -158,27 +162,27 @@
                   <label for="con3_all">전체</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con3_1">
+                  <input type="checkbox" id="con3_1" class="status_ckbox">
                   <label for="con3_1">대기중</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con3_2">
+                  <input type="checkbox" id="con3_2" class="status_ckbox">
                   <label for="con3_2">펀딩중</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con3_3">
+                  <input type="checkbox" id="con3_3" class="status_ckbox">
                   <label for="con3_3">펀딩완료</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con3_4">
+                  <input type="checkbox" id="con3_4" class="status_ckbox">
                   <label for="con3_4">수익 분배중</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con3_4">
+                  <input type="checkbox" id="con3_5" class="status_ckbox">
                   <label for="con3_4">수익 분배완료</label>
                 </span>
                 <span>
-                  <input type="checkbox" id="con3_4">
+                  <input type="checkbox" id="con3_6" class="status_ckbox">
                   <label for="con3_4">연체중</label>
                 </span>
               </div>

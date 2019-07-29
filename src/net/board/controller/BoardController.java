@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.board.action.BoardQnaAction;
 import net.board.action.BoardQnaList;
+import net.board.action.FaqSearchAction;
 import net.board.action.ListAction;
+import net.board.action.ListSearchAction;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 
@@ -93,6 +95,26 @@ public class BoardController extends HttpServlet implements Servlet{
 			}
 			
 		}
+		
+		/////////////////// 태훈 추가 start ///////////////////
+		else if(command.equals("/ListSearchAction.bd")) {
+			action = new ListSearchAction();
+			try {
+				forward = action.execute(request, response);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/search_faq.bd")) {
+			action = new FaqSearchAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		/////////////////// 태훈 추가 end ///////////////////
 		
 		///////////////////////유정 추가 end///////////////////////
 		

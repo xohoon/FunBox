@@ -103,7 +103,7 @@
 			<button>기타FAQ</button>
 			<div class="sch">
 				<label>키워드로 검색해보세요</label>
-				<input type="text">
+				<input type="text" id="search_faq">
 				<input type="button">
 			</div><!--.sch-->
 			<div class="table">
