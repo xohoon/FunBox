@@ -9,11 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.board.dto.Board_Search_ListVO;
+import net.board.dto.FaqVO;
+import net.board.dto.NoticeVO;
 import net.board.dto.QnaReplyVO;
 import net.board.dto.QnaVO;
-import net.company.dto.CompanyBean;
-import net.company.dto.CompanyVO;
-import net.member.dto.Main_CityVO;
 
 public class BoardDAO {
 
@@ -231,6 +230,94 @@ public class BoardDAO {
 			
 			return null;
 		}
+		
+		
+		
+		// 고객지원 - 공지사항 불러오기
+		public ArrayList<NoticeVO> getNotice() throws Exception {
+			String sql = "select idx,title,content,reg_date_time from notice order by reg_date_time desc";
+			
+			ArrayList<NoticeVO> notice_list = new ArrayList<NoticeVO>();
+			PreparedStatement pstm = null;
+			ResultSet rs = null;
+
+			try {
+				pstm = conn.prepareStatement(sql);
+				rs = pstm.executeQuery();
+
+				while(rs.next()) {
+					NoticeVO notice = new NoticeVO();
+					
+					notice.setIdx(rs.getInt("idx"));
+					notice.setTitle(rs.getString("title"));
+					notice.setContent(rs.getString("content"));
+					notice.setReg_date_time(rs.getTimestamp("reg_date_time"));
+					notice_list.add(notice);
+				}
+				return notice_list;
+				
+
+			} catch (Exception ex) {
+				
+				System.out.println("getNotice 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstm != null)
+						pstm.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+			
+			return null;
+		}
+		
+		
+		// 고객지원 - FAQ 불러오기
+		public ArrayList<FaqVO> getFaq(int category) throws Exception {
+			String sql = "select title,content from faq where category=? order by reg_date_time desc;";
+			
+			ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
+			PreparedStatement pstm = null;
+			ResultSet rs = null;
+
+			try {
+				pstm = conn.prepareStatement(sql);
+				pstm.setInt(1, category);
+				rs = pstm.executeQuery();
+
+				while(rs.next()) {
+					FaqVO faq = new FaqVO();
+					
+					faq.setTitle(rs.getString("title"));
+					faq.setContent(rs.getString("content"));
+					faq_list.add(faq);
+				}
+				return faq_list;
+				
+
+			} catch (Exception ex) {
+				
+				System.out.println("getFaq 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstm != null)
+						pstm.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+			
+			return null;
+		}
 
 	///////////////////////유정 추가 end///////////////////////
 		
@@ -285,5 +372,13 @@ public class BoardDAO {
 		return Search_list;
 	}
 		
+	
+	public String Faq_Search(String key_word) throws Exception {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		return null;
+	}
 	//////////////////// 태훈 추가 end //////////////////////////
 }

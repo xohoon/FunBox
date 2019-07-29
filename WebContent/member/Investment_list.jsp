@@ -294,10 +294,10 @@
         
         <c:choose>
 	        <c:when test="${category == '투자'}">
-		        <td class="minus">-<fmt:formatNumber value="<%=member_invest_list.get(i).getPoint() %>" pattern="#,###"/></td>
+		        <td class="minus">-<fmt:formatNumber value="<%=member_invest_list.get(i).getPoint() %>" pattern="#,###"/>P</td>
 	        </c:when>
 	        <c:otherwise>
-	        	<td class="plus">+<fmt:formatNumber value="<%=member_invest_list.get(i).getPoint() %>" pattern="#,###"/></td>
+	        	<td class="plus">+<fmt:formatNumber value="<%=member_invest_list.get(i).getPoint() %>" pattern="#,###"/>P</td>
 	        </c:otherwise>
         </c:choose>
         <td><fmt:formatDate value="<%=member_invest_list.get(i).getMi_reg_date_time() %>" pattern="yyyy-MM-dd"/></td>
