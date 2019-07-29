@@ -74,7 +74,7 @@ pageEncoding="UTF-8"%>
               </div>
             </div>
             
-            <div class="cost"><span><%=mapper.stringnumberChange(companyBean.getIv_min_amount()) %></span> point</div>
+			<div class="cost"><span><%=mapper.stringnumberChange(companyBean.getIv_min_amount()) %></span> point</div>
             <div class="quantity">
               <input type="number" name="select" min="1" step="1" value="1">
             </div>
