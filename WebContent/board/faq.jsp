@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="net.board.dto.FaqVO"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="kr">
-
+<%
+	ArrayList<FaqVO> faq = (ArrayList<FaqVO>)request.getAttribute("faq");
+%>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
@@ -94,6 +100,8 @@
 			<h3>고객지원서비스</h3>
 			<h5>FUNBOX 고객지원 서비스입니다</h5>
 		</div><!--sub_title-->
+		
+		
 		<div class="faq">
 			<h4>FAQ</h4>
 			<h5>궁금한 점이 있다면 여기서 먼저 찾아보세요</h5>
@@ -107,36 +115,43 @@
 				<input type="button">
 			</div><!--.sch-->
 			<div class="table">
+			<input type="hidden" id="category">
+				<c:forEach var="faq" items="${faq }">
 				<div class="btn1">
 					<p class="depth1">
-						<span>Q.여기는 입출금관련 자주묻는질문 자리 입니다.</span>
+						<span>${faq.title }</span>
 					</p>
 					<p class="depth2">
 						<span>
-							A.여기는 답변자리구요.
+							${faq.content }
 						</span>
 					</p>
 				</div>
+				</c:forEach>
+				<c:forEach var="faq" items="${faq }">
 				<div class="btn2">
 					<p class="depth1">
-						<span>Q.여기는 투자관련 자주묻는질문 자리 입니다.</span>
+						<span>${faq.title }</span>
 					</p>
 					<p class="depth2">
 						<span>
-							A.여기는 답변자리구요.
+							${faq.content }
 						</span>
 					</p>
 				</div>
+				</c:forEach>
+				<c:forEach var="faq" items="${faq }">
 				<div class="btn3">
 					<p class="depth1">
-						<span>Q.여기는 기타 자주묻는질문 자리 입니다.</span>
+						<span>${faq.title }</span>
 					</p>
 					<p class="depth2">
 						<span>
-							A.여기는 답변자리구요.
+							${faq.content }
 						</span>
 					</p>
 				</div>
+				</c:forEach>
 			</div><!--.table-->
 			<a href="#" class="prev">◀</a>
 			<ul class="pager">

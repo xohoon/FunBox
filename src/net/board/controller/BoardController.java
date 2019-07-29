@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.board.action.BoardQnaAction;
 import net.board.action.BoardQnaList;
+import net.board.action.FaqAction;
 import net.board.action.ListAction;
+import net.board.action.NoticeAction;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 
@@ -40,14 +42,6 @@ public class BoardController extends HttpServlet implements Servlet{
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./board/intro.jsp");
-		}else if (command.equals("/Notice.bd")) {
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("./board/notice.jsp");
-		}else if (command.equals("/Faq.bd")) {
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("./board/faq.jsp");
 		}else if (command.equals("/Qna.bd")){ 
 			forward = new ActionForward();
 		    forward.setRedirect(false); 
@@ -86,6 +80,22 @@ public class BoardController extends HttpServlet implements Servlet{
 			
 		}else if (command.equals("/ListAction.bd")) { // 메인 지도에서 지역 선택하면 해당하는 기업리스트 불러오기
 			action = new ListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}else if (command.equals("/Notice.bd")) { // 고객지원 - 공지사항 불러오기
+			action = new NoticeAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}else if (command.equals("/Faq.bd")) { // 고객지원 - 공지사항 불러오기
+			action = new FaqAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="net.board.dto.NoticeVO"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="kr">
-
+<%
+	ArrayList<NoticeVO> notice = (ArrayList<NoticeVO>)request.getAttribute("notice");
+%>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <title></title>
+  <title>공지사항</title>
 
   <!--[if lt IE 9]>
       <script src="./js/html5.js"></script>
@@ -42,26 +48,22 @@
 						<span>등록일</span>
 					</p>
 				</div>
+				<c:forEach var="notice" items="${notice }">
 				<div>
 					<p class="depth1">
-						<span>100</span>
-						<span>제목1</span>
-						<span>19.06.20</span>
+						<span>${notice.idx }</span>
+						<span>${notice.title }</span>
+						<span>${notice.reg_date_time }</span>
 					</p>
 					<p class="depth2">
-						<span>공지사항내용이 들어갑니다</span>
+					<%
+						request.setAttribute("newLine", "\n");
+						request.setAttribute("br", "<br/>");
+					%>
+						<span>${fn:replace(notice.content, newLine, br) }</span>
 					</p>
 				</div>
-				<div>
-					<p class="depth1">
-						<span>101</span>
-						<span>제목2</span>
-						<span>19.06.20</span>
-					</p>
-					<p class="depth2">
-						<span>공지사항내용이 들어갑니다</span>
-					</p>
-				</div>
+				</c:forEach>
 			</div><!--.table-->
 			<a href="#" class="prev">◀</a>
 			<ul class="pager">
