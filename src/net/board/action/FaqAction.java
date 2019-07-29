@@ -25,6 +25,9 @@ public class FaqAction implements Action{
 		
 		request.setAttribute("faq", faq);
 		
+//		int category = (Integer)request.getAttribute("category");
+//		System.out.println(">>>"+category);
+		
 		forward.setRedirect(false);
 		forward.setPath("./board/faq.jsp");
 		return forward;

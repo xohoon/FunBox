@@ -50,6 +50,7 @@
 	  });
 	  
 	  $(function(){
+		  var f = document.faqForm;
 		  $('.faq > button').on('click',function(){
 			  $('.faq > button').removeClass('on');
 			  $(this).addClass('on');
@@ -66,6 +67,7 @@
 			  $('.btn1').css({
 				  'display':'block'
 			  });
+			  /* $("#category").val("1"); */
 		  });
 		  $('.faq > button').eq(2).on('click',function(){
 			  $('.table > div').css({
@@ -115,7 +117,9 @@
 				<input type="button">
 			</div><!--.sch-->
 			<div class="table">
-			<input type="hidden" id="category">
+			<form name="faqForm">
+			<input type="hidden" name="category">
+			</form>
 				<c:forEach var="faq" items="${faq }">
 				<div class="btn1">
 					<p class="depth1">
