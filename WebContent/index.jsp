@@ -7,7 +7,10 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="net.page.dto.MainPageDateOfOpenVO"%>
 <%@page import="net.page.dto.MainPageDeadLineVO"%>
+<%@page import="mapperController.mapper"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <%
 	ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = (ArrayList<MainPageDateOfOpenVO>)request.getAttribute("mainPageDateOfOpenVOs");
@@ -15,6 +18,7 @@
 	List<Main_SlideVO> slideVO = (List<Main_SlideVO>)request.getAttribute("slideVO");
 	List<Main_LikeVO> likeVO = (List<Main_LikeVO>)request.getAttribute("likeVO");
 	Main_CityVO cityVO = (Main_CityVO)request.getAttribute("cityVO");
+	mapper mapper = new mapper();
 %>
 
 <!DOCTYPE html>
@@ -27,7 +31,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <title></title>
+  <title>메인 화면</title>
 
   <!--[if lt IE 9]>
       <script src="./js/html5.js"></script>
@@ -153,12 +157,15 @@
 	            <p>${likeVO.lk_cp_branch }</p>
 	          </div>
 	          <div class="gage">
-	            <div class="per"><span>${likeVO.lk_cp_percent }</span>%</div>
+	            <div class="per"><span><fmt:parseNumber value ="${likeVO.lk_cp_percent }" integerOnly ="true" /> 
+	            </span>%</div>
 	            <div class="gage_full">
 	              <div class="gage_fill"></div>
 	            </div>
 	            <div>
-	              <span class="p_amt"><span>${likeVO.lk_cp_current_amount }</span> / <span>${likeVO.lk_cp_goal_amount }</span> P</span>
+	              <span class="p_amt"><span><fmt:formatNumber value="${likeVO.lk_cp_current_amount}" pattern="#,###" />
+	              </span> / <span> <fmt:formatNumber value="${likeVO.lk_cp_goal_amount }" pattern="#,###" />
+	              </span> P</span>
 	              <span class="d_day">D-<span>27</span></span>
 	            </div>
 	          </div>
@@ -234,7 +241,8 @@
 	                <p>${mainPageDeadLineVO.cp_branch }</p>
               	</div>
               	<div class="gage">
-              		<div class="per"><span>${mainPageDeadLineVO.persent }</span>%
+              		<div class="per"><span><fmt:parseNumber value ="${mainPageDeadLineVO.persent }" integerOnly ="true" />
+              		</span>%
               			<ul id="timer_${mainPageDeadLineVO.cp_idx }">
               				<li><span id="days"></span>일</li>
 		                    <li><span id="hours"></span> :</li>
@@ -245,7 +253,10 @@
                   			<div class="gage_fill"></div>
                 		</div>
                 		<div>
-		                  <span class="p_amt"><span>${mainPageDeadLineVO.iv_current_amount }</span> / <span>${mainPageDeadLineVO.iv_goal_amount }</span> P</span>
+		                  <span class="p_amt"><span><fmt:formatNumber value="${mainPageDeadLineVO.iv_current_amount }" pattern="#,###" />
+		                  </span> 
+		                  / <span><fmt:formatNumber value="${mainPageDeadLineVO.iv_goal_amount }" pattern="#,###" />
+		                  </span> P</span>
 		                  <span class="d_day">D-<span id="DDay_${mainPageDeadLineVO.cp_idx }">1</span></span>
 		                </div>
               		</div>

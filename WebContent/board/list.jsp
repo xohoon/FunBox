@@ -5,6 +5,7 @@
 <%@ page import="java.util.List"%>
 <%@page import="net.company.dto.CompanyBean"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	ArrayList<Board_Search_ListVO> searchVO = (ArrayList<Board_Search_ListVO>)request.getAttribute("searchVO");
 	System.out.println("list>>>>>"+searchVO);
@@ -203,12 +204,15 @@
 	                <p>${searchVO.search_cp_branch }</p>
 	              </div>
 	              <div class="gage">
-	                <div class="per"><span>${searchVO.search_cp_percent }</span>%</div>
+	                <div class="per"><span><fmt:parseNumber value ="${searchVO.search_cp_percent }" integerOnly ="true" />
+	                </span>%</div>
 	                <div class="gage_full">
 	                  <div class="gage_fill"></div>
 	                </div>
 	                <div>
-	                  <span class="p_amt"><span>${searchVO.search_cp_current_amount }</span> / <span>${searchVO.search_cp_goal_amount }</span> P</span>
+	                  <span class="p_amt"><span><fmt:formatNumber value="${searchVO.search_cp_current_amount }" pattern="#,###" />
+	                  </span> / <span> <fmt:formatNumber value="${searchVO.search_cp_goal_amount }" pattern="#,###" /> 
+	                  </span> P</span>
 	                  <span class="d_day">D-<span>27</span></span>
 	                </div>
 	              </div>

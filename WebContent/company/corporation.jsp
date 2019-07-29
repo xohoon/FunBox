@@ -168,7 +168,7 @@
               </div>
             </div>
             <div class="gage-bar">
-              <p>${companyBean.iv_percent}%</p>
+              <p><%=mapper.removecoma(companyBean.getIv_percent()) %>%</p>
               <div class="gage">
                 <div>
                   <span>${companyBean.iv_percent}</span>
@@ -228,7 +228,7 @@
                     </tr>
                     <tr>
                       <td>자본금</td>
-                      <td><%=companyBean.getCp_capital() %></td>
+                      <td><%=mapper.stringnumberChange(companyBean.getCp_capital()) %></td>
                     </tr>
                     <tr>
                       <td>본사주소</td>

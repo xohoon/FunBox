@@ -1,6 +1,8 @@
+<%@page import="mapperController.mapper"%>
 <%@page import="net.company.dto.CompanyBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -25,6 +27,7 @@
 <body>
 <%
 	CompanyBean companyBean = (CompanyBean)request.getAttribute("company");
+	mapper mapper = new mapper();
 %>
   <div id="wrap">
     <header></header>
@@ -65,13 +68,13 @@
             <p><%=companyBean.getCp_intro_content() %></p>
             
             <div class="gage">
-              <div class="per"><span><%=companyBean.getIv_percent() %></span>%</div>
+              <div class="per"><span><%=mapper.removecoma(companyBean.getIv_percent()) %></span>%</div>
               <div class="gage_full">
                 <div class="gage_fill"></div>
               </div>
             </div>
             
-            <div class="cost"><span><%=companyBean.getIv_min_amount() %></span> point</div>
+            <div class="cost"><span><%=mapper.stringnumberChange(companyBean.getIv_min_amount()) %></span> point</div>
             <div class="quantity">
               <input type="number" name="select" min="1" step="1" value="1">
             </div>

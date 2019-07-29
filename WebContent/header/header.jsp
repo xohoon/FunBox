@@ -1,3 +1,4 @@
+<%@page import="mapperController.mapper"%>
 <%@page import="net.member.dto.Member_headerVO"%>
 <%@page import="net.member.dao.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -33,6 +34,7 @@
     	MemberDAO memberDAO = new MemberDAO();
   	Member_headerVO member = (Member_headerVO)memberDAO.Member_accumulate(idx);
   	System.out.println("point>>"+member.getMb_point()+"token"+member.getMb_token()+"누적"+member.getMb_accumulate());
+  	mapper mapper = new mapper();
   %>
 
   <div class="hdbar">
@@ -55,15 +57,15 @@
     <div class="inner">
       <div>
         <p><img src="./img/icon_fun.svg" alt="포인트수량">보유 펀토큰</p>
-        <span><%=member.getMb_token() %></span> FUN
+        <span><%=mapper.stringnumberChange(member.getMb_token()) %></span> FUN
       </div>
       <div>
         <p><img src="./img/icon_point.svg" alt="포인트수량">보유 포인트</p>
-        <span><%=member.getMb_point() %></span> P
+        <span><%=mapper.stringnumberChange(member.getMb_point()) %></span> P
       </div>
       <div>
         <p><img src="./img/icon_reward.svg" alt="포인트수량">누적 수익</p>
-        <span><%=member.getMb_accumulate() %></span> P
+        <span><%=mapper.stringnumberChange(mapper.removecoma(member.getMb_accumulate()))%></span> P
       </div>
       <button onclick="location.href='./Mypage4_1.mb'">자산관리 바로가기</button>
     </div>
@@ -83,7 +85,14 @@
           </li>
           <li>기업신청
             <ul>
-              <li onclick="location.href='./Application1.cp'">기업용 신청서 작성</li>
+            <c:choose>
+	              <c:when test="${sessionScope.id ne null}">
+	              <li onclick="location.href='./Application1.cp'">기업용 신청서 작성</li>
+	              </c:when>
+	              <c:otherwise>
+	              <li>기업용 신청서 작성</li>
+	              </c:otherwise>
+              </c:choose>
             </ul>
           </li>
           <li>회사소개
