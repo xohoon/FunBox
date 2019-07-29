@@ -2,6 +2,7 @@
 <%@page import="net.company.dto.InvestPointVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 <!-- 유정 추가 -->
@@ -52,10 +53,10 @@
             <h3><%=companyBean.getCp_name() %><span><%=companyBean.getCp_branch() %></span></h3>
 
             <div class="summary">
-              <div><span><%=companyBean.getIv_min_amount() %></span> point</div>
+              <div><span><fmt:formatNumber value="<%=companyBean.getIv_min_amount() %>" pattern="#,###" /></span> point</div>
               <div>x <span><%=invest_point.getInvest_amount() %></span> 구좌</div>
               <hr>
-              <div><span><%=invest_point.getInvest_point() %></span> point</div>
+              <div><span><fmt:formatNumber value="<%=invest_point.getInvest_point() %>" pattern="#,###" /></span> point</div>
             </div>
 
             <div class="inv_noti">
