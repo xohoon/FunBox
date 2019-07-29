@@ -88,7 +88,7 @@
 	              <li onclick="location.href='./Application1.cp'">기업용 신청서 작성</li>
 	              </c:when>
 	              <c:otherwise>
-	              <li>기업용 신청서 작성</li>
+	              <li onclick="go();">기업용 신청서 작성</li>
 	              </c:otherwise>
               </c:choose>
             </ul>
@@ -106,7 +106,7 @@
 	              <li onclick="location.href='./BoardQnaList.bd'">1:1상담</li>
 	              </c:when>
 	              <c:otherwise>
-	              <li>1:1상담</li>
+	              <li onclick="go();">1:1상담</li>
 	              </c:otherwise>
               </c:choose>
               <li onclick="location.href='./Faq.bd'">FAQ</li>
@@ -212,4 +212,7 @@
       });
       
     });
+  	function go(){
+  		alert('로그인이 필요한 서비스입니다.');
+  	}
   </script>
