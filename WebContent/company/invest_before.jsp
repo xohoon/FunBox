@@ -68,7 +68,7 @@ pageEncoding="UTF-8"%>
             <p><%=companyBean.getCp_intro_content() %></p>
             
             <div class="gage">
-              <div class="per"><span><%=mapper.removecoma(companyBean.getIv_percent()) %></span>%</div>
+              <div class="per"><span><%=companyBean.getIv_percent() %></span>%</div>
               <div class="gage_full">
                 <div class="gage_fill"></div>
               </div>

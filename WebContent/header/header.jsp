@@ -29,9 +29,8 @@
   <c:otherwise>
   <%
   	String idx = (String)session.getAttribute("idx");
-    	System.out.println(">>>>>>>>>"+idx);
-    	
-    	MemberDAO memberDAO = new MemberDAO();
+    System.out.println(">>>>>>>>>"+idx);
+    MemberDAO memberDAO = new MemberDAO();
   	Member_headerVO member = (Member_headerVO)memberDAO.Member_accumulate(idx);
   	System.out.println("point>>"+member.getMb_point()+"token"+member.getMb_token()+"누적"+member.getMb_accumulate());
   	mapper mapper = new mapper();
@@ -65,7 +64,7 @@
       </div>
       <div>
         <p><img src="./img/icon_reward.svg" alt="포인트수량">누적 수익</p>
-        <span><%=mapper.stringnumberChange(mapper.removecoma(member.getMb_accumulate()))%></span> P
+        <span><%=mapper.stringnumberChange(member.getMb_accumulate())%></span> P
       </div>
       <button onclick="location.href='./Mypage4_1.mb'">자산관리 바로가기</button>
     </div>

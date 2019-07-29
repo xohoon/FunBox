@@ -168,7 +168,7 @@
               </div>
             </div>
             <div class="gage-bar">
-              <p><%=mapper.removecoma(companyBean.getIv_percent()) %>%</p>
+              <p><%=companyBean.getIv_percent() %>%</p>
               <div class="gage">
                 <div>
                   <span>${companyBean.iv_percent}</span>
