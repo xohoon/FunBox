@@ -1,10 +1,10 @@
-<%@page import="mapperController.mapper"%>
 <%@page import="net.member.dto.Member_headerVO"%>
 <%@page import="net.member.dao.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
   <link href="css/HF.css" rel="stylesheet" type="text/css">
-  <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
   
   <!--로그인 전-->
   <c:choose>
@@ -33,7 +33,6 @@
     MemberDAO memberDAO = new MemberDAO();
   	Member_headerVO member = (Member_headerVO)memberDAO.Member_accumulate(idx);
   	System.out.println("point>>"+member.getMb_point()+"token"+member.getMb_token()+"누적"+member.getMb_accumulate());
-  	mapper mapper = new mapper();
   %>
 
   <div class="hdbar">
@@ -56,15 +55,15 @@
     <div class="inner">
       <div>
         <p><img src="./img/icon_fun.svg" alt="포인트수량">보유 펀토큰</p>
-        <span><%=mapper.stringnumberChange(member.getMb_token()) %></span> FUN
+        <span><fmt:formatNumber value="<%=member.getMb_token() %>" pattern="#,###" /></span> FUN
       </div>
       <div>
         <p><img src="./img/icon_point.svg" alt="포인트수량">보유 포인트</p>
-        <span><%=mapper.stringnumberChange(member.getMb_point()) %></span> P
+        <span><fmt:formatNumber value="<%=member.getMb_point() %>" pattern="#,###" /></span> P
       </div>
       <div>
         <p><img src="./img/icon_reward.svg" alt="포인트수량">누적 수익</p>
-        <span><%=mapper.stringnumberChange(member.getMb_accumulate())%></span> P
+        <span><fmt:formatNumber value="<%=member.getMb_accumulate()%>" pattern="#,###" /></span> P
       </div>
       <button onclick="location.href='./Mypage4_1.mb'">자산관리 바로가기</button>
     </div>
