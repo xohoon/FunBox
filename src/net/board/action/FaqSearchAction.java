@@ -30,7 +30,7 @@ public class FaqSearchAction implements Action{
 		System.out.println(faq_list);
 		
 		request.setAttribute("faq_list", faq_list);
-		
+		request.setAttribute("cate", category);
 		forward.setRedirect(false);
 		forward.setPath("./board/faq.jsp");
 		return forward;

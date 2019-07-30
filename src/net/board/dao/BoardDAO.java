@@ -364,7 +364,7 @@ public class BoardDAO {
 					}
 			}
 	        return faq_list;
-	    }  
+	    } 
 
 	///////////////////////유정 추가 end///////////////////////
 		
