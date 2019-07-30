@@ -10,15 +10,16 @@ import net.board.dto.FaqVO;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 
-// 유정 고객지원 - 공지사항 불러오기
+// 유정 고객지원 - FAQ
 public class FaqAction implements Action{
 
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); //한글처리
 		
+		//FAQ 불러오기
 		System.out.println("FaqAction OK");
 		ActionForward forward = new ActionForward();
-		
+
 		BoardDAO bd_dao1 = new BoardDAO();
 		ArrayList<FaqVO> faq1 = bd_dao1.getFaq(1);
 		

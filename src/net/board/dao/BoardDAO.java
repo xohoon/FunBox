@@ -318,6 +318,53 @@ public class BoardDAO {
 			
 			return null;
 		}
+		
+		
+		// FAQ 검색기능 추가
+	    public ArrayList<FaqVO> searchFaq(String keyword, int category){
+	    	
+	    	PreparedStatement pstmt = null;
+			ResultSet rs = null;
+	        ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
+	       
+	        try{//실행
+	        	String sql ="select title,content,category from faq ";
+	        	
+	        	if(keyword != null && !keyword.equals("") && category != 0){
+	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and category=? order by reg_date_time desc";
+	        	}else{//모든 레코드 검색
+	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and (category=? or 1 or 2 or 3) order by reg_date_time desc";
+	        	}
+
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setInt(1, category);
+	            rs = pstmt.executeQuery();
+	            System.out.println(pstmt);
+	            
+	            while(rs.next()){
+	            	FaqVO faq = new FaqVO();
+	               
+	            	faq.setTitle(rs.getString("title"));
+	            	faq.setContent(rs.getString("content"));
+	               
+	                faq_list.add(faq);
+	            }
+	        }catch (Exception ex) {
+				System.out.println("searchFaq ERROR: " + ex);
+			} finally {
+				if (rs != null)
+					try {
+						rs.close();
+					} catch (SQLException ex) {
+					}
+				if (pstmt != null)
+					try {
+						pstmt.close();
+					} catch (SQLException ex) {
+					}
+			}
+	        return faq_list;
+	    }  
 
 	///////////////////////유정 추가 end///////////////////////
 		

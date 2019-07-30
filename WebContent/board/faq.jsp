@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="net.board.dto.FaqVO"%>
+<%@page import="net.board.dao.BoardDAO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
@@ -10,6 +11,8 @@
 	ArrayList<FaqVO> faq1 = (ArrayList<FaqVO>)request.getAttribute("faq1");
 	ArrayList<FaqVO> faq2 = (ArrayList<FaqVO>)request.getAttribute("faq2");
 	ArrayList<FaqVO> faq3 = (ArrayList<FaqVO>)request.getAttribute("faq3");
+	
+	ArrayList<FaqVO> faq_list = (ArrayList<FaqVO>)request.getAttribute("faq_list");
 %>
 <head>
   <meta charset="UTF-8">
@@ -52,7 +55,6 @@
 	  });
 	  
 	  $(function(){
-		  var f = document.faqForm;
 		  $('.faq > button').on('click',function(){
 			  $('.faq > button').removeClass('on');
 			  $(this).addClass('on');
@@ -87,6 +89,28 @@
 			  });
 		  });
 	  });
+	  
+	  function searchCheck(frm){
+		  
+		  if(frm.keyword.value==''){
+			alert('검색할 단어를 입력해주세요.');
+			frm.keyword.focus();
+			return false;
+		  }
+		  frm.submit();
+		  
+	  }
+	  function cateval(){
+		  $("#button1").click(function(){
+			  $("#category").val('1');
+		  });
+		  $("#button2").click(function(){
+			  $("#category").val('2');
+		  });
+		  $("#button3").click(function(){
+			  $("#category").val('3');
+		  });
+	  }
   </script>
 
 </head>
@@ -107,13 +131,16 @@
 			<h4>FAQ</h4>
 			<h5>궁금한 점이 있다면 여기서 먼저 찾아보세요</h5>
 			<button class="on">전체FAQ</button>
-			<button id="button1">입출금관련FAQ</button>
-			<button>투자관련FAQ</button>
-			<button>기타FAQ</button>
+			<button id="button1" onclick="cateval();">입출금관련FAQ</button>
+			<button id="button2" onclick="cateval();">투자관련FAQ</button>
+			<button id="button3" onclick="cateval();">기타FAQ</button>
 			<div class="sch">
+			<form name="search" method="post" action="./search_faq.bd">
 				<label>키워드로 검색해보세요</label>
-				<input type="text" id="search_faq">
-				<input type="button">
+				<input type="text" id="search_faq" name="keyword">
+				<input type="hidden" id="category" name="category" value="0">
+				<input type="button" onclick="searchCheck(this.form)">
+			</form>
 			</div><!--.sch-->
 			<div class="table">
 				<c:forEach var="faq1" items="${faq1 }">
@@ -148,6 +175,18 @@
 					<p class="depth2">
 						<span>
 							${faq3.content }
+						</span>
+					</p>
+				</div>
+				</c:forEach>
+				<c:forEach var="faq_list" items="${faq_list }">
+				<div class="btn1">
+					<p class="depth1">
+						<span>${faq_list.title }</span>
+					</p>
+					<p class="depth2">
+						<span>
+							${faq_list.content }
 						</span>
 					</p>
 				</div>
