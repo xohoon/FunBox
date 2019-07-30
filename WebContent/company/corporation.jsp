@@ -2,13 +2,12 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="net.company.dto.CompanyListVO"%>
 <%@page import="net.company.dto.CompanyBean"%>
-<%@page import="mapperController.mapper"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
 	CompanyBean companyBean = (CompanyBean)request.getAttribute("companyBean");
 	ArrayList<CompanyListVO> leftCompanyList = (ArrayList<CompanyListVO>)request.getAttribute("leftCompanyList");
-	mapper mapper = new mapper();
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -99,27 +98,27 @@
                 <div>
                   <i><img src="img/corpor_icon3.png"></i>
                   <p>최소투자금액</p>
-                  <p><%=mapper.stringnumberChange(companyBean.getIv_min_amount()) %> Point</p>
+                  <p><fmt:formatNumber value="<%=companyBean.getIv_min_amount() %>" pattern="#,###" /> Point</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon4.png"></i>
                   <p>잔여구좌</p>
-                  <p><%=mapper.stringnumberChange(companyBean.getIv_balance_stock()) %></p>
+                  <p><fmt:formatNumber value="<%=companyBean.getIv_balance_stock() %>" pattern="#,###" /></p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon5.png"></i>
                   <p>현재모금액</p>
-                  <p><%=mapper.stringnumberChange(companyBean.getIv_current_amount()) %> Point</p>
+                  <p><fmt:formatNumber value="<%=companyBean.getIv_current_amount() %>" pattern="#,###" /> Point</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon6.png"></i>
                   <p>투자가능금액</p>
-                  <p><%=mapper.stringnumberChange(companyBean.getIv_possible_amount()) %> Point</p>
+                  <p><fmt:formatNumber value="<%=companyBean.getIv_possible_amount() %>" pattern="#,###" /> Point</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon7.png"></i>
                   <p>현재참여인원</p>
-                  <p><%=mapper.stringnumberChange(companyBean.getIv_current_participants()) %>명</p>
+                  <p><fmt:formatNumber value="<%=companyBean.getIv_current_participants() %>" pattern="#,###" />명</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon8.png"></i>
@@ -175,8 +174,8 @@
                 </div>
               </div>
               <div>
-                <p><%=mapper.stringnumberChange(companyBean.getIv_current_amount()) %></p>
-                <p><%=mapper.stringnumberChange(companyBean.getIv_goal_amount()) %></p>
+                <p><fmt:formatNumber value="<%=companyBean.getIv_current_amount() %>" pattern="#,###" /></p>
+                <p><fmt:formatNumber value="<%=companyBean.getIv_goal_amount() %>" pattern="#,###" /></p>
               </div>
             </div>
             <div class="bg">
@@ -228,7 +227,7 @@
                     </tr>
                     <tr>
                       <td>자본금</td>
-                      <td><%=mapper.stringnumberChange(companyBean.getCp_capital()) %></td>
+                      <td><fmt:formatNumber value="<%=companyBean.getCp_capital() %>" pattern="#,###" /></td>
                     </tr>
                     <tr>
                       <td>본사주소</td>
@@ -305,28 +304,28 @@
                 <tr>
                   <th colspan="2">매출</th>
 
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_sales()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_sales() %>" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th rowspan="4">비용</th>
                   <td>원재료(생선매입비용)</td>
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_stuff()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_stuff() %>" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <td>인건비</td>
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_costs_person()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_costs_person() %>" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <td>임대비</td>
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_lease_expenses()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_lease_expenses() %>" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <td>운영비</td>
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_operating_expenses()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_operating_expenses() %>" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th colspan="2">순수익</th>
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_net_income()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_net_income() %>" pattern="#,###" /> 원</td>
                 </tr>
               </table>
               <h4>월 평균 수익금 <span>(1구좌 당)</span><span>(단위 : 원 / 년)</span></h4>
@@ -334,26 +333,26 @@
                 <tr>
                   <th>현금 배당률</th>
                   <td>순수익의 50%</td>
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_cash_dividend_ratio()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_cash_dividend_ratio() %>" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th>지분</th>
                   <td>1%</td>
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_share()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_share() %>" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th>플랫폼 이용료</th>
                   <td>지분의 10.5%</td>
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_platform()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_platform() %>" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th>예상 수익금</th>
                   <td>지분 - 플랫폼 이용료</td>
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_proceeds()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_proceeds() %>" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th colspan="2">월 평균</th>
-                  <td style="color: #ff9123"><%=mapper.intnumberChange(companyBean.getCp_pre_avg_monthly()) %> 원</td>
+                  <td style="color: #ff9123"><fmt:formatNumber value="<%=companyBean.getCp_pre_avg_monthly() %>" pattern="#,###" /> 원</td>
                 </tr>
               </table>
               <h4>1금융권 정기 예금과 평균 비교</h4>
@@ -361,11 +360,11 @@
                 <tr>
                   <th>실 수익률</th>
                   <td>(지급이자 - 플랫폼 이용료) / 원금</td>
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_net_profit_ratio()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_net_profit_ratio() %>" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th colspan="2">1금융권 정기예금 평균 금리</th>
-                  <td><%=mapper.intnumberChange(companyBean.getCp_pre_interest_rate()) %> 원</td>
+                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_interest_rate() %>" pattern="#,###" /> 원</td>
                 </tr>
                 <tr></tr>
               </table>

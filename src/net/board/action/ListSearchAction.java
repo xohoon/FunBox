@@ -14,10 +14,6 @@ public class ListSearchAction implements Action{
 		
 		
 		BoardDAO boardDAO = new BoardDAO();
-		String key_word = (String)request.getAttribute("key_word");
-		boardDAO.Faq_Search(key_word);
-		
-		System.out.println("ListSearchAction >> " + key_word);
 	
 	return null;
 	}

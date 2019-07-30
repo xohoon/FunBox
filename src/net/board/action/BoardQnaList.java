@@ -23,9 +23,6 @@ public class BoardQnaList implements Action{
 		ActionForward forward = new ActionForward();
 		HttpSession session = request.getSession();
 		
-
-		
-		
 		String id = (String) session.getAttribute("id");
 
 		if (session.getAttribute("id") == null) {
@@ -40,6 +37,8 @@ public class BoardQnaList implements Action{
 			return null;
 		}
 		
+		System.out.println("세션 아이디값 확인 : " + id);
+		
 		
 		////////////////페이징 처리 ////////////////
 		// 한 페이지 당 보여줄 글 갯수
@@ -47,28 +46,38 @@ public class BoardQnaList implements Action{
 		// 페이지그룹안의 페이지 갯수 ex) [이전] 1 2 3 4 5 [다음] 일 경우 페이지 갯수는 5
 		int pageGroupSize = 5;
 
-		String pageNum = request.getParameter("pageNum");// 페이지 번호
+		String pageNum = request.getParameter("pageNum");// 페이지 번호 / 1
 		if (pageNum == null) {
 			pageNum = "1";
 		}
 		int currentPage = Integer.parseInt(pageNum);
-
-		int startRow = (currentPage - 1) * pageSize + 1;// 한 페이지의 시작글 번호
-		int endRow = currentPage * pageSize;// 한 페이지의 마지막 글번호
+		System.out.println("currentPage : "+currentPage);
+		
+		int startRow = (currentPage - 1) * pageSize + 1;// 한 페이지의 시작글 번호 / 1
+		System.out.println("startRow : "+startRow);
+		
+		int endRow = currentPage * pageSize;// 한 페이지의 마지막 글번호 / 10
+		System.out.println("endRow : "+endRow);
+		
 		int count = 0;
 		int number = 0;
 
 		List<QnaVO> qna_list = null;
 		BoardDAO qna_dao = new BoardDAO();
-		count = qna_dao.qnaCount();// 전체 글의 수 불러오기
+		
+		
+		// 여기 잘못 됨
+		count = qna_dao.qnaCount(id);// 전체 글의 수 불러오기
+		System.out.println("해당 DB 글  개수"+count);
 		
 
-		if (count > 0) {
-			if (endRow > count)
+		if (count > 0) { // 있을때
+			if (endRow > count) {
 				endRow = count;
+			}
+			
 			BoardDAO qna_dao2 = new BoardDAO();
 			qna_list = qna_dao2.getQnaList(id, startRow - 1, pageSize);// 현재 페이지에 해당하는 글 목록불러오기
-			
 
 		} else {
 			BoardDAO qna_dao2 = new BoardDAO();
@@ -84,16 +93,32 @@ public class BoardQnaList implements Action{
 		//이다.
 		int numPageGroup = (int) Math.ceil((double) currentPage / pageGroupSize);
 		
-		request.setAttribute("currentPage", new Integer(currentPage));
-		request.setAttribute("startRow", new Integer(startRow));
-		request.setAttribute("endRow", new Integer(endRow));
-		request.setAttribute("count", new Integer(count));
-		request.setAttribute("pageSize", new Integer(pageSize));
+		request.setAttribute("currentPage", new Integer(currentPage)); //1
+		System.out.println(currentPage);
+		
+		request.setAttribute("startRow", new Integer(startRow)); //1
+		System.out.println(startRow);
+		
+		request.setAttribute("endRow", new Integer(endRow)); //7
+		System.out.println(endRow);
+		
+		request.setAttribute("count", new Integer(count)); //7
+		System.out.println(count);
+		
+		request.setAttribute("pageSize", new Integer(pageSize)); //10
+		System.out.println(pageSize);
 
-		request.setAttribute("number", new Integer(number));
-		request.setAttribute("pageGroupSize", new Integer(pageGroupSize));
-		request.setAttribute("numPageGroup", new Integer(numPageGroup));
-		request.setAttribute("pageGroupCount", new Integer(pageGroupCount));
+		request.setAttribute("number", new Integer(number)); //7
+		System.out.println(number);
+		
+		request.setAttribute("pageGroupSize", new Integer(pageGroupSize)); //5
+		System.out.println(pageGroupSize);
+		
+		request.setAttribute("numPageGroup", new Integer(numPageGroup)); //1
+		System.out.println(numPageGroup);
+		
+		request.setAttribute("pageGroupCount", new Integer(pageGroupCount)); //1
+		System.out.println(pageGroupCount);
 
 		
 		// 1:1문의 리스트 가져오기

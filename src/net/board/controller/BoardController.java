@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.board.action.BoardQnaAction;
 import net.board.action.BoardQnaList;
 import net.board.action.FaqAction;
-import net.board.action.FaqSearchAction;
 import net.board.action.ListAction;
 import net.board.action.NoticeAction;
 import net.board.action.ListSearchAction;
@@ -96,14 +95,13 @@ public class BoardController extends HttpServlet implements Servlet{
 				e.printStackTrace();
 			}
 			
-		}else if (command.equals("/Faq.bd")) { // 고객지원 - 공지사항 불러오기
+		}else if (command.equals("/Faq.bd")) { // FAQ 불러오기 및 페이징 처리
 			action = new FaqAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
-			
+			}	
 		}
 		
 		/////////////////// 태훈 추가 start ///////////////////
@@ -114,16 +112,7 @@ public class BoardController extends HttpServlet implements Servlet{
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-		}else if(command.equals("/search_faq.bd")) {
-			action = new FaqSearchAction();
-			try {
-				forward = action.execute(request, response);
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
 		}
-		
-		
 		/////////////////// 태훈 추가 end ///////////////////
 		
 		///////////////////////유정 추가 end///////////////////////
