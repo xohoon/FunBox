@@ -10,28 +10,26 @@ import net.board.dto.FaqVO;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 
-// 유정 고객지원 - FAQ
-public class FaqAction implements Action{
-
+//유정 고객지원 - FAQ
+public class FaqSearchAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); //한글처리
-		
-		//FAQ 불러오기
-		System.out.println("FaqAction OK");
+	
+		System.out.println("FaqSearchAction OK");
 		ActionForward forward = new ActionForward();
-
-		BoardDAO bd_dao1 = new BoardDAO();
-		ArrayList<FaqVO> faq1 = bd_dao1.getFaq(1);
 		
-		BoardDAO bd_dao2 = new BoardDAO();
-		ArrayList<FaqVO> faq2 = bd_dao2.getFaq(2);
+		//FAQ 키워드 검색
+		String keyword = request.getParameter("keyword");
+		System.out.println(keyword);
 		
-		BoardDAO bd_dao3 = new BoardDAO();
-		ArrayList<FaqVO> faq3 = bd_dao3.getFaq(3);
+		int category = Integer.parseInt(request.getParameter("category"));
+		System.out.println(category);
 		
-		request.setAttribute("faq1", faq1);
-		request.setAttribute("faq2", faq2);
-		request.setAttribute("faq3", faq3);
+		BoardDAO dao = new BoardDAO();
+		ArrayList<FaqVO> faq_list = dao.searchFaq(keyword, category);
+		System.out.println(faq_list);
+		
+		request.setAttribute("faq_list", faq_list);
 		
 		forward.setRedirect(false);
 		forward.setPath("./board/faq.jsp");
