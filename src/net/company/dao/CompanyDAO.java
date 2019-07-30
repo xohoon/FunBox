@@ -473,7 +473,8 @@ public class CompanyDAO {
 			// 쿼리
 			String sql = "SELECT *,"
 					+ "concat(b.cf_directory,b.cf_image1) as cf_directory_image1,concat(b.cf_directory,b.cf_image2) as cf_directory_image2,concat(b.cf_directory,b.cf_image3) as cf_directory_image3,concat(b.cf_directory,b.cf_image4) as cf_directory_image4,concat(b.cf_directory,b.cf_image5) as cf_directory_image5,concat(b.cf_directory,b.cf_image6) as cf_directory_image6 , c.iv_current_amount/iv_goal_amount*100 "
-					+ "FROM company as a " + "JOIN company_file as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
+					+ "FROM company as a " 
+					+ "JOIN company_file as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
 					+ "JOIN company_invest as c ON a.cp_idx = c.cp_idx "
 					+ "JOIN company_lease as d ON a.cp_idx = d.cp_idx "
 					+ "JOIN company_pay_schedule as e ON a.cp_idx = e.cp_idx "
