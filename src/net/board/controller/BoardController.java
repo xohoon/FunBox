@@ -96,8 +96,16 @@ public class BoardController extends HttpServlet implements Servlet{
 				e.printStackTrace();
 			}
 			
-		}else if (command.equals("/Faq.bd")) { // 고객지원 - 공지사항 불러오기
+		}else if (command.equals("/Faq.bd")) { // 고객지원 - FAQ
 			action = new FaqAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}else if (command.equals("/search_faq.bd")) { // 고객지원 - FAQ 검색기능
+			action = new FaqSearchAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

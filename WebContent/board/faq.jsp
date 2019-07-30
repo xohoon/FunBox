@@ -13,13 +13,14 @@
 	ArrayList<FaqVO> faq3 = (ArrayList<FaqVO>)request.getAttribute("faq3");
 	
 	ArrayList<FaqVO> faq_list = (ArrayList<FaqVO>)request.getAttribute("faq_list");
+	int cate = (Integer)request.getAttribute("cate");
 %>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <title></title>
+  <title>FAQ</title>
 
   <!--[if lt IE 9]>
       <script src="./js/html5.js"></script>
@@ -90,6 +91,7 @@
 		  });
 	  });
 	  
+	  
 	  function searchCheck(frm){
 		  
 		  if(frm.keyword.value==''){
@@ -98,8 +100,8 @@
 			return false;
 		  }
 		  frm.submit();
-		  
 	  }
+	  
 	  function cateval(){
 		  $("#button1").click(function(){
 			  $("#category").val('1');
@@ -130,7 +132,7 @@
 		<div class="faq">
 			<h4>FAQ</h4>
 			<h5>궁금한 점이 있다면 여기서 먼저 찾아보세요</h5>
-			<button class="on">전체FAQ</button>
+			<button id="button0" class="on">전체FAQ</button>
 			<button id="button1" onclick="cateval();">입출금관련FAQ</button>
 			<button id="button2" onclick="cateval();">투자관련FAQ</button>
 			<button id="button3" onclick="cateval();">기타FAQ</button>
@@ -179,6 +181,49 @@
 					</p>
 				</div>
 				</c:forEach>
+				
+				
+				<form name="cateForm">
+					<input type="hidden" name="cate" value="${cate }">
+				</form>
+				<script>
+				 $(function(){
+					var f = document.cateForm;
+					
+					if(f.cate.value == 1){
+						$('.faq > button').removeClass('on');
+						$('#button1').addClass('on');
+					}else if(f.cate.value == 2){
+						$('.faq > button').removeClass('on');
+						$('#button2').addClass('on');
+					}else if(f.cate.value == 3){
+						$('.faq > button').removeClass('on');
+						$('#button3').addClass('on');
+					}else if(f.cate.value == 0){
+						$('.faq > button').removeClass('on');
+						$('#button0').addClass('on');
+					}
+				});
+				</script>
+				
+				
+				<!-- 검색한 값 보여주기 -->
+				<c:set var="cate" value="${cate }"/>
+				<c:if test="${cate == 0}">
+				<c:forEach var="faq_list" items="${faq_list }">
+				<div class="btn0">
+					<p class="depth1">
+						<span>${faq_list.title }</span>
+					</p>
+					<p class="depth2">
+						<span>
+							${faq_list.content }
+						</span>
+					</p>
+				</div>
+				</c:forEach>
+				</c:if>
+				<c:if test="${cate == 1}">
 				<c:forEach var="faq_list" items="${faq_list }">
 				<div class="btn1">
 					<p class="depth1">
@@ -191,7 +236,38 @@
 					</p>
 				</div>
 				</c:forEach>
-			</div><!--.table-->
+				</c:if>
+				<c:if test="${cate == 2}">
+				<c:forEach var="faq_list" items="${faq_list }">
+				<div class="btn2">
+					<p class="depth1">
+						<span>${faq_list.title }</span>
+					</p>
+					<p class="depth2">
+						<span>
+							${faq_list.content }
+						</span>
+					</p>
+				</div>
+				</c:forEach>
+				</c:if>
+				<c:if test="${cate == 3}">
+				<c:forEach var="faq_list" items="${faq_list }">
+				<div class="btn3">
+					<p class="depth1">
+						<span>${faq_list.title }</span>
+					</p>
+					<p class="depth2">
+						<span>
+							${faq_list.content }
+						</span>
+					</p>
+				</div>
+				</c:forEach>
+				</c:if>
+				</div><!--.table-->
+				
+				
 			<a href="#" class="prev">◀</a>
 			<ul class="pager">
 				<li class="on">1</li>
