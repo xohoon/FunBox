@@ -99,29 +99,40 @@ $(document).ready(function() {
 			$('#con3_all').prop('checked', false);
 		}
 	});
+	/* 검색버튼 클릭시 통신
+	$("#search_btn").on('click', function() {
+		var key_word = $("#search_ajax").val();
+		console.log("data??>>>"+key_word)
+		search_ajax();
+	});
+	*/
+	// 검색어 타이핑 시 실시간 통신
+	$("#search_ajax").keyup(function() {
+		var key_word = $("#search_ajax").val();
+		console.log("data??>>>"+key_word)
+		search_ajax();
+	});
 });
-/*
-var search_list = [];
-$("input[class='sector_ckbox']:checked").each(function(i) {
-	search_list.push($(this).val());
-});
-*/
-function search_ajax(){
-    $.ajax({
-        type: "POST",
-        url : "./ListSearchAction.bd",
-        data: JSON.stringify(ArrayList),
-        dataType : "json",
-        contentType : "application; charset=utf-8",
-        success : function(data){
-            //success function
-            //TIP : location.herf = "사용할 URL" 하면 GET방식으로 
-        },
-        error : function(){
-            //error function
-        }
-    });
+
+function search_ajax() {
+	$.ajax({
+		type: "POST",
+		url: "./ListSearchAction.bd",
+		async: false,
+		cache: false,
+		dataType: "JSON",
+		data: { key_word : $("#search_ajax").val() },
+		success: function(result) {
+			console.log("성공좀해라"+result);
+		},
+		error: function(request, status, error) {
+			console.log("request>>"+request);
+			console.log("status>>"+status);
+			console.log("error>>" +error);
+		}
+	})
 }
+
 
 
 
