@@ -208,10 +208,13 @@
 	                <p>${searchVO.search_cp_branch }</p>
 	              </div>
 	              <div class="gage">
-	                <div class="per"><span><fmt:parseNumber value ="${searchVO.search_cp_percent }" integerOnly ="true" />
-	                </span>%</div>
+	                <div class="per">
+	                	<span><fmt:parseNumber value ="${searchVO.search_cp_percent }" integerOnly ="true" /></span>%
+	                </div>
 	                <div class="gage_full">
-	                  <div class="gage_fill"></div>
+	                  <div class="gage_fill">
+						<span></span>	                  
+	                  </div>
 	                </div>
 	                <div>
 	                  <span class="p_amt"><span><fmt:formatNumber value="${searchVO.search_cp_current_amount }" pattern="#,###" />
@@ -221,7 +224,6 @@
 	                </div>
 	              </div>
 	              <div class="reward_per">
-	                수익률
 	                <span>${searchVO.search_cp_profit }</span>
 	              </div>
 	            </div>

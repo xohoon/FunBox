@@ -171,7 +171,8 @@
               <p><%=companyBean.getIv_percent() %>%</p>
               <div class="gage">
                 <div>
-                  <span>${companyBean.iv_percent}</span>
+                  <fmt:parseNumber var="test" value="${companyBean.iv_percent}" integerOnly = "true" />
+                  <span>${test}</span>
                 </div>
               </div>
               <div>
