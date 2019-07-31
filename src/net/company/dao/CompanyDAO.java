@@ -54,7 +54,7 @@ public class CompanyDAO {
 	public boolean insertApp(ApplicationVO company) {
 		String sql = "INSERT INTO company_application("
 				// application01
-				+ "app_cp_name, app_cp_manager, app_cp_hp, app_cp_num, app_cp_ch, app_cp_more, app_cp_extra, app_cp_sector, app_cp_open_date_time, app_cp_prestige, app_cp_deposit, app_cp_monthly, "
+				+ "app_cp_name, app_cp_manager, app_cp_hp, app_cp_num, app_cp_ch, app_cp_more, app_cp_extra, app_cp_sector, app_cp_open_date_time, app_cp_prestige, app_cp_deposit, app_cp_monthly, app_cp_status, "
 				// application02
 				+ "app_cp_goal_amount, app_cp_avg_monthly_profit, app_cp_monthly_profit, app_cp_during, app_cp_inv_min_amount, "
 				// application03
@@ -62,7 +62,7 @@ public class CompanyDAO {
 				// application04
 				+ "app_cp_registrantion, app_cp_financial, app_cp_estate_contract, app_cp_image1, app_cp_image2, app_cp_image3, app_cp_image4, app_cp_image5, app_cp_other_document1, app_cp_other_document2, app_cp_other_document3, app_cp_other_document4, app_cp_other_document5, app_cp_real_path, "
 				+ "	mb_idx" + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 35)";
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 35)";
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -81,35 +81,36 @@ public class CompanyDAO {
 			pstmt.setString(10, company.getApp_cp_prestige());
 			pstmt.setString(11, company.getApp_cp_deposit());
 			pstmt.setString(12, company.getApp_cp_monthly());
+			pstmt.setInt(13, company.getApp_cp_status());
 
 			///// 태훈 /////
-			pstmt.setString(13, company.getApp_cp_goal_amount());
-			pstmt.setString(14, company.getApp_cp_avg_monthly_profit());
-			pstmt.setString(15, company.getApp_cp_monthly_profit());
-			pstmt.setString(16, company.getApp_cp_during());
-			pstmt.setString(17, company.getApp_cp_inv_min_amount());
+			pstmt.setString(14, company.getApp_cp_goal_amount());
+			pstmt.setString(15, company.getApp_cp_avg_monthly_profit());
+			pstmt.setString(16, company.getApp_cp_monthly_profit());
+			pstmt.setString(17, company.getApp_cp_during());
+			pstmt.setString(18, company.getApp_cp_inv_min_amount());
 
 			///// 유정 /////
-			pstmt.setString(18, company.getApp_cp_introduction());
-			pstmt.setString(19, company.getApp_cp_purpose());
-			pstmt.setString(20, company.getApp_cp_point());
+			pstmt.setString(19, company.getApp_cp_introduction());
+			pstmt.setString(20, company.getApp_cp_purpose());
+			pstmt.setString(21, company.getApp_cp_point());
 
 			///// 신규 /////
-			pstmt.setString(21, company.getApp_cp_registrantion());
-			pstmt.setString(22, company.getApp_cp_financial());
-			pstmt.setString(23, company.getApp_cp_estate_contract());
-			pstmt.setString(24, company.getApp_cp_image1());
-			pstmt.setString(25, company.getApp_cp_image2());
-			pstmt.setString(26, company.getApp_cp_image3());
-			pstmt.setString(27, company.getApp_cp_image4());
-			pstmt.setString(28, company.getApp_cp_image5());
-			pstmt.setString(29, company.getApp_cp_other_document1());
-			pstmt.setString(30, company.getApp_cp_other_document2());
-			pstmt.setString(31, company.getApp_cp_other_document3());
-			pstmt.setString(32, company.getApp_cp_other_document4());
-			pstmt.setString(33, company.getApp_cp_other_document5());
-			pstmt.setString(34, company.getApp_cp_real_path());
-
+			pstmt.setString(22, company.getApp_cp_registrantion());
+			pstmt.setString(23, company.getApp_cp_financial());
+			pstmt.setString(24, company.getApp_cp_estate_contract());
+			pstmt.setString(25, company.getApp_cp_image1());
+			pstmt.setString(26, company.getApp_cp_image2());
+			pstmt.setString(27, company.getApp_cp_image3());
+			pstmt.setString(28, company.getApp_cp_image4());
+			pstmt.setString(29, company.getApp_cp_image5());
+			pstmt.setString(30, company.getApp_cp_other_document1());
+			pstmt.setString(31, company.getApp_cp_other_document2());
+			pstmt.setString(32, company.getApp_cp_other_document3());
+			pstmt.setString(33, company.getApp_cp_other_document4());
+			pstmt.setString(34, company.getApp_cp_other_document5());
+			pstmt.setString(35, company.getApp_cp_real_path());
+			
 			result = pstmt.executeUpdate();
 			System.out.println(pstmt);
 			if (result != 0) {
