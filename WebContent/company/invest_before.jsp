@@ -72,7 +72,11 @@ pageEncoding="UTF-8"%>
               </div>
             </div>
             
+<<<<<<< HEAD
+			<div class="cost"><span><%=companyBean.getIv_min_amount() %></span> point</div>
+=======
             <div class="cost"><span><%=companyBean.getIv_min_amount() %></span> point</div>
+>>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
             <div class="quantity">
               <input type="number" name="select" min="1" step="1" value="1">
             </div>

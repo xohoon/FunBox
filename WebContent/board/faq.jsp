@@ -7,11 +7,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="kr">
+
 <%
 	ArrayList<FaqVO> faq1 = (ArrayList<FaqVO>)request.getAttribute("faq1");
 	ArrayList<FaqVO> faq2 = (ArrayList<FaqVO>)request.getAttribute("faq2");
 	ArrayList<FaqVO> faq3 = (ArrayList<FaqVO>)request.getAttribute("faq3");
-	
 	ArrayList<FaqVO> faq_list = (ArrayList<FaqVO>)request.getAttribute("faq_list");
 	int cate = (Integer)request.getAttribute("cate");
 %>
@@ -21,22 +21,20 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <title>FAQ</title>
-
   <!--[if lt IE 9]>
       <script src="./js/html5.js"></script>
    <![endif]-->
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/jquery.bxslider.css" rel="stylesheet">
-
   <link href="css/service.css" rel="stylesheet">
   <link href="css/list_box.css" rel="stylesheet">
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="js/jquery.bxslider.min.js"></script>
+ <script type="text/javascript" src="jquery-2.2.2.min.js"></script>
+
+  <script type="text/javascript"></script>
   <script>
-    $(function() {
-      $('header').load('./header/header.jsp')
-      $('footer').load('./footer/footer.jsp')
-    });
+
 	  
 	  
 	  $(function(){
@@ -90,8 +88,7 @@
 			  });
 		  });
 	  });
-	  
-	  
+
 	  function searchCheck(frm){
 		  
 		  if(frm.keyword.value==''){
@@ -105,14 +102,18 @@
 	  function cateval(){
 		  $("#button1").click(function(){
 			  $("#category").val('1');
+			  $("#category_number").val('1');
 		  });
 		  $("#button2").click(function(){
 			  $("#category").val('2');
+			  $("#category_number").val('2');
 		  });
 		  $("#button3").click(function(){
 			  $("#category").val('3');
-		  });
-	  }
+			  $("#category_number").val('3');
+		  });		  	  
+	}
+	  
   </script>
 
 </head>
@@ -132,17 +133,17 @@
 		<div class="faq">
 			<h4>FAQ</h4>
 			<h5>궁금한 점이 있다면 여기서 먼저 찾아보세요</h5>
-			<button id="button0" class="on">전체FAQ</button>
-			<button id="button1" onclick="cateval();">입출금관련FAQ</button>
-			<button id="button2" onclick="cateval();">투자관련FAQ</button>
-			<button id="button3" onclick="cateval();">기타FAQ</button>
+				<button id="button0" class="on">전체FAQ</button>
+				<button id="button1" onclick="cateval();">입출금관련FAQ</button>
+				<button id="button2" onclick="cateval();">투자관련FAQ</button>
+				<button id="button3" onclick="cateval();">기타FAQ</button>
 			<div class="sch">
-			<form name="search" method="post" action="./search_faq.bd">
-				<label>키워드로 검색해보세요</label>
-				<input type="text" id="search_faq" name="keyword">
-				<input type="hidden" id="category" name="category" value="0">
-				<input type="button" onclick="searchCheck(this.form)">
-			</form>
+				<form name="search" method="post" action="./search_faq.bd">
+					<label>키워드로 검색해보세요</label>
+					<input type="text" id="search_faq" name="keyword">
+					<input type="hidden" id="category" name="category" value="0">
+					<input type="button" onclick="searchCheck(this.form)">
+				</form>
 			</div><!--.sch-->
 			<div class="table">
 				<c:forEach var="faq1" items="${faq1 }">
@@ -181,8 +182,6 @@
 					</p>
 				</div>
 				</c:forEach>
-				
-				
 				<form name="cateForm">
 					<input type="hidden" name="cate" value="${cate }">
 				</form>
@@ -224,7 +223,7 @@
 				</c:forEach>
 				</c:if>
 				<c:if test="${cate == 1}">
-				<c:forEach var="faq_list" items="${faq_list }">
+				<c:forEach var="faq_list" items="${faq_list}">
 				<div class="btn1">
 					<p class="depth1">
 						<span>${faq_list.title }</span>
@@ -267,18 +266,51 @@
 				</c:if>
 				</div><!--.table-->
 				
-				
-			<a href="#" class="prev">◀</a>
 			<ul class="pager">
-				<li class="on">1</li>
-				<li>2</li>
-				<li>3</li>
+				<c:if test="${count > 0}">
+					<c:set var="pageCount" value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" /> 
+					<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
+					<c:set var="endPage" value="${startPage + pageGroupSize-1}" />
+					
+					<c:if test="${endPage > pageCount}">
+						<c:set var="endPage" value="${pageCount}" />
+					</c:if>
+					<c:if test="${numPageGroup > 1}">
+						<a href="./Faq.bd?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">◀</a>
+					</c:if>
+					
+					<ul class="pager">
+						<c:forEach var="i" begin="${startPage}" end="${endPage}">
+							<c:choose>
+								<c:when test="${currentPage == i}">
+									<b><a class="on" href="./Faq.bd?pageNum=${i}"><font size=3>${i}</font></a></b>
+								</c:when>
+								<c:otherwise>
+									<a href="./Faq.bd?pageNum=${i}">
+									<font size=3>${i}</font></a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</ul>
+					
+					<c:if test="${numPageGroup < pageGroupCount}">
+						<a href="./Faq.bd?pageNum=${numPageGroup*pageGroupSize+1}" class="next">▶</a>
+					</c:if>
+				</c:if>
 			</ul><!--.pager-->
-			<a href="#" class="next">▶</a>
 		</div><!--.qna_list-->
 	</section>
 
     <footer></footer>
   </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		  $('#button').trigger('click');	  
+	});
 
+  $(function() {
+    $('header').load('./header/header.jsp')
+    $('footer').load('./footer/footer.jsp')
+  });
+</script>
 </body></html>
