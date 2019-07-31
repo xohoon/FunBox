@@ -477,7 +477,7 @@ input[type="file"]{
 	float:none;
 }
 .step3 span, .step4 span{
-	display:block;
+	display:inline-block;
 	font-size:14px;
 	color:#73a6d6;
 	margin-bottom:8px;
@@ -514,6 +514,32 @@ input[type="checkbox"]{
 .application .prev:hover{
 	border:1px solid #ff9124;
 	color:#ff9124;
+}
+input[name="yet1"],input[name="yet2"],input[name="yet3"],input[name="yet4"]{
+  float:right;
+  margin-right:8px;
+  line-height:14px;
+  margin-top:4px;
+}
+label[for="yet1"],label[for="yet2"],label[for="yet3"],label[for="yet4"]{
+  font-size:14px;
+  float:right;
+  line-height:14px;
+  color:#777;
+  margin-top:4px;
+}
+.step1 select{
+  display:block;
+  height:32px;
+  padding:0 36px 0 24px;
+  background:url(../img/ico_arrow.png) no-repeat right 8px center/ auto 8px;
+  border-radius:4px;
+  float:right;
+  margin-right:8px;
+  
+}
+input[name="open_datetime"]{
+  max-width:164px;
 }
 /*************************************************************************application*******/
 
@@ -589,6 +615,9 @@ input[type="checkbox"]{
 		width:calc(100% - 104px);
 		max-width:none;
 	}
+  input[name="open_datetime"]{
+    max-width:calc(100% - 116px);
+  }
 }
 
 @media all and (max-width:355px){
