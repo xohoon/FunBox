@@ -19,17 +19,24 @@ public class CorporationAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		ActionForward forward = new ActionForward();
-
-//		System.out.println("CorporationAction OK!");
+		System.out.println("CorporationAction OK!");
 		
 		CompanyBean company = new CompanyBean();		
 		ArrayList<CompanyListVO> leftCompanyList = new ArrayList<CompanyListVO>();
+		int cp_idx = 1;
 		
-//		int idx = Integer.parseInt(request.getParameter("idx"));
+		try {
+			String idx = request.getParameter("cp_idx");
+			cp_idx = Integer.parseInt(idx);
+			System.out.println("transidx 확인:" + cp_idx);	
+		}catch(NumberFormatException e) {
+			System.out.println("NumberFormatException 에러: " + e);
+		}
+		
 		
 		CompanyDAO company_dao = new CompanyDAO();
 		
-		company = company_dao.getCompanyInfo2(1);		
+		company = company_dao.getCompanyInfo2(cp_idx);		
 		request.setAttribute("companyBean", company);
 		
 		CompanyDAO company_dao2 = new CompanyDAO();
