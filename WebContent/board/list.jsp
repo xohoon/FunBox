@@ -46,15 +46,15 @@
           </div>
 
           <div class="search">
-            <input type="search" placeholder="추천 키워드 '바른생선회'" id="search_ajax">
+            <input type="search" placeholder="추천 키워드 '바른생선회'" id="search_text">
             <input type="button" value="검색" id="search_btn">
           </div>
 
           <div class="list_set">
-            <select>
-              <option>등록순</option>
-              <option>추천순</option>
-              <option>수익순</option>
+            <select id="select_option">
+              <option value="0">등록순</option>
+              <option value="1">추천순</option>
+              <option value="2">수익순</option>
             </select>
           </div>
 
@@ -208,7 +208,7 @@
 	                <p>${searchVO.search_cp_branch }</p>
 	              </div>
 	              <div class="gage">
-	                <div class="per"><span><fmt:parseNumber value ="${searchVO.search_cp_percent }" integerOnly ="true" />
+	                <div class="per"><span>${searchVO.search_cp_percent }
 	                </span>%</div>
 	                <div class="gage_full">
 	                  <div class="gage_fill"></div>
@@ -222,7 +222,7 @@
 	              </div>
 	              <div class="reward_per">
 	                수익률
-	                <span>${searchVO.search_cp_profit }</span>
+	                <span>${searchVO.search_cp_profit }%</span>
 	              </div>
 	            </div>
        	 </c:forEach>

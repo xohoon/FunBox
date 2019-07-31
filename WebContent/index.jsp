@@ -171,7 +171,7 @@
 	          </div>
 	          <div class="reward_per">
 	            수익률
-	            <span>${likeVO.lk_cp_profit }</span>
+	            <span>${likeVO.lk_cp_profit }%</span>
 	          </div>
 	        </div>
       </c:forEach>
@@ -262,7 +262,7 @@
               		</div>
               	</div>
               	<div class="reward_per">
-              		수익률<span>${mainPageDeadLineVO.cp_monthly_profit}</span>
+              		수익률<span>${mainPageDeadLineVO.cp_monthly_profit}%</span>
 	            </div>
           	</div>
           </c:forEach>

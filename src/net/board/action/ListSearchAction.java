@@ -6,14 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
 
 import net.board.dao.BoardDAO;
-import net.board.dto.Board_Search_ListVO;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 
@@ -21,6 +15,7 @@ import net.common.action.ActionForward;
 public class ListSearchAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); //한글처리
+		@SuppressWarnings("unused")
 		ActionForward forward = new ActionForward();
 		BoardDAO boardDAO = new BoardDAO();
 		
@@ -34,6 +29,15 @@ public class ListSearchAction implements Action{
 		String[] list_sector = request.getParameterValues("list_sector[]");
 		String[] list_city = request.getParameterValues("list_city[]");
 		String[] list_status = request.getParameterValues("list_status[]");
+		String select_value = request.getParameter("select_value");
+		String getKeyword = request.getParameter("getKeyword");
+		System.out.println("action>>>>>"+getKeyword);
+		
+		// 검색어 null 일때
+		if(getKeyword == null) {
+			getKeyword = "검색어없음";
+		}
+		System.out.println("action>>>>>"+getKeyword);
 		
 		// 배열 뽑아내기
 		if(list_sector != null) {
@@ -55,13 +59,13 @@ public class ListSearchAction implements Action{
 			}
 		}
 		// 차라리 하나로 몰자...
+		list_all.add(getKeyword);
 		list_all.addAll(sector);
 		list_all.addAll(city);
 		list_all.addAll(status);
-		
-		JSONArray search_list = boardDAO.Search_ListInfo(list_all);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+select_value);
+		JSONArray search_list = boardDAO.Search_ListInfo(list_all, select_value);
 		System.out.println("Action 최종 데이터:::" + search_list);
-		
 		
 		response.setContentType("application/x-json;charset=UTF-8");
     	response.getWriter().print(search_list);

@@ -355,16 +355,16 @@ public class BoardDAO {
 	        }catch (Exception ex) {
 				System.out.println("searchFaq ERROR: " + ex);
 			} finally {
-				if (rs != null)
-					try {
+				try {
+					if (rs != null)
 						rs.close();
-					} catch (SQLException ex) {
-					}
-				if (pstmt != null)
-					try {
+					if (pstmt != null)
 						pstmt.close();
-					} catch (SQLException ex) {
-					}
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
 			}
 	        return faq_list;
 	    } 
@@ -408,51 +408,51 @@ public class BoardDAO {
 		} catch (Exception ex) {
 			System.out.println("Board_Search_ListVO ERROR: " + ex);
 		} finally {
-			if (rs != null)
-				try {
+			try {
+				if (rs != null)
 					rs.close();
-				} catch (SQLException ex) {
-				}
-			if (pstmt != null)
-				try {
+				if (pstmt != null)
 					pstmt.close();
-				} catch (SQLException ex) {
-				}
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
 		}
 		return Search_list;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public JSONArray Search_ListInfo(ArrayList<String> list_all) throws Exception {
+	public JSONArray Search_ListInfo(ArrayList<String> list_all, String select_value) throws Exception {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ArrayList<Board_Search_ListVO> search_list = new ArrayList<Board_Search_ListVO>();
+		//ArrayList<Board_Search_ListVO> search_list = new ArrayList<Board_Search_ListVO>();
 		JSONArray jsonArr = new JSONArray();
 		System.out.println("DAO ALL>>1"+list_all);
+		System.out.println("DAO value>>1"+select_value);
 		// pstmt 변수로 지정
-		int pstmt_num = 0;
+		int pstmt_num = 0; 
 		
 		try {
 			// 쪼인해도되고안해도되고
-			String sql = "SELECT cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime "
+			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime "
 					+ "FROM company as cp "
-					+ "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx "
-					+ "WHERE ";
+					+ "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
 			
 			if(list_all != null) {
 				for(int i=0; i<list_all.size(); i++) {
 					if(i == 0) {
 						if(list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
-							sql += "CONCAT(cp.cp_funding_status) REGEXP ? ";
+							sql += "WHERE CONCAT(cp.cp_funding_status) REGEXP ? ";
 						}
 						if(list_all.get(i) == "21" || list_all.get(i) == "22") {
-							sql += "CONCAT(cp.cp_revenue_distribution_status) REGEXP ? ";
+							sql += "WHERE CONCAT(cp.cp_revenue_distribution_status) REGEXP ? ";
 						}
 						if(list_all.get(i) == "30") {
-							sql += "CONCAT(cp.cp_overdue_status) REGEXP ? ";
+							sql += "WHERE CONCAT(cp.cp_overdue_status) REGEXP ? ";
 						}
-						sql += "CONCAT(cp.cp_sector, cp.cp_add_ch) REGEXP ? ";
+						sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) REGEXP ? ";
 					} else {
 						if(list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
 							sql += "OR CONCAT(cp.cp_funding_status) REGEXP ? ";
@@ -463,11 +463,19 @@ public class BoardDAO {
 						if(list_all.get(i) == "30") {
 							sql += "OR CONCAT(cp.cp_overdue_status) REGEXP ? ";
 						}
-						sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch) REGEXP ? ";
+						sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) REGEXP ? ";
 					}
 				}
 			}
-			sql += "ORDER BY cp.cp_reg_datetime DESC";
+			
+			if(select_value.equals("1")) {
+				sql += "ORDER BY cp.cp_recommand_count DESC";
+			}else if(select_value.equals("2")) {
+				sql += "ORDER BY cp.cp_monthly_profit DESC";
+			}else {
+				sql += "ORDER BY cp.cp_reg_datetime DESC";
+			}
+			
 			pstmt = conn.prepareStatement(sql);
 			System.out.println(">>>>>>>"+sql);
 			if(list_all != null) {
@@ -496,16 +504,16 @@ public class BoardDAO {
 		} catch (Exception ex) {
 			System.out.println("검색 ERROR: " + ex);
 		} finally {
-			if (rs != null)
-				try {
+			try {
+				if (rs != null)
 					rs.close();
-				} catch (SQLException ex) {
-				}
-			if (pstmt != null)
-				try {
+				if (pstmt != null)
 					pstmt.close();
-				} catch (SQLException ex) {
-				}
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
 		}
 		return null;
 	}

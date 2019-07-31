@@ -662,16 +662,16 @@ public class CompanyDAO {
 		} catch (Exception ex) {
 			System.out.println("getInvestment 에러: " + ex);
 		} finally {
-			if (rs != null)
-				try {
+			try {
+				if (rs != null)
 					rs.close();
-				} catch (SQLException ex) {
-				}
-			if (pstmt != null)
-				try {
+				if (pstmt != null)
 					pstmt.close();
-				} catch (SQLException ex) {
-				}
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
 		}
 
 		return null;
@@ -694,16 +694,16 @@ public class CompanyDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (rs != null)
-				try {
+			try {
+				if (rs != null)
 					rs.close();
-				} catch (SQLException ex) {
-				}
-			if (pstmt != null)
-				try {
+				if (pstmt != null)
 					pstmt.close();
-				} catch (SQLException ex) {
-				}
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
 		}
 		return total;
 	}
