@@ -208,14 +208,9 @@
 	                <p>${searchVO.search_cp_branch }</p>
 	              </div>
 	              <div class="gage">
-<<<<<<< HEAD
-	                <div class="per"><span>${searchVO.search_cp_percent }
-	                </span>%</div>
-=======
 	                <div class="per">
 	                	<span><fmt:parseNumber value ="${searchVO.search_cp_percent }" integerOnly ="true" /></span>%
 	                </div>
->>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
 	                <div class="gage_full">
 	                  <div class="gage_fill">
 						<span></span>	                  
@@ -229,12 +224,8 @@
 	                </div>
 	              </div>
 	              <div class="reward_per">
-<<<<<<< HEAD
 	                수익률
 	                <span>${searchVO.search_cp_profit }%</span>
-=======
-	                <span>${searchVO.search_cp_profit }</span>
->>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
 	              </div>
 	            </div>
        	 </c:forEach>

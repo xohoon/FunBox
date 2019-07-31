@@ -34,9 +34,6 @@ public class ListSearchAction implements Action{
 		System.out.println("action>>>>>"+getKeyword);
 		
 		// 검색어 null 일때
-		if(getKeyword == null) {
-			getKeyword = "검색어없음";
-		}
 		System.out.println("action>>>>>"+getKeyword);
 		
 		// 배열 뽑아내기

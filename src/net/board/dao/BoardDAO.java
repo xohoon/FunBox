@@ -526,7 +526,15 @@ public class BoardDAO {
 		System.out.println("DAO ALL>>1"+list_all);
 		System.out.println("DAO value>>1"+select_value);
 		// pstmt 변수로 지정
-		int pstmt_num = 0; 
+		int pstmt_num = 0;
+		
+		String nothing = "검색어없음";
+		
+		for(int i=0; i<list_all.size(); i++) {
+			if(list_all.get(i).equals(nothing)) {
+				list_all.remove(i);
+			}
+		}
 		
 		try {
 			// 쪼인해도되고안해도되고
@@ -560,15 +568,24 @@ public class BoardDAO {
 						sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) REGEXP ? ";
 					}
 				}
+				if(select_value.equals("1")) {
+					sql += "ORDER BY cp.cp_recommand_count DESC";
+				}else if(select_value.equals("2")) {
+					sql += "ORDER BY cp.cp_monthly_profit DESC";
+				}else {
+					sql += "ORDER BY cp.cp_reg_datetime DESC";
+				}
+			}else {
+				if(select_value.equals("1")) {
+					sql += "ORDER BY cp.cp_recommand_count DESC";
+				}else if(select_value.equals("2")) {
+					sql += "ORDER BY cp.cp_monthly_profit DESC";
+				}else {
+					sql += "ORDER BY cp.cp_reg_datetime DESC";
+				}
 			}
 			
-			if(select_value.equals("1")) {
-				sql += "ORDER BY cp.cp_recommand_count DESC";
-			}else if(select_value.equals("2")) {
-				sql += "ORDER BY cp.cp_monthly_profit DESC";
-			}else {
-				sql += "ORDER BY cp.cp_reg_datetime DESC";
-			}
+			
 			
 			pstmt = conn.prepareStatement(sql);
 			System.out.println(">>>>>>>"+sql);

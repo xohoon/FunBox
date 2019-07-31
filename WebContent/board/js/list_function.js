@@ -223,9 +223,21 @@ function ckbox_list() {
 	});
 	
 	// 전역변수에 넣어준다
-	list_sector = list_sector_box;
-	list_city = list_city_box;
-	list_status = list_status_box;
+	if(!list_sector_box) {
+		list_sector = c;
+	}else {
+		list_sector = list_sector_box;
+	}
+	if(!list_city_box) {
+		list_city = c;
+	}else {
+		list_city = list_city_box;
+	}
+	if(!list_status_box) {
+		list_status = c;
+	}else {
+		list_status = list_status_box;
+	}
 	
 	console.log("list_sector:::"+list_sector);
 	console.log("list_city:::"+list_city);
@@ -244,7 +256,7 @@ function addLists(search_data) {
 			+"</div><div class=\"gage\">"
 			+"<div class=\"per\"><span>"+search_data.cp_percent+""
 			+"</span>%</div><div class=\"gage_full\"><div class=\"gage_fill\"></div>"
-			+"</div><div>"
+			+"<span></span></div><div>"
 			+"<span class=\"p_amt\"><span>"+search_data.cp_current+""
 			+"</span> / <span> "+search_data.cp_goal+""
 			+"</span> P</span><span class=\"d_day\">D-<span>27</span></span>"
