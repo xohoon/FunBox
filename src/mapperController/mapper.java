@@ -25,6 +25,14 @@ public class mapper{
 	    
 	}
 	
+	public String Stringsum(String number) {
+		int convert = Integer.parseInt(number); 
+		String result = "";
+		
+		
+		return result;
+	}
+	
 	/*
 	 * //콤바 뒤로 제거 public String removecoma(String number){
 	 * 

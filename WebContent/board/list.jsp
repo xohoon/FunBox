@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <title></title>
+  <title>기업 리스트</title>
 
   <!--[if lt IE 9]>
       <script src="./js/html5.js"></script>
@@ -198,7 +198,7 @@
 	        <div class="mom_box">
 	          <div class="boxwrap">
      	   <c:forEach var="searchVO" items="${searchVO }">
-	            <div class="corp_box" onclick="location.href='./CorporationAction.cp'">
+	            <div class="corp_box" onclick="location.href='./CorporationAction.cp?cp_idx=${searchVO.search_cp_idx}'">
 	              <div class="c_img">
 	                <img src="./img/row1_anotherminae.jpg" alt="">
 	              </div>
