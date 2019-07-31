@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import net.board.dto.Board_Search_ListVO;
 import net.board.dto.FaqVO;
 import net.board.dto.NoticeVO;
@@ -458,7 +461,7 @@ public class BoardDAO {
 					}
 			}
 	        return faq_list;
-	    }  
+	    } 
 
 	///////////////////////유정 추가 end///////////////////////
 		
@@ -513,40 +516,79 @@ public class BoardDAO {
 		return Search_list;
 	}
 	
-	public ArrayList<Board_Search_ListVO> Search_ListInfo(String key_word) throws Exception {
+	@SuppressWarnings("unchecked")
+	public JSONArray Search_ListInfo(ArrayList<String> list_all) throws Exception {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ArrayList<Board_Search_ListVO> Search_list = new ArrayList<Board_Search_ListVO>();
+		ArrayList<Board_Search_ListVO> search_list = new ArrayList<Board_Search_ListVO>();
+		JSONArray jsonArr = new JSONArray();
+		System.out.println("DAO ALL>>1"+list_all);
+		// pstmt 변수로 지정
+		int pstmt_num = 0;
 		
 		try {
-			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount "
-					+ "FROM company as cp, company_invest as cp_iv "
-					+ "WHERE cp.cp_idx = cp_iv.cp_idx "
-					+ "AND cp.cp_name LIKE ? "
-					+ "ORDER BY cp_reg_datetime DESC";
-
+			// 쪼인해도되고안해도되고
+			String sql = "SELECT cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime "
+					+ "FROM company as cp "
+					+ "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx "
+					+ "WHERE ";
+			
+			if(list_all != null) {
+				for(int i=0; i<list_all.size(); i++) {
+					if(i == 0) {
+						if(list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
+							sql += "CONCAT(cp.cp_funding_status) REGEXP ? ";
+						}
+						if(list_all.get(i) == "21" || list_all.get(i) == "22") {
+							sql += "CONCAT(cp.cp_revenue_distribution_status) REGEXP ? ";
+						}
+						if(list_all.get(i) == "30") {
+							sql += "CONCAT(cp.cp_overdue_status) REGEXP ? ";
+						}
+						sql += "CONCAT(cp.cp_sector, cp.cp_add_ch) REGEXP ? ";
+					} else {
+						if(list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
+							sql += "OR CONCAT(cp.cp_funding_status) REGEXP ? ";
+						}
+						if(list_all.get(i) == "21" || list_all.get(i) == "22") {
+							sql += "OR CONCAT(cp.cp_revenue_distribution_status) REGEXP ? ";
+						}
+						if(list_all.get(i) == "30") {
+							sql += "OR CONCAT(cp.cp_overdue_status) REGEXP ? ";
+						}
+						sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch) REGEXP ? ";
+					}
+				}
+			}
+			sql += "ORDER BY cp.cp_reg_datetime DESC";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%"+key_word+"%");
+			System.out.println(">>>>>>>"+sql);
+			if(list_all != null) {
+				for(int i=0; i<list_all.size(); i++) {
+					pstmt.setString(i+1, list_all.get(i));
+				}
+			}
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Board_Search_ListVO listVO = new Board_Search_ListVO();
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("cp_branch", rs.getString("cp_branch"));
+				jsonObj.put("cp_current_amount", rs.getString("iv_current_amount"));
+				jsonObj.put("cp_goal_amount", rs.getString("iv_goal_amount"));
+				jsonObj.put("cp_idx", rs.getString("cp_idx"));
+				jsonObj.put("cp_name", rs.getString("cp_name"));
+				jsonObj.put("percent", rs.getString("percent"));
+				jsonObj.put("cp_monthly_profit", rs.getString("cp_monthly_profit"));
+				jsonObj.put("cp_sector", rs.getString("cp_sector"));
 				
-				listVO.setSearch_cp_branch(rs.getString("cp_branch"));
-				listVO.setSearch_cp_current_amount(rs.getString("iv_current_amount"));
-				listVO.setSearch_cp_goal_amount(rs.getString("iv_goal_amount"));
-				listVO.setSearch_cp_idx(rs.getString("cp_idx"));
-				listVO.setSearch_cp_name(rs.getString("cp_name"));
-				listVO.setSearch_cp_percent(rs.getString("percent"));
-				listVO.setSearch_cp_profit(rs.getString("cp_monthly_profit"));
-				listVO.setSearch_cp_sector(rs.getString("cp_sector"));
 				
-				Search_list.add(listVO);
+				jsonArr.add(jsonObj);
 			}
+			return jsonArr;
 			
 		} catch (Exception ex) {
-			System.out.println("Board_Search_ListVO ERROR: " + ex);
+			System.out.println("검색 ERROR: " + ex);
 		} finally {
 			if (rs != null)
 				try {
@@ -559,7 +601,7 @@ public class BoardDAO {
 				} catch (SQLException ex) {
 				}
 		}
-		return Search_list;
+		return null;
 	}
 	
 	//////////////////// 태훈 추가 end //////////////////////////

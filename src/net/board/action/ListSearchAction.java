@@ -1,15 +1,16 @@
 package net.board.action;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
 
 import net.board.dao.BoardDAO;
 import net.board.dto.Board_Search_ListVO;
@@ -23,22 +24,48 @@ public class ListSearchAction implements Action{
 		ActionForward forward = new ActionForward();
 		BoardDAO boardDAO = new BoardDAO();
 		
-		String key_word = request.getParameter("key_word");
-		System.out.println("검색 리스트 >>>111"+request.getParameter("key_word"));
+		// 배열 선언
+		ArrayList<String> sector = new ArrayList<String>();
+		ArrayList<String> city = new ArrayList<String>();
+		ArrayList<String> status = new ArrayList<String>();
+		ArrayList<String> list_all = new ArrayList<String>();
 		
-		ArrayList<Board_Search_ListVO> search_list = boardDAO.Search_ListInfo(key_word);
-		System.out.println("검색 리스트 >>>222"+search_list);
+		// 배열 받아오기
+		String[] list_sector = request.getParameterValues("list_sector[]");
+		String[] list_city = request.getParameterValues("list_city[]");
+		String[] list_status = request.getParameterValues("list_status[]");
 		
-		// map
-//		Map<String, Object> search_map = new HashMap<String, Object>();
-//		search_map.put("Search_list", Search_list);
+		// 배열 뽑아내기
+		if(list_sector != null) {
+			for(int i=0; i<list_sector.length; i++) {
+				sector.add(list_sector[i]);
+				System.out.println("받은배열 sector::"+list_sector[i]+"받은배열 sector::"+sector);
+			}
+		}
+		if(list_city != null) {
+			for(int i=0; i<list_city.length; i++) {
+				city.add(list_city[i]);
+				System.out.println("받은배열 city::"+list_city[i]+"받은배열 city::"+city);
+			}
+		}
+		if(list_status != null) {
+			for(int i=0; i<list_status.length; i++) {
+				status.add(list_status[i]);
+				System.out.println("받은배열 status::"+list_status[i]+"받은배열 status::"+status);
+			}
+		}
+		// 차라리 하나로 몰자...
+		list_all.addAll(sector);
+		list_all.addAll(city);
+		list_all.addAll(status);
 		
-		request.setAttribute("search_list", search_list);
-//		request.setAttribute("search_map", search_map);
+		JSONArray search_list = boardDAO.Search_ListInfo(list_all);
+		System.out.println("Action 최종 데이터:::" + search_list);
 		
-		forward.setRedirect(false);
-		forward.setPath("./board/list.jsp");
 		
-		return forward;
+		response.setContentType("application/x-json;charset=UTF-8");
+    	response.getWriter().print(search_list);
+		
+		return null;
 	}
 }

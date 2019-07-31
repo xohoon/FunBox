@@ -13,6 +13,7 @@
 	ArrayList<FaqVO> faq2 = (ArrayList<FaqVO>)request.getAttribute("faq2");
 	ArrayList<FaqVO> faq3 = (ArrayList<FaqVO>)request.getAttribute("faq3");
 	ArrayList<FaqVO> faq_list = (ArrayList<FaqVO>)request.getAttribute("faq_list");
+	int cate = (Integer)request.getAttribute("cate");
 %>
 <head>
   <meta charset="UTF-8">
@@ -20,7 +21,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <title>FAQ</title>
-	
   <!--[if lt IE 9]>
       <script src="./js/html5.js"></script>
    <![endif]-->
@@ -88,7 +88,7 @@
 			  });
 		  });
 	  });
-	    
+
 	  function searchCheck(frm){
 		  
 		  if(frm.keyword.value==''){
@@ -97,36 +97,23 @@
 			return false;
 		  }
 		  frm.submit();
-		  
 	  }
+	  
 	  function cateval(){
 		  $("#button1").click(function(){
 			  $("#category").val('1');
+			  $("#category_number").val('1');
 		  });
 		  $("#button2").click(function(){
 			  $("#category").val('2');
+			  $("#category_number").val('2');
 		  });
 		  $("#button3").click(function(){
 			  $("#category").val('3');
-		  });
-	  }
+			  $("#category_number").val('3');
+		  });		  	  
+	}
 	  
-	  function List(button){
-		  var category = button;
-		  console.log(button);
-		  
-		  $.ajax({
-				url : './Faq.bd', 
-				type : 'POST',
-				data : "category="+category,  	
-				dataType : 'json',
-				success:function(data){
-					console.log("test");
-				}, error:function(data){
-					console.log("test1");
-				}
-			});
-	  }
   </script>
 
 </head>
@@ -146,18 +133,17 @@
 		<div class="faq">
 			<h4>FAQ</h4>
 			<h5>궁금한 점이 있다면 여기서 먼저 찾아보세요</h5>
-			<button id="button" value = "0" onclick= "List(this.value)" class="on">전체FAQ</button>
-			<button id="button1" value = "1" onclick = "List(this.value)">입출금관련FAQ</button>
-			<button id="button2" value = "2" onclick = "List(this.value)">투자관련FAQ</button>
-			<button id="button3" value = "3" onclick = "List(this.value)">기타FAQ</button>
-
+				<button id="button0" class="on">전체FAQ</button>
+				<button id="button1" onclick="cateval();">입출금관련FAQ</button>
+				<button id="button2" onclick="cateval();">투자관련FAQ</button>
+				<button id="button3" onclick="cateval();">기타FAQ</button>
 			<div class="sch">
-			<form name="search" method="post" action="./search_faq.bd">
-				<label>키워드로 검색해보세요</label>
-				<input type="text" id="search_faq" name="keyword">
-				<input type="hidden" id="category" name="category" value="0">
-				<input type="button" onclick="searchCheck(this.form)">
-			</form>
+				<form name="search" method="post" action="./search_faq.bd">
+					<label>키워드로 검색해보세요</label>
+					<input type="text" id="search_faq" name="keyword">
+					<input type="hidden" id="category" name="category" value="0">
+					<input type="button" onclick="searchCheck(this.form)">
+				</form>
 			</div><!--.sch-->
 			<div class="table">
 				<c:forEach var="faq1" items="${faq1 }">
@@ -196,7 +182,48 @@
 					</p>
 				</div>
 				</c:forEach>
+				<form name="cateForm">
+					<input type="hidden" name="cate" value="${cate }">
+				</form>
+				<script>
+				 $(function(){
+					var f = document.cateForm;
+					
+					if(f.cate.value == 1){
+						$('.faq > button').removeClass('on');
+						$('#button1').addClass('on');
+					}else if(f.cate.value == 2){
+						$('.faq > button').removeClass('on');
+						$('#button2').addClass('on');
+					}else if(f.cate.value == 3){
+						$('.faq > button').removeClass('on');
+						$('#button3').addClass('on');
+					}else if(f.cate.value == 0){
+						$('.faq > button').removeClass('on');
+						$('#button0').addClass('on');
+					}
+				});
+				</script>
+				
+				
+				<!-- 검색한 값 보여주기 -->
+				<c:set var="cate" value="${cate }"/>
+				<c:if test="${cate == 0}">
 				<c:forEach var="faq_list" items="${faq_list }">
+				<div class="btn0">
+					<p class="depth1">
+						<span>${faq_list.title }</span>
+					</p>
+					<p class="depth2">
+						<span>
+							${faq_list.content }
+						</span>
+					</p>
+				</div>
+				</c:forEach>
+				</c:if>
+				<c:if test="${cate == 1}">
+				<c:forEach var="faq_list" items="${faq_list}">
 				<div class="btn1">
 					<p class="depth1">
 						<span>${faq_list.title }</span>
@@ -208,8 +235,37 @@
 					</p>
 				</div>
 				</c:forEach>
-			</div><!--.table-->
-			
+				</c:if>
+				<c:if test="${cate == 2}">
+				<c:forEach var="faq_list" items="${faq_list }">
+				<div class="btn2">
+					<p class="depth1">
+						<span>${faq_list.title }</span>
+					</p>
+					<p class="depth2">
+						<span>
+							${faq_list.content }
+						</span>
+					</p>
+				</div>
+				</c:forEach>
+				</c:if>
+				<c:if test="${cate == 3}">
+				<c:forEach var="faq_list" items="${faq_list }">
+				<div class="btn3">
+					<p class="depth1">
+						<span>${faq_list.title }</span>
+					</p>
+					<p class="depth2">
+						<span>
+							${faq_list.content }
+						</span>
+					</p>
+				</div>
+				</c:forEach>
+				</c:if>
+				</div><!--.table-->
+				
 			<ul class="pager">
 				<c:if test="${count > 0}">
 					<c:set var="pageCount" value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" /> 
@@ -248,9 +304,9 @@
     <footer></footer>
   </div>
 <script type="text/javascript">
-$(document).ready(function(){
-	  $('#button').trigger('click');	  
-});
+	$(document).ready(function(){
+		  $('#button').trigger('click');	  
+	});
 
   $(function() {
     $('header').load('./header/header.jsp')

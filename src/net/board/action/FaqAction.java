@@ -25,7 +25,7 @@ public class FaqAction implements Action{
 		System.out.println("FaqAction OK");
 		ActionForward forward = new ActionForward();
 
-		String category = request.getParameter("category");
+		String category = request.getParameter("category_number");
 		System.out.println("category:"+category);
 	
 		// 페이징 처리 구문

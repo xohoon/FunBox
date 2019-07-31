@@ -21,7 +21,6 @@ public class ListAction implements Action{
 		/// 태훈 추가 - 기업 리스트 전체 뿌려주기
 		BoardDAO boardDAO = new BoardDAO();
 		ArrayList<Board_Search_ListVO> searchVO = boardDAO.ListInfo();
-		System.out.println(">>>>>>>>>>>>>>>>>>>>"+searchVO);
 		
 		/// 태훈 추가 - 기업 리스트 전체 뿌려주기
 		request.setAttribute("searchVO", searchVO);
