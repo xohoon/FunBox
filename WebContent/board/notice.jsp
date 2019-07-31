@@ -65,14 +65,36 @@
 				</div>
 				</c:forEach>
 			</div><!--.table-->
-			<a href="#" class="prev">◀</a>
-			<ul class="pager">
-				<li class="on">1</li>
-				<li>2</li>
-				<li>3</li>
+		<ul class="pager">
+				<c:if test="${count > 0}">
+					<c:set var="pageCount"
+						value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />
+					<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
+					<c:set var="endPage" value="${startPage + pageGroupSize-1}" />
+						<c:if test="${endPage > pageCount}">
+						<c:set var="endPage" value="${pageCount}" />
+					</c:if>
+						<c:if test="${numPageGroup > 1}">
+						<a href="./Notice.bd?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">◀</a>
+					</c:if>
+						<ul class="pager">
+						<c:forEach var="i" begin="${startPage}" end="${endPage}">
+							<c:choose>
+								<c:when test="${currentPage == i}">
+									<b><a class="on" href="./Notice.bd?pageNum=${i}"><font size=3>${i}</font></a></b>
+								</c:when>
+								<c:otherwise>
+									<a href="./Notice.bd?pageNum=${i}">
+									<font size=3>${i}</font></a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</ul>
+						<c:if test="${numPageGroup < pageGroupCount}">
+						<a href="./Notice.bd?pageNum=${numPageGroup*pageGroupSize+1}" class="next">▶</a>
+						</c:if>
+				</c:if>
 			</ul><!--.pager-->
-			<a href="#" class="next">▶</a>
-		</div><!--.qna_list-->
 	</section>
 
     <footer></footer>

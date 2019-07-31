@@ -38,7 +38,7 @@
     <section>
     <div class="like_box"></div>
     	<ul class="tab">
-    		<li onclick="location.href='./Mypage1.mb'">투자현황</li>
+    		<li onclick="location.href='./MemberInvestmentList.mb'">투자현황</li>
     		<li class="on" onclick="location.href='./Mypage2_1.mb'">자산관리</li>
     		<li onclick="location.href='./Mypage3.mb'">거래내역</li>
     		<li onclick="location.href='./Mypage4_1.mb'">내정보</li>

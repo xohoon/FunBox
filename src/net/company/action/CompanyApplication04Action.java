@@ -1,12 +1,14 @@
 package net.company.action;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import net.common.action.Action;
@@ -15,24 +17,31 @@ import net.company.dao.CompanyDAO;
 import net.company.dto.ApplicationVO;
 
 // 박신규 - CompanyFileUploadAction
+// 유정 수정 - 변수 추가 및 수정, alert 추가 
 public class CompanyApplication04Action implements Action {
 
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); // 한글처리
+		boolean result = false;
+		HttpSession session = request.getSession();
+
+		System.out.println("CompanyApplication04Action");
 
 		// page1 파라미터값
+		String idx = (String)session.getAttribute("idx");
 		String app_cp_name = request.getParameter("name");
 		String app_cp_manager = request.getParameter("manager");
 		String app_cp_hp = request.getParameter("phone");
-		String app_cp_num = request.getParameter("app4");
-		String app_cp_ch = request.getParameter("app4_1");
-		String app_cp_more = request.getParameter("app4_2");
-		String app_cp_extra = request.getParameter("app4_3");
+		String app_cp_num = request.getParameter("num");
+		String app_cp_ch = request.getParameter("ch");
+		String app_cp_more = request.getParameter("more");
+		String app_cp_extra = request.getParameter("extra");
 		String app_cp_sector = request.getParameter("sector");
 		String app_cp_open_date_time = request.getParameter("open_datetime");
-		String app_cp_prestige = request.getParameter("open_datetime");
+		String app_cp_prestige = request.getParameter("prestige");
 		String app_cp_deposit = request.getParameter("deposit");
 		String app_cp_monthly = request.getParameter("monthly");
+		int app_cp_status = Integer.parseInt(request.getParameter("status"));
 
 		// page2 파라미터값
 		String app_cp_goal_amount = request.getParameter("goal_amount");
@@ -45,6 +54,7 @@ public class CompanyApplication04Action implements Action {
 		String app_cp_introduction = request.getParameter("app_cp_introduction");
 		String app_cp_purpose = request.getParameter("app_cp_purpose");
 		String app_cp_point = request.getParameter("app_cp_point");
+		
 		// page4 파라미터값
 
 		// 날짜변환 기능
@@ -123,6 +133,8 @@ public class CompanyApplication04Action implements Action {
 		company.setApp_cp_prestige(app_cp_prestige);
 		company.setApp_cp_deposit(app_cp_deposit);
 		company.setApp_cp_monthly(app_cp_monthly);
+		company.setApp_cp_status(app_cp_status);
+		company.setMb_idx(idx);
 
 		// page2 company에 데이터 추가
 		company.setApp_cp_goal_amount(app_cp_goal_amount);
@@ -143,8 +155,31 @@ public class CompanyApplication04Action implements Action {
 
 		CompanyDAO companyDAO2 = new CompanyDAO();
 
-		 companyDAO2.insertApp(company);
+		result = companyDAO2.insertApp(company);
 
+		//return null;
+		if(result==false){
+			System.out.println("기업신청 실패");
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('기업신청에 실패했습니다.\n다시 시도해주세요.');");
+			out.println("location.href='./Application1.cp';");
+			out.println("</script>");
+			out.close();
+			
+			return null;
+		}
+		
+		System.out.println("기업신청 성공");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println("<script>");
+		out.println("alert('기업신청이 완료되었습니다.');");
+		out.println("location.href='./Index.mb';");
+		out.println("</script>");
+		out.close();
+		
 		return null;
 	}
 
@@ -158,4 +193,5 @@ public class CompanyApplication04Action implements Action {
 		}
 		return "";
 	}
+	
 }

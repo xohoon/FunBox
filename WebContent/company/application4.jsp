@@ -1,6 +1,6 @@
-<%@page import="net.company.dto.ApplicationVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="net.company.dto.ApplicationVO"%>
 <%
 	request.setCharacterEncoding("utf-8"); // 한글처리
 	ApplicationVO company = (ApplicationVO) request.getAttribute("company");
@@ -30,7 +30,7 @@
     <input type="hidden" name="manager" id="manager" value="<%=company.getApp_cp_manager()%>">
     <input type="hidden" name="phone" id="phone" value="<%=company.getApp_cp_hp()%>">
     <input type="hidden" name="num" id="num" value="<%=company.getApp_cp_num()%>">
-    <input type="hidden" name="ch" id="ch" value="<%=company.getApp_cp_num()%>">
+    <input type="hidden" name="ch" id="ch" value="<%=company.getApp_cp_ch()%>">
     <input type="hidden" name="more" id="more" value="<%=company.getApp_cp_more()%>">
     <input type="hidden" name="extra" id="extra" value="<%=company.getApp_cp_extra()%>">
     <input type="hidden" name="sector" id="sector" value="<%=company.getApp_cp_sector()%>">
@@ -38,6 +38,7 @@
     <input type="hidden" name="prestige" id="prestige" value="<%=company.getApp_cp_prestige()%>">
     <input type="hidden" name="deposit" id="deposit" value="<%=company.getApp_cp_deposit()%>">
     <input type="hidden" name="monthly" id="monthly" value="<%=company.getApp_cp_monthly()%>">
+    <input type="hidden" name="status" id="status" value="<%=company.getApp_cp_status()%>">
     <input type="hidden" name="goal_amount" id="goal_amount" value="<%=company.getApp_cp_goal_amount()%>">
     <input type="hidden" name="avg_monthly_profit" id="avg_monthly_profit" value="<%=company.getApp_cp_avg_monthly_profit()%>">
     <input type="hidden" name="monthly_profit" id="monthly_profit" value="<%=company.getApp_cp_monthly_profit()%>">
@@ -73,19 +74,27 @@
      <div class="step4">
 	 	<div id="app16-group" class="group cf">
 			<label>필수 제출 서류</label>
-			<span>사업자 등록증 (파일 크기 10MB 이하)</span>
+			<span>사업자 등록증</span>
+			<label for="yet1">오픈 전 매장입니다.</label>
+			<input type="checkbox" name="yet1" id="yet1">
 			<input type="file" name="app_cp_registrantion" id="app_cp_registrantion">
-			<span>재무제표 (파일 크기 10MB 이하)</span>
+			<span>재무제표</span>
+			<label for="yet1">오픈 전 매장입니다.</label>
+			<input type="checkbox" name="yet2" id="yet2">
 			<input type="file" name="app_cp_financial" id="app_cp_financial">
-			<span>부동산 계약서 (파일 크기 10MB 이하)</span>
+			<span>부동산 계약서</span>
+			<label for="yet1">오픈 전 매장입니다.</label>
+			<input type="checkbox" name="yet3" id="yet3">
 			<input type="file" name="app_cp_estate_contract" id="app_cp_estate_contract">
-			<span>매장사진(최소 3장,최대 5장) (총 파일 크기 50MB 이하)</span>
+			<span>매장사진(최소 3장)</span>
+			<label for="yet1">오픈 전 매장입니다.</label>
+			<input type="checkbox" name="yet4" id="yet4">
 			<input type="file" multiple name="app_cp_images" id="app_cp_images">
-			<p>* 오픈 예정 매장일 경우, 본 프랜차이즈 매장 중 영업 및 입지조건이 비슷한 타 가맹점 최소 2개의 가맹점 자료 첨부</p>
+			<p>* 오픈 예정 매장일 경우, 본 프랜차이즈 매장 중 영업 및 입지조건이 비슷한 타 가맹점 최소 2개의 가맹점 자료 첨부.<br>비교 대상 부재 등 자료 첨부가 어려울 경우 생략 가능</p>
 		  </div><!--#app8-->
 		  <div id="app17-group" class="group cf">
 			<label>기타 제출 서류</label>
-			<span>결산장부, 법인등기부등본, 정관, 주주명부 등 (최대 5장) (총 파일 크기 50MB 이하)</span>
+			<span>결산장부, 법인등기부등본, 정관, 주주명부 등</span>
 			<input type="file" multiple name="app_cp_other_documents" id="app_cp_other_documents">
 			<p>* 기타서류 제출 시 심사에 반영됩니다.</p>
 		  </div><!--#app8-->
@@ -99,8 +108,8 @@
     </form>
     <footer>
         <ul>
-          <li><a href="./Policy_1.bd">이용안내</a></li>
-          <li><a href="./Notice.bd">공지사항</a></li>
+            <li><a href="./Policy_1.bd">이용안내</a></li>
+            <li><a href="./Notice.bd">공지사항</a></li>
         </ul>
         <p>
             Copyright ⓒ 2019 IOLAB. All rights reserved.
@@ -108,5 +117,4 @@
     </footer>
   </div><!--#wrap-->
   <script src="js/html5.js"></script>
-  
 </body></html>

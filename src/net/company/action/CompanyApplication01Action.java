@@ -2,6 +2,7 @@ package net.company.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.common.action.Action;
 import net.common.action.ActionForward;
@@ -13,8 +14,10 @@ public class CompanyApplication01Action implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); //한글처리
 		ActionForward forward = new ActionForward();
+		HttpSession session = request.getSession();
 		
 		// page1 파라미터값
+		String idx = (String)session.getAttribute("idx");
 		String app_cp_name = request.getParameter("name");
 		String app_cp_manager = request.getParameter("manager");
 		String app_cp_hp = request.getParameter("phone");
@@ -27,8 +30,10 @@ public class CompanyApplication01Action implements Action{
 		String app_cp_prestige = request.getParameter("prestige");
 		String app_cp_deposit = request.getParameter("deposit");
 		String app_cp_monthly = request.getParameter("monthly");
-		
+		int app_cp_status = Integer.parseInt(request.getParameter("status"));
+
 		ApplicationVO company = new ApplicationVO();
+		
 
 		//page1 company에 데이터 추가
 		company.setApp_cp_name(app_cp_name);
@@ -43,6 +48,11 @@ public class CompanyApplication01Action implements Action{
 		company.setApp_cp_prestige(app_cp_prestige);
 		company.setApp_cp_deposit(app_cp_deposit);
 		company.setApp_cp_monthly(app_cp_monthly);
+		company.setApp_cp_status(app_cp_status);
+		company.setMb_idx(idx);
+		
+		System.out.println(company.toString());
+		
 		// 다음페이지에 company 전달
 		request.setAttribute("company", company);
 				

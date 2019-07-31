@@ -8,6 +8,7 @@
 <%
 	CompanyBean companyBean = (CompanyBean)request.getAttribute("companyBean");
 	ArrayList<CompanyListVO> leftCompanyList = (ArrayList<CompanyListVO>)request.getAttribute("leftCompanyList");
+	int sumPayPrincipal;
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -45,32 +46,32 @@
     				<c:when test="${company.cp_idx eq companyBean.cp_idx }">
     					<c:choose>
     						<c:when test="${company.cp_recommand and company.cp_best}">
-    							<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="recommend ">추천</div><div class="best">BEST</div></li>
+    							<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name}<div class="recommend ">추천</div><div class="best">BEST</div></li>
 		    				</c:when>
 		    				<c:when test="${company.cp_idx eq companyBean.cp_idx and company.cp_recommand}">
-								<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="recommend ">추천</div></li>
+								<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx}'">${company.cp_name}<div class="recommend ">추천</div></li>
 							</c:when>
 							<c:when test="${company.cp_idx eq companyBean.cp_idx and company.cp_best}">
-								<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="best ">BEST</div></li>
+								<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx}'">${company.cp_name}<div class="best ">BEST</div></li>
 							</c:when>
 							<c:otherwise>
-								<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }</li>
+								<li class="on" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx}'">${company.cp_name}</li>
 							</c:otherwise>
     					</c:choose>
     				</c:when>
     				<c:otherwise>
     					<c:choose>
     						<c:when test="${ company.cp_recommand and company.cp_best}">
-    							<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="recommend ">추천</div><div class="best">BEST</div></li>
+    							<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx}'">${company.cp_name}<div class="recommend ">추천</div><div class="best">BEST</div></li>
     						</c:when>
     						<c:when test="${ company.cp_recommand}">
-    							<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="recommend ">추천</div></li>
+    							<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx}'">${company.cp_name}<div class="recommend ">추천</div></li>
     						</c:when>
     						<c:when test="${ company.cp_best}">
-    							<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }<div class="best ">BEST</div></li>
+    							<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx}'">${company.cp_name}<div class="best ">BEST</div></li>
     						</c:when>
     						<c:otherwise>
-								<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx }'">${company.cp_name }</li>
+								<li onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx}'">${company.cp_name}</li>
 							</c:otherwise>
     					</c:choose>
     				</c:otherwise>
@@ -81,8 +82,8 @@
           <!--.list-->
           <div class="info">
             <h2 class="logo"></h2>
-            <h3>일반음식점</h3>
-            <h1>바른생선횟집<span>해운대점</span></h1>
+            <h3>${companyBean.cp_sector}</h3>
+            <h1>${companyBean.cp_name}<span>${companyBean.cp_branch}</span></h1>
             <div class="info-content">
               <div class="data">
                 <div>
@@ -167,10 +168,12 @@
               </div>
             </div>
             <div class="gage-bar">
-              <p><%=companyBean.getIv_percent() %>%</p>
+            	<fmt:parseNumber var="test" value="${companyBean.iv_percent}" integerOnly = "true" />
+              <p>${test}%</p>
               <div class="gage">
                 <div>
-                  <span>${companyBean.iv_percent}</span>
+                  <fmt:parseNumber var="test" value="${companyBean.iv_percent}" integerOnly = "true" />
+                  <span>${test}</span>
                 </div>
               </div>
               <div>
@@ -386,9 +389,9 @@
                 <c:forEach var = "i" begin = "1" end = "12"> 
 	                <tr>
 	                  <td>${i}</td>
-	                  <td><%=companyBean.getCp_pay_expected_payment_date() %></td>
+	                  <td><%=companyBean.getCp_pay_expected_payment_date() %></td>	                  
 	                  <td><%=companyBean.getCp_pay_principal() %></td>
-	                  <td><%=companyBean.getCp_pay_interest_paid() %></td>
+	                  <td><%=companyBean.getCp_pay_interest_paid() %></td>                  
 	                  <td><%=companyBean.getCp_pay_fees() %></td>
 	                  <td><%=companyBean.getCp_pay_actual_payment_amout() %></td>
 	                  <td><%=companyBean.getCp_pay_actual_rate_return() %></td>
@@ -397,7 +400,7 @@
                 <tr>
                   <td>총 합계</td>
                   <td>-</td>
-                  <td>3,000,000원</td>
+                  <td><%=companyBean.getCp_pay_principal() %></td>
                   <td>305,520원</td>
                   <td>32,080원</td>
                   <td>273,470원</td>

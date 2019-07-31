@@ -97,14 +97,16 @@ public class BoardDAO {
 	
 	
 	// 총 qna 리스트 수 출력 함수
-	public int qnaCount() {
-		String sql = "select * from qna";
+	public int qnaCount(String id) {
+		
+		String sql = "select * from qna where id =?";
 		PreparedStatement pstmt = null;
 		int count = 0;
 		ResultSet rs = null;
 
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 
 			rs.last();
@@ -142,6 +144,99 @@ public class BoardDAO {
 
 	}
 	
+	// 총 faq 리스트 수 출력 함수
+		public int faqCount(String category) {
+			PreparedStatement pstmt = null;
+			int count = 0;
+			ResultSet rs = null;
+			String sql = "select * from faq where category = ?";
+			System.out.println("boardDao:"+category);
+			
+			try {
+				if(category.equals("0")) {
+					sql = "select * from faq ";
+					pstmt = conn.prepareStatement(sql);
+					rs = pstmt.executeQuery();
+				}else {
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, category);
+					rs = pstmt.executeQuery();
+				}
+				
+				System.out.println(sql);
+				rs.last();
+
+				count = rs.getRow();
+
+				rs.beforeFirst();
+				
+				
+				return count;
+
+			} catch (Exception ex) {
+				System.out.println("faqCount 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("해제 실패 : " + e.getMessage());
+				}
+			}
+
+			return 0;
+
+		}
+		// 총 notice 리스트 수 출력 함수
+				public int noticeCount() {
+					String sql = "select * from notice";
+					PreparedStatement pstmt = null;
+					int count = 0;
+					ResultSet rs = null;
+
+					try {
+						pstmt = conn.prepareStatement(sql);
+					//	pstmt.setString(1, category);
+						rs = pstmt.executeQuery();
+
+						rs.last();
+
+						count = rs.getRow();
+
+						rs.beforeFirst();
+
+						/*
+						 * while(rs.next()){ count = rs.getRow(); }
+						 */
+
+						/*
+						 * rs = pstmt.executeQuery(sql); if(rs.next()) { count = rs.getInt(1); }
+						 */
+
+						return count;
+
+					} catch (Exception ex) {
+						System.out.println("noticeCount 에러: " + ex);
+					} finally {
+						try {
+							if (rs != null)
+								rs.close();
+							if (pstmt != null)
+								pstmt.close();
+							if (conn != null)
+								conn.close();
+						} catch (Exception e) {
+							System.out.println("해제 실패 : " + e.getMessage());
+						}
+					}
+
+					return 0;
+
+				}
 	
 	
 	// 1:1 문의내역 - 문의 리스트 가져오기
@@ -281,9 +376,8 @@ public class BoardDAO {
 		
 		
 		// 고객지원 - FAQ 불러오기
-		public ArrayList<FaqVO> getFaq(int category) throws Exception {
-			String sql = "select title,content from faq where category=? order by reg_date_time desc;";
-			
+		public ArrayList<FaqVO> getFaq(int category, int startRow, int pageSize) throws Exception {
+			String sql = "select title,content from faq where category=? order by reg_date_time desc limit " + startRow + ", " + pageSize;
 			ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
 			PreparedStatement pstm = null;
 			ResultSet rs = null;

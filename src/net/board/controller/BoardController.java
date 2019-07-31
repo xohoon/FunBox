@@ -14,8 +14,8 @@ import net.board.action.BoardQnaList;
 import net.board.action.FaqAction;
 import net.board.action.FaqSearchAction;
 import net.board.action.ListAction;
-import net.board.action.NoticeAction;
 import net.board.action.ListSearchAction;
+import net.board.action.NoticeAction;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 
@@ -33,8 +33,7 @@ public class BoardController extends HttpServlet implements Servlet{
 		ActionForward forward = null;
 		Action action = null;
 		
-		
-		
+			
 		///////////////////////유정 추가 start///////////////////////
 		if (command.equals("/List.bd")) {
 			forward = new ActionForward();
@@ -102,16 +101,14 @@ public class BoardController extends HttpServlet implements Servlet{
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
-			
+			}	
 		}else if (command.equals("/search_faq.bd")) { // 고객지원 - FAQ 검색기능
 			action = new FaqSearchAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
-			
+			}			
 		}
 		
 		/////////////////// 태훈 추가 start ///////////////////

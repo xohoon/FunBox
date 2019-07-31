@@ -167,41 +167,9 @@ function application3_check(){
 		f.submit();
 	}
 }
-/*
-//application4.jsp 유효성 검사
-function application4_check(){
-	var f = document.application4_form;
-	
-	var business_license = f.business_license.value;			//사업자 등록증
-	var financial_statements = f.financial_statements.value;	//재무재표
-	var real_covenant = f.real_covenant.value;					//부동산 계약서
-	var store = f.store.value;									//매장사진
-	var submission = f.submission.value;						//기타 제출 서류
-	
-	var agree = f.agree.checked;								//정보제공 동의
-	
-	if(!business_license){
-		alert("사업자 등록증을 첨부해 주세요.");
-		return false;
-	}else if(!financial_statements){
-		alert("재무재표를 첨부해 주세요.");
-		return false;
-	}else if(!real_covenant){
-		alert("부동산 계약서를 첨부해 주세요.");
-		return false;
-	}else if(!store){
-		alert("매장사진을 첨부해 주세요.");
-		return false;
-	}else if(!submission){
-		alert("기타 제출 서류를 첨부해 주세요.");
-		return false;
-	}else if(!agree) {
-		alert('정보제공에 동의하지 않았습니다.');
-		return false;
-	}else{
-		f.submit();
-	}
-}*/
+
+
+
 var MB_10 = 10485760;
 var MB_10_str = '10MB';
 var MB_50 = 52428800;
@@ -280,21 +248,29 @@ $(document).ready(function() {
 	});
 	
 	$('.submit').on('click',function(){
-		if (document.getElementById('app_cp_registrantion').files.length != 1) {
-			alert('사업자 등록증 파일을 업로드해주세요.');
-			return;
+		if(!$("#yet1").is(":checked")){
+			if (document.getElementById('app_cp_registrantion').files.length != 1) {
+				alert('사업자 등록증 파일을 업로드해주세요.');
+				return;
+			}
 		}
-		if(document.getElementById('app_cp_financial').files.length != 1){
-			alert('사업자 등록증 파일을 업로드해주세요.');
-			return;
+		if(!$("#yet2").is(":checked")){
+			if(document.getElementById('app_cp_financial').files.length != 1){
+				alert('재무제표 파일을 업로드해주세요.');
+				return;
+			}
 		}
-		if(document.getElementById('app_cp_estate_contract').files.length != 1){
-			alert('사업자 등록증 파일을 업로드해주세요.');
-			return;
+		if(!$("#yet3").is(":checked")){
+			if(document.getElementById('app_cp_estate_contract').files.length != 1){
+				alert('부동산 계약서 파일을 업로드해주세요.');
+				return;
+			}
 		}
-		if(document.getElementById('app_cp_images').files.length > 5 || document.getElementById('app_cp_images').files.length < 3 ){
-			alert('매장 사진 파일은 최소 3장 최대 5장 입니다.');
-			return;
+		if(!$("#yet4").is(":checked")){
+			if(document.getElementById('app_cp_images').files.length > 5 || document.getElementById('app_cp_images').files.length < 3 ){
+				alert('매장 사진 파일은 최소 3장 최대 5장 입니다.');
+				return;
+			}
 		}
 		if(document.getElementById('app_cp_other_documents').files.length > 5){
 			alert('기타 제출 서류는 5장을 넘을 수 없습니다.');

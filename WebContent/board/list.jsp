@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <title></title>
+  <title>기업 리스트</title>
 
   <!--[if lt IE 9]>
       <script src="./js/html5.js"></script>
@@ -198,7 +198,7 @@
 	        <div class="mom_box">
 	          <div class="boxwrap">
      	   <c:forEach var="searchVO" items="${searchVO }">
-	            <div class="corp_box" onclick="location.href='./CorporationAction.cp'">
+	            <div class="corp_box" onclick="location.href='./CorporationAction.cp?cp_idx=${searchVO.search_cp_idx}'">
 	              <div class="c_img">
 	                <img src="./img/row1_anotherminae.jpg" alt="">
 	              </div>
@@ -208,10 +208,18 @@
 	                <p>${searchVO.search_cp_branch }</p>
 	              </div>
 	              <div class="gage">
+<<<<<<< HEAD
 	                <div class="per"><span>${searchVO.search_cp_percent }
 	                </span>%</div>
+=======
+	                <div class="per">
+	                	<span><fmt:parseNumber value ="${searchVO.search_cp_percent }" integerOnly ="true" /></span>%
+	                </div>
+>>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
 	                <div class="gage_full">
-	                  <div class="gage_fill"></div>
+	                  <div class="gage_fill">
+						<span></span>	                  
+	                  </div>
 	                </div>
 	                <div>
 	                  <span class="p_amt"><span><fmt:formatNumber value="${searchVO.search_cp_current_amount }" pattern="#,###" />
@@ -221,8 +229,12 @@
 	                </div>
 	              </div>
 	              <div class="reward_per">
+<<<<<<< HEAD
 	                수익률
 	                <span>${searchVO.search_cp_profit }%</span>
+=======
+	                <span>${searchVO.search_cp_profit }</span>
+>>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
 	              </div>
 	            </div>
        	 </c:forEach>
