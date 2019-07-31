@@ -10,7 +10,10 @@
 	ArrayList<Board_Search_ListVO> searchVO = (ArrayList<Board_Search_ListVO>)request.getAttribute("searchVO");
 	System.out.println("list>>>>>"+searchVO);
 	String cityName = (String)request.getAttribute("cityName");
+	ArrayList<Board_Search_ListVO> search_list = (ArrayList<Board_Search_ListVO>)request.getAttribute("search_list");
+	System.out.println("list>>>>>111!"+search_list);
 %>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -46,8 +49,8 @@
           </div>
 
           <div class="search">
-            <input type="search" placeholder="추천 키워드 '바른생선회'">
-            <input type="button" value="검색">
+            <input type="search" placeholder="추천 키워드 '바른생선회'" id="search_ajax">
+            <input type="button" value="검색" id="search_btn">
           </div>
 
           <div class="list_set">
@@ -197,7 +200,7 @@
       <div class="inner">
 	        <div class="mom_box">
 	          <div class="boxwrap">
-        <c:forEach var="searchVO" items="${searchVO }">
+     	   <c:forEach var="searchVO" items="${searchVO }">
 	            <div class="corp_box" onclick="location.href='./CorporationAction.cp'">
 	              <div class="c_img">
 	                <img src="./img/row1_anotherminae.jpg" alt="">
@@ -225,7 +228,7 @@
 	                <span>${searchVO.search_cp_profit }</span>
 	              </div>
 	            </div>
-        </c:forEach>
+       	 </c:forEach>
 	          </div>
 	        </div>
 

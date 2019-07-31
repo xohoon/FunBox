@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="net.board.dto.FaqVO"%>
+<%@page import="net.board.dao.BoardDAO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -12,6 +12,7 @@
 	ArrayList<FaqVO> faq1 = (ArrayList<FaqVO>)request.getAttribute("faq1");
 	ArrayList<FaqVO> faq2 = (ArrayList<FaqVO>)request.getAttribute("faq2");
 	ArrayList<FaqVO> faq3 = (ArrayList<FaqVO>)request.getAttribute("faq3");
+	ArrayList<FaqVO> faq_list = (ArrayList<FaqVO>)request.getAttribute("faq_list");
 %>
 <head>
   <meta charset="UTF-8">
@@ -25,7 +26,6 @@
    <![endif]-->
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/jquery.bxslider.css" rel="stylesheet">
-
   <link href="css/service.css" rel="stylesheet">
   <link href="css/list_box.css" rel="stylesheet">
   <script src="js/jquery-3.1.1.min.js"></script>
@@ -34,18 +34,7 @@
 
   <script type="text/javascript"></script>
   <script>
-  
-  $(document).ready(function(){
-	$("#button").trigger("click");
-  });
 
-
-
-출처: https://namik.tistory.com/101 [남익의 생활]
-    $(function() {
-      $('header').load('./header/header.jsp')
-      $('footer').load('./footer/footer.jsp')
-    });
 	  
 	  
 	  $(function(){
@@ -65,7 +54,6 @@
 	  });
 	  
 	  $(function(){
-		  var f = document.faqForm;
 		  $('.faq > button').on('click',function(){
 			  $('.faq > button').removeClass('on');
 			  $(this).addClass('on');
@@ -100,6 +88,28 @@
 			  });
 		  });
 	  });
+	    
+	  function searchCheck(frm){
+		  
+		  if(frm.keyword.value==''){
+			alert('검색할 단어를 입력해주세요.');
+			frm.keyword.focus();
+			return false;
+		  }
+		  frm.submit();
+		  
+	  }
+	  function cateval(){
+		  $("#button1").click(function(){
+			  $("#category").val('1');
+		  });
+		  $("#button2").click(function(){
+			  $("#category").val('2');
+		  });
+		  $("#button3").click(function(){
+			  $("#category").val('3');
+		  });
+	  }
 	  
 	  function List(button){
 		  var category = button;
@@ -111,13 +121,12 @@
 				data : "category="+category,  	
 				dataType : 'json',
 				success:function(data){
-					
+					console.log("test");
 				}, error:function(data){
-				
+					console.log("test1");
 				}
 			});
 	  }
-	  
   </script>
 
 </head>
@@ -137,14 +146,18 @@
 		<div class="faq">
 			<h4>FAQ</h4>
 			<h5>궁금한 점이 있다면 여기서 먼저 찾아보세요</h5>
-			<button id="button" value = "ALL" onclick = "List(this.value)" class="on">전체FAQ</button>
-			<button id="button" value = "1" onclick = "List(this.value)">입출금관련FAQ</button>
-			<button id="button" value = "2" onclick = "List(this.value)">투자관련FAQ</button>
-			<button id="button" value = "3" onclick = "List(this.value)">기타FAQ</button>
+			<button id="button" value = "0" onclick= "List(this.value)" class="on">전체FAQ</button>
+			<button id="button1" value = "1" onclick = "List(this.value)">입출금관련FAQ</button>
+			<button id="button2" value = "2" onclick = "List(this.value)">투자관련FAQ</button>
+			<button id="button3" value = "3" onclick = "List(this.value)">기타FAQ</button>
+
 			<div class="sch">
+			<form name="search" method="post" action="./search_faq.bd">
 				<label>키워드로 검색해보세요</label>
-				<input type="text" id="search_faq">
-				<input type="button">
+				<input type="text" id="search_faq" name="keyword">
+				<input type="hidden" id="category" name="category" value="0">
+				<input type="button" onclick="searchCheck(this.form)">
+			</form>
 			</div><!--.sch-->
 			<div class="table">
 				<c:forEach var="faq1" items="${faq1 }">
@@ -183,20 +196,34 @@
 					</p>
 				</div>
 				</c:forEach>
+				<c:forEach var="faq_list" items="${faq_list }">
+				<div class="btn1">
+					<p class="depth1">
+						<span>${faq_list.title }</span>
+					</p>
+					<p class="depth2">
+						<span>
+							${faq_list.content }
+						</span>
+					</p>
+				</div>
+				</c:forEach>
 			</div><!--.table-->
+			
 			<ul class="pager">
 				<c:if test="${count > 0}">
-					<c:set var="pageCount"
-						value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />
+					<c:set var="pageCount" value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" /> 
 					<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
 					<c:set var="endPage" value="${startPage + pageGroupSize-1}" />
-						<c:if test="${endPage > pageCount}">
+					
+					<c:if test="${endPage > pageCount}">
 						<c:set var="endPage" value="${pageCount}" />
 					</c:if>
-						<c:if test="${numPageGroup > 1}">
+					<c:if test="${numPageGroup > 1}">
 						<a href="./Faq.bd?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">◀</a>
 					</c:if>
-						<ul class="pager">
+					
+					<ul class="pager">
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
 							<c:choose>
 								<c:when test="${currentPage == i}">
@@ -209,9 +236,10 @@
 							</c:choose>
 						</c:forEach>
 					</ul>
-						<c:if test="${numPageGroup < pageGroupCount}">
+					
+					<c:if test="${numPageGroup < pageGroupCount}">
 						<a href="./Faq.bd?pageNum=${numPageGroup*pageGroupSize+1}" class="next">▶</a>
-						</c:if>
+					</c:if>
 				</c:if>
 			</ul><!--.pager-->
 		</div><!--.qna_list-->
@@ -219,5 +247,14 @@
 
     <footer></footer>
   </div>
+<script type="text/javascript">
+$(document).ready(function(){
+	  $('#button').trigger('click');	  
+});
 
+  $(function() {
+    $('header').load('./header/header.jsp')
+    $('footer').load('./footer/footer.jsp')
+  });
+</script>
 </body></html>

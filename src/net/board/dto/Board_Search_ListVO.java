@@ -3,7 +3,7 @@ package net.board.dto;
 /// 태훈 추가 - 프렌차이즈 검색 리스트 VO
 public class Board_Search_ListVO {
 	
-	private String search_cp_idx;						// 검색 리스트 기업 식별자
+	private String search_cp_idx;					// 검색 리스트 기업 식별자
 //	private String search_cp_image;					// 검색 리스트 이미지
 	private String search_cp_name;					// 검색 리스트 기업 이름
 	private String search_cp_sector;				// 검색 리스트 기업 업종

@@ -13,8 +13,8 @@ import net.board.action.BoardQnaAction;
 import net.board.action.BoardQnaList;
 import net.board.action.FaqAction;
 import net.board.action.ListAction;
-import net.board.action.NoticeAction;
 import net.board.action.ListSearchAction;
+import net.board.action.NoticeAction;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 
@@ -32,8 +32,7 @@ public class BoardController extends HttpServlet implements Servlet{
 		ActionForward forward = null;
 		Action action = null;
 		
-		
-		
+			
 		///////////////////////유정 추가 start///////////////////////
 		if (command.equals("/List.bd")) {
 			forward = new ActionForward();
