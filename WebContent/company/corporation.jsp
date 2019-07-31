@@ -168,7 +168,8 @@
               </div>
             </div>
             <div class="gage-bar">
-              <p><%=companyBean.getIv_percent() %>%</p>
+            	<fmt:parseNumber var="test" value="${companyBean.iv_percent}" integerOnly = "true" />
+              <p>${test}%</p>
               <div class="gage">
                 <div>
                   <fmt:parseNumber var="test" value="${companyBean.iv_percent}" integerOnly = "true" />
