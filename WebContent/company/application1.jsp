@@ -58,19 +58,19 @@
 		  </div><!--#app1-->
 		  <div id="app2-group" class="group cf">
 			<label for="app2">담당자 이름</label>
-			<input type="text" id="manager" name="manager" placeholder="이름을 입력하세요." onKeyup="this.value=this.value.replace(/[^가-힣a-zA-Z]/g,'');"/>
+			<input type="text" id="manager" name="manager" placeholder="이름을 입력하세요." onKeyup="this.value=this.value.replace(/[^가-힣a-zA-Z]/g,'');">
 		  </div><!--#app2-->
 		   <div id="app3-group" class="group cf">
 			<label for="app3">연락처</label>
-			<input type="text" id="phone" name="phone" placeholder="ex)01012345678" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+			<input type="text" id="phone" name="phone" placeholder="ex)01012345678" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
 		  </div><!--#app3-->
 		  <div id="app4-group" class="group cf">
 			<label for="app4">사업장소재지</label>
 			<input type="button" value="검색" class="app4_btn" onclick="address_search();">
-			<input type="text" id="app4" name="app4" placeholder="우편번호">
-			<input type="text" id="app4_1" name="app4" placeholder="주소">
+			<input type="text" id="app4" name="app4" placeholder="우편번호" readonly="readonly">
+			<input type="text" id="app4_1" name="app4" placeholder="주소" readonly="readonly">
 			<input type="text" id="app4_2" name="app4" placeholder="상세주소">
-			<input type="text" id="app4_3" name="app4" placeholder="참조">
+			<input type="text" id="app4_3" name="app4" placeholder="참조" readonly="readonly">
 		  </div><!--#app4-->
 		  <div id="app5-group" class="group cf">
 			<label for="app5">업종</label>
@@ -79,19 +79,23 @@
 		  <div id="app6-group" class="group cf">
 			<label for="app6">기업 임대정보</label>
 			<span>권리금</span>
-			<input type="text" id="prestige" name="prestige" placeholder="전세, 자가인 경우 생략" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+			<input type="text" id="prestige" name="prestige" placeholder="전세, 자가인 경우 생략" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
 			<span>보증금</span>
-			<input type="text" id="deposit" name="deposit" placeholder="전세, 자가인 경우 생략" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+			<input type="text" id="deposit" name="deposit" placeholder="전세, 자가인 경우 생략" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
 			<span>월세</span>
-			<input type="text" id="monthly" name="monthly" placeholder="전세, 자가인 경우 생략" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+			<input type="text" id="monthly" name="monthly" placeholder="전세, 자가인 경우 생략" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
 		  </div><!--#app6-->
      	  <div id="app7-group" class="group cf">
 			<label for="app7">오픈상태</label>
-			<input type="text" id="open_datetime" name="open_datetime" placeholder="ex)20190628(오픈날짜 / 오픈예정인 경우 예정날짜)" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+			<input type="text" id="open_datetime" name="open_datetime" placeholder="오픈날짜 ex)20190628" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+			<select>
+			  <option>운영중</option>
+			  <option>오픈예정</option>
+			</select>
 		  </div><!--#app7-->
     		<div class="cf">
      		<input type="button" class="next" value="다음" onclick="company_join_app01();">
-     		<input type="button" class="cancel" value="취소하기" onclick="location.href='./Index.mb'">
+     		<input type="button" class="cancel" value="취소하기" onclick="location.href='./Index.mb''">
      		</div>
       </div><!--.step1-->
     </form>
