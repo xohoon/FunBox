@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ApplicationVO {
 	
 	// 태훈 application01
+	private String mb_idx;
 	private String app_cp_name;
 	private String app_cp_manager;
 	private String app_cp_hp;
@@ -51,6 +52,12 @@ public class ApplicationVO {
 	
 	
 	
+	public String getMb_idx() {
+		return mb_idx;
+	}
+	public void setMb_idx(String mb_idx) {
+		this.mb_idx = mb_idx;
+	}
 	public int getApp_cp_status() {
 		return app_cp_status;
 	}
@@ -306,23 +313,25 @@ public class ApplicationVO {
 	}
 	@Override
 	public String toString() {
-		return "ApplicationVO [app_cp_name=" + app_cp_name + ", app_cp_manager=" + app_cp_manager + ", app_cp_hp="
-				+ app_cp_hp + ", app_cp_num=" + app_cp_num + ", app_cp_ch=" + app_cp_ch + ", app_cp_more=" + app_cp_more
-				+ ", app_cp_extra=" + app_cp_extra + ", app_cp_sector=" + app_cp_sector + ", app_cp_open_date_time="
-				+ app_cp_open_date_time + ", app_cp_prestige=" + app_cp_prestige + ", app_cp_deposit=" + app_cp_deposit
-				+ ", app_cp_monthly=" + app_cp_monthly + ", app_cp_status=" + app_cp_status + ", app_cp_goal_amount="
-				+ app_cp_goal_amount + ", app_cp_avg_monthly_profit=" + app_cp_avg_monthly_profit
-				+ ", app_cp_monthly_profit=" + app_cp_monthly_profit + ", app_cp_during=" + app_cp_during
-				+ ", app_cp_inv_min_amount=" + app_cp_inv_min_amount + ", app_cp_introduction=" + app_cp_introduction
-				+ ", app_cp_purpose=" + app_cp_purpose + ", app_cp_point=" + app_cp_point + ", app_cp_registrantion="
-				+ app_cp_registrantion + ", app_cp_financial=" + app_cp_financial + ", app_cp_estate_contract="
-				+ app_cp_estate_contract + ", app_cp_image1=" + app_cp_image1 + ", app_cp_image2=" + app_cp_image2
-				+ ", app_cp_image3=" + app_cp_image3 + ", app_cp_image4=" + app_cp_image4 + ", app_cp_image5="
-				+ app_cp_image5 + ", app_cp_other_document1=" + app_cp_other_document1 + ", app_cp_other_document2="
-				+ app_cp_other_document2 + ", app_cp_other_document3=" + app_cp_other_document3
-				+ ", app_cp_other_document4=" + app_cp_other_document4 + ", app_cp_other_document5="
-				+ app_cp_other_document5 + ", app_cp_real_path=" + app_cp_real_path + "]";
+		return "ApplicationVO [mb_idx=" + mb_idx + ", app_cp_name=" + app_cp_name + ", app_cp_manager=" + app_cp_manager
+				+ ", app_cp_hp=" + app_cp_hp + ", app_cp_num=" + app_cp_num + ", app_cp_ch=" + app_cp_ch
+				+ ", app_cp_more=" + app_cp_more + ", app_cp_extra=" + app_cp_extra + ", app_cp_sector=" + app_cp_sector
+				+ ", app_cp_open_date_time=" + app_cp_open_date_time + ", app_cp_prestige=" + app_cp_prestige
+				+ ", app_cp_deposit=" + app_cp_deposit + ", app_cp_monthly=" + app_cp_monthly + ", app_cp_status="
+				+ app_cp_status + ", app_cp_goal_amount=" + app_cp_goal_amount + ", app_cp_avg_monthly_profit="
+				+ app_cp_avg_monthly_profit + ", app_cp_monthly_profit=" + app_cp_monthly_profit + ", app_cp_during="
+				+ app_cp_during + ", app_cp_inv_min_amount=" + app_cp_inv_min_amount + ", app_cp_introduction="
+				+ app_cp_introduction + ", app_cp_purpose=" + app_cp_purpose + ", app_cp_point=" + app_cp_point
+				+ ", app_cp_registrantion=" + app_cp_registrantion + ", app_cp_financial=" + app_cp_financial
+				+ ", app_cp_estate_contract=" + app_cp_estate_contract + ", app_cp_image1=" + app_cp_image1
+				+ ", app_cp_image2=" + app_cp_image2 + ", app_cp_image3=" + app_cp_image3 + ", app_cp_image4="
+				+ app_cp_image4 + ", app_cp_image5=" + app_cp_image5 + ", app_cp_other_document1="
+				+ app_cp_other_document1 + ", app_cp_other_document2=" + app_cp_other_document2
+				+ ", app_cp_other_document3=" + app_cp_other_document3 + ", app_cp_other_document4="
+				+ app_cp_other_document4 + ", app_cp_other_document5=" + app_cp_other_document5 + ", app_cp_real_path="
+				+ app_cp_real_path + "]";
 	}
+	
 	
 	
 	
