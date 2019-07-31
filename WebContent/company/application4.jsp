@@ -30,7 +30,7 @@
     <input type="hidden" name="manager" id="manager" value="<%=company.getApp_cp_manager()%>">
     <input type="hidden" name="phone" id="phone" value="<%=company.getApp_cp_hp()%>">
     <input type="hidden" name="num" id="num" value="<%=company.getApp_cp_num()%>">
-    <input type="hidden" name="ch" id="ch" value="<%=company.getApp_cp_num()%>">
+    <input type="hidden" name="ch" id="ch" value="<%=company.getApp_cp_ch()%>">
     <input type="hidden" name="more" id="more" value="<%=company.getApp_cp_more()%>">
     <input type="hidden" name="extra" id="extra" value="<%=company.getApp_cp_extra()%>">
     <input type="hidden" name="sector" id="sector" value="<%=company.getApp_cp_sector()%>">
@@ -38,6 +38,7 @@
     <input type="hidden" name="prestige" id="prestige" value="<%=company.getApp_cp_prestige()%>">
     <input type="hidden" name="deposit" id="deposit" value="<%=company.getApp_cp_deposit()%>">
     <input type="hidden" name="monthly" id="monthly" value="<%=company.getApp_cp_monthly()%>">
+    <input type="hidden" name="status" id="status" value="<%=company.getApp_cp_status()%>">
     <input type="hidden" name="goal_amount" id="goal_amount" value="<%=company.getApp_cp_goal_amount()%>">
     <input type="hidden" name="avg_monthly_profit" id="avg_monthly_profit" value="<%=company.getApp_cp_avg_monthly_profit()%>">
     <input type="hidden" name="monthly_profit" id="monthly_profit" value="<%=company.getApp_cp_monthly_profit()%>">
@@ -77,7 +78,7 @@
 			<label for="yet1">오픈 전 매장입니다.</label>
 			<input type="checkbox" name="yet1" id="yet1">
 			<input type="file" name="app_cp_registrantion" id="app_cp_registrantion">
-			<span>재무재표</span>
+			<span>재무제표</span>
 			<label for="yet1">오픈 전 매장입니다.</label>
 			<input type="checkbox" name="yet2" id="yet2">
 			<input type="file" name="app_cp_financial" id="app_cp_financial">

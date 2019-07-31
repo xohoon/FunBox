@@ -27,7 +27,8 @@ public class CompanyApplication01Action implements Action{
 		String app_cp_prestige = request.getParameter("prestige");
 		String app_cp_deposit = request.getParameter("deposit");
 		String app_cp_monthly = request.getParameter("monthly");
-		
+		int app_cp_status = Integer.parseInt(request.getParameter("status"));
+
 		ApplicationVO company = new ApplicationVO();
 
 		//page1 company에 데이터 추가
@@ -43,6 +44,10 @@ public class CompanyApplication01Action implements Action{
 		company.setApp_cp_prestige(app_cp_prestige);
 		company.setApp_cp_deposit(app_cp_deposit);
 		company.setApp_cp_monthly(app_cp_monthly);
+		company.setApp_cp_status(app_cp_status);
+		
+		System.out.println(company.toString());
+		
 		// 다음페이지에 company 전달
 		request.setAttribute("company", company);
 				

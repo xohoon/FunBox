@@ -33,7 +33,7 @@
     <input type="hidden" name="manager" id="manager" value="<%=company.getApp_cp_manager()%>">
     <input type="hidden" name="phone" id="phone" value="<%=company.getApp_cp_hp()%>">
     <input type="hidden" name="num" id="num" value="<%=company.getApp_cp_num()%>">
-    <input type="hidden" name="ch" id="ch" value="<%=company.getApp_cp_num()%>">
+    <input type="hidden" name="ch" id="ch" value="<%=company.getApp_cp_ch()%>">
     <input type="hidden" name="more" id="more" value="<%=company.getApp_cp_more()%>">
     <input type="hidden" name="extra" id="extra" value="<%=company.getApp_cp_extra()%>">
     <input type="hidden" name="sector" id="sector" value="<%=company.getApp_cp_sector()%>">
@@ -41,6 +41,7 @@
     <input type="hidden" name="prestige" id="prestige" value="<%=company.getApp_cp_prestige()%>">
     <input type="hidden" name="deposit" id="deposit" value="<%=company.getApp_cp_deposit()%>">
     <input type="hidden" name="monthly" id="monthly" value="<%=company.getApp_cp_monthly()%>">
+    <input type="hidden" name="status" id="status" value="<%=company.getApp_cp_status()%>">
     <h3>투자기업신청</h3>
      <div id="intro">
         <p class="tt1">

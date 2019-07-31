@@ -68,9 +68,9 @@
 			<label for="app4">사업장소재지</label>
 			<input type="button" value="검색" class="app4_btn" onclick="address_search();">
 			<input type="text" id="app4" name="app4" placeholder="우편번호" readonly="readonly">
-			<input type="text" id="app4_1" name="app4" placeholder="주소" readonly="readonly">
-			<input type="text" id="app4_2" name="app4" placeholder="상세주소">
-			<input type="text" id="app4_3" name="app4" placeholder="참조" readonly="readonly">
+			<input type="text" id="app4_1" name="app4_1" placeholder="주소" readonly="readonly">
+			<input type="text" id="app4_2" name="app4_2" placeholder="상세주소">
+			<input type="text" id="app4_3" name="app4_3" placeholder="참조" readonly="readonly">
 		  </div><!--#app4-->
 		  <div id="app5-group" class="group cf">
 			<label for="app5">업종</label>
@@ -88,9 +88,9 @@
      	  <div id="app7-group" class="group cf">
 			<label for="app7">오픈상태</label>
 			<input type="text" id="open_datetime" name="open_datetime" placeholder="오픈날짜 ex)20190628" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
-			<select>
-			  <option>운영중</option>
-			  <option>오픈예정</option>
+			<select name="status">
+			  <option value="1">운영중</option>
+			  <option value="0">오픈예정</option>
 			</select>
 		  </div><!--#app7-->
     		<div class="cf">

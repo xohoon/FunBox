@@ -19,15 +19,16 @@ public class CompanyApplication02Action implements Action {
 		String app_cp_name = request.getParameter("name");
 		String app_cp_manager = request.getParameter("manager");
 		String app_cp_hp = request.getParameter("phone");
-		String app_cp_num = request.getParameter("app4");
-		String app_cp_ch = request.getParameter("app4_1");
-		String app_cp_more = request.getParameter("app4_2");
-		String app_cp_extra = request.getParameter("app4_3");
+		String app_cp_num = request.getParameter("num");
+		String app_cp_ch = request.getParameter("ch");
+		String app_cp_more = request.getParameter("more");
+		String app_cp_extra = request.getParameter("extra");
 		String app_cp_sector = request.getParameter("sector");
 		String app_cp_open_date_time = request.getParameter("open_datetime");
-		String app_cp_prestige = request.getParameter("open_datetime");
+		String app_cp_prestige = request.getParameter("prestige");
 		String app_cp_deposit = request.getParameter("deposit");
 		String app_cp_monthly = request.getParameter("monthly");
+		int app_cp_status = Integer.parseInt(request.getParameter("status"));
 
 		// page2 파라미터값
 		String app_cp_goal_amount = request.getParameter("goal_amount");
@@ -51,6 +52,7 @@ public class CompanyApplication02Action implements Action {
 		company.setApp_cp_prestige(app_cp_prestige);
 		company.setApp_cp_deposit(app_cp_deposit);
 		company.setApp_cp_monthly(app_cp_monthly);
+		company.setApp_cp_status(app_cp_status);
 		
 		// page2 company에 데이터 추가
 		company.setApp_cp_goal_amount(app_cp_goal_amount);
@@ -59,6 +61,8 @@ public class CompanyApplication02Action implements Action {
 		company.setApp_cp_during(app_cp_during);
 		company.setApp_cp_inv_min_amount(app_cp_inv_min_amount);
 
+		System.out.println(company.toString());
+		
 		// 다음페이지에 company 전달
 		request.setAttribute("company", company);
 
