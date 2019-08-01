@@ -7,7 +7,6 @@ var list_city = new Array;
 var list_status = new Array;
 var c = "검색어없음";
 
-
 /// check box ///
 $(document).ready(function() {
 	// 함수 실행
@@ -15,7 +14,7 @@ $(document).ready(function() {
 	option_clickFunc();
 	ckbox_clickFunc();
 //	search_key();
-	
+	main_chkbox();
 });
 
 /*
@@ -364,4 +363,76 @@ function ckbox_func() {
 			$('#con3_all').prop('checked', false);
 		}
 	});
+}
+
+function main_chkbox() {
+	window.onload = function () {
+		if($("#con2_1").is(":checked") == true) {
+			alert("서울 검색 결과입니다.");
+			$("#con2_1").trigger("click");
+			if($("#con2_1").is(":checked") == false) {
+				$("#con2_1").trigger("click");
+			}
+		}else if($("#con2_2").is(":checked") == true) {
+			alert("경기도 검색 결과입니다.");
+			$("#con2_2").trigger("click");
+			if($("#con2_2").is(":checked") == false) {
+				$("#con2_2").trigger("click");
+			}
+		}else if($("#con2_3").is(":checked") == true) {
+			alert("인천 검색 결과입니다.");
+			$("#con2_3").trigger("click");
+			if($("#con2_3").is(":checked") == false) {
+				$("#con2_3").trigger("click");
+			}
+		}else if($("#con2_4").is(":checked") == true) {
+			alert("강원도 검색 결과입니다.");
+			$("#con2_4").trigger("click");
+			if($("#con2_4").is(":checked") == false) {
+				$("#con2_4").trigger("click");
+			}
+		}else if($("#con2_5").is(":checked") == true) {
+			alert("대전과 충천 검색 결과입니다.");
+			$("#con2_5").trigger("click");
+			if($("#con2_5").is(":checked") == false) {
+				$("#con2_5").trigger("click");
+			}
+		}else if($("#con2_6").is(":checked") == true) {
+			alert("대구 검색 결과입니다.");
+			$("#con2_6").trigger("click");
+			if($("#con2_6").is(":checked") == false) {
+				$("#con2_6").trigger("click");
+			}
+		}else if($("#con2_7").is(":checked") == true) {
+			alert("부산 검색 결과입니다.");
+			$("#con2_7").trigger("click");
+			if($("#con2_7").is(":checked") == false) {
+				$("#con2_7").trigger("click");
+			}
+		}else if($("#con2_8").is(":checked") == true) {
+			alert("울산 검색 결과입니다.");
+			$("#con2_8").trigger("click");
+			if($("#con2_8").is(":checked") == false) {
+				$("#con2_8").trigger("click");
+			}
+		}else if($("#con2_9").is(":checked") == true) {
+			alert("경상도 검색 결과입니다.");
+			$("#con2_9").trigger("click");
+			if($("#con2_9").is(":checked") == false) {
+				$("#con2_9").trigger("click");
+			}
+		}else if($("#con2_10").is(":checked") == true) {
+			alert("광주와 전라도 검색 결과입니다.");
+			$("#con2_10").trigger("click");
+			if($("#con2_10").is(":checked") == false) {
+				$("#con2_10").trigger("click");
+			}
+		}else if($("#con2_11").is(":checked") == true) {
+			alert("제주도 검색 결과입니다.");
+			$("#con2_11").trigger("click");
+			if($("#con2_11").is(":checked") == false) {
+				$("#con2_11").trigger("click");
+			}
+		}
+	}
 }
