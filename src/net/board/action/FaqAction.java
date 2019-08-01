@@ -67,33 +67,60 @@ public class FaqAction implements Action{
 			if (endRow > count) {
 				endRow = count;
 			}
+			if(category.equals("0")) {//전체
+				BoardDAO bd_dao1 = new BoardDAO(); //입출금 관련 FAQ
+				ArrayList<FaqVO> faq1 = bd_dao1.getFaq(1, startRow - 1, pageSize);			
+				BoardDAO bd_dao2 = new BoardDAO(); //투자관련 FAQ
+				ArrayList<FaqVO> faq2 = bd_dao2.getFaq(2, startRow - 1, pageSize);			
+				BoardDAO bd_dao3 = new BoardDAO(); //기타 FAQ
+				ArrayList<FaqVO> faq3 = bd_dao3.getFaq(3, startRow - 1, pageSize);
+				
+				request.setAttribute("faq1", faq1);		
+				request.setAttribute("faq2", faq2);
+				request.setAttribute("faq3", faq3);
+				
+			}else if(category.equals("1")) {//입출금 관련 FAQ
+				BoardDAO bd_dao1 = new BoardDAO(); 
+				ArrayList<FaqVO> faq1 = bd_dao1.getFaq(1, startRow - 1, pageSize);
+				request.setAttribute("faq1", faq1);
+			}else if(category.equals("2")) {//투자관련 FAQ
+				BoardDAO bd_dao2 = new BoardDAO(); 
+				ArrayList<FaqVO> faq2 = bd_dao2.getFaq(2, startRow - 1, pageSize);
+				request.setAttribute("faq2", faq2);
+			}else if(category.equals("3")) {//기타 FAQ
+				BoardDAO bd_dao3 = new BoardDAO(); 
+				ArrayList<FaqVO> faq3 = bd_dao3.getFaq(3, startRow - 1, pageSize);
+				request.setAttribute("faq3", faq3);
+			}
 			
-			BoardDAO bd_dao1 = new BoardDAO(); 
-			ArrayList<FaqVO> faq1 = bd_dao1.getFaq(1, startRow - 1, pageSize);
-			
-			BoardDAO bd_dao2 = new BoardDAO();
-			ArrayList<FaqVO> faq2 = bd_dao2.getFaq(2, startRow - 1, pageSize);
-			
-			BoardDAO bd_dao3 = new BoardDAO();
-			ArrayList<FaqVO> faq3 = bd_dao3.getFaq(3, startRow - 1, pageSize);
-			
-			request.setAttribute("faq1", faq1);		
-			request.setAttribute("faq2", faq2);
-			request.setAttribute("faq3", faq3);
 			
 		}else {
-			BoardDAO bd_dao1 = new BoardDAO(); 
-			ArrayList<FaqVO> faq1 = bd_dao1.getFaq(1, startRow - 1, pageSize);
+			if(category.equals("0")) {//전체
+				BoardDAO bd_dao1 = new BoardDAO(); //입출금 관련 FAQ
+				ArrayList<FaqVO> faq1 = bd_dao1.getFaq(1, startRow - 1, pageSize);			
+				BoardDAO bd_dao2 = new BoardDAO(); //투자관련 FAQ
+				ArrayList<FaqVO> faq2 = bd_dao2.getFaq(2, startRow - 1, pageSize);			
+				BoardDAO bd_dao3 = new BoardDAO(); //기타 FAQ
+				ArrayList<FaqVO> faq3 = bd_dao3.getFaq(3, startRow - 1, pageSize);
+				
+				request.setAttribute("faq1", faq1);		
+				request.setAttribute("faq2", faq2);
+				request.setAttribute("faq3", faq3);
+				
+			}else if(category.equals("1")) {//입출금 관련 FAQ
+				BoardDAO bd_dao1 = new BoardDAO(); 
+				ArrayList<FaqVO> faq1 = bd_dao1.getFaq(1, startRow - 1, pageSize);
+				request.setAttribute("faq1", faq1);
+			}else if(category.equals("2")) {//투자관련 FAQ
+				BoardDAO bd_dao2 = new BoardDAO(); 
+				ArrayList<FaqVO> faq2 = bd_dao2.getFaq(2, startRow - 1, pageSize);
+				request.setAttribute("faq2", faq2);
+			}else if(category.equals("3")) {//기타 FAQ
+				BoardDAO bd_dao3 = new BoardDAO(); 
+				ArrayList<FaqVO> faq3 = bd_dao3.getFaq(3, startRow - 1, pageSize);
+				request.setAttribute("faq3", faq3);
+			}
 			
-			BoardDAO bd_dao2 = new BoardDAO();
-			ArrayList<FaqVO> faq2 = bd_dao2.getFaq(2, startRow - 1, pageSize);
-			
-			BoardDAO bd_dao3 = new BoardDAO();
-			ArrayList<FaqVO> faq3 = bd_dao3.getFaq(3, startRow - 1, pageSize);
-			
-			request.setAttribute("faq1", faq1);		
-			request.setAttribute("faq2", faq2);
-			request.setAttribute("faq3", faq3);
 		}
 		
 		number = count - (currentPage - 1) * pageSize;// 글목록에 표시할 글번호
