@@ -9,7 +9,6 @@
 <%
 	String idx = (String)session.getAttribute("idx");
 	// 회원 idx
-	idx = "1";
 	MemberDAO memberDAO = new MemberDAO();
 	List<Member_likeboxVO> boxs = memberDAO.LikeboxInfo(idx);
 	request.setAttribute("boxs", boxs);

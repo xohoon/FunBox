@@ -750,12 +750,12 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<Member_likeboxVO> boxs = new ArrayList<Member_likeboxVO>();
-
+		System.out.println(">>>>>>>>>>>>>>>>>"+mb_idx);
 		try {
-			// 쿼리 기업 idx필요
-			String sql = "SELECT a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
+			// 쿼리 멤버 idx필요
+			String sql = "SELECT a.mb_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
 					+ "FROM member_likebox as a " 
-					+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
+					+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.mb_idx = ? "
 					+ "JOIN company_invest as c ON b.cp_idx = c.cp_idx";
 
 			pstmt = conn.prepareStatement(sql);
