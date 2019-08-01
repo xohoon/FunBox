@@ -18,6 +18,7 @@ public class FaqSearchAction implements Action{
 		System.out.println("FaqSearchAction OK");
 		ActionForward forward = new ActionForward();
 		
+		
 		//FAQ 키워드 검색
 		String keyword = request.getParameter("keyword");
 		System.out.println(keyword);

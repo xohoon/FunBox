@@ -57,23 +57,28 @@
   <ul>
     <li>
       <img src="img/ico_fin1.jpg" alt="투자현황"><p>
-        기업명</p><span><%=memberInvestVO.getCp_name() %><span><%=memberInvestVO.getCp_add_ch() %></span></span>
+        기업명</p>
+        <span><%=memberInvestVO.getCp_name() %><span><%=memberInvestVO.getCp_add_ch() %></span></span>
     </li>
     <li>
       <img src="img/ico_fin2.jpg" alt="투자현황"><p>
-      보유구좌</p><span><%=memberInvestVO.getMi_hoiling_stock() %>계좌</span>
+      보유구좌</p>
+      <span><%=memberInvestVO.getMi_hoiling_stock() %>계좌</span>
     </li>
     <li>
       <img src="img/ico_fin3.jpg" alt="투자현황"><p>
-      구좌가치</p><span><%=memberInvestVO.getMi_stock_value() %>P</span>
+      구좌가치</p>
+      <span><%=memberInvestVO.getMi_stock_value() %>P</span>
     </li>
     <li>
       <img src="img/ico_fin4.jpg" alt="투자현황"><p>
-      당월수익</p><span><%=memberInvestVO.getMi_monthly_profit() %>P</span>
+      당월수익</p>
+      <span><%=memberInvestVO.getMi_monthly_profit() %>P</span>
     </li>
     <li>
       <img src="img/ico_fin5.png" alt="투자현황"><p>
-      누적수익</p><span><%=memberInvestVO.getMi_cumulative_profit() %>P</span>
+      누적수익</p>
+      <span><%=memberInvestVO.getMi_cumulative_profit() %>P</span>
     </li>
   </ul>
   <button class="list_show">투자리스트보기</button>

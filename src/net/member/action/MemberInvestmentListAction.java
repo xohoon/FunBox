@@ -29,7 +29,7 @@ public class MemberInvestmentListAction implements Action {
 			out.println("<script>alert('1잘못된 접근 입니다.');</script>");
 			out.close();
 			forward.setRedirect(true);
-			forward.setPath("./index.mb");
+			forward.setPath("./Index.mb");
 			return forward;
 		}
 		
@@ -64,7 +64,7 @@ public class MemberInvestmentListAction implements Action {
 			out.println("<script>alert('2잘못된 접근 입니다.');</script>");
 			out.close();
 			forward.setRedirect(true);
-			forward.setPath("./index.mb");
+			forward.setPath("./Index.mb");
 			return forward;
 		}
 		memberDAO = new MemberDAO();

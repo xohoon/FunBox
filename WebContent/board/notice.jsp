@@ -84,8 +84,7 @@
 									<b><a class="on" href="./Notice.bd?pageNum=${i}"><font size=3>${i}</font></a></b>
 								</c:when>
 								<c:otherwise>
-									<a href="./Notice.bd?pageNum=${i}">
-									<font size=3>${i}</font></a>
+									<li><a href="./Notice.bd?pageNum=${i}"><font size=3>${i}</font></a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
