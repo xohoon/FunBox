@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+  <link href="css/HF.css" rel="stylesheet" type="text/css">
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -20,7 +23,7 @@
   <link href="css/list_box.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/947fdcffe2.js"></script>
    <script src="js/jquery-3.1.1.min.js"></script>
-   <script src="member/js/mypage_functions.js"></script>
+<script src="member/js/mypage_functions.js"></script>
   <script>
     $(function() {
       $('header').load('./header/header.jsp')
@@ -28,7 +31,6 @@
       $('.like_box').load('./member/like_box.jsp')
     });	  
   </script>
-
 </head>
 
 <body>
@@ -36,11 +38,11 @@
     <header></header>
     <div class="hdbck"></div>
     <div class="toppdng"></div>
-    
     <section>
     	<div class="like_box"></div>
+   		<input type="hidden" value="${sessionScope.id }" id="session_value">
     	<ul class="tab">
-    		<li onclick="location.href='./MemberInvestmentList.mb'">투자현황</li>
+    		<li id="invest_check">투자현황</li>
     		<li onclick="location.href='./Mypage2_1.mb'">자산관리</li>
     		<li onclick="location.href='./Mypage3.mb'">거래내역</li>
     		<li class="on" onclick="location.href='./Mypage4_1.mb'">내정보</li>

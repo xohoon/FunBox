@@ -941,7 +941,46 @@ public class MemberDAO {
 
 			return null;
 		}
-			
+		
+		public String Member_Invest_check(String sessionID) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String result = "0";
+
+			try {
+				String sql = "select count(*) from member_invest where mb_id = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, sessionID);
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					if (rs.getInt("count(*)") > 0) {
+						result = "1"; // 아이디와 비밀번호 일치하는 경우
+					} else {
+						result = "0"; // 아이디는 있으나 비밀번호 맞지 않는 경우
+					}
+				} else {
+					result = "0";// 잘못된 정보 또는 관리자가 아닙니다. 아이디가 없는 경우
+				}
+			} catch (Exception ex) {
+				System.out.println("Member_Invest_check 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
+		
+		
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
 	// 윤식 추가/////////////////////////////////////////////////
