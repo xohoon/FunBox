@@ -97,23 +97,17 @@
 			return false;
 		  }
 		  frm.submit();
+		  console.log("search test");
 	  }
 	  
-	  function cateval(){
-		  $("#button1").click(function(){
-			  $("#category").val('1');
-			  $("#category_number").val('1');
-		  });
-		  $("#button2").click(function(){
-			  $("#category").val('2');
-			  $("#category_number").val('2');
-		  });
-		  $("#button3").click(function(){
-			  $("#category").val('3');
-			  $("#category_number").val('3');
-		  });		  	  
+	  function cateval(button){
+		  var category = button
+		  console.log(category);
+		  $("#category").val(category);
+		  location.href='./Faq.bd?category='+category;
+		  
 	}
-	  
+
   </script>
 
 </head>
@@ -133,10 +127,12 @@
 		<div class="faq">
 			<h4>FAQ</h4>
 			<h5>궁금한 점이 있다면 여기서 먼저 찾아보세요</h5>
-				<button id="button0" class="on">전체FAQ</button>
-				<button id="button1" onclick="cateval();">입출금관련FAQ</button>
-				<button id="button2" onclick="cateval();">투자관련FAQ</button>
-				<button id="button3" onclick="cateval();">기타FAQ</button>
+				<button id="button1" value = "0" onclick= "cateval(this.value)" class="on">전체FAQ</button>
+				<button id="button2" value = "1" onclick= "cateval(this.value)" >입출금관련FAQ</button>
+				<button id="button2" value = "2" onclick= "cateval(this.value)">투자관련FAQ</button>
+				<button id="button3" value = "3" onclick= "cateval(this.value)">기타FAQ</button>
+				<input id="test" type="hidden" id="category_all" name="category" value="0">
+				
 			<div class="sch">
 				<form name="search" method="post" action="./search_faq.bd">
 					<label>키워드로 검색해보세요</label>
