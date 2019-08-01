@@ -157,10 +157,13 @@
 	            <p>${likeVO.lk_cp_branch }</p>
 	          </div>
 	          <div class="gage">
-	            <div class="per"><span><fmt:parseNumber value ="${likeVO.lk_cp_percent }" integerOnly ="true" /> 
-	            </span>%</div>
+	            <div class="per"
+	            ><span><fmt:parseNumber value ="${likeVO.lk_cp_percent }" integerOnly ="true" /></span>%
+	            </div>
 	            <div class="gage_full">
-	              <div class="gage_fill"></div>
+	              <div class="gage_fill">
+	              <span></span>
+	              </div>
 	            </div>
 	            <div>
 	              <span class="p_amt"><span><fmt:formatNumber value="${likeVO.lk_cp_current_amount}" pattern="#,###" />
@@ -241,8 +244,9 @@
 	                <p>${mainPageDeadLineVO.cp_branch }</p>
               	</div>
               	<div class="gage">
-              		<div class="per"><span><fmt:parseNumber value ="${mainPageDeadLineVO.persent }" integerOnly ="true" />
-              		</span>%
+              		<div class="per">
+	              		<span><fmt:parseNumber value ="${mainPageDeadLineVO.persent }" integerOnly ="true" /></span>%
+              		</div>
               			<ul id="timer_${mainPageDeadLineVO.cp_idx }">
               				<li><span id="days"></span>일</li>
 		                    <li><span id="hours"></span> :</li>
@@ -250,7 +254,9 @@
 		                    <li><span id="seconds"></span></li>		                    
               			</ul>
               			<div class="gage_full">
-                  			<div class="gage_fill"></div>
+                  			<div class="gage_fill">
+                  			<span></span>
+                  			</div>
                 		</div>
                 		<div>
 		                  <span class="p_amt"><span><fmt:formatNumber value="${mainPageDeadLineVO.iv_current_amount }" pattern="#,###" />
@@ -259,10 +265,10 @@
 		                  </span> P</span>
 		                  <span class="d_day">D-<span id="DDay_${mainPageDeadLineVO.cp_idx }">1</span></span>
 		                </div>
-              		</div>
               	</div>
               	<div class="reward_per">
-              		수익률<span>${mainPageDeadLineVO.cp_monthly_profit}%</span>
+              		수익률
+              		<span>${mainPageDeadLineVO.cp_monthly_profit}%</span>
 	            </div>
           	</div>
           </c:forEach>
