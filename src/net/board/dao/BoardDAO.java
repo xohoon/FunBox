@@ -498,6 +498,7 @@ public class BoardDAO {
 				
 				Search_list.add(listVO);
 			}
+			return Search_list;
 			
 		} catch (Exception ex) {
 			System.out.println("Board_Search_ListVO ERROR: " + ex);
@@ -513,10 +514,11 @@ public class BoardDAO {
 				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
 		}
-		return Search_list;
+		return null;
+		
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	public JSONArray Search_ListInfo(ArrayList<String> list_all, String select_value) throws Exception {
 		
 		PreparedStatement pstmt = null;
@@ -585,8 +587,6 @@ public class BoardDAO {
 				}
 			}
 			
-			
-			
 			pstmt = conn.prepareStatement(sql);
 			System.out.println(">>>>>>>"+sql);
 			if(list_all != null) {
@@ -606,7 +606,6 @@ public class BoardDAO {
 				jsonObj.put("percent", rs.getString("percent"));
 				jsonObj.put("cp_monthly_profit", rs.getString("cp_monthly_profit"));
 				jsonObj.put("cp_sector", rs.getString("cp_sector"));
-				
 				
 				jsonArr.add(jsonObj);
 			}
