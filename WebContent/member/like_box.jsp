@@ -38,7 +38,7 @@
     		<h6><i class="fas fa-star"></i> 내가 찜한 BOX</h6>
     		<ul>
     			<c:forEach var="boxs" items="${boxs }">
-	    			<li>
+	    			<li onclick="location.href='./CorporationAction.cp?cp_idx=${searchVO.search_cp_idx}'">
 	    				<a href="#" class="delete"><i class="fas fa-times-circle"></i></a>
 	                        <div class="img">
 						    <img src="img/row1_anotherminae.jpg" alt="미네스">
