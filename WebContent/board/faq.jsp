@@ -276,7 +276,7 @@
 						<c:set var="endPage" value="${pageCount}" />
 					</c:if>
 					<c:if test="${numPageGroup > 1}">
-						<a href="./Faq.bd?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">◀</a>
+						<li><a href="./Faq.bd?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">◀</a></li>
 					</c:if>
 					
 					<ul class="pager">
@@ -286,8 +286,7 @@
 									<b><a class="on" href="./Faq.bd?pageNum=${i}"><font size=3>${i}</font></a></b>
 								</c:when>
 								<c:otherwise>
-									<a href="./Faq.bd?pageNum=${i}">
-									<font size=3>${i}</font></a>
+									<li><a href="./Faq.bd?pageNum=${i}"><font size=3>${i}</font></a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -304,10 +303,6 @@
     <footer></footer>
   </div>
 <script type="text/javascript">
-	$(document).ready(function(){
-		  $('#button').trigger('click');	  
-	});
-
   $(function() {
     $('header').load('./header/header.jsp')
     $('footer').load('./footer/footer.jsp')

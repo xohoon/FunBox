@@ -24,10 +24,18 @@ public class FaqAction implements Action{
 		//FAQ 불러오기
 		System.out.println("FaqAction OK");
 		ActionForward forward = new ActionForward();
-
-		String category = request.getParameter("category_number");
+		String category = request.getParameter("category");
 		System.out.println("category:"+category);
-	
+		
+		try {
+			if(category.equals(null)) {
+				category = "0";
+			}
+		}catch(NullPointerException e) {
+			//System.out.println("NullPointerException :" + e);
+			category = "0";			
+		}
+			
 		// 페이징 처리 구문
 		int pageSize = 10; // 한페이지에 보여줄 List
 		

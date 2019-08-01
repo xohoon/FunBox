@@ -8,7 +8,10 @@
 <%
 	CompanyBean companyBean = (CompanyBean)request.getAttribute("companyBean");
 	ArrayList<CompanyListVO> leftCompanyList = (ArrayList<CompanyListVO>)request.getAttribute("leftCompanyList");
-	int sumPayPrincipal;
+	int sumPayPrincipal;	
+  	String idx = (String)session.getAttribute("idx");
+	System.out.println("idx 값 확인 : "+idx);
+	
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -164,7 +167,7 @@
                   </div>
                   <a href="#">예상 지급스케쥴 자세히 보러가기</a>
                 </div>
-                <div class="invest" onclick="location.href='./Invest_beforeAction.cp'">투자하기</div>
+                <div class="invest" onclick= investClick()>투자하기</div>
               </div>
             </div>
             <div class="gage-bar">
@@ -529,10 +532,20 @@
           $('.content .list').slideToggle(500);
         return false;
       });
-    });
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+   <script>
+   	function investClick(){
+   		var idx = <%= idx%>;
+   		if(idx){
+   			location.href='./Invest_beforeAction.cp';
+   		}else{
+   			alert("로그인 후 사용해주세요.");
+   			location.href='./LoginPage.mb';
+   		}                		
+   	}
+  </script>     
   <!-- <script charset="UTF-8">
     var mapWidth = $('.corpor-location').innerWidth();
     var mapHeight = $('.corpor-location').innerHeight();
