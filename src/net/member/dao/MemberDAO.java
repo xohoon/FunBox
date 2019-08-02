@@ -753,7 +753,7 @@ public class MemberDAO {
 		System.out.println(">>>>>>>>>>>>>>>>>"+mb_idx);
 		try {
 			// 쿼리 멤버 idx필요
-			String sql = "SELECT a.mb_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
+			String sql = "SELECT a.mb_idx, a.cp_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
 					+ "FROM member_likebox as a " 
 					+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.mb_idx = ? "
 					+ "JOIN company_invest as c ON b.cp_idx = c.cp_idx";
@@ -766,6 +766,8 @@ public class MemberDAO {
 			while (rs.next()) {
 				Member_likeboxVO box = new Member_likeboxVO();
 
+				box.setMb_idx(rs.getInt("mb_idx"));
+				box.setCp_idx(rs.getInt("cp_idx"));
 				box.setLike_cp_name(rs.getString("like_cp_name"));
 				box.setCp_monthly_profit(rs.getString("cp_monthly_profit"));
 				box.setCp_branch(rs.getString("cp_branch"));
