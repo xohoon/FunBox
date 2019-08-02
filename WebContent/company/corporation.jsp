@@ -271,13 +271,15 @@
                       <div class="click"><a href="#">
                           <p class="name">재무제표.pdf</p>
                           <p class="more">more</p>
-                        </a></div>
+                        </a>
+                      </div>
                       <div class="box"><a href="#">
                           <div class="img"></div>
                           <div class="text">
                             <a href="./CompanyFileDownload?filename=<%=companyBean.getCf_financial() %>&cp_idx=<%=companyBean.getCp_idx() %>" download>재무제표 다운로드</a>
                           </div>
-                        </a></div>
+                        </a>
+                       </div>
                     </li>
                     <li class="c2">
                       <div class="click"><a href="#">

@@ -29,10 +29,8 @@
   <c:otherwise>
   <%
   	String idx = (String)session.getAttribute("idx");
-    	System.out.println(">>>>>>>>>"+idx);
-    	MemberDAO memberDAO = new MemberDAO();
+   	MemberDAO memberDAO = new MemberDAO();
   	Member_headerVO member = (Member_headerVO)memberDAO.Member_accumulate(idx);
-  	System.out.println("point>>"+member.getMb_point()+"token"+member.getMb_token()+"누적"+member.getMb_accumulate());
   %>
 
   <div class="hdbar">
