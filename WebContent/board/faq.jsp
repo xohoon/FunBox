@@ -35,8 +35,6 @@
   <script type="text/javascript"></script>
   <script>
 
-	  
-	  
 	  $(function(){
 		  var onOff = false;
         $('.depth1').on('click',function(){
@@ -101,11 +99,14 @@
 	  }
 	  
 	  function cateval(button){
-		  var category = button
-		  console.log(category);
-		  $("#category").val(category);
-		  location.href='./Faq.bd?category='+category;
+		  // 페이징 링크 링크 연결 수정
+		  var category = button;
+		  var pageNum = document.getElementById("hiddenCategory").value;
+		  		  
+		  $("#category").val(category); // 찾기를 위한 카테고리 변수
 		  
+		  location.href='./Faq.bd?category='+category+ '&pageNum='+pageNum;
+		  //location.href='./Faq.bd?category='+category;
 	}
 
   </script>
@@ -130,9 +131,7 @@
 				<button id="button1" value = "0" onclick= "cateval(this.value)" class="on">전체FAQ</button>
 				<button id="button2" value = "1" onclick= "cateval(this.value)" >입출금관련FAQ</button>
 				<button id="button2" value = "2" onclick= "cateval(this.value)">투자관련FAQ</button>
-				<button id="button3" value = "3" onclick= "cateval(this.value)">기타FAQ</button>
-				<input id="test" type="hidden" id="category_all" name="category" value="0">
-				
+				<button id="button3" value = "3" onclick= "cateval(this.value)">기타FAQ</button>			
 			<div class="sch">
 				<form name="search" method="post" action="./search_faq.bd">
 					<label>키워드로 검색해보세요</label>
@@ -267,7 +266,6 @@
 					<c:set var="pageCount" value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" /> 
 					<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
 					<c:set var="endPage" value="${startPage + pageGroupSize-1}" />
-					
 					<c:if test="${endPage > pageCount}">
 						<c:set var="endPage" value="${pageCount}" />
 					</c:if>
@@ -279,10 +277,28 @@
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
 							<c:choose>
 								<c:when test="${currentPage == i}">
-									<b><a class="on" href="./Faq.bd?pageNum=${i}"><font size=3>${i}</font></a></b>
+									<c:choose>
+										<c:when test="${flag == 1}">
+											<li><b><a class="on" href="./Faq.bd?pageNum=${i}&category=${categroyFlag}"><font size=3>${i}</font></a></b></li>
+											<input type="hidden" id= "hiddenCategory"  name="hiddenCategory" value="${i}">
+										</c:when>
+										<c:otherwise>
+											<li><b><a class="on" href="./search_faq.bd?pageNum=${i}&category=${categroyFlag}&keyword=${keyword}"><font size=3>${i}</font></a></b></li>
+											<input type="hidden" id= "hiddenCategory"  name="hiddenCategory" value="${i}">
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 								<c:otherwise>
-									<li><a href="./Faq.bd?pageNum=${i}"><font size=3>${i}</font></a></li>
+									<c:choose>
+										<c:when test="${flag == 1}">
+											<li><b><a class="on" href="./Faq.bd?pageNum=${i}&category=${categroyFlag}"><font size=3>${i}</font></a></b></li>
+											<input type="hidden" id= "hiddenCategory"  name="hiddenCategory" value="${i}">
+										</c:when>
+										<c:otherwise>
+											<li><b><a class="on" href="./search_faq.bd?pageNum=${i}&category=${categroyFlag}&keyword=${keyword}"><font size=3>${i}</font></a></b></li>
+											<input type="hidden" id= "hiddenCategory"  name="hiddenCategory" value="${i}">
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
