@@ -115,14 +115,6 @@ public class BoardDAO {
 
 			rs.beforeFirst();
 
-			/*
-			 * while(rs.next()){ count = rs.getRow(); }
-			 */
-
-			/*
-			 * rs = pstmt.executeQuery(sql); if(rs.next()) { count = rs.getInt(1); }
-			 */
-
 			return count;
 
 		} catch (Exception ex) {
@@ -192,52 +184,44 @@ public class BoardDAO {
 
 		}
 		// 총 notice 리스트 수 출력 함수
-				public int noticeCount() {
-					String sql = "select * from notice";
-					PreparedStatement pstmt = null;
-					int count = 0;
-					ResultSet rs = null;
+		public int noticeCount() {
+			String sql = "select * from notice";
+			PreparedStatement pstmt = null;
+			int count = 0;
+			ResultSet rs = null;
 
-					try {
-						pstmt = conn.prepareStatement(sql);
-					//	pstmt.setString(1, category);
-						rs = pstmt.executeQuery();
+			try {
+				pstmt = conn.prepareStatement(sql);
+			//	pstmt.setString(1, category);
+				rs = pstmt.executeQuery();
 
-						rs.last();
+				rs.last();
 
-						count = rs.getRow();
+				count = rs.getRow();
 
-						rs.beforeFirst();
+				rs.beforeFirst();
+				
+				return count;
 
-						/*
-						 * while(rs.next()){ count = rs.getRow(); }
-						 */
-
-						/*
-						 * rs = pstmt.executeQuery(sql); if(rs.next()) { count = rs.getInt(1); }
-						 */
-
-						return count;
-
-					} catch (Exception ex) {
-						System.out.println("noticeCount 에러: " + ex);
-					} finally {
-						try {
-							if (rs != null)
-								rs.close();
-							if (pstmt != null)
-								pstmt.close();
-							if (conn != null)
-								conn.close();
-						} catch (Exception e) {
-							System.out.println("해제 실패 : " + e.getMessage());
-						}
-					}
-
-					return 0;
-
+			} catch (Exception ex) {
+				System.out.println("noticeCount 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("해제 실패 : " + e.getMessage());
 				}
-	
+			}
+
+			return 0;
+
+		}
+
 	
 	// 1:1 문의내역 - 문의 리스트 가져오기
 	public List<QnaVO> getQnaList(String id, int startRow, int pageSize) throws Exception {// 시작페이지, 끝 페이지
@@ -417,8 +401,55 @@ public class BoardDAO {
 		}
 		
 		
+		// FAQ 검색기능 count
+	    public int searchFaqCount(String keyword, int category){
+	    	
+	    	PreparedStatement pstmt = null;
+			ResultSet rs = null;
+	        ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
+	        int count = 0;
+	       
+	        try{//실행
+	        	String sql ="select title,content,category from faq ";
+	        	
+	        	if(keyword != null && !keyword.equals("") && category != 0){
+	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and category=? order by reg_date_time desc";
+	        	}else{//모든 레코드 검색
+	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and (category=? or 1 or 2 or 3) order by reg_date_time desc";
+	        	}
+
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setInt(1, category);
+	            rs = pstmt.executeQuery();
+	            rs.last();
+
+				count = rs.getRow();
+
+				rs.beforeFirst();
+
+				return count;
+				
+	        }catch (Exception ex) {
+				System.out.println("searchFaqCount: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+	        return 0;
+	    } 
+		
+		
+		
 		// FAQ 검색기능 추가
-	    public ArrayList<FaqVO> searchFaq(String keyword, int category){
+	    public ArrayList<FaqVO> searchFaq(String keyword, int category, int startRow, int pageSize){
 	    	
 	    	PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -428,9 +459,9 @@ public class BoardDAO {
 	        	String sql ="select title,content,category from faq ";
 	        	
 	        	if(keyword != null && !keyword.equals("") && category != 0){
-	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and category=? order by reg_date_time desc";
+	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and category=? order by reg_date_time desc limit "+startRow+","+pageSize;
 	        	}else{//모든 레코드 검색
-	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and (category=? or 1 or 2 or 3) order by reg_date_time desc";
+	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and (category=? or 1 or 2 or 3) order by reg_date_time desc limit "+startRow+","+ pageSize;
 	        	}
 
 	            pstmt = conn.prepareStatement(sql);

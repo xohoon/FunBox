@@ -17,7 +17,9 @@ import net.common.action.ActionForward;
 // 유정 고객지원 - FAQ
 
 public class FaqAction implements Action{
-
+	
+	String categroyFlag = "";
+	
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); //한글처리
 		
@@ -57,6 +59,7 @@ public class FaqAction implements Action{
 		
 		int count = 0;
 		int number = 0;
+		categroyFlag = category;
 		
 		BoardDAO qna_dao_count = new BoardDAO();		
 		count = qna_dao_count.faqCount(category); // 전체 글의 수 불러오기 (선택시)
@@ -158,7 +161,9 @@ public class FaqAction implements Action{
 		
 		request.setAttribute("pageGroupCount", new Integer(pageGroupCount));
 		System.out.println(pageGroupCount); // 1
-			
+		
+		request.setAttribute("flag", new Integer(1));
+		request.setAttribute("categroyFlag", categroyFlag);
 		forward.setRedirect(false);
 		forward.setPath("./board/faq.jsp");
 		
