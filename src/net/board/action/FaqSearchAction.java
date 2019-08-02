@@ -124,6 +124,7 @@ public class FaqSearchAction implements Action{
 			
 		request.setAttribute("categroyFlag", categroyFlag);
 		request.setAttribute("keyword", keyword);
+		request.setAttribute("category", category);
 		
 		forward.setRedirect(false);
 		forward.setPath("./board/faq.jsp");
