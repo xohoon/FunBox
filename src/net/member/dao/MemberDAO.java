@@ -750,12 +750,12 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<Member_likeboxVO> boxs = new ArrayList<Member_likeboxVO>();
-
+		System.out.println(">>>>>>>>>>>>>>>>>"+mb_idx);
 		try {
-			// 쿼리 기업 idx필요
-			String sql = "SELECT a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
+			// 쿼리 멤버 idx필요
+			String sql = "SELECT a.mb_idx, a.cp_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
 					+ "FROM member_likebox as a " 
-					+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
+					+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.mb_idx = ? "
 					+ "JOIN company_invest as c ON b.cp_idx = c.cp_idx";
 
 			pstmt = conn.prepareStatement(sql);
@@ -766,6 +766,8 @@ public class MemberDAO {
 			while (rs.next()) {
 				Member_likeboxVO box = new Member_likeboxVO();
 
+				box.setMb_idx(rs.getInt("mb_idx"));
+				box.setCp_idx(rs.getInt("cp_idx"));
 				box.setLike_cp_name(rs.getString("like_cp_name"));
 				box.setCp_monthly_profit(rs.getString("cp_monthly_profit"));
 				box.setCp_branch(rs.getString("cp_branch"));
@@ -941,7 +943,46 @@ public class MemberDAO {
 
 			return null;
 		}
-			
+		
+		public String Member_Invest_check(String sessionID) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String result = "0";
+
+			try {
+				String sql = "select count(*) from member_invest where mb_id = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, sessionID);
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					if (rs.getInt("count(*)") > 0) {
+						result = "1"; // 아이디와 비밀번호 일치하는 경우
+					} else {
+						result = "0"; // 아이디는 있으나 비밀번호 맞지 않는 경우
+					}
+				} else {
+					result = "0";// 잘못된 정보 또는 관리자가 아닙니다. 아이디가 없는 경우
+				}
+			} catch (Exception ex) {
+				System.out.println("Member_Invest_check 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
+		
+		
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
 	// 윤식 추가/////////////////////////////////////////////////

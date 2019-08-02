@@ -9,7 +9,6 @@
 <%
 	String idx = (String)session.getAttribute("idx");
 	// 회원 idx
-	idx = "1";
 	MemberDAO memberDAO = new MemberDAO();
 	List<Member_likeboxVO> boxs = memberDAO.LikeboxInfo(idx);
 	request.setAttribute("boxs", boxs);
@@ -39,7 +38,7 @@
     		<h6><i class="fas fa-star"></i> 내가 찜한 BOX</h6>
     		<ul>
     			<c:forEach var="boxs" items="${boxs }">
-	    			<li>
+	    			<li onclick="location.href='./CorporationAction.cp?cp_idx=${boxs.getCp_idx() }'">
 	    				<a href="#" class="delete"><i class="fas fa-times-circle"></i></a>
 	                        <div class="img">
 						    <img src="img/row1_anotherminae.jpg" alt="미네스">
