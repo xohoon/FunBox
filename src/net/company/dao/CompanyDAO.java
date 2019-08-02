@@ -29,7 +29,7 @@ public class CompanyDAO {
 	// 4.
 	private Connection conn;
 	// autoReconnect=true
-	private static String URL = "jdbc:mysql://52.79.240.236/funbox?serverTimezone=Asia/Seoul&useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&validationQuery=select 1";
+	private static String URL = "jdbc:mysql://52.79.240.236/funbox?serverTimezone=Asia/Seoul&useSSL=false&useUnicode=true&characterEncoding=utf8";
 	private static String USERNAME = "damonwin01";
 	private static String PASSWORD = "damon123!!";
 
@@ -630,36 +630,36 @@ public class CompanyDAO {
 		return false;
 	}
 
-	// 투자현황 - 투자내역 불러오기
+	//투자현황 - 투자내역 불러오기
 	public ArrayList<MemberInvestVO> getInvestment(String id, int startRow, int endRow) {// 시작페이지, 끝 페이지
 		String sql = "select mi_category,mi_name,mi_point,mi_reg_date_time,mi_note from member_invest where mb_id=? order by mi_idx desc limit "
-				+ startRow + ", " + endRow;
+								+ startRow + ", " + endRow;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<MemberInvestVO> member_invest_list = new ArrayList<MemberInvestVO>();
-		System.out.println("getInvestment 실행 : " + id);
+		System.out.println("getInvestment 실행 : "+ id);
 
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			System.out.println(pstmt);
-
-			while (rs.next()) {
-
+			
+			while(rs.next()) {
+				
 				MemberInvestVO member_invest = new MemberInvestVO();
 				member_invest.setMi_category(rs.getString("mi_category"));
 				member_invest.setName(rs.getString("mi_name"));
 				member_invest.setPoint(rs.getString("mi_point"));
 				member_invest.setMi_reg_date_time(rs.getTimestamp("mi_reg_date_time"));
 				member_invest.setMi_note(rs.getString("mi_note"));
-
+				
 				member_invest_list.add(member_invest);
 
 			}
 
 			return member_invest_list;
-
+			
 		} catch (Exception ex) {
 			System.out.println("getInvestment 에러: " + ex);
 		} finally {
@@ -695,16 +695,16 @@ public class CompanyDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (rs != null)
+			if (rs != null)
+				try {
 					rs.close();
-				if (pstmt != null)
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
 					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				System.out.println("연결 해제 실패: " + e.getMessage());
-			}
+				} catch (SQLException ex) {
+				}
 		}
 		System.out.println("total: "+total);
 		return total;
