@@ -29,7 +29,7 @@ public class CompanyDAO {
 	// 4.
 	private Connection conn;
 	// autoReconnect=true
-	private static String URL = "jdbc:mysql://52.79.240.236/funbox?serverTimezone=Asia/Seoul&useSSL=false&useUnicode=true&characterEncoding=utf8";
+	private static String URL = "jdbc:mysql://52.79.240.236/funbox?serverTimezone=Asia/Seoul&useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&validationQuery=select 1";
 	private static String USERNAME = "damonwin01";
 	private static String PASSWORD = "damon123!!";
 
@@ -700,12 +700,13 @@ public class CompanyDAO {
 					rs.close();
 				if (pstmt != null)
 					pstmt.close();
-				if (conn != null)
-					conn.close();
+				/*if (conn != null)
+					conn.close();*/
 			} catch (Exception e) {
 				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
 		}
+		System.out.println("total: "+total);
 		return total;
 	}
 	// 유정 추가 end ////////////////////////////
