@@ -700,8 +700,8 @@ public class CompanyDAO {
 					rs.close();
 				if (pstmt != null)
 					pstmt.close();
-				/*if (conn != null)
-					conn.close();*/
+				if (conn != null)
+					conn.close();
 			} catch (Exception e) {
 				System.out.println("연결 해제 실패: " + e.getMessage());
 			}

@@ -27,7 +27,7 @@ public class FaqSearchAction implements Action{
 		System.out.println("keyword :" + keyword);
 		
 		int category = Integer.parseInt(request.getParameter("category"));
-		System.out.println(category);
+		System.out.println("검색할때category:"+category);
 		String categoryOfcount = request.getParameter("category");
 		System.out.println("category:"+categoryOfcount);
 		

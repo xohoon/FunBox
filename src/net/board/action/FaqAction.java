@@ -164,6 +164,8 @@ public class FaqAction implements Action{
 		
 		request.setAttribute("flag", new Integer(1));
 		request.setAttribute("categroyFlag", categroyFlag);
+		request.setAttribute("category", category);
+		System.out.println("cate 몇번임?"+category);
 		forward.setRedirect(false);
 		forward.setPath("./board/faq.jsp");
 		
