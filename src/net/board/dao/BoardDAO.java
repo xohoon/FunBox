@@ -529,7 +529,20 @@ public class BoardDAO {
 		System.out.println("DAO value>>1"+select_value);
 		// pstmt 변수로 지정
 		int pstmt_num = 0;
-		
+		/*
+		ArrayList<String> city_all = new ArrayList<String>();
+		city_all.add("서울");
+		city_all.add("경기");
+		city_all.add("인천");
+		city_all.add("강원");
+		city_all.add("대전/충천");
+		city_all.add("대구");
+		city_all.add("부산");
+		city_all.add("울산");
+		city_all.add("경상");
+		city_all.add("광주/전라");
+		city_all.add("제주");
+		*/
 		String nothing = "검색어없음";
 		
 		for(int i=0; i<list_all.size(); i++) {
@@ -537,6 +550,19 @@ public class BoardDAO {
 				list_all.remove(i);
 			}
 		}
+		/*
+		for(int i=0; i<list_all.size(); i++) {
+			System.out.println("도시전체 있나없나 >>>>>>>>"+list_all.get(i));
+			if(list_all.get(i).equals("도시전체")) {
+				list_all.clear();
+				for(int j=0; j<city_all.size(); j++) {
+					list_all.add(city_all.get(j));
+				}
+			}
+		}
+		System.out.println("도시전체테스트>>>>>111"+city_all.toString());
+		System.out.println("도시전체테스트>>>>>222"+list_all.toString());
+		 */
 		
 		try {
 			// 쪼인해도되고안해도되고
@@ -545,9 +571,9 @@ public class BoardDAO {
 					+ "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
 			
 			if(list_all != null) {
-				for(int i=0; i<list_all.size(); i++) {
+				for(int i = 0; i<list_all.size(); i++) {
 					if(i == 0) {
-						if(list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
+						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
 							sql += "WHERE CONCAT(cp.cp_funding_status) REGEXP ? ";
 						}
 						if(list_all.get(i) == "21" || list_all.get(i) == "22") {
@@ -556,8 +582,11 @@ public class BoardDAO {
 						if(list_all.get(i) == "30") {
 							sql += "WHERE CONCAT(cp.cp_overdue_status) REGEXP ? ";
 						}
-						sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) REGEXP ? ";
-					} else {
+						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
+								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
+							sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) REGEXP ? ";
+						}
+					} else if(i != 0){
 						if(list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
 							sql += "OR CONCAT(cp.cp_funding_status) REGEXP ? ";
 						}
@@ -567,7 +596,10 @@ public class BoardDAO {
 						if(list_all.get(i) == "30") {
 							sql += "OR CONCAT(cp.cp_overdue_status) REGEXP ? ";
 						}
-						sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) REGEXP ? ";
+						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
+								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
+							sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) REGEXP ? ";
+						}
 					}
 				}
 				if(select_value.equals("1")) {
@@ -592,6 +624,8 @@ public class BoardDAO {
 			if(list_all != null) {
 				for(int i=0; i<list_all.size(); i++) {
 					pstmt.setString(i+1, list_all.get(i));
+					System.out.println(">>>>>>>>>>>>>pstmt"+list_all.size());
+					System.out.println(">>>>>>>>>>>>>pstmt"+list_all.get(i));
 				}
 			}
 			rs = pstmt.executeQuery();

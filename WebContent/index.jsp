@@ -42,16 +42,15 @@
   <link href="css/index.css" rel="stylesheet">
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="js/jquery.bxslider.min.js"></script>
-
+  <script src="js/index_function.js"></script>
 </head>
 
 <body>
+<input type="hidden" id="select_k" value="0">
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div>
     <div class="toppdng"></div>
-
-
     <section id="sec1">
       <div class="inner">
         <div class="regular slider">
@@ -83,10 +82,10 @@
             });
           });
         </script>
-
         <div class="live_chart">
           <h3>실시간 인기순위</h3>
-          <ul>
+          <ul class="list_ul">
+          <!-- 
             <li>
               <span>1</span>&nbsp;
               <a href="#">어나더 미네스</a>
@@ -137,6 +136,7 @@
               <a href="#">-</a>
               <span>-</span>
             </li>
+             -->
           </ul>
         </div>
       </div>

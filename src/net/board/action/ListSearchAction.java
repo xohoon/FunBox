@@ -36,17 +36,23 @@ public class ListSearchAction implements Action{
 		// 검색어 null 일때
 		System.out.println("action>>>>>"+getKeyword);
 		
+		String[] cityall = {"서울", "경기", "인천", "강원", "대전/충천", "대구", "부산", "울산", "경상", "광주/전라", "제주"};
+		String[] sectorall = {"한식", "분식", "일식", "중식", "양식", "카페", "치킨", "기타"};
+		String[] statusall = {"10", "11", "12", "21", "22", "30"};
+		// list_city <- cityall
+		// city <- list_city
+
 		// 배열 뽑아내기
-		if(list_sector != null) {
-			for(int i=0; i<list_sector.length; i++) {
-				sector.add(list_sector[i]);
-				System.out.println("받은배열 sector::"+list_sector[i]+"받은배열 sector::"+sector);
-			}
-		}
 		if(list_city != null) {
 			for(int i=0; i<list_city.length; i++) {
 				city.add(list_city[i]);
 				System.out.println("받은배열 city::"+list_city[i]+"받은배열 city::"+city);
+			}
+		}
+		if(list_sector != null) {
+			for(int i=0; i<list_sector.length; i++) {
+				sector.add(list_sector[i]);
+				System.out.println("받은배열 sector::"+list_sector[i]+"받은배열 sector::"+sector);
 			}
 		}
 		if(list_status != null) {

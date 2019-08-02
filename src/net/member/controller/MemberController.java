@@ -19,8 +19,9 @@ import net.member.action.MemberJoinAction;
 import net.member.action.MemberLoginAction;
 import net.member.action.MemberLoginCheckAction;
 import net.member.action.MemberPhoneCheckAction;
+import net.member.action.MemberSelectKeyAction;
 import net.member.action.MemberUpdateAction;
-import net.member.action.Member_Invest_check;
+import net.member.action.MemberInvestcheck;
 import net.member.action.Mypage2_2Action;
 import net.member.action.MypagePINCheckAction;
 import net.member.action.MypagePWCheckAction;
@@ -183,15 +184,28 @@ public class MemberController extends HttpServlet implements Servlet {
 			
 		///////////////////////유정 추가 end///////////////////////
 		/////////////////////////태훈 추가 / 시작//////////////////////////
-		else if(command.equals("/Member_Invest_check.mb")) {
-			System.out.println("controller>>>>>>>>>>>1");
-			action = new Member_Invest_check();
+		else if(command.equals("/MemberInvestcheck.mb")) {
+			action = new MemberInvestcheck();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if(command.equals("/MemberSelectKey.mb")) {
+			action = new MemberSelectKeyAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
+		
+		
+		else if (command.equals("/socket_test.mb")) {
+				forward = new ActionForward();
+				forward.setRedirect(false);
+				forward.setPath("./socket_test.jsp");
+			}
 		/////////////////////////태훈 추가 끝///////////////////////////
 		
 		/*박신규 시작*/

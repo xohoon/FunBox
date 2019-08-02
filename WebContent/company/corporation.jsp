@@ -35,8 +35,6 @@
 <body>
   <div id="wrap">
     <header></header>
-    <div class="hdbck"></div>
-    <div class="toppdng"></div>
     <!--여기에 내용 입력-->
     <div class="bodyWrap">
       <div class="inner">

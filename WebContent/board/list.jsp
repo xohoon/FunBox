@@ -67,7 +67,7 @@
               <div class="f_list_type1">
                 <h2>업종</h2>
                 <span>
-                  <input type="checkbox" id="con1_all" value="전체">
+                  <input type="checkbox" id="con1_all" value="업종전체">
                   <label for="con1_all">전체</label>
                 </span>
                 <span>
@@ -107,7 +107,9 @@
               <div class="f_list_type2">
                 <h2>지역</h2>
                 <span>
-                  <input type="checkbox" id="con2_all" value="전체">
+                  <input type="checkbox" id="con2_all" value1="서울" value2="경기" value3="인천"
+                   value4="강원" value5="대전/충천" value6="대구" value7="부산" value8="울산" value9="경상"
+                    value10="광주/전라" value11="제주">
                   <label for="con2_all">전체</label>
                 </span>
                 <span>
@@ -159,7 +161,7 @@
               <div class="f_list_type3">
                 <h2>현황</h2>
                 <span>
-                  <input type="checkbox" id="con3_all" value="전체">
+                  <input type="checkbox" id="con3_all" value="현황전체">
                   <label for="con3_all">전체</label>
                 </span>
                 <span>

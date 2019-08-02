@@ -9,12 +9,13 @@ var c = "검색어없음";
 
 /// check box ///
 $(document).ready(function() {
+	main_chkbox();
 	// 함수 실행
 	search_btnFunc();
 	option_clickFunc();
 	ckbox_clickFunc();
+	ckbox_func();
 //	search_key();
-	main_chkbox();
 });
 
 /*
@@ -163,7 +164,19 @@ function ckbox_list() {
 	});
 	// city input
 	$("input[id='con2_all']:checked").each(function(i) {
-		list_city_box.push($(this).val());
+//		list_city_box.push($(this).val());
+		alert(">>>"+$(this).attr("value1"));
+		list_city_box.push($(this).attr("value1"));
+		list_city_box.push($(this).attr("value2"));
+		list_city_box.push($(this).attr("value3"));
+		list_city_box.push($(this).attr("value4"));
+		list_city_box.push($(this).attr("value5"));
+		list_city_box.push($(this).attr("value6"));
+		list_city_box.push($(this).attr("value7"));
+		list_city_box.push($(this).attr("value8"));
+		list_city_box.push($(this).attr("value9"));
+		list_city_box.push($(this).attr("value10"));
+		list_city_box.push($(this).attr("value11"));
 	});
 	$("input[id='con2_1']:checked").each(function(i) {
 		list_city_box.push($(this).val());

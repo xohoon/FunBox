@@ -72,7 +72,7 @@ function invest_click() {
 function invest_chk_ajax() {
 		$.ajax({
 			type: "POST",
-			url: "./Member_Invest_check.mb",
+			url: "./MemberInvestcheck.mb",
 			dataType: "json",
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: {
