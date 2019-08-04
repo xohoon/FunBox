@@ -70,7 +70,6 @@ public class MemberInvestmentListAction implements Action {
 		memberDAO = new MemberDAO();
 		MemberInvestPageVO memberInvestVO = memberDAO.getMyPageInvestment(cp_idx,mb_id);
 		
-		
 		// 유정 추가
 		// 투자현황 - 투자내역 불러오기
 		//////////////// 페이징 처리 ////////////////

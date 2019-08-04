@@ -40,5 +40,12 @@ public class FaqVO {
 	public void setReg_date_time(Date reg_date_time) {
 		this.reg_date_time = reg_date_time;
 	}
+	@Override
+	public String toString() {
+		return "FaqVO [idx=" + idx + ", category=" + category + ", title=" + title + ", content=" + content
+				+ ", reg_date_time=" + reg_date_time + "]";
+	}
+	
+	
 	
 }

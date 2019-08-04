@@ -358,29 +358,35 @@ public class BoardDAO {
 			return null;
 		}
 		
-		
+		// 윤식추가  쿼리문 통일 
 		// 고객지원 - FAQ 불러오기
-		public ArrayList<FaqVO> getFaq(int category, int startRow, int pageSize) throws Exception {
-			String sql = "select title,content from faq where category=? order by reg_date_time desc limit " + startRow + ", " + pageSize;
+		//@SuppressWarnings({ "unchecked", "unused" })
+		public ArrayList<FaqVO> getFaq(String category, int startRow, int pageSize) throws Exception {
 			ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
+			// 0을 넣었을때 다른 sql 구문이 돌수 있게 하자
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
+			String sql = "select title,content from faq where category=? order by reg_date_time desc limit " + startRow + ", " + pageSize;
 
 			try {
-				pstm = conn.prepareStatement(sql);
-				pstm.setInt(1, category);
-				rs = pstm.executeQuery();
-
+				if(category.equals("0")) {
+					sql = "select * from faq order by reg_date_time desc limit " + startRow + "," + pageSize;
+					pstm = conn.prepareStatement(sql);
+					rs = pstm.executeQuery();
+				}else {
+					pstm = conn.prepareStatement(sql);
+					pstm.setString(1, category);
+					rs = pstm.executeQuery();
+				}
+				
 				while(rs.next()) {
 					FaqVO faq = new FaqVO();
-					
 					faq.setTitle(rs.getString("title"));
 					faq.setContent(rs.getString("content"));
 					faq_list.add(faq);
 				}
 				return faq_list;
 				
-
 			} catch (Exception ex) {
 				
 				System.out.println("getFaq 에러: " + ex);
@@ -400,13 +406,12 @@ public class BoardDAO {
 			return null;
 		}
 		
-		
+		// 윤식 추가
 		// FAQ 검색기능 count
 	    public int searchFaqCount(String keyword, int category){
 	    	
 	    	PreparedStatement pstmt = null;
 			ResultSet rs = null;
-	        ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
 	        int count = 0;
 	       
 	        try{//실행
