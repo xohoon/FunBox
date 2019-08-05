@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import net.member.dto.Main_CityVO;
 import net.member.dto.Main_LikeVO;
 import net.member.dto.Main_SlideVO;
@@ -754,12 +757,12 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<Member_likeboxVO> boxs = new ArrayList<Member_likeboxVO>();
-
+		System.out.println(">>>>>>>>>>>>>>>>>"+mb_idx);
 		try {
-			// 쿼리 기업 idx필요
-			String sql = "SELECT a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
+			// 쿼리 멤버 idx필요
+			String sql = "SELECT a.mb_idx, a.cp_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
 					+ "FROM member_likebox as a " 
-					+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
+					+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.mb_idx = ? "
 					+ "JOIN company_invest as c ON b.cp_idx = c.cp_idx";
 
 			pstmt = conn.prepareStatement(sql);
@@ -770,6 +773,8 @@ public class MemberDAO {
 			while (rs.next()) {
 				Member_likeboxVO box = new Member_likeboxVO();
 
+				box.setMb_idx(rs.getInt("mb_idx"));
+				box.setCp_idx(rs.getInt("cp_idx"));
 				box.setLike_cp_name(rs.getString("like_cp_name"));
 				box.setCp_monthly_profit(rs.getString("cp_monthly_profit"));
 				box.setCp_branch(rs.getString("cp_branch"));
@@ -945,7 +950,137 @@ public class MemberDAO {
 
 			return null;
 		}
+		
+		// 태훈 - 기업 투자 현황 페에지 제어
+		public String Member_Invest_check(String sessionID) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String result = "0";
+
+			try {
+				String sql = "SELECT count(*) FROM member_invest WHERE mb_id = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, sessionID);
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					if (rs.getInt("count(*)") > 0) {
+						result = "1"; 
+					} else {
+						result = "0";
+					}
+				} else {
+					result = "0";
+				}
+			} catch (Exception ex) {
+				System.out.println("Member_Invest_check 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
+	
+		
+		// 태훈 추가 - 실시간 즐겨찾기 순서 AJAX 및 수동 자동 제어
+		public int getSelectKey() {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int select_key = 0;
+	
+			try {
+				String sql = "SELECT cp_select_key FROM realtime_select_key";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+	
+				if (rs.next()) {
+					if (rs.getInt("cp_select_key") == 1) {
+						select_key = 1; 
+					} else if (rs.getInt("cp_select_key") == 2){
+						select_key = 2;
+					}
+				} else {
+					select_key = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("getSelectKey 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+				/*
+				 * if (conn != null) conn.close();
+				 */
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+	
+			return select_key;
+		}
+		
+		// 탑10 SQL
+		@SuppressWarnings({ "unchecked", "unused" })
+		public JSONArray getRealList(int select_key) throws Exception {
 			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			JSONArray jsonArr = new JSONArray();
+			
+			try {
+				// 쪼인해도되고안해도되고
+				String sql = "SELECT cp_name "
+						+ "FROM company "
+						+ "ORDER BY cp_recommand_count DESC limit 10";
+				
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					JSONObject jsonObj = new JSONObject();
+					jsonObj.put("cp_name1", rs.getString("cp_name"));
+					jsonObj.put("cp_name2", rs.getString("cp_name"));
+					jsonObj.put("cp_name3", rs.getString("cp_name"));
+					jsonObj.put("cp_name4", rs.getString("cp_name"));
+					jsonObj.put("cp_name5", rs.getString("cp_name"));
+					jsonObj.put("cp_name6", rs.getString("cp_name"));
+					jsonObj.put("cp_name7", rs.getString("cp_name"));
+					jsonObj.put("cp_name8", rs.getString("cp_name"));
+					jsonObj.put("cp_name9", rs.getString("cp_name"));
+					jsonObj.put("cp_name10", rs.getString("cp_name"));
+					
+					jsonArr.add(jsonObj);
+				}
+				return jsonArr;
+				
+			} catch (Exception ex) {
+				System.out.println("getRealList ERROR: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+			return null;
+		}
+		
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
 	// 윤식 추가/////////////////////////////////////////////////

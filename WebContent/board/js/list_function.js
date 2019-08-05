@@ -11,16 +11,15 @@ var current_page = 0;
 var companyListHTML ;
 var count = 0;
 
-
 /// check box ///
 $(document).ready(function() {
+	main_chkbox();
 	// 함수 실행
 	search_btnFunc();
 	option_clickFunc();
 	ckbox_clickFunc();
 	ckbox_func();
 //	search_key();
-	
 });
 
 /*
@@ -238,7 +237,19 @@ function ckbox_list() {
 	});
 	// city input
 	$("input[id='con2_all']:checked").each(function(i) {
-		list_city_box.push($(this).val());
+//		list_city_box.push($(this).val());
+		alert(">>>"+$(this).attr("value1"));
+		list_city_box.push($(this).attr("value1"));
+		list_city_box.push($(this).attr("value2"));
+		list_city_box.push($(this).attr("value3"));
+		list_city_box.push($(this).attr("value4"));
+		list_city_box.push($(this).attr("value5"));
+		list_city_box.push($(this).attr("value6"));
+		list_city_box.push($(this).attr("value7"));
+		list_city_box.push($(this).attr("value8"));
+		list_city_box.push($(this).attr("value9"));
+		list_city_box.push($(this).attr("value10"));
+		list_city_box.push($(this).attr("value11"));
 	});
 	$("input[id='con2_1']:checked").each(function(i) {
 		list_city_box.push($(this).val());
@@ -329,8 +340,8 @@ function ckbox_list() {
 			+"<p>"+search_data.cp_branch+"</p>"
 			+"</div><div class=\"gage\">"
 			+"<div class=\"per\"><span>"+search_data.cp_percent+""
-			+"</span>%</div><div class=\"gage_full\"><div class=\"gage_fill\"></div>"
-			+"<span></span></div><div>"
+			+"</span>%</div><div class=\"gage_full\"><div class=\"gage_fill\">"
+			+"<span></span></div></div><div>"
 			+"<span class=\"p_amt\"><span>"+search_data.cp_current+""
 			+"</span> / <span> "+search_data.cp_goal+""
 			+"</span> P</span><span class=\"d_day\">D-<span>27</span></span>"
@@ -442,4 +453,76 @@ function ckbox_func() {
 			$('#con3_all').prop('checked', false);
 		}
 	});
+}
+
+function main_chkbox() {
+	window.onload = function () {
+		if($("#con2_1").is(":checked") == true) {
+			alert("서울 검색 결과입니다.");
+			$("#con2_1").trigger("click");
+			if($("#con2_1").is(":checked") == false) {
+				$("#con2_1").trigger("click");
+			}
+		}else if($("#con2_2").is(":checked") == true) {
+			alert("경기도 검색 결과입니다.");
+			$("#con2_2").trigger("click");
+			if($("#con2_2").is(":checked") == false) {
+				$("#con2_2").trigger("click");
+			}
+		}else if($("#con2_3").is(":checked") == true) {
+			alert("인천 검색 결과입니다.");
+			$("#con2_3").trigger("click");
+			if($("#con2_3").is(":checked") == false) {
+				$("#con2_3").trigger("click");
+			}
+		}else if($("#con2_4").is(":checked") == true) {
+			alert("강원도 검색 결과입니다.");
+			$("#con2_4").trigger("click");
+			if($("#con2_4").is(":checked") == false) {
+				$("#con2_4").trigger("click");
+			}
+		}else if($("#con2_5").is(":checked") == true) {
+			alert("대전과 충천 검색 결과입니다.");
+			$("#con2_5").trigger("click");
+			if($("#con2_5").is(":checked") == false) {
+				$("#con2_5").trigger("click");
+			}
+		}else if($("#con2_6").is(":checked") == true) {
+			alert("대구 검색 결과입니다.");
+			$("#con2_6").trigger("click");
+			if($("#con2_6").is(":checked") == false) {
+				$("#con2_6").trigger("click");
+			}
+		}else if($("#con2_7").is(":checked") == true) {
+			alert("부산 검색 결과입니다.");
+			$("#con2_7").trigger("click");
+			if($("#con2_7").is(":checked") == false) {
+				$("#con2_7").trigger("click");
+			}
+		}else if($("#con2_8").is(":checked") == true) {
+			alert("울산 검색 결과입니다.");
+			$("#con2_8").trigger("click");
+			if($("#con2_8").is(":checked") == false) {
+				$("#con2_8").trigger("click");
+			}
+		}else if($("#con2_9").is(":checked") == true) {
+			alert("경상도 검색 결과입니다.");
+			$("#con2_9").trigger("click");
+			if($("#con2_9").is(":checked") == false) {
+				$("#con2_9").trigger("click");
+			}
+		}else if($("#con2_10").is(":checked") == true) {
+			alert("광주와 전라도 검색 결과입니다.");
+			$("#con2_10").trigger("click");
+			if($("#con2_10").is(":checked") == false) {
+				$("#con2_10").trigger("click");
+			}
+		}else if($("#con2_11").is(":checked") == true) {
+			alert("제주도 검색 결과입니다.");
+			$("#con2_11").trigger("click");
+			if($("#con2_11").is(":checked") == false) {
+				$("#con2_11").trigger("click");
+			}
+		}
+	}
 }

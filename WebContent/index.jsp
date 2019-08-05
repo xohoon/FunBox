@@ -11,7 +11,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
 <%
 	ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = (ArrayList<MainPageDateOfOpenVO>)request.getAttribute("mainPageDateOfOpenVOs");
 	ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = (ArrayList<MainPageDeadLineVO>)request.getAttribute("mainPageDeadLineVOs");
@@ -43,16 +42,15 @@
   <link href="css/index.css" rel="stylesheet">
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="js/jquery.bxslider.min.js"></script>
-
+  <script src="js/index_function.js"></script>
 </head>
 
 <body>
+<input type="hidden" id="select_k" value="0">
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div>
     <div class="toppdng"></div>
-
-
     <section id="sec1">
       <div class="inner">
         <div class="regular slider">
@@ -84,10 +82,10 @@
             });
           });
         </script>
-
         <div class="live_chart">
           <h3>실시간 인기순위</h3>
-          <ul>
+          <ul class="list_ul">
+          <!-- 
             <li>
               <span>1</span>&nbsp;
               <a href="#">어나더 미네스</a>
@@ -138,6 +136,7 @@
               <a href="#">-</a>
               <span>-</span>
             </li>
+             -->
           </ul>
         </div>
       </div>
@@ -157,13 +156,10 @@
 	            <p>${likeVO.lk_cp_branch }</p>
 	          </div>
 	          <div class="gage">
-	            <div class="per"
-	            ><span><fmt:parseNumber value ="${likeVO.lk_cp_percent }" integerOnly ="true" /></span>%
-	            </div>
+	            <div class="per"><span><fmt:parseNumber value ="${likeVO.lk_cp_percent }" integerOnly ="true" /> 
+	            </span>%</div>
 	            <div class="gage_full">
-	              <div class="gage_fill">
-	              <span></span>
-	              </div>
+	              <div class="gage_fill"></div>
 	            </div>
 	            <div>
 	              <span class="p_amt"><span><fmt:formatNumber value="${likeVO.lk_cp_current_amount}" pattern="#,###" />
@@ -188,17 +184,17 @@
             <h5>지역별 현황</h5>
             <div class="map"></div>
             <ul>
-              <li class="local01" onclick="location.href='./ListAction.bd?cityName=10'">서울(${cityVO.seoul })</li>
-              <li class="local02" onclick="location.href='./ListAction.bd?cityName=11'">경기(${cityVO.gyeonggi })</li>
-              <li class="local03" onclick="location.href='./ListAction.bd?cityName=12'">인천(${cityVO.incheon })</li>
-              <li class="local04" onclick="location.href='./ListAction.bd?cityName=13'">강원(${cityVO.gangwon })</li>
-              <li class="local05" onclick="location.href='./ListAction.bd?cityName=14'">대전·충청(${cityVO.daejeonNchungcheong })</li>
-              <li class="local06" onclick="location.href='./ListAction.bd?cityName=15'">대구((${cityVO.daegu })</li>
-              <li class="local07" onclick="location.href='./ListAction.bd?cityName=16'">부산(${cityVO.busan })</li>
-              <li class="local08" onclick="location.href='./ListAction.bd?cityName=17'">울산(${cityVO.ulsan })</li>
-              <li class="local09" onclick="location.href='./ListAction.bd?cityName=18'">경상(${cityVO.gyeongsang })</li>
-              <li class="local10" onclick="location.href='./ListAction.bd?cityName=19'">광주·전라(${cityVO.gwangjuNjeonla })</li>
-              <li class="local11" onclick="location.href='./ListAction.bd?cityName=20'">제주(${cityVO.jeju })</li>
+              <li class="local01">서울(<span id="seoul_count">${cityVO.seoul }</span>)</li>
+              <li class="local02">경기(<span id="gyeonggi_count">${cityVO.gyeonggi }</span>)</li>
+              <li class="local03">인천(<span id="incheon_count">${cityVO.incheon }</span>)</li>
+              <li class="local04">강원(<span id="gangwon_count">${cityVO.gangwon }</span>)</li>
+              <li class="local05">대전·충청(<span id="daejeonNchungcheong_count">${cityVO.daejeonNchungcheong }</span>)</li>
+              <li class="local06">대구(<span id="daegu_count">${cityVO.daegu }</span>)</li>
+              <li class="local07">부산(<span id="busan_count">${cityVO.busan }</span>)</li>
+              <li class="local08">울산(<span id="ulsan_count">${cityVO.ulsan }</span>)</li>
+              <li class="local09">경상(<span id="gyeongsang_count">${cityVO.gyeongsang }</span>)</li>
+              <li class="local10">광주·전라(<span id="gwangjuNjeonla_count">${cityVO.gwangjuNjeonla }</span>)</li>
+              <li class="local11">제주(<span id="jeju_count">${cityVO.jeju }</span>)</li>
             </ul>
           </div>
         </div>
@@ -244,9 +240,8 @@
 	                <p>${mainPageDeadLineVO.cp_branch }</p>
               	</div>
               	<div class="gage">
-              		<div class="per">
-	              		<span><fmt:parseNumber value ="${mainPageDeadLineVO.persent }" integerOnly ="true" /></span>%
-              		</div>
+              		<div class="per"><span><fmt:parseNumber value ="${mainPageDeadLineVO.persent }" integerOnly ="true" />
+              		</span>%
               			<ul id="timer_${mainPageDeadLineVO.cp_idx }">
               				<li><span id="days"></span>일</li>
 		                    <li><span id="hours"></span> :</li>
@@ -254,9 +249,7 @@
 		                    <li><span id="seconds"></span></li>		                    
               			</ul>
               			<div class="gage_full">
-                  			<div class="gage_fill">
-                  			<span></span>
-                  			</div>
+                  			<div class="gage_fill"></div>
                 		</div>
                 		<div>
 		                  <span class="p_amt"><span><fmt:formatNumber value="${mainPageDeadLineVO.iv_current_amount }" pattern="#,###" />
@@ -265,10 +258,10 @@
 		                  </span> P</span>
 		                  <span class="d_day">D-<span id="DDay_${mainPageDeadLineVO.cp_idx }">1</span></span>
 		                </div>
+              		</div>
               	</div>
               	<div class="reward_per">
-              		수익률
-              		<span>${mainPageDeadLineVO.cp_monthly_profit}%</span>
+              		수익률<span>${mainPageDeadLineVO.cp_monthly_profit}%</span>
 	            </div>
           	</div>
           </c:forEach>
@@ -278,6 +271,93 @@
     </section>
     <footer></footer>
   </div>
+
+<script>
+////////////////////////////////////////// 태훈 추가
+$(document).ready(function() {
+	city_click();
+});
+/////////////// 태훈 - 도시 클릭시 제어 기능
+function city_click() {
+	$(".local01").on('click', function() {
+		if($("#seoul_count").text() != 0) {
+			location.href="./ListAction.bd?cityName=10";
+		}else {
+			alert("검색 결과가 존재하지 않습니다.");
+		}
+	});
+	$(".local02").on('click', function() {
+		if($("#gyeonggi_count").text() != 0) {
+			location.href="./ListAction.bd?cityName=11";
+		}else {
+			alert("검색 결과가 존재하지 않습니다.");
+		}
+	});$(".local03").on('click', function() {
+		if($("#incheon_count").text() != 0) {
+			location.href="./ListAction.bd?cityName=12";
+		}else {
+			alert("검색 결과가 존재하지 않습니다.");
+		}
+	});
+	$(".local04").on('click', function() {
+		if($("#gangwon_count").text() != 0) {
+			location.href="./ListAction.bd?cityName=13";
+		}else {
+			alert("검색 결과가 존재하지 않습니다.");
+		}
+	});
+	$(".local05").on('click', function() {
+		if($("#daejeonNchungcheong_count").text() != 0) {
+			location.href="./ListAction.bd?cityName=14";
+		}else {
+			alert("검색 결과가 존재하지 않습니다.");
+		}
+	});
+	$(".local06").on('click', function() {
+		if($("#daegu_count").text() != 0) {
+			location.href="./ListAction.bd?cityName=15";
+		}else {
+			alert("검색 결과가 존재하지 않습니다.");
+		}
+	});
+	$(".local07").on('click', function() {
+		if($("#busan_count").text() != 0) {
+			location.href="./ListAction.bd?cityName=16";
+		}else {
+			alert("검색 결과가 존재하지 않습니다.");
+		}
+	});
+	$(".local08").on('click', function() {
+		if($("#ulsan_count").text() != 0) {
+			location.href="./ListAction.bd?cityName=17";
+		}else {
+			alert("검색 결과가 존재하지 않습니다.");
+		}
+	});
+	$(".local09").on('click', function() {
+		if($("#gyeongsang_count").text() != 0) {
+			location.href="./ListAction.bd?cityName=18";
+		}else {
+			alert("검색 결과가 존재하지 않습니다.");
+		}
+	});
+	$(".local10").on('click', function() {
+		if($("#gwangjuNjeonla_count").text() != 0) {
+			location.href="./ListAction.bd?cityName=19";
+		}else {
+			alert("검색 결과가 존재하지 않습니다.");
+		}
+	});
+	$(".local11").on('click', function() {
+		if($("#jeju_count").text() != 0) {
+			location.href="./ListAction.bd?cityName=20";
+		}else {
+			alert("검색 결과가 존재하지 않습니다.");
+		}
+	});
+}
+</script>
+
 
   <script>
     $(function() {

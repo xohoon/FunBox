@@ -8,7 +8,10 @@
 <%
 	CompanyBean companyBean = (CompanyBean)request.getAttribute("companyBean");
 	ArrayList<CompanyListVO> leftCompanyList = (ArrayList<CompanyListVO>)request.getAttribute("leftCompanyList");
-	int sumPayPrincipal;
+	int sumPayPrincipal;	
+  	String idx = (String)session.getAttribute("idx");
+	System.out.println("idx 값 확인 : "+idx);
+	
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -32,8 +35,6 @@
 <body>
   <div id="wrap">
     <header></header>
-    <div class="hdbck"></div>
-    <div class="toppdng"></div>
     <!--여기에 내용 입력-->
     <div class="bodyWrap">
       <div class="inner">
@@ -84,6 +85,7 @@
             <h2 class="logo"></h2>
             <h3>${companyBean.cp_sector}</h3>
             <h1>${companyBean.cp_name}<span>${companyBean.cp_branch}</span></h1>
+            <button class="like"><span class="icon"></span> 즐겨찾기</button>
             <div class="info-content">
               <div class="data">
                 <div>
@@ -164,7 +166,7 @@
                   </div>
                   <a href="#">예상 지급스케쥴 자세히 보러가기</a>
                 </div>
-                <div class="invest" onclick="location.href='./Invest_beforeAction.cp'">투자하기</div>
+                <div class="invest" onclick= investClick()>투자하기</div>
               </div>
             </div>
             <div class="gage-bar">
@@ -189,6 +191,27 @@
             </div>
             <div class="photo">
               <h3>매장사진</h3>
+             <div>
+               <button class="prev icon" onclick="plusSlides(-1)"></button>
+               <button href="#" class="next icon" onclick="plusSlides(+1)"></button>
+               <p id="caption"></p>
+             </div>
+             <ul>
+               
+             </ul>
+            </div>
+            <div id="lightBox">
+              <button class="close"></button>
+              <div>
+                <button class="prev icon" onclick="plusSlides(-1)"></button>
+               <button href="#" class="next icon" onclick="plusSlides(+1)"></button>
+               <p id="caption2"></p>
+              </div>
+              <ul></ul>
+            </div><!--#lightBox-->
+            <%-- 
+            <div class="photo">
+              <h3>매장사진</h3>
               <div class="photo-top">
                 <img src="<%=companyBean.getCf_image1() %>">
               </div>
@@ -204,6 +227,7 @@
                 <img src="<%=companyBean.getCf_image4() %>">
               </div>
             </div>
+             --%>
             <div class="information">
               <div class="information-left">
                 <h3>회사소개 및 사업계획</h3>
@@ -245,13 +269,15 @@
                       <div class="click"><a href="#">
                           <p class="name">재무제표.pdf</p>
                           <p class="more">more</p>
-                        </a></div>
+                        </a>
+                      </div>
                       <div class="box"><a href="#">
                           <div class="img"></div>
                           <div class="text">
                             <a href="./CompanyFileDownload?filename=<%=companyBean.getCf_financial() %>&cp_idx=<%=companyBean.getCp_idx() %>" download>재무제표 다운로드</a>
                           </div>
-                        </a></div>
+                        </a>
+                       </div>
                     </li>
                     <li class="c2">
                       <div class="click"><a href="#">
@@ -529,10 +555,130 @@
           $('.content .list').slideToggle(500);
         return false;
       });
-    });
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+   <script>
+   	function investClick(){
+   		var idx = <%= idx%>;
+   		if(idx){
+   			location.href='./Invest_beforeAction.cp';
+   		}else{
+   			alert("로그인 후 사용해주세요.");
+   			location.href='./LoginPage.mb';
+   		}                		
+   	}
+  </script>     
+  
+  <script>
+    //매장사진 슬라이드
+    $(function(){
+      var i;
+      var imgArr = ['img/row1_anotherminae.jpg', 'img/row1_busancoffee.jpg', 'img/row1_soinsoo.jpg', 'img/row2_bokraeheon.jpg','img/row2_moon.jpg','img/row3_noodle.jpg','img/row2_myeonchaeum.jpg'],
+          imgLeng = imgArr.length,
+          $ul = $('.photo').find('ul'),
+          $div = $('.photo').find('div'),
+          $box = $('#lightBox'),
+          $ul2 = $box.find('ul'),
+          $div2 = $box.find('div');
+          
+      
+      for(i=0;i<imgLeng;i++){
+        var addLi = document.createElement('li');
+            addLi.style.backgroundImage = "url(" + imgArr[i] + ")"; 
+        var addDiv = document.createElement('img');
+            addDiv.src = imgArr[i];
+            addDiv.className='corImg';
+        $ul.append(addLi);
+        $div.append(addDiv);
+      }
+      
+      for(i=0;i<imgLeng;i++){
+        var addLi = document.createElement('li');
+            addLi.style.backgroundImage = "url(" + imgArr[i] + ")"; 
+            addLi.setAttribute('onclick',"currentSlide(" + (i+1) + ")");
+        var addDiv = document.createElement('img');
+            addDiv.src = imgArr[i];
+            addDiv.className='corImg2';
+        
+        $ul2.append(addLi);
+        $div2.append(addDiv);
+      }
+      
+     
+      
+      document.getElementById('caption').innerHTML = slideIndex + '&nbsp;/&nbsp;' + imgLeng;
+      document.getElementById('caption2').innerHTML = slideIndex + '&nbsp;/&nbsp;' + imgLeng;
+      
+      $ul2.find('li').eq(slideIndex-1).addClass('on');
+      
+      $box.hide();
+      $ul.find('li').eq(5).on('click', function(){
+        $box.show();
+      });
+      $box.find('.close').on('click', function(){
+        $box.hide();
+      });
+      
+      $ul.find('li').on('click', function(){
+        var a = $(this).index();
+        switch(a){
+          case 0 : currentSlide(1); break;
+          case 1 : currentSlide(2); break;
+          case 2 : currentSlide(3); break;
+          case 3 : currentSlide(4); break;
+          case 4 : currentSlide(5); break;
+        }
+      });
+      
+//      $ul2.find('li').on('click', function(){
+//        var a = $(this).index();
+//        switch(a){
+//          case a : currentSlid(a+1);
+//        }if(a == imgLeng){
+//          break;
+//        }
+//      });
+    
+    });
+    
+    $('#lightBox ul').mousewheel(function(event, delta) {
+          this.scrollLeft -= (delta * 100);
+          event.preventDefault();
+      });
+    
+     var slideIndex = 1;
+      showSlides();
+    
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    
+    
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("corImg");
+      var slides2 = document.getElementsByClassName("corImg2");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+        slides2[i].style.display = "none";
+      }
+      slides[slideIndex-1].style.display = "block";
+      slides2[slideIndex-1].style.display = "block";
+      document.getElementById('caption').innerHTML = slideIndex + '&nbsp;/&nbsp;' + slides.length;
+      document.getElementById('caption2').innerHTML = slideIndex + '&nbsp;/&nbsp;' + slides2.length;
+      $('#lightBox').find('li').removeClass('on');
+      $('#lightBox').find('li').eq(slideIndex-1).addClass('on');
+    }
+  </script>
+  
   <!-- <script charset="UTF-8">
     var mapWidth = $('.corpor-location').innerWidth();
     var mapHeight = $('.corpor-location').innerHeight();

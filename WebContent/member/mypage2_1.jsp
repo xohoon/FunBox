@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -19,6 +21,7 @@
 <script src="https://kit.fontawesome.com/947fdcffe2.js"></script>
 <script src="js/clipboard.min.js"></script>
 <script src="js/jquery-3.1.1.min.js"></script>
+<script src="member/js/mypage_functions.js"></script>
 <script>
 	$(function() {
 		$('header').load('./header/header.jsp')
@@ -26,7 +29,6 @@
 		$('.like_box').load('./member/like_box.jsp')
 	});
 </script>
-
 </head>
 
 <body>
@@ -34,11 +36,11 @@
 		<header></header>
 		<div class="hdbck"></div>
 		<div class="toppdng"></div>
-
 		<section>
 			<div class="like_box"></div>
+			<input type="hidden" value="${sessionScope.id }" id="session_value">
 			<ul class="tab">
-				<li onclick="location.href='./MemberInvestmentList.mb'">투자현황</li>
+				<li id="invest_check" onclick="location.href='./MemberInvestmentList.mb'">투자현황</li>
 				<li class="on" onclick="location.href='./Mypage2_1.mb'">자산관리</li>
 				<li onclick="location.href='./Mypage3.mb'">거래내역</li>
 				<li onclick="location.href='./Mypage4_1.mb'">내정보</li>
@@ -64,13 +66,16 @@
 						<div class="b2 cf">
 							<h5>코인받기</h5>
 							<div>
-								<label>보낸사람 지갑주소</label> <input type="text" name="td_from_address">
+								<label>보낸사람 지갑주소</label> <input type="text"
+									name="td_from_address">
 							</div>
 							<div>
 								<label>TX Hash</label> <input type="text" name="td_tx_hash">
 							</div>
 							<div>
-								<label>입금받을 수량</label> <input type="text" name="td_amount" class="coin" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" /><span>Coin</span>
+								<label>입금받을 수량</label> <input type="text" name="td_amount"
+									class="coin"
+									onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" /><span>Coin</span>
 								<div class="coinbtn">
 									<input type="button" value="+1백만" class="cob cob1"> <input
 										type="button" value="+5백만" class="cob cob2"> <input
@@ -95,16 +100,19 @@
 								<label>받을사람 지갑주소</label> <input type="text" name="tk_to_address">
 							</div>
 							<div>
-								<label>출금할 수량</label> <input type="text" name="tk_amount" class="coin" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" /><span>Coin</span>
+								<label>출금할 수량</label> <input type="text" name="tk_amount"
+									class="coin"
+									onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" /><span>Coin</span>
 								<div class="coinbtn">
-									<input type="button" value="+1백만" class="cob cob1"> 
-									<input type="button" value="+5백만" class="cob cob2">
-									<input type="button" value="+1천만" class="cob cob3">
+									<input type="button" value="+1백만" class="cob cob1"> <input
+										type="button" value="+5백만" class="cob cob2"> <input
+										type="button" value="+1천만" class="cob cob3">
 								</div>
 								<p class="out">0</p>
 							</div>
 							<hr>
-							<div class="sum">합계 <span id="sumcomma2">0</span> point
+							<div class="sum">
+								합계 <span id="sumcomma2">0</span> point
 							</div>
 							<!-- <input id="button_withdraw" type="button" value="출금하기" class="send_btn"> -->
 							<input type="button" class="send_btn" value="출금하기">
@@ -176,27 +184,26 @@
 				$(this).height(this.scrollHeight);
 			});
 			$('.txt_wrap').find('textarea').keyup();
-			
-			$('#button_deposit').on('click',function(){
+
+			$('#button_deposit').on('click', function() {
 				$('#form_deposit').submit();
 			});
 			//영어 숫자만 가능하게 하깅~//
-			$("input[name=td_from_address]").keyup(function(event){ 
-				if (!(event.keyCode >=37 && event.keyCode<=40)) {
+			$("input[name=td_from_address]").keyup(function(event) {
+				if (!(event.keyCode >= 37 && event.keyCode <= 40)) {
 					var inputVal = $(this).val();
-					$(this).val(inputVal.replace(/[^a-z0-9]/gi,''));
-					}
-				});
-			$("input[name=tk_to_address]").keyup(function(event){ 
-				if (!(event.keyCode >=37 && event.keyCode<=40)) {
+					$(this).val(inputVal.replace(/[^a-z0-9]/gi, ''));
+				}
+			});
+			$("input[name=tk_to_address]").keyup(function(event) {
+				if (!(event.keyCode >= 37 && event.keyCode <= 40)) {
 					var inputVal = $(this).val();
-					$(this).val(inputVal.replace(/[^a-z0-9]/gi,''));
-					}
-				});
+					$(this).val(inputVal.replace(/[^a-z0-9]/gi, ''));
+				}
+			});
 			//영어 숫자만 가능하게 하깅~//
 		});
-		
-		
+
 		var clipboard = new ClipboardJS('.copybtn');
 		clipboard.on('success', function(e) {
 			console.log(e);

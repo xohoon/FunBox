@@ -113,14 +113,6 @@ public class BoardDAO {
 
 			rs.beforeFirst();
 
-			/*
-			 * while(rs.next()){ count = rs.getRow(); }
-			 */
-
-			/*
-			 * rs = pstmt.executeQuery(sql); if(rs.next()) { count = rs.getInt(1); }
-			 */
-
 			return count;
 
 		} catch (Exception ex) {
@@ -184,12 +176,9 @@ public class BoardDAO {
 				System.out.println("해제 실패 : " + e.getMessage());
 			}
 		}
-
 		return 0;
-
 	}
 
-	// 총 notice 리스트 수 출력 함수
 	public int noticeCount() {
 		String sql = "select * from notice";
 		PreparedStatement pstmt = null;
@@ -206,14 +195,6 @@ public class BoardDAO {
 			count = rs.getRow();
 
 			rs.beforeFirst();
-
-			/*
-			 * while(rs.next()){ count = rs.getRow(); }
-			 */
-
-			/*
-			 * rs = pstmt.executeQuery(sql); if(rs.next()) { count = rs.getInt(1); }
-			 */
 
 			return count;
 
@@ -403,16 +384,16 @@ public class BoardDAO {
 				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
 		}
-
 		return null;
 	}
 
-	// FAQ 검색기능 추가
-	public ArrayList<FaqVO> searchFaq(String keyword, int category) {
+	// FAQ 검색기능 count
+	public int searchFaqCount(String keyword, int category) {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
+		int count = 0;
 
 		try {// 실행
 			String sql = "select title,content,category from faq ";
@@ -427,17 +408,62 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, category);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+			rs.last();
 
-			while (rs.next()) {
-				FaqVO faq = new FaqVO();
+			count = rs.getRow();
 
-				faq.setTitle(rs.getString("title"));
-				faq.setContent(rs.getString("content"));
+			rs.beforeFirst();
 
-				faq_list.add(faq);
-			}
+			return count;
+
 		} catch (Exception ex) {
+			System.out.println("searchFaqCount: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+		return 0;
+	}
+
+	
+	// FAQ 검색기능 추가
+    public ArrayList<FaqVO> searchFaq(String keyword, int category, int startRow, int pageSize){
+    	
+    	PreparedStatement pstmt = null;
+		ResultSet rs = null;
+        ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
+       
+        try{//실행
+        	String sql ="select title,content,category from faq ";
+        	
+        	if(keyword != null && !keyword.equals("") && category != 0){
+        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and category=? order by reg_date_time desc limit "+startRow+","+pageSize;
+        	}else{//모든 레코드 검색
+        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and (category=? or 1 or 2 or 3) order by reg_date_time desc limit "+startRow+","+ pageSize;
+        	}
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, category);
+            rs = pstmt.executeQuery();
+            System.out.println(pstmt);
+            
+            while(rs.next()){
+            	FaqVO faq = new FaqVO();
+               
+            	faq.setTitle(rs.getString("title"));
+            	faq.setContent(rs.getString("content"));
+               
+                faq_list.add(faq);
+            }
+        }catch (Exception ex) {
 			System.out.println("searchFaq ERROR: " + ex);
 		} finally {
 			try {
@@ -451,8 +477,8 @@ public class BoardDAO {
 				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
 		}
-		return faq_list;
-	}
+        return faq_list;
+    } 
 
 	/////////////////////// 유정 추가 end///////////////////////
 
@@ -629,8 +655,8 @@ public class BoardDAO {
 
 	//////////////////// 태훈 추가 end //////////////////////////
 	//////////////////// 신규 추가 start //////////////////////////
-	
-	//스크롤 - 전체 보기
+
+	// 스크롤 - 전체 보기
 	public ArrayList<Board_Search_ListVO> getCompanyListScroll(int page) throws Exception {
 
 		PreparedStatement pstmt = null;
@@ -639,15 +665,15 @@ public class BoardDAO {
 
 		try {
 			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount FROM company as cp, company_invest as cp_iv WHERE cp.cp_idx = cp_iv.cp_idx ORDER BY cp_reg_datetime DESC LIMIT ?, 8";
-			
+
 			if (page < 0) {
 				return null;
 			}
-			int n = 8*page;
-			
+			int n = 8 * page;
+
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, n);
-			
+
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

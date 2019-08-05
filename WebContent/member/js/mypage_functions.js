@@ -51,3 +51,49 @@
 			}
 		})
 	}
+	
+	
+	
+/////////////////////////////////////////// 태훈 추가////////////////////////
+
+var sessionID; 
+$(document).ready(function() {
+	invest_click();
+});
+
+function invest_click() {
+	$("#invest_check").on('click', function() {
+		sessionID = $('#session_value').val();
+		console.log("sessionID>>>"+sessionID);
+		invest_chk_ajax();
+	});
+}
+
+function invest_chk_ajax() {
+		$.ajax({
+			type: "POST",
+			url: "./MemberInvestcheck.mb",
+			dataType: "json",
+			contentType: "application/x-www-form-urlencoded;charset=utf-8",
+			data: {
+				sessionID: sessionID
+			},
+			success: function(data, result, response) {
+				console.log("data>>>"+data);
+				console.log("result>>>"+result);
+				console.log("response>>>"+response);
+				if(data.result == 1) {
+					location.href="./MemberInvestmentList.mb";
+				}else {
+					alert("투자현황이 존재하지 않습니다. 기업에 투자해보세요");
+					location.href="./ListAction.bd";
+				}
+			},
+			error: function(request, status, error){
+				console.log("request>>"+request);
+				console.log("status>>"+status);
+				console.log("error>>" +error);
+			}
+		});
+}
+/////////////////////////////////////////// 태훈 추가////////////////////////

@@ -22,14 +22,13 @@ public class MemberInvestmentListAction implements Action {
 		ActionForward forward = new ActionForward();
 		HttpSession session = request.getSession();
 		String mb_id = (String) session.getAttribute("id");
-		
 		if (mb_id == null ) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('1잘못된 접근 입니다.');</script>");
 			out.close();
 			forward.setRedirect(true);
-			forward.setPath("./index.mb");
+			forward.setPath("./Index.mb");
 			return forward;
 		}
 		
@@ -64,12 +63,11 @@ public class MemberInvestmentListAction implements Action {
 			out.println("<script>alert('2잘못된 접근 입니다.');</script>");
 			out.close();
 			forward.setRedirect(true);
-			forward.setPath("./index.mb");
+			forward.setPath("./Index.mb");
 			return forward;
 		}
 		memberDAO = new MemberDAO();
 		MemberInvestPageVO memberInvestVO = memberDAO.getMyPageInvestment(cp_idx,mb_id);
-		
 		
 		// 유정 추가
 		// 투자현황 - 투자내역 불러오기
@@ -98,10 +96,13 @@ public class MemberInvestmentListAction implements Action {
 		if (count > 0) {
 			if (endRow > count)
 				endRow = count;
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>들옴");
 			member_invest_list = company_dao.getInvestment(mb_id, startRow - 1, endRow);// 현재 페이지에 해당하는 글 목록불러오기
 		} else {
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>에러");
 			member_invest_list = company_dao.getInvestment(mb_id, startRow - 1, endRow);
 		}
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>나옴");
 
 		number = count - (currentPage - 1) * pageSize;// 글목록에 표시할 글번호
 		// 페이지그룹의 갯수

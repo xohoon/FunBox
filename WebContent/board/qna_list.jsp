@@ -134,11 +134,10 @@
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
 							<c:choose>
 								<c:when test="${currentPage == i}">
-									<b><a class="on" href="./BoardQnaList.bd?pageNum=${i}"><font size=3>${i}</font></a></b>
+									<li><b><a class="on" href="./BoardQnaList.bd?pageNum=${i}"><font size=3>${i}</font></a></b></li>
 								</c:when>
 								<c:otherwise>
-									<a href="./BoardQnaList.bd?pageNum=${i}">
-									<font size=3>${i}</font></a>
+									<li><a href="./BoardQnaList.bd?pageNum=${i}"><font size=3>${i} </font></a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>

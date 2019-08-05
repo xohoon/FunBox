@@ -14,6 +14,7 @@
 	ArrayList<FaqVO> faq3 = (ArrayList<FaqVO>)request.getAttribute("faq3");
 	ArrayList<FaqVO> faq_list = (ArrayList<FaqVO>)request.getAttribute("faq_list");
 	int cate = (Integer)request.getAttribute("cate");
+	int category = (Integer)request.getAttribute("caetgory");
 %>
 <head>
   <meta charset="UTF-8">
@@ -35,8 +36,6 @@
   <script type="text/javascript"></script>
   <script>
 
-	  
-	  
 	  $(function(){
 		  var onOff = false;
         $('.depth1').on('click',function(){
@@ -53,8 +52,10 @@
         });
 	  });
 	  
+	  
 	  $(function(){
-		  $('.faq > button').on('click',function(){
+		  
+		  /* $('.faq > button').on('click',function(){
 			  $('.faq > button').removeClass('on');
 			  $(this).addClass('on');
 		  });
@@ -87,6 +88,23 @@
 				  'display':'block'
 			  });
 		  });
+		   */
+		  if($('#cate_color').val() == '0'){
+			$('.faq > button').removeClass('on');
+			$('#button1').addClass('on');
+		  }
+		  else if($('#cate_color').val() == '1'){
+	 		$('.faq > button').removeClass('on');
+	 		$('#button2').addClass('on');
+	 	  }
+		  else if($('#cate_color').val() == '2'){
+		 	$('.faq > button').removeClass('on');
+		 	$('#button3').addClass('on');
+		  }
+		  else if($('#cate_color').val() == '3'){
+		 	$('.faq > button').removeClass('on');
+		 	$('#button4').addClass('on');
+		  }
 	  });
 
 	  function searchCheck(frm){
@@ -97,23 +115,20 @@
 			return false;
 		  }
 		  frm.submit();
+		  console.log("search test");
 	  }
 	  
-	  function cateval(){
-		  $("#button1").click(function(){
-			  $("#category").val('1');
-			  $("#category_number").val('1');
-		  });
-		  $("#button2").click(function(){
-			  $("#category").val('2');
-			  $("#category_number").val('2');
-		  });
-		  $("#button3").click(function(){
-			  $("#category").val('3');
-			  $("#category_number").val('3');
-		  });		  	  
+	  function cateval(button){
+		  // 페이징 링크 링크 연결 수정
+		  var category = button;
+		  var pageNum = document.getElementById("hiddenCategory").value;
+		  		  
+		  $("#category").val(category); // 찾기를 위한 카테고리 변수
+		  
+		  location.href='./Faq.bd?category='+category+ '&pageNum='+pageNum;
+		  //location.href='./Faq.bd?category='+category;
 	}
-	  
+
   </script>
 
 </head>
@@ -133,15 +148,16 @@
 		<div class="faq">
 			<h4>FAQ</h4>
 			<h5>궁금한 점이 있다면 여기서 먼저 찾아보세요</h5>
-				<button id="button0" class="on">전체FAQ</button>
-				<button id="button1" onclick="cateval();">입출금관련FAQ</button>
-				<button id="button2" onclick="cateval();">투자관련FAQ</button>
-				<button id="button3" onclick="cateval();">기타FAQ</button>
+				<button id="button1" value = "0" onclick= "cateval(this.value)" class="on">전체FAQ</button>
+				<button id="button2" value = "1" onclick= "cateval(this.value)" >입출금관련FAQ</button>
+				<button id="button3" value = "2" onclick= "cateval(this.value)">투자관련FAQ</button>
+				<button id="button4" value = "3" onclick= "cateval(this.value)">기타FAQ</button>			
 			<div class="sch">
 				<form name="search" method="post" action="./search_faq.bd">
 					<label>키워드로 검색해보세요</label>
 					<input type="text" id="search_faq" name="keyword">
 					<input type="hidden" id="category" name="category" value="0">
+					<input type="hidden" id="cate_color" name="cate_color" value="${category }">
 					<input type="button" onclick="searchCheck(this.form)">
 				</form>
 			</div><!--.sch-->
@@ -185,7 +201,7 @@
 				<form name="cateForm">
 					<input type="hidden" name="cate" value="${cate }">
 				</form>
-				<script>
+				<!-- <script>
 				 $(function(){
 					var f = document.cateForm;
 					
@@ -203,7 +219,7 @@
 						$('#button0').addClass('on');
 					}
 				});
-				</script>
+				</script> -->
 				
 				
 				<!-- 검색한 값 보여주기 -->
@@ -271,23 +287,39 @@
 					<c:set var="pageCount" value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" /> 
 					<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
 					<c:set var="endPage" value="${startPage + pageGroupSize-1}" />
-					
 					<c:if test="${endPage > pageCount}">
 						<c:set var="endPage" value="${pageCount}" />
 					</c:if>
 					<c:if test="${numPageGroup > 1}">
-						<a href="./Faq.bd?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">◀</a>
+						<li><a href="./Faq.bd?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">◀</a></li>
 					</c:if>
 					
 					<ul class="pager">
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
 							<c:choose>
 								<c:when test="${currentPage == i}">
-									<b><a class="on" href="./Faq.bd?pageNum=${i}"><font size=3>${i}</font></a></b>
+									<c:choose>
+										<c:when test="${flag == 1}">
+											<li><b><a class="on" href="./Faq.bd?pageNum=${i}&category=${categroyFlag}"><font size=3>${i}</font></a></b></li>
+											<input type="hidden" id= "hiddenCategory"  name="hiddenCategory" value="${i}">
+										</c:when>
+										<c:otherwise>
+											<li><b><a class="on" href="./search_faq.bd?pageNum=${i}&category=${categroyFlag}&keyword=${keyword}"><font size=3>${i}</font></a></b></li>
+											<input type="hidden" id= "hiddenCategory"  name="hiddenCategory" value="${i}">
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 								<c:otherwise>
-									<a href="./Faq.bd?pageNum=${i}">
-									<font size=3>${i}</font></a>
+									<c:choose>
+										<c:when test="${flag == 1}">
+											<li><b><a class="on" href="./Faq.bd?pageNum=${i}&category=${categroyFlag}"><font size=3>${i}</font></a></b></li>
+											<input type="hidden" id= "hiddenCategory"  name="hiddenCategory" value="${i}">
+										</c:when>
+										<c:otherwise>
+											<li><b><a class="on" href="./search_faq.bd?pageNum=${i}&category=${categroyFlag}&keyword=${keyword}"><font size=3>${i}</font></a></b></li>
+											<input type="hidden" id= "hiddenCategory"  name="hiddenCategory" value="${i}">
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -304,10 +336,6 @@
     <footer></footer>
   </div>
 <script type="text/javascript">
-	$(document).ready(function(){
-		  $('#button').trigger('click');	  
-	});
-
   $(function() {
     $('header').load('./header/header.jsp')
     $('footer').load('./footer/footer.jsp')
