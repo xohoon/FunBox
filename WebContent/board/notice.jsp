@@ -21,12 +21,21 @@
    <![endif]-->
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/service.css" rel="stylesheet">
+  <link href="css/loader.css" rel="stylesheet" type="text/css">
   <script src="js/jquery-3.1.1.min.js"></script>
  
 
 </head>
 
 <body>
+  <div class="loader">
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+  </div>
+  
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div> 
@@ -107,6 +116,10 @@
 		  $('.depth1').on('click',function(){
             $(this).siblings('.depth2').slideToggle(200);
         });
+		  setTimeout(function() {
+		        $('.loader').fadeOut(1000);
+		  }, 1000)  
+		  
 	  });
   </script>
 </body></html>

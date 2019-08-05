@@ -20,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="css/common.css" rel="stylesheet" type="text/css">
-   <link href="css/loader.css" rel="stylesheet" type="text/css">
+  <link href="css/loader.css" rel="stylesheet" type="text/css">
   <link href="css/jquery.bxslider.css" rel="stylesheet">
   <link href="css/service.css" rel="stylesheet">
   <link href="css/list_box.css" rel="stylesheet">
@@ -32,6 +32,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   
   <script> 
+  
+  var Flag = 0;
+  
+  
 	  $(function(){
 		  var onOff = false;
         $('.depth1').on('click',function(){
@@ -47,8 +51,7 @@
             }
         });
 	  });
-	  
-	  
+	  	  
 	  $(function(){
 		  if($('#cate_color').val() == '0'){
 			$('.faq > button').removeClass('on');
@@ -96,13 +99,12 @@
 </head>
 
 <body> 
-  
   <div class="loader">
-    <div class="circle"></div>
-    <div class="circle"></div>
-    <div class="circle"></div>
-    <div class="circle"></div>
-    <div class="circle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
   </div>
   
   <div id="wrap">
@@ -127,7 +129,7 @@
 				<form name="search" method="post" action="./search_faq.bd">
 					<label>키워드로 검색해보세요</label>
 					<input type="text" id="search_faq" name="keyword">
-					<input type="hidden" id="category" name="category" value="0">
+					<input type="hidden" id="category" name="category" value="${categroyFlag}">
 					<input type="hidden" id="cate_color" name="cate_color" value="${category}">
 					<input type="button" onclick="searchCheck(this.form)">
 				</form>

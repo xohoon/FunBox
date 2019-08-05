@@ -23,9 +23,15 @@ import net.member.action.MemberSelectKeyAction;
 import net.member.action.MemberUpdateAction;
 import net.member.action.MemberInvestcheck;
 import net.member.action.Mypage2_2Action;
+import net.member.action.MypageChargePointAction;
+import net.member.action.MypageDepositAction;
+import net.member.action.MypageExchangePointToTokenAction;
 import net.member.action.MypagePINCheckAction;
 import net.member.action.MypagePWCheckAction;
 import net.member.action.MypagePWPINCheckAction;
+import net.member.action.MypageSendTokenAction;
+import net.member.action.Token_DepositAction;
+import net.member.action.Token_WithdrawAction;
 
 
 public class MemberController extends HttpServlet implements Servlet {
@@ -76,7 +82,8 @@ public class MemberController extends HttpServlet implements Servlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/mypage2_1.jsp");
-		}else if (command.equals("/Mypage2_1_1.mb")) {
+		}
+		else if (command.equals("/Mypage2_1_1.mb")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/mypage2_1_1.jsp");
@@ -198,6 +205,20 @@ public class MemberController extends HttpServlet implements Servlet {
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
+		}else if(command.equals("/TokenDepositAction.mb")) {
+			action = new Token_DepositAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/TokenWithdrawAction.mb")) {
+			action = new Token_WithdrawAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		
@@ -211,6 +232,34 @@ public class MemberController extends HttpServlet implements Servlet {
 		/*박신규 시작*/
 		else if (command.equals("/MemberInvestmentList.mb")) {
 			action = new MemberInvestmentListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/MypageDeposit.mb")) {
+			action = new MypageDepositAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/MypageSendToken.mb")) {
+			action = new MypageSendTokenAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/MypageChargePoint.mb")) {
+			action = new MypageChargePointAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/MypageExchangePointToToken.mb")) {
+			action = new MypageExchangePointToTokenAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

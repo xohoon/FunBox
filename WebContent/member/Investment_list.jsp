@@ -145,7 +145,7 @@
                <td><fmt:formatNumber value="<%= companypayscheduleVO.get(0).getCp_pay_fees() %>" pattern="#,###" /></td>
                <td><fmt:formatNumber value="<%= companypayscheduleVO.get(0).getCp_pay_actual_payment_amout() %>" pattern="#,###" /></td>
                <td><fmt:formatNumber value="<%= companypayscheduleVO.get(0).getCp_pay_actual_rate_return() %>" pattern="#,###" /></td>            
-             </tr>
+             </tr>             
           	</c:forEach>
               <tr>
                 <td>총 합계</td>
@@ -319,6 +319,8 @@ $(function(){
     	cf_financial_download.attr("href", "./CompanyFileDownload?filename="+$("#cf_financial_selector").val()+"&cp_idx=${memberInvestVO.cp_idx}");
     });
 });
+
 </script>
+
 </body>
 </html>

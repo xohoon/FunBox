@@ -20,7 +20,7 @@ import net.board.dto.QnaVO;
 public class BoardDAO {
 
 	private static BoardDAO instance;
-	
+
 	// 3.
 	public static BoardDAO getInstance() {
 		if (instance == null)
@@ -30,7 +30,7 @@ public class BoardDAO {
 
 	// 4.
 	private Connection conn;
-	//autoReconnect=true
+	// autoReconnect=true
 	private static String URL = "jdbc:mysql://52.79.240.236/funbox?serverTimezone=Asia/Seoul&useSSL=false&useUnicode=true&characterEncoding=utf8";
 	private static String USERNAME = "damonwin01";
 	private static String PASSWORD = "damon123!!";
@@ -51,8 +51,8 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	///////////////////////유정 추가 start///////////////////////
+
+	/////////////////////// 유정 추가 start///////////////////////
 	// 1:1 문의내역 - 문의등록 insert
 	public boolean insertQna(QnaVO qna) {
 		String sql = "insert into qna(id,category,name,email,mobile,title,content,email_chk,mobile_chk,reg_date_time) values (?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
@@ -93,12 +93,10 @@ public class BoardDAO {
 
 		return false;
 	}
-	
-	
-	
+
 	// 총 qna 리스트 수 출력 함수
 	public int qnaCount(String id) {
-		
+
 		String sql = "select * from qna where id =?";
 		PreparedStatement pstmt = null;
 		int count = 0;
@@ -135,100 +133,97 @@ public class BoardDAO {
 		return 0;
 
 	}
-	
+
 	// 총 faq 리스트 수 출력 함수
-		public int faqCount(String category) {
-			PreparedStatement pstmt = null;
-			int count = 0;
-			ResultSet rs = null;
-			String sql = "select * from faq where category = ?";
-			System.out.println("boardDao:"+category);
-			
-			try {
-				if(category.equals("0")) {
-					sql = "select * from faq ";
-					pstmt = conn.prepareStatement(sql);
-					rs = pstmt.executeQuery();
-				}else {
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, category);
-					rs = pstmt.executeQuery();
-				}
-				
-				System.out.println(sql);
-				rs.last();
+	public int faqCount(String category) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		ResultSet rs = null;
+		String sql = "select * from faq where category = ?";
+		System.out.println("boardDao:" + category);
 
-				count = rs.getRow();
-
-				rs.beforeFirst();
-				
-				
-				return count;
-
-			} catch (Exception ex) {
-				System.out.println("faqCount 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("해제 실패 : " + e.getMessage());
-				}
-			}
-
-			return 0;
-
-		}
-		// 총 notice 리스트 수 출력 함수
-		public int noticeCount() {
-			String sql = "select * from notice";
-			PreparedStatement pstmt = null;
-			int count = 0;
-			ResultSet rs = null;
-
-			try {
+		try {
+			if (category.equals("0")) {
+				sql = "select * from faq ";
 				pstmt = conn.prepareStatement(sql);
-			//	pstmt.setString(1, category);
 				rs = pstmt.executeQuery();
-
-				rs.last();
-
-				count = rs.getRow();
-
-				rs.beforeFirst();
-				
-				return count;
-
-			} catch (Exception ex) {
-				System.out.println("noticeCount 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("해제 실패 : " + e.getMessage());
-				}
+			} else {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, category);
+				rs = pstmt.executeQuery();
 			}
 
-			return 0;
+			System.out.println(sql);
+			rs.last();
 
+			count = rs.getRow();
+
+			rs.beforeFirst();
+
+			return count;
+
+		} catch (Exception ex) {
+			System.out.println("faqCount 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+		return 0;
+	}
+
+	public int noticeCount() {
+		String sql = "select * from notice";
+		PreparedStatement pstmt = null;
+		int count = 0;
+		ResultSet rs = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			// pstmt.setString(1, category);
+			rs = pstmt.executeQuery();
+
+			rs.last();
+
+			count = rs.getRow();
+
+			rs.beforeFirst();
+
+			return count;
+
+		} catch (Exception ex) {
+			System.out.println("noticeCount 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
 		}
 
-	
+		return 0;
+
+	}
+
 	// 1:1 문의내역 - 문의 리스트 가져오기
 	public List<QnaVO> getQnaList(String id, int startRow, int pageSize) throws Exception {// 시작페이지, 끝 페이지
-		String sql = "SELECT idx,category,title,content,reg_date_time FROM qna WHERE id = ? order by idx desc limit " + startRow + ", " + pageSize;
-		
+		String sql = "SELECT idx,category,title,content,reg_date_time FROM qna WHERE id = ? order by idx desc limit "
+				+ startRow + ", " + pageSize;
+
 		List<QnaVO> qna_list = new ArrayList<QnaVO>();
-		PreparedStatement pstm = null; 
+		PreparedStatement pstm = null;
 		ResultSet rs = null;
 
 		try {
@@ -237,17 +232,17 @@ public class BoardDAO {
 			pstm.setString(1, id);
 			rs = pstm.executeQuery();
 
-			while (rs.next()) {	// 1:1문의 리스트를 DTO에 담는다.
+			while (rs.next()) { // 1:1문의 리스트를 DTO에 담는다.
 				QnaVO qna = new QnaVO();
-				
+
 				qna.setIdx(rs.getInt("idx"));
-		 		qna.setCategory(rs.getString("category"));
-		 		qna.setTitle(rs.getString("title"));
-		 		qna.setContent(rs.getString("content"));
-		 		qna.setReg_date_time(rs.getTimestamp("reg_date_time"));
-		 		qna_list.add(qna);
-				
-			}			
+				qna.setCategory(rs.getString("category"));
+				qna.setTitle(rs.getString("title"));
+				qna.setContent(rs.getString("content"));
+				qna.setReg_date_time(rs.getTimestamp("reg_date_time"));
+				qna_list.add(qna);
+
+			}
 			return qna_list;
 
 		} catch (Exception ex) {
@@ -264,245 +259,241 @@ public class BoardDAO {
 				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
 		}
-		
+
 		return null;
 	}
-	
-		
-	
+
 	// 1:1 문의내역 - 답변 가져오기
-		public List<QnaReplyVO> getQnaReply(int idx) throws Exception {
-			String sql = "select idx,content,reg_date_time from qna_reply where idx = ?";
-			
-			List<QnaReplyVO> qna_reply_list = new ArrayList<QnaReplyVO>();
-			PreparedStatement pstm = null;
-			ResultSet rs = null;
+	public List<QnaReplyVO> getQnaReply(int idx) throws Exception {
+		String sql = "select idx,content,reg_date_time from qna_reply where idx = ?";
 
+		List<QnaReplyVO> qna_reply_list = new ArrayList<QnaReplyVO>();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		try {
+			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, idx);
+			rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				QnaReplyVO qna_reply = new QnaReplyVO();
+
+				qna_reply.setIdx(rs.getInt("idx"));
+				qna_reply.setContent(rs.getString("content"));
+				qna_reply.setReg_date_time(rs.getTimestamp("reg_date_time"));
+				qna_reply_list.add(qna_reply);
+			}
+			return qna_reply_list;
+
+		} catch (Exception ex) {
+
+			System.out.println("getQnaReply 에러: " + ex);
+		} finally {
 			try {
+				if (rs != null)
+					rs.close();
+				if (pstm != null)
+					pstm.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return null;
+	}
+
+	// 고객지원 - 공지사항 불러오기
+	public ArrayList<NoticeVO> getNotice() throws Exception {
+		String sql = "select idx,title,content,reg_date_time from notice order by reg_date_time desc";
+
+		ArrayList<NoticeVO> notice_list = new ArrayList<NoticeVO>();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		try {
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				NoticeVO notice = new NoticeVO();
+
+				notice.setIdx(rs.getInt("idx"));
+				notice.setTitle(rs.getString("title"));
+				notice.setContent(rs.getString("content"));
+				notice.setReg_date_time(rs.getTimestamp("reg_date_time"));
+				notice_list.add(notice);
+			}
+			return notice_list;
+
+		} catch (Exception ex) {
+
+			System.out.println("getNotice 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstm != null)
+					pstm.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return null;
+	}
+
+	// 윤식추가 쿼리문 통일
+	// 고객지원 - FAQ 불러오기
+	// @SuppressWarnings({ "unchecked", "unused" })
+	public ArrayList<FaqVO> getFaq(String category, int startRow, int pageSize) throws Exception {
+		ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
+		// 0을 넣었을때 다른 sql 구문이 돌수 있게 하자
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		String sql = "select title,content from faq where category=? order by reg_date_time desc limit " + startRow
+				+ ", " + pageSize;
+
+		try {
+			if (category.equals("0")) {
+				sql = "select * from faq order by reg_date_time desc limit " + startRow + "," + pageSize;
 				pstm = conn.prepareStatement(sql);
-				pstm.setInt(1, idx);
 				rs = pstm.executeQuery();
-
-				if(rs.next()) {
-					QnaReplyVO qna_reply = new QnaReplyVO();
-					
-					qna_reply.setIdx(rs.getInt("idx"));
-					qna_reply.setContent(rs.getString("content"));
-					qna_reply.setReg_date_time(rs.getTimestamp("reg_date_time"));
-					qna_reply_list.add(qna_reply);
-				}
-				return qna_reply_list;
-				
-
-			} catch (Exception ex) {
-				
-				System.out.println("getQnaReply 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstm != null)
-						pstm.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
-			}
-			
-			return null;
-		}
-		
-		
-		
-		// 고객지원 - 공지사항 불러오기
-		public ArrayList<NoticeVO> getNotice() throws Exception {
-			String sql = "select idx,title,content,reg_date_time from notice order by reg_date_time desc";
-			
-			ArrayList<NoticeVO> notice_list = new ArrayList<NoticeVO>();
-			PreparedStatement pstm = null;
-			ResultSet rs = null;
-
-			try {
+			} else {
 				pstm = conn.prepareStatement(sql);
+				pstm.setString(1, category);
 				rs = pstm.executeQuery();
-
-				while(rs.next()) {
-					NoticeVO notice = new NoticeVO();
-					
-					notice.setIdx(rs.getInt("idx"));
-					notice.setTitle(rs.getString("title"));
-					notice.setContent(rs.getString("content"));
-					notice.setReg_date_time(rs.getTimestamp("reg_date_time"));
-					notice_list.add(notice);
-				}
-				return notice_list;
-				
-
-			} catch (Exception ex) {
-				
-				System.out.println("getNotice 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstm != null)
-						pstm.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
 			}
-			
-			return null;
-		}
-		
-		// 윤식추가  쿼리문 통일 
-		// 고객지원 - FAQ 불러오기
-		//@SuppressWarnings({ "unchecked", "unused" })
-		public ArrayList<FaqVO> getFaq(String category, int startRow, int pageSize) throws Exception {
-			ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
-			// 0을 넣었을때 다른 sql 구문이 돌수 있게 하자
-			PreparedStatement pstm = null;
-			ResultSet rs = null;
-			String sql = "select title,content from faq where category=? order by reg_date_time desc limit " + startRow + ", " + pageSize;
 
+			while (rs.next()) {
+				FaqVO faq = new FaqVO();
+				faq.setTitle(rs.getString("title"));
+				faq.setContent(rs.getString("content"));
+				faq_list.add(faq);
+			}
+			return faq_list;
+
+		} catch (Exception ex) {
+
+			System.out.println("getFaq 에러: " + ex);
+		} finally {
 			try {
-				if(category.equals("0")) {
-					sql = "select * from faq order by reg_date_time desc limit " + startRow + "," + pageSize;
-					pstm = conn.prepareStatement(sql);
-					rs = pstm.executeQuery();
-				}else {
-					pstm = conn.prepareStatement(sql);
-					pstm.setString(1, category);
-					rs = pstm.executeQuery();
-				}
-				
-				while(rs.next()) {
-					FaqVO faq = new FaqVO();
-					faq.setTitle(rs.getString("title"));
-					faq.setContent(rs.getString("content"));
-					faq_list.add(faq);
-				}
-				return faq_list;
-				
-			} catch (Exception ex) {
-				
-				System.out.println("getFaq 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstm != null)
-						pstm.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+				if (rs != null)
+					rs.close();
+				if (pstm != null)
+					pstm.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
-			
-			return null;
 		}
-		
-		// 윤식 추가
-		// FAQ 검색기능 count
-	    public int searchFaqCount(String keyword, int category){
-	    	
-	    	PreparedStatement pstmt = null;
-			ResultSet rs = null;
-	        int count = 0;
-	       
-	        try{//실행
-	        	String sql ="select title,content,category from faq ";
-	        	
-	        	if(keyword != null && !keyword.equals("") && category != 0){
-	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and category=? order by reg_date_time desc";
-	        	}else{//모든 레코드 검색
-	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and (category=? or 1 or 2 or 3) order by reg_date_time desc";
-	        	}
 
-	            pstmt = conn.prepareStatement(sql);
-	            pstmt.setInt(1, category);
-	            rs = pstmt.executeQuery();
-	            rs.last();
+		return null;
+	}
 
-				count = rs.getRow();
+	// 윤식 추가
+	// FAQ 검색기능 count
+	public int searchFaqCount(String keyword, int category) {
 
-				rs.beforeFirst();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
 
-				return count;
-				
-	        }catch (Exception ex) {
-				System.out.println("searchFaqCount: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+		try {// 실행
+			String sql = "select title,content,category from faq ";
+
+			if (keyword != null && !keyword.equals("") && category != 0) {
+				sql += "WHERE title LIKE '%" + keyword.trim() + "%' and category=? order by reg_date_time desc";
+			} else {// 모든 레코드 검색
+				sql += "WHERE title LIKE '%" + keyword.trim()
+						+ "%' and (category=? or 1 or 2 or 3) order by reg_date_time desc";
 			}
-	        return 0;
-	    } 
-		
-		
-		
-		// FAQ 검색기능 추가
-	    public ArrayList<FaqVO> searchFaq(String keyword, int category, int startRow, int pageSize){
-	    	
-	    	PreparedStatement pstmt = null;
-			ResultSet rs = null;
-	        ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
-	       
-	        try{//실행
-	        	String sql ="select title,content,category from faq ";
-	        	
-	        	if(keyword != null && !keyword.equals("") && category != 0){
-	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and category=? order by reg_date_time desc limit "+startRow+","+pageSize;
-	        	}else{//모든 레코드 검색
-	        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and (category=? or 1 or 2 or 3) order by reg_date_time desc limit "+startRow+","+ pageSize;
-	        	}
 
-	            pstmt = conn.prepareStatement(sql);
-	            pstmt.setInt(1, category);
-	            rs = pstmt.executeQuery();
-	            System.out.println(pstmt);
-	            
-	            while(rs.next()){
-	            	FaqVO faq = new FaqVO();
-	               
-	            	faq.setTitle(rs.getString("title"));
-	            	faq.setContent(rs.getString("content"));
-	               
-	                faq_list.add(faq);
-	            }
-	        }catch (Exception ex) {
-				System.out.println("searchFaq ERROR: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, category);
+			rs = pstmt.executeQuery();
+			rs.last();
+
+			count = rs.getRow();
+
+			rs.beforeFirst();
+
+			return count;
+
+		} catch (Exception ex) {
+			System.out.println("searchFaqCount: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
-	        return faq_list;
-	    } 
+		}
+		return 0;
+	}
 
-	///////////////////////유정 추가 end///////////////////////
-		
+	public ArrayList<FaqVO> searchFaq(String keyword, int category, int startRow, int pageSize) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
+
+		try {// 실행
+			String sql = "select title,content,category from faq ";
+
+			if (keyword != null && !keyword.equals("") && category != 0) {
+				sql += "WHERE title LIKE '%" + keyword.trim() + "%' and category=? order by reg_date_time desc limit "
+						+ startRow + "," + pageSize;
+			} else {// 모든 레코드 검색
+				sql += "WHERE title LIKE '%" + keyword.trim()
+						+ "%' and (category=? or 1 or 2 or 3) order by reg_date_time desc limit " + startRow + ","
+						+ pageSize;
+			}
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, category);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+
+			while (rs.next()) {
+				FaqVO faq = new FaqVO();
+
+				faq.setTitle(rs.getString("title"));
+				faq.setContent(rs.getString("content"));
+
+				faq_list.add(faq);
+			}
+		} catch (Exception ex) {
+			System.out.println("searchFaq ERROR: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+		return faq_list;
+	}
+
+	/////////////////////// 유정 추가 end///////////////////////
+
 	//////////////////// 태훈 추가 start ////////////////////////
-		
+
 	// 태훈 - 기업 리스트(전체 리스트 가져오기)
 	public ArrayList<Board_Search_ListVO> ListInfo() throws Exception {
 
@@ -512,8 +503,7 @@ public class BoardDAO {
 
 		try {
 			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount "
-					+ "FROM company as cp, company_invest as cp_iv "
-					+ "WHERE cp.cp_idx = cp_iv.cp_idx "
+					+ "FROM company as cp, company_invest as cp_iv " + "WHERE cp.cp_idx = cp_iv.cp_idx "
 					+ "ORDER BY cp_reg_datetime DESC";
 
 			pstmt = conn.prepareStatement(sql);
@@ -522,7 +512,7 @@ public class BoardDAO {
 
 			while (rs.next()) {
 				Board_Search_ListVO listVO = new Board_Search_ListVO();
-				
+
 				listVO.setSearch_cp_branch(rs.getString("cp_branch"));
 				listVO.setSearch_cp_current_amount(rs.getString("iv_current_amount"));
 				listVO.setSearch_cp_goal_amount(rs.getString("iv_goal_amount"));
@@ -531,11 +521,11 @@ public class BoardDAO {
 				listVO.setSearch_cp_percent(rs.getString("percent"));
 				listVO.setSearch_cp_profit(rs.getString("cp_monthly_profit"));
 				listVO.setSearch_cp_sector(rs.getString("cp_sector"));
-				
+
 				Search_list.add(listVO);
 			}
 			return Search_list;
-			
+
 		} catch (Exception ex) {
 			System.out.println("Board_Search_ListVO ERROR: " + ex);
 		} finally {
@@ -551,118 +541,93 @@ public class BoardDAO {
 			}
 		}
 		return null;
-		
+
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "unused" })
-	public JSONArray Search_ListInfo(ArrayList<String> list_all, String select_value) throws Exception {
-		
+	public JSONArray Search_ListInfo(List<String> list_all, String select_value, int page) throws Exception {
+		if (page < 0) {
+			return null;
+		}
+		int n = 8 * page;
+		System.out.println("n의값 :: " + n);
+
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		//ArrayList<Board_Search_ListVO> search_list = new ArrayList<Board_Search_ListVO>();
+		// ArrayList<Board_Search_ListVO> search_list = new
+		// ArrayList<Board_Search_ListVO>();
 		JSONArray jsonArr = new JSONArray();
-		System.out.println("DAO ALL>>1"+list_all);
-		System.out.println("DAO value>>1"+select_value);
+// 		System.out.println("DAO ALL>>1" + list_all);
+// 		System.out.println("DAO value>>1" + select_value);
 		// pstmt 변수로 지정
 		int pstmt_num = 0;
-		/*
-		ArrayList<String> city_all = new ArrayList<String>();
-		city_all.add("서울");
-		city_all.add("경기");
-		city_all.add("인천");
-		city_all.add("강원");
-		city_all.add("대전/충천");
-		city_all.add("대구");
-		city_all.add("부산");
-		city_all.add("울산");
-		city_all.add("경상");
-		city_all.add("광주/전라");
-		city_all.add("제주");
-		*/
+
 		String nothing = "검색어없음";
-		
-		for(int i=0; i<list_all.size(); i++) {
-			if(list_all.get(i).equals(nothing)) {
+
+		for (int i = 0; i < list_all.size(); i++) {
+			if (list_all.get(i).equals(nothing)) {
 				list_all.remove(i);
 			}
 		}
-		/*
-		for(int i=0; i<list_all.size(); i++) {
-			System.out.println("도시전체 있나없나 >>>>>>>>"+list_all.get(i));
-			if(list_all.get(i).equals("도시전체")) {
-				list_all.clear();
-				for(int j=0; j<city_all.size(); j++) {
-					list_all.add(city_all.get(j));
-				}
-			}
-		}
-		System.out.println("도시전체테스트>>>>>111"+city_all.toString());
-		System.out.println("도시전체테스트>>>>>222"+list_all.toString());
-		 */
-		
+
 		try {
 			// 쪼인해도되고안해도되고
 			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime "
-					+ "FROM company as cp "
-					+ "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
-			
-			if(list_all != null) {
-				for(int i = 0; i<list_all.size(); i++) {
-					if(i == 0) {
-						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
-							sql += "WHERE CONCAT(cp.cp_funding_status) REGEXP ? ";
+					+ "FROM company as cp " + "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
+
+			if (list_all != null) {
+				for (int i = 0; i < list_all.size(); i++) {
+					if (i == 0) {
+						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
+							sql += "WHERE CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
-						if(list_all.get(i) == "21" || list_all.get(i) == "22") {
-							sql += "WHERE CONCAT(cp.cp_revenue_distribution_status) REGEXP ? ";
+						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
+							sql += "WHERE CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
-						if(list_all.get(i) == "30") {
-							sql += "WHERE CONCAT(cp.cp_overdue_status) REGEXP ? ";
+						if (list_all.get(i) == "30") {
+							sql += "WHERE CONCAT(cp.cp_overdue_status) LIKE ? ";
 						}
-						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
-								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
-							sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) REGEXP ? ";
+						sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+					} else {
+						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
+							sql += "OR CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
-					} else if(i != 0){
-						if(list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
-							sql += "OR CONCAT(cp.cp_funding_status) REGEXP ? ";
+						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
+							sql += "OR CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
-						if(list_all.get(i) == "21" || list_all.get(i) == "22") {
-							sql += "OR CONCAT(cp.cp_revenue_distribution_status) REGEXP ? ";
+						if (list_all.get(i) == "30") {
+							sql += "OR CONCAT(cp.cp_overdue_status) LIKE ? ";
 						}
-						if(list_all.get(i) == "30") {
-							sql += "OR CONCAT(cp.cp_overdue_status) REGEXP ? ";
-						}
-						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
-								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
-							sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) REGEXP ? ";
-						}
+						sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
 					}
 				}
-				if(select_value.equals("1")) {
+				if (select_value.equals("1")) {
 					sql += "ORDER BY cp.cp_recommand_count DESC";
-				}else if(select_value.equals("2")) {
+				} else if (select_value.equals("2")) {
 					sql += "ORDER BY cp.cp_monthly_profit DESC";
-				}else {
+				} else {
 					sql += "ORDER BY cp.cp_reg_datetime DESC";
 				}
-			}else {
-				if(select_value.equals("1")) {
+			} else {
+				if (select_value.equals("1")) {
 					sql += "ORDER BY cp.cp_recommand_count DESC";
-				}else if(select_value.equals("2")) {
+				} else if (select_value.equals("2")) {
 					sql += "ORDER BY cp.cp_monthly_profit DESC";
-				}else {
+				} else {
 					sql += "ORDER BY cp.cp_reg_datetime DESC";
 				}
 			}
-			
+			sql += " limit ?, 8";
+
 			pstmt = conn.prepareStatement(sql);
-			System.out.println(">>>>>>>"+sql);
-			if(list_all != null) {
-				for(int i=0; i<list_all.size(); i++) {
-					pstmt.setString(i+1, list_all.get(i));
-					System.out.println(">>>>>>>>>>>>>pstmt"+list_all.size());
-					System.out.println(">>>>>>>>>>>>>pstmt"+list_all.get(i));
+			System.out.println(">>>>>>>" + sql);
+			if (list_all != null) {
+				int i = 0;
+				for (i = 0; i < list_all.size(); i++) {
+					pstmt.setString(i + 1, "%" + list_all.get(i) + "%");
 				}
+				pstmt.setInt(i + 1, n);
+				System.out.println("IIIIIIIIII>" + i);
 			}
 			rs = pstmt.executeQuery();
 
@@ -676,11 +641,11 @@ public class BoardDAO {
 				jsonObj.put("percent", rs.getString("percent"));
 				jsonObj.put("cp_monthly_profit", rs.getString("cp_monthly_profit"));
 				jsonObj.put("cp_sector", rs.getString("cp_sector"));
-				
+
 				jsonArr.add(jsonObj);
 			}
 			return jsonArr;
-			
+
 		} catch (Exception ex) {
 			System.out.println("검색 ERROR: " + ex);
 		} finally {
@@ -697,6 +662,63 @@ public class BoardDAO {
 		}
 		return null;
 	}
-	
+
 	//////////////////// 태훈 추가 end //////////////////////////
+	//////////////////// 신규 추가 start //////////////////////////
+
+	// 스크롤 - 전체 보기
+	public ArrayList<Board_Search_ListVO> getCompanyListScroll(int page) throws Exception {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Board_Search_ListVO> Search_list = new ArrayList<Board_Search_ListVO>();
+
+		try {
+			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount FROM company as cp, company_invest as cp_iv WHERE cp.cp_idx = cp_iv.cp_idx ORDER BY cp_reg_datetime DESC LIMIT ?, 8";
+
+			if (page < 0) {
+				return null;
+			}
+			int n = 8 * page;
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, n);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Board_Search_ListVO listVO = new Board_Search_ListVO();
+
+				listVO.setSearch_cp_branch(rs.getString("cp_branch"));
+				listVO.setSearch_cp_current_amount(rs.getString("iv_current_amount"));
+				listVO.setSearch_cp_goal_amount(rs.getString("iv_goal_amount"));
+				listVO.setSearch_cp_idx(rs.getString("cp_idx"));
+				listVO.setSearch_cp_name(rs.getString("cp_name"));
+				listVO.setSearch_cp_percent(rs.getString("percent"));
+				listVO.setSearch_cp_profit(rs.getString("cp_monthly_profit"));
+				listVO.setSearch_cp_sector(rs.getString("cp_sector"));
+
+				Search_list.add(listVO);
+			}
+			return Search_list;
+
+		} catch (Exception ex) {
+			System.out.println("getCompanyListScroll ERROR: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+		return null;
+
+	}
+
+	//////////////////// 신규 추가 end //////////////////////////
 }

@@ -17,8 +17,12 @@ import net.member.dto.Main_SlideVO;
 import net.member.dto.MemberBean;
 import net.member.dto.MemberInvestCompanyVO;
 import net.member.dto.MemberInvestPageVO;
+import net.member.dto.MemberIplog;
 import net.member.dto.Member_headerVO;
 import net.member.dto.Member_likeboxVO;
+import net.money.dto.PointTransactionVO;
+import net.money.dto.TokenDepositVO;
+import net.money.dto.TokenTransaction;
 
 public class MemberDAO {
 
@@ -1077,6 +1081,87 @@ public class MemberDAO {
 			return null;
 		}
 		
+		// 태훈 추가 - 자산관리 토큰 입금
+		public int Token_Deposit (String token_sum, String token_wallet, String token_hash, String session_idx, String bar) throws Exception{
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int result = 0;
+
+			try {
+				String sql = "INSERT INTO token_deposit(mb_idx, td_to_address, td_from_address, td_tx_hash, td_amount, td_status, td_date_time)"
+						+ "VALUES(?, ?, ?, ?, ?, 0, now())";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, session_idx);
+				pstmt.setString(2, token_wallet);
+				pstmt.setString(3, bar);
+				pstmt.setString(4, token_hash);
+				pstmt.setString(5, token_sum);
+				result = pstmt.executeUpdate();
+
+				if (result != 0) {
+					result = 1;
+					return result;
+				}else {
+					result = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("Token_Deposit 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
+		
+		
+		// 태훈 추가 - 자산관리 토큰 출금
+		public int Token_Withdraw (String token_sum, String token_wallet, String session_idx, String bar) throws Exception{
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int result = 0;
+				
+			try {
+				String sql = "INSERT INTO token_withdraw(mb_idx, td_to_address, td_from_address, td_amount, td_status, td_date_time) "
+						+ "VALUES(?, ?, ?, ?, 0, now())";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, session_idx);
+				pstmt.setString(2, bar);
+				pstmt.setString(3, token_wallet);
+				pstmt.setString(4, token_sum);
+				result = pstmt.executeUpdate();
+						
+				if (result != 0) {
+					result = 1;
+					return result;
+				}else {
+					result = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("Token_Withdraw 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
 	// 윤식 추가/////////////////////////////////////////////////
@@ -1176,5 +1261,44 @@ public class MemberDAO {
 
 		return null;
 	}
+	
+	public boolean insertMemberLoginLog(MemberIplog memberIplog) {
+		String sql = "INSERT INTO member_iplog(ip, id, date, content) VALUES (?,?,now(),?)";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberIplog.getIp());
+			pstmt.setString(2, memberIplog.getId());
+			pstmt.setString(3, memberIplog.getContent());
+			result = pstmt.executeUpdate();
+			
+
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("MemberLoginLog 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+	
+	
+	//String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx, tk_price, po_amount, po_content, po_date_time) VALUES (2,1,1,100,?,?,now())";
+	//String sql = "INSERT INTO token_transaction(tk_category, po_idx, tk_amount, tk_price, po_amount, tk_content, tk_date_time) VALUES (3,1,?,10,?,'비고',now())";
+	//String sql = "UPDATE member SET mb_point = mb_point + ?, mb_token = mb_token - ? WHERE mb_idx = ?";
 	// 박신규 끝~ ///////////////////////////////////////////////////
 }

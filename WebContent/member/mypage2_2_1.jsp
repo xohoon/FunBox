@@ -13,7 +13,7 @@
         <input type="password" id="pin" name="pin"  maxlength="6" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
       </div>
       <!--pin-->
-      <input type="button" class="submit" value="충전하기">
+      <input id="charge_button" type="button" class="submit" value="충전하기">
     </form>
   </div><!--.coin_send-->
   
@@ -22,5 +22,8 @@
 		  $('#coin_send button').on('click', function(){
 			 $(this).parent('#coin_send').hide();
 		  });
+		  $('#charge_button').on('click', function(){
+				 $('#form_charge').submit();
+			  });
 	  });
   </script>

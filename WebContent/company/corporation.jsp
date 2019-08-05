@@ -28,11 +28,19 @@
    <![endif]-->
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/corporation.css" rel="stylesheet">
+  <link href="css/loader.css" rel="stylesheet" type="text/css">
   <script src="js/jquery-3.1.1.min.js"></script>
 
 </head>
 
 <body>
+  <div class="loader">
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+  </div>
   <div id="wrap">
     <header></header>
     <!--여기에 내용 입력-->
@@ -143,7 +151,7 @@
                   <p>을 투자하시면</p>
                 </div>
                 <div class="calc-bottom">
-                  <div>
+                  <div>s
                     <p>예상 세후 총 수익금</p>
                     <div class="circle">!
                       <div>상기 표시된 연 수익률에서 플랫폼 수수료를 제외한 총액이며, 실제 상환 일정에 따라 변동될 수 있습니다.</div>
@@ -417,7 +425,7 @@
 	                <tr>
 	                  <td>${i}</td>
 	                  <td><%=companyBean.getCp_pay_expected_payment_date() %></td>
-	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_principal() %>" pattern="#,###" /></td>
+	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_principal() %>" pattern="#,###" /></td>	                  
 	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_interest_paid() %>" pattern="#,###" /></td>
 	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_fees() %>" pattern="#,###" /></td>
 	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_actual_payment_amout() %>" pattern="#,###" /></td>
@@ -640,7 +648,11 @@
 //          break;
 //        }
 //      });
-    
+    	
+    	setTimeout(function() {
+        	$('.loader').fadeOut(1000);
+      	}, 1000)
+      	
     });
     
     $('#lightBox ul').mousewheel(function(event, delta) {
@@ -677,9 +689,10 @@
       document.getElementById('caption2').innerHTML = slideIndex + '&nbsp;/&nbsp;' + slides2.length;
       $('#lightBox').find('li').removeClass('on');
       $('#lightBox').find('li').eq(slideIndex-1).addClass('on');
+      
     }
   </script>
-  
+	  
   <!-- <script charset="UTF-8">
     var mapWidth = $('.corpor-location').innerWidth();
     var mapHeight = $('.corpor-location').innerHeight();
@@ -691,4 +704,5 @@
       "mapHeight": mapHeight
     }).render();
   </script> -->
+  
   </html>
