@@ -535,7 +535,12 @@ public class BoardDAO {
 	}
 
 	@SuppressWarnings({ "unchecked", "unused" })
-	public JSONArray Search_ListInfo(ArrayList<String> list_all, String select_value) throws Exception {
+	public JSONArray Search_ListInfo(ArrayList<String> list_all, String select_value, int page) throws Exception {
+		
+		if (page < 0) {
+			return null;
+		}
+		int n = 8*page;
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -634,15 +639,16 @@ public class BoardDAO {
 					sql += "ORDER BY cp.cp_reg_datetime DESC";
 				}
 			}
+			sql += " limit ?, 8";
 			
 			pstmt = conn.prepareStatement(sql);
 			System.out.println(">>>>>>>"+sql);
 			if(list_all != null) {
-				for(int i=0; i<list_all.size(); i++) {
+				int i = 0;
+				for(i=0; i<list_all.size(); i++) {
 					pstmt.setString(i+1, "%"+list_all.get(i)+"%");
-					System.out.println(">>>>>>>>>>>>>pstmt"+list_all.size());
-					System.out.println(">>>>>>>>>>>>>pstmt"+list_all.get(i));
 				}
+				pstmt.setInt(i+1, n);
 			}
 			rs = pstmt.executeQuery();
 

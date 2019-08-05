@@ -325,13 +325,13 @@
     					companyListHTML += "</div>";
     					var clonedata = companyListHTML;
     			        
-    			        var randomarti = Math.ceil(Math.random() * 6)
-    			        var randomnum = (randomarti + 4) * 100
+    			        var randomarti = Math.ceil(Math.random() * 6);
+    			        var randomnum = (randomarti + 4) * 100;
 
     			        
     			        var htmlheight = $('html').outerHeight();
     			        var veiwheight = $(window).height();
-    			        var trigger = htmlheight - veiwheight - 20
+    			        var trigger = htmlheight - veiwheight - 20;
 
     			        if (currentscroll < trigger) {
     			          currentscroll = $(window).scrollTop();
@@ -344,7 +344,7 @@
 
     			          $('.scrolload').stop().append(clonedata)
 
-    			          var foot = $('footer').offset().top
+    			          var foot = $('footer').offset().top;
 
     			          setTimeout(function() {
     			            $('.scrolload > .boxwrap').addClass('on')

@@ -29,9 +29,11 @@
 		$('.like_box').load('./member/like_box.jsp')
 	});
 </script>
+<script src="member/js/mypage_token.js"></script>
 </head>
 
 <body>
+
 	<div id="wrap">
 		<header></header>
 		<div class="hdbck"></div>
@@ -39,6 +41,7 @@
 		<section>
 			<div class="like_box"></div>
 			<input type="hidden" value="${sessionScope.id }" id="session_value">
+			<input type="hidden" value="${sessionScope.idx }" id="session_idx">
 			<ul class="tab">
 				<li id="invest_check" onclick="location.href='./MemberInvestmentList.mb'">투자현황</li>
 				<li class="on" onclick="location.href='./Mypage2_1.mb'">자산관리</li>
@@ -64,13 +67,13 @@
 				<div>
 					<form id="form_deposit" action="MypageDeposit.mb" method="post">
 						<div class="b2 cf">
-							<h5>코인받기</h5>
+							<h5>토큰받기</h5>
 							<div>
 								<label>보낸사람 지갑주소</label> <input type="text"
-									name="td_from_address">
+									name="td_from_address" id="token_wallet">
 							</div>
 							<div>
-								<label>TX Hash</label> <input type="text" name="td_tx_hash">
+								<label>TX Hash</label> <input type="text" name="td_tx_hash" id="token_hash">
 							</div>
 							<div>
 								<label>입금받을 수량</label> <input type="text" name="td_amount"
@@ -95,9 +98,9 @@
 					</form>
 					<form id="form_sendToken" action="MypageSendToken.mb" method="post">
 						<div class="b3 cf">
-							<h5>코인보내기</h5>
+							<h5>토큰보내기</h5>
 							<div>
-								<label>받을사람 지갑주소</label> <input type="text" name="tk_to_address">
+								<label>받을사람 지갑주소</label> <input type="text" name="tk_to_address" id="tk_to_address">
 							</div>
 							<div>
 								<label>출금할 수량</label> <input type="text" name="tk_amount"
@@ -185,9 +188,6 @@
 			});
 			$('.txt_wrap').find('textarea').keyup();
 
-			$('#button_deposit').on('click', function() {
-				$('#form_deposit').submit();
-			});
 			//영어 숫자만 가능하게 하깅~//
 			$("input[name=td_from_address]").keyup(function(event) {
 				if (!(event.keyCode >= 37 && event.keyCode <= 40)) {

@@ -324,9 +324,9 @@ function ckbox_list() {
 		list_status = list_status_box;
 	}
 	
-//	console.log("list_sector:::"+list_sector);
-//	console.log("list_city:::"+list_city);
-//	console.log("list_status:::"+list_status);
+	console.log("list_sector:::"+list_sector);
+	console.log("list_city:::"+list_city);
+	console.log("list_status:::"+list_status);
 }
 
 /*function addLists(search_data) {

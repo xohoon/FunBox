@@ -30,6 +30,8 @@ import net.member.action.MypagePINCheckAction;
 import net.member.action.MypagePWCheckAction;
 import net.member.action.MypagePWPINCheckAction;
 import net.member.action.MypageSendTokenAction;
+import net.member.action.Token_DepositAction;
+import net.member.action.Token_WithdrawAction;
 
 
 public class MemberController extends HttpServlet implements Servlet {
@@ -198,6 +200,20 @@ public class MemberController extends HttpServlet implements Servlet {
 			}
 		}else if(command.equals("/MemberSelectKey.mb")) {
 			action = new MemberSelectKeyAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/TokenDepositAction.mb")) {
+			action = new Token_DepositAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/TokenWithdrawAction.mb")) {
+			action = new Token_WithdrawAction();
 			try {
 				forward = action.execute(request, response);
 			}catch(Exception e) {

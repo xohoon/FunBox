@@ -118,7 +118,7 @@
 						<div id="char"></div>
 					</div><!--입금-->
 				<div class="b3 cf">
-					<h5>코인으로 환전하기</h5>
+					<h5>토큰으로 환전하기</h5>
 					<div>
 						<label>환전할 포인트</label>
 						<input type="text" class="coin" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/><span>POINT</span>

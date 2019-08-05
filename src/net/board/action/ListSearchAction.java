@@ -43,7 +43,8 @@ public class ListSearchAction implements Action {
 		String[] cityall = {"서울", "경기", "인천", "강원", "대전/충천", "대구", "부산", "울산", "경상", "광주/전라", "제주"};
 		String[] sectorall = {"한식", "분식", "일식", "중식", "양식", "카페", "치킨", "기타"};
 		String[] statusall = {"10", "11", "12", "21", "22", "30"};
-		System.out.println(">>>>>>>>>>>>>>>>>>>>1111>"+statusall[0]+statusall[5]);
+		
+		
 		if (list_city != null) {
 			for (int i = 0; i < list_city.length; i++) {
 				if(list_city[i].equals("도시전체")) {
@@ -52,6 +53,11 @@ public class ListSearchAction implements Action {
 					city.add(list_city[i]);
 				}
 			}
+			/*
+			 * for(int j=0; j<list_city.length; i++) {
+			 * 
+			 * }
+			 */
 			System.out.println("받은배열 city::" + list_city + "받은배열 city::" + city);
 		}
 		
@@ -92,7 +98,7 @@ public class ListSearchAction implements Action {
 		list_all.addAll(city);
 		list_all.addAll(status);
 	
-		JSONArray search_list = boardDAO.Search_ListInfo(list_all, select_value,page); 
+		JSONArray search_list = boardDAO.Search_ListInfo(list_all, select_value, page); 
 
 		response.setContentType("application/x-json;charset=UTF-8");
 		response.getWriter().print(search_list);

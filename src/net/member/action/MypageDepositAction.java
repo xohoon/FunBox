@@ -37,7 +37,6 @@ public class MypageDepositAction implements Action {
 		
 		
 		MemberDAO memberDAO = new MemberDAO();
-		memberDAO.depositToken(tokenDepositVO);
 		
 		forward.setRedirect(false);
 		forward.setPath("/Mypage2_1.mb");
