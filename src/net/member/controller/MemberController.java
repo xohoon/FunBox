@@ -30,6 +30,8 @@ import net.member.action.MypagePINCheckAction;
 import net.member.action.MypagePWCheckAction;
 import net.member.action.MypagePWPINCheckAction;
 import net.member.action.MypageSendTokenAction;
+import net.member.action.Point_DepositAction;
+import net.member.action.Point_WithdrawAction;
 import net.member.action.Token_DepositAction;
 import net.member.action.Token_WithdrawAction;
 
@@ -167,6 +169,7 @@ public class MemberController extends HttpServlet implements Servlet {
 				e.printStackTrace();
 			}
 		}else if (command.equals("/MypagePINCheckAction.mb")) { 
+			System.out.println("Controller>>>>>");
 			action = new MypagePINCheckAction();
 			try {
 				forward = action.execute(request, response);
@@ -214,6 +217,20 @@ public class MemberController extends HttpServlet implements Servlet {
 			}
 		}else if(command.equals("/TokenWithdrawAction.mb")) {
 			action = new Token_WithdrawAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/PointDepositAction.mb")) {
+			action = new Point_DepositAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/PointWithdrawAction.mb")) {
+			action = new Point_WithdrawAction();
 			try {
 				forward = action.execute(request, response);
 			}catch(Exception e) {

@@ -9,7 +9,7 @@ import net.common.action.Action;
 import net.common.action.ActionForward;
 import net.member.dao.MemberDAO;
 
-public class Token_WithdrawAction implements Action {
+public class Point_WithdrawAction implements Action {
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -18,15 +18,12 @@ public class Token_WithdrawAction implements Action {
 		MemberDAO memberDAO = new MemberDAO();
 		
 		String session_idx = request.getParameter("session_idx");
-		String token_sum = request.getParameter("token_sum");
-		String token_wallet = request.getParameter("token_wallet");
-		String bar = request.getParameter("bar");
+		String point_sum = request.getParameter("point_sum");
 		
 		int result = 0;
 		
-		if(token_sum != null && token_wallet != null && session_idx != null && bar != null) {
-			System.out.println("DAO>>>>>>>>>>>>>");
-			result = memberDAO.Token_Withdraw(token_sum, token_wallet, session_idx, bar);
+		if(point_sum != null && session_idx != null) {
+			result = memberDAO.Point_Withdraw(point_sum, session_idx);
 		}
 		
 		if(result != 0) {

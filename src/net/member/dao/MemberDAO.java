@@ -1082,7 +1082,7 @@ public class MemberDAO {
 		}
 		
 		// 태훈 추가 - 자산관리 토큰 입금
-		public int Token_Deposit (String token_sum, String token_wallet, String token_hash, String session_idx, String bar) throws Exception{
+		public int Token_Deposit(String token_sum, String token_wallet, String token_hash, String session_idx, String bar) throws Exception{
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			int result = 0;
@@ -1124,7 +1124,7 @@ public class MemberDAO {
 		
 		
 		// 태훈 추가 - 자산관리 토큰 출금
-		public int Token_Withdraw (String token_sum, String token_wallet, String session_idx, String bar) throws Exception{
+		public int Token_Withdraw(String token_sum, String token_wallet, String session_idx, String bar) throws Exception{
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			int result = 0;
@@ -1138,7 +1138,7 @@ public class MemberDAO {
 				pstmt.setString(3, token_wallet);
 				pstmt.setString(4, token_sum);
 				result = pstmt.executeUpdate();
-						
+				
 				if (result != 0) {
 					result = 1;
 					return result;
@@ -1147,6 +1147,82 @@ public class MemberDAO {
 				}
 			} catch (Exception ex) {
 				System.out.println("Token_Withdraw 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
+		
+		// 태훈 추가 - 자산관리 포인트 충전
+		public int Point_Deposit(String point_sum, String session_idx) throws Exception{
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int result = 0;
+			
+			try {
+				String sql = "INSERT INTO  point_transaction(po_category, mb_idx, po_amount, po_date_time)"
+						+ "VALUES(3, ?, ?, now())";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, session_idx);
+				pstmt.setString(2, point_sum);
+				result = pstmt.executeUpdate();
+
+				if (result != 0) {
+					result = 1;
+					return result;
+				}else {
+					result = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("Token_Deposit 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
+		
+		// 태훈 추가 - 자산관리 포인트 환전
+		public int Point_Withdraw(String point_sum, String session_idx) throws Exception{
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int result = 0;
+					
+			try {
+				String sql = "INSERT INTO  point_transaction(po_category, mb_idx, po_amount, po_date_time)"
+						+ "VALUES(2, ?, ?, now())";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, session_idx);
+				pstmt.setString(2, point_sum);
+				result = pstmt.executeUpdate();
+
+				if (result != 0) {
+					result = 1;
+					return result;
+				}else {
+					result = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("Token_Deposit 에러: " + ex);
 			} finally {
 				try {
 					if (rs != null)
