@@ -7,6 +7,10 @@ var list_city = new Array;
 var list_status = new Array;
 var c = "검색어없음";
 
+var current_page = 0;
+var companyListHTML ;
+var count = 0;
+
 
 /// check box ///
 $(document).ready(function() {
@@ -14,6 +18,7 @@ $(document).ready(function() {
 	search_btnFunc();
 	option_clickFunc();
 	ckbox_clickFunc();
+	ckbox_func();
 //	search_key();
 	
 });
@@ -30,13 +35,18 @@ function search_key() {
 	});
 }
  */
+function checkboxTrriger(){
+	current_page = 0;
+	$('.scrolload').stop().html('');
+	$('.moreBtn').trigger('click');
+}
 function search_btnFunc() {
 	$("#search_btn").on('click', function() {
 		search_value();
 		option_value();
 		ckbox_list();
-		// ajax 함수 호출
-		search_ajax();
+		alert('search_btn');
+		checkboxTrriger();
 	});
 }
 function option_clickFunc() {
@@ -45,25 +55,25 @@ function option_clickFunc() {
 		search_value();
 		option_value();
 		ckbox_list();
-		// ajax 함수 호출
-		search_ajax();
+		alert('select_option');
+		checkboxTrriger();
 	});
 }
 
 function ckbox_clickFunc() {
 	// 체크박스 클릭시 이벤트 발생
 	$("input[type='checkbox']").on('click', function() {
+		
 		// 체크된 데이터 불러오는 함수 호출
 		search_value();
 		option_value();
 		ckbox_list();
-		// ajax 함수 호출
-		search_ajax();
+		checkboxTrriger();
 	});
 }
 
 //검색 ajax
-function search_ajax() {
+/*function search_ajax() {
 	$.ajax({
 		type: "POST",
 		url: "./ListSearchAction.bd",
@@ -74,7 +84,8 @@ function search_ajax() {
 			"list_city": list_city,
 			"list_status": list_status,
 			"select_value": getSelect,
-			"getKeyword": getKeyword
+			"getKeyword": getKeyword,
+			"page" : 0
 		},
 		success: function(data, idx, val,response) {
 			console.log("ajax 통신 성공>>>>");
@@ -107,6 +118,63 @@ function search_ajax() {
 			console.log("error>>" +error);
 		}
 	});
+}*/
+function makeMoreCompanyListHTML(resultData){	
+	companyListHTML += "<div class='corp_box' onclick='location.href='./CorporationAction.cp?cp_idx="+resultData.cp_idx+"'><div class='c_img'><img src='./img/row1_anotherminae.jpg' alt=''></div><div class='c_txt'><p>"+resultData.cp_sector+"</p><h5>"+resultData.cp_name+" <span>추천</span></h5><p>"+resultData.cp_branch+"</p></div><div class='gage'><div class='per'><span>"+resultData.cp_percent+"</span>%</div><div class='gage_full'><div class='gage_fill' style='overflow: hidden; width: 2.155%;'><span></span></div></div><div><span class='p_amt'><span>"+resultData.cp_current+"</span> / <span>"+resultData.cp_goal+"</span> P</span><span class='d_day'>D-<span>27</span></span></div></div><div class='reward_per'>수익률<span>"+resultData.cp_profit+"%</span></div></div>";
+};
+function search_ajax() {
+	$.ajax({
+		type: "POST",
+		url: "./ListSearchAction.bd",
+		dataType: "json", 
+		contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		data: {
+			"page" : current_page,
+			"list_sector": list_sector,
+			"list_city": list_city,
+			"list_status": list_status,
+			"select_value": getSelect,
+			"getKeyword": getKeyword,
+		},
+		success: function(data, idx, val,response) {
+			if(data != null) {
+				companyListHTML = "<div class='boxwrap'>";
+				$.each(data, function(idx, val) {
+					var resultData = {
+							cp_idx: val.cp_idx,
+							cp_name: val.cp_name,
+							cp_percent: val.percent,
+							cp_current: val.cp_current_amount,
+							cp_goal: val.cp_goal_amount,
+							cp_profit: val.cp_monthly_profit,
+							cp_branch: val.cp_branch,
+							cp_sector: val.cp_sector
+					}
+					makeMoreCompanyListHTML(resultData);
+					str += "1";
+				});
+				companyListHTML += "</div>";
+				
+				alert(str);
+				current_page++;
+				
+				console.log(companyListHTML);
+			}else if(data == null){
+				alert('data null');
+				console.log(companyListHTML);
+			}
+			console.log(companyListHTML);
+		},
+		error: function(request, status, error) {
+			console.log("request>>"+request);
+			console.log("status>>"+status);
+			console.log("error>>" +error);
+		}
+		
+	});
+	alert(str+'sss');
+	console.log(companyListHTML);
+	return companyListHTML;
 }
 
 function search_value() {
@@ -133,6 +201,12 @@ function ckbox_list() {
 	var list_sector_box = new Array;
 	var list_city_box = new Array;
 	var list_status_box = new Array;
+	
+	var city_all = new Array;
+	var sector_all = new Array;
+	var status_all = new Array;
+	
+//	city_all = ["서울", "경기", "인천", "강원", "대전/충천", "대구", "부산", "울산", "경상", "광주/전라", "제주"];
 	
 	// sector input
 	$("input[id='con1_all']:checked").each(function(i) {
@@ -239,12 +313,12 @@ function ckbox_list() {
 		list_status = list_status_box;
 	}
 	
-	console.log("list_sector:::"+list_sector);
-	console.log("list_city:::"+list_city);
-	console.log("list_status:::"+list_status);
+//	console.log("list_sector:::"+list_sector);
+//	console.log("list_city:::"+list_city);
+//	console.log("list_status:::"+list_status);
 }
 
-function addLists(search_data) {
+/*function addLists(search_data) {
 	$('.boxwrap').append(
 			"<div class=\"corp_box\" onclick=\"location.href='./CorporationAction.cp'\">"
 			+"<div class=\"c_img\">"
@@ -265,12 +339,15 @@ function addLists(search_data) {
 			+"</div></div>"
 			);
 }
+*/
+
 
 function ckbox_func() {
 	/// 업종 체크박스
 	// 전체 체크박스 클릭시 세부 체크박스 전체 선택 및 해제
 	$('#con1_all').click(function() {
-		$('.sector_ckbox').prop('checked', this.checked);
+		$('.sector_ckbox').prop('checked', this.checked);		
+		//checkboxTrriger();
 	});
 	// 세부 체크박스 모두 선택시 전체 체크박스 자동 선택
 	$('.sector_ckbox').click(function() {
@@ -296,13 +373,14 @@ function ckbox_func() {
 				|| $("#con1_7").is(":checked") == false
 				|| $("#con1_8").is(":checked") == false) {
 			$('#con1_all').prop('checked', false);
-		}
+		}		
 	});
 	
 	/// 지역 체크박스
 	// 전체 체크박스 클릭시 세부 체크박스 전체 선택 및 해제
 	$('#con2_all').click(function() {
-		$('.city_ckbox').prop('checked', this.checked);
+		$('.city_ckbox').prop('checked', this.checked);		
+		//checkboxTrriger();
 	});
 	// 세부 체크박스 모두 선택시 전체 체크박스 자동 선택
 	$('.city_ckbox').click(function() {

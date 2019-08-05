@@ -14,8 +14,12 @@ import net.member.dto.Main_SlideVO;
 import net.member.dto.MemberBean;
 import net.member.dto.MemberInvestCompanyVO;
 import net.member.dto.MemberInvestPageVO;
+import net.member.dto.MemberIplog;
 import net.member.dto.Member_headerVO;
 import net.member.dto.Member_likeboxVO;
+import net.money.dto.PointTransactionVO;
+import net.money.dto.TokenDepositVO;
+import net.money.dto.TokenTransaction;
 
 public class MemberDAO {
 
@@ -1041,5 +1045,284 @@ public class MemberDAO {
 
 		return null;
 	}
+	
+	//자산관리 - 출금
+	public boolean depositToken(TokenDepositVO tokenDepositVO) {
+		String sql = "INSERT INTO token_deposit(mb_idx, td_to_address, td_from_address, td_tx_hash, td_amount,td_date_time) VALUES (?,?,?,?,?,now())";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, tokenDepositVO.getMb_idx());
+			pstmt.setString(2, tokenDepositVO.getTd_to_address());
+			pstmt.setString(3, tokenDepositVO.getTd_from_address());
+			pstmt.setString(4, tokenDepositVO.getTd_tx_hash());
+			pstmt.setString(5, tokenDepositVO.getTd_amount());
+			result = pstmt.executeUpdate();
+			
+
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("depositToken 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+	
+	//입출금관리 코인보내기 출금
+	public boolean sendToken(TokenTransaction tokenTransaction) {
+		String sql = "INSERT INTO token_transaction(tk_category, po_idx, tk_amount, tk_price, po_amount, tk_content, tk_date_time) VALUES (3,1,?,10,?,?,now())";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tokenTransaction.getTk_amount());
+			pstmt.setString(2, tokenTransaction.getPo_amount());
+			pstmt.setString(3, tokenTransaction.getTk_content());
+			result = pstmt.executeUpdate();
+			
+
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("withdrawTokenTransaction 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+	
+	//입출금관리 코인보내기 출금
+	public boolean sendToken(PointTransactionVO pointTransactionVO) {
+		String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx, tk_price, po_amount, po_content, po_date_time) VALUES (3,1,1,100,?,?,now())";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pointTransactionVO.getPo_amount());
+			pstmt.setString(2, pointTransactionVO.getPo_content());
+			result = pstmt.executeUpdate();
+			
+
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("withdrawPointTransaction 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+	
+	public boolean changeToTokenFromPoint(PointTransactionVO pointTransactionVO) {
+		String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx, tk_price, po_amount, po_content, po_date_time) VALUES (3,1,1,100,?,?,now())";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pointTransactionVO.getPo_amount());
+			pstmt.setString(2, pointTransactionVO.getPo_content());
+			result = pstmt.executeUpdate();
+			
+
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("changeToTokenFromPoint 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+	
+	public boolean changeToTokenFromPoint(TokenTransaction tokenTransaction) {
+		String sql = "INSERT INTO token_transaction(tk_category, po_idx, tk_amount, tk_price, po_amount, tk_content, tk_date_time) VALUES (3,1,?,10,?,'비고',now())";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tokenTransaction.getTk_amount());
+			pstmt.setString(2, tokenTransaction.getPo_amount());
+			pstmt.setString(3, tokenTransaction.getTk_content());
+			result = pstmt.executeUpdate();
+			
+
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("withdrawTokenTransaction 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+	
+	//포인트 관리 - 포인트 충전하기
+	public boolean chargePoint(String mb_token,String mb_point,int mb_idx) {
+		String sql = "UPDATE member SET mb_point = mb_point + ?, mb_token = mb_token - ? WHERE mb_idx = ?";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mb_point);
+			pstmt.setString(2, mb_token);
+			pstmt.setInt(3, mb_idx);
+			result = pstmt.executeUpdate();
+			
+
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("chargePoint 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+	//포인트 관리 - 코인으로 환전하기
+	public boolean exchangePointToToken(String mb_point,String mb_token,int mb_idx) {
+		String sql = "UPDATE member SET mb_point = mb_point - ?, mb_token = mb_token + ? WHERE mb_idx = ?";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mb_point);
+			pstmt.setString(2, mb_token);
+			pstmt.setInt(3, mb_idx);
+			result = pstmt.executeUpdate();
+			
+
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("chargePoint 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+	
+	public boolean insertMemberLoginLog(MemberIplog memberIplog) {
+		String sql = "INSERT INTO member_iplog(ip, id, date, content) VALUES (?,?,now(),?)";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberIplog.getIp());
+			pstmt.setString(2, memberIplog.getId());
+			pstmt.setString(3, memberIplog.getContent());
+			result = pstmt.executeUpdate();
+			
+
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("MemberLoginLog 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+	//String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx, tk_price, po_amount, po_content, po_date_time) VALUES (2,1,1,100,?,?,now())";
+	//String sql = "INSERT INTO token_transaction(tk_category, po_idx, tk_amount, tk_price, po_amount, tk_content, tk_date_time) VALUES (3,1,?,10,?,'비고',now())";
+	//String sql = "UPDATE member SET mb_point = mb_point + ?, mb_token = mb_token - ? WHERE mb_idx = ?";
 	// 박신규 끝~ ///////////////////////////////////////////////////
 }

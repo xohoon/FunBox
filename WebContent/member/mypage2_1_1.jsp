@@ -23,7 +23,9 @@
         <input type="text" id="verti_num" name="verti_num" placeholder="인증번호 6자리" maxlength="6" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
          <input type="button" class="num_ch" value="확인">
         </div><!--#verti-->
-      <input type="button" class="submit" value="출금하기">
+       <!-- <input type="button" class="submit" value="출금하기"> --> 
+       <input id="button_withdraw" type="button" class="submit" value="출금하기"> 
+      <!-- <input id="button_withdraw" type="button" value="출금하기" class="send_btn"> -->
     </form>
   </div><!--.coin_send-->
   
@@ -32,5 +34,8 @@
 		  $('#coin_send button').on('click', function(){
 			 $(this).parent('#coin_send').hide();
 		  });
+		  $('#button_withdraw').on('click',function(){
+				$('#form_withdraw').submit();
+			});
 	  });
   </script>

@@ -29,6 +29,7 @@
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="js/jquery.scrollstop.js"></script>
   <script src="board/js/list_function.js"></script>
+  <script src="board/js/unlimitedScrolling.js"></script>
 </head>
 
 <body>
@@ -67,7 +68,7 @@
               <div class="f_list_type1">
                 <h2>업종</h2>
                 <span>
-                  <input type="checkbox" id="con1_all" value="전체">
+                  <input type="checkbox" id="con1_all" value="업종전체">
                   <label for="con1_all">전체</label>
                 </span>
                 <span>
@@ -107,7 +108,7 @@
               <div class="f_list_type2">
                 <h2>지역</h2>
                 <span>
-                  <input type="checkbox" id="con2_all" value="전체">
+                  <input type="checkbox" id="con2_all" value="도시전체">
                   <label for="con2_all">전체</label>
                 </span>
                 <span>
@@ -159,7 +160,7 @@
               <div class="f_list_type3">
                 <h2>현황</h2>
                 <span>
-                  <input type="checkbox" id="con3_all" value="전체">
+                  <input type="checkbox" id="con3_all" value="현황전체">
                   <label for="con3_all">전체</label>
                 </span>
                 <span>
@@ -196,7 +197,7 @@
     <section id="sec2">
       <div class="inner">
 	        <div class="mom_box">
-	          <div class="boxwrap">
+	          <%-- <div class="boxwrap">
      	   <c:forEach var="searchVO" items="${searchVO }">
 	            <div class="corp_box" onclick="location.href='./CorporationAction.cp?cp_idx=${searchVO.search_cp_idx}'">
 	              <div class="c_img">
@@ -229,7 +230,7 @@
 	              </div>
 	            </div>
        	 </c:forEach>
-	          </div>
+	          </div> --%>
 	        </div>
 
         <div class="scrolload">
@@ -271,7 +272,8 @@
         $('.corp_box').addClass('wide_box')
       });
     });
-
+    
+    
     $(function() {
 
       $('.gage').each(function() {
@@ -288,70 +290,161 @@
 
 
       $(window).on('scrollstop', function() {
-        var randomarti = Math.ceil(Math.random() * 6)
-        var randomnum = (randomarti + 4) * 100
-        var clonedata = $('.mom_box').html();
-        var htmlheight = $('html').outerHeight();
-        var veiwheight = $(window).height();
-        var trigger = htmlheight - veiwheight - 20
+    	  
+    	  $.ajax({
+    			type: "POST",
+    			url: "./ListSearchAction.bd",
+    			dataType: "json", 
+    			contentType: "application/x-www-form-urlencoded;charset=utf-8",
+    			data: {
+    				"page" : current_page,
+    				"list_sector": list_sector,
+    				"list_city": list_city,
+    				"list_status": list_status,
+    				"select_value": getSelect,
+    				"getKeyword": getKeyword,
+    			},
+    			success: function(data, idx, val,response) {
+    				if(data != null) {
+    					var count = 0;
+    					companyListHTML = "<div class='boxwrap'>";
+    					$.each(data, function(idx, val) {
+    						var resultData = {
+    								cp_idx: val.cp_idx,
+    								cp_name: val.cp_name,
+    								cp_percent: val.percent,
+    								cp_current: val.cp_current_amount,
+    								cp_goal: val.cp_goal_amount,
+    								cp_profit: val.cp_monthly_profit,
+    								cp_branch: val.cp_branch,
+    								cp_sector: val.cp_sector
+    						}
+    						count++;
+    						makeMoreCompanyListHTML(resultData);
+    					});
+    					companyListHTML += "</div>";
+    					var clonedata = companyListHTML;
+    			        
+    			        var randomarti = Math.ceil(Math.random() * 6)
+    			        var randomnum = (randomarti + 4) * 100
 
-        if (currentscroll < trigger) {
-          currentscroll = $(window).scrollTop();
-        }
-        //alert(lastscroll)
+    			        
+    			        var htmlheight = $('html').outerHeight();
+    			        var veiwheight = $(window).height();
+    			        var trigger = htmlheight - veiwheight - 20
 
-        if (lastscroll = trigger && currentscroll > trigger) {
+    			        if (currentscroll < trigger) {
+    			          currentscroll = $(window).scrollTop();
+    			        }
 
-          $('.loader').stop().fadeIn(100);
-          lastscroll = $(window).scrollTop()
+    			        if (lastscroll = trigger && currentscroll > trigger) {
 
-          $('.scrolload').stop().append(clonedata)
+    			          $('.loader').stop().fadeIn(100);
+    			          lastscroll = $(window).scrollTop()
 
-          var foot = $('footer').offset().top
+    			          $('.scrolload').stop().append(clonedata)
 
-          /*
-          var movingpoint = foot - veiwheight * 1.3
+    			          var foot = $('footer').offset().top
 
-          $('html').stop().animate({
-            scrollTop: movingpoint
-          }, 0)          
-          */
+    			          setTimeout(function() {
+    			            $('.scrolload > .boxwrap').addClass('on')
+    			            $('.loader').stop().fadeOut(randomnum);
 
-          setTimeout(function() {
-            $('.scrolload > .boxwrap').addClass('on')
-            $('.loader').stop().fadeOut(randomnum);
+    			            $('.gage').each(function() {
+    			              var percent = $(this).find('.per > span').text();
 
-            $('.gage').each(function() {
-              var percent = $(this).find('.per > span').text();
-
-              $(this).find('.gage_fill').animate({
-                'width': percent + '%'
-              }, 1500);
-            });
-          }, randomnum);
-        }
+    			              $(this).find('.gage_fill').animate({
+    			                'width': percent + '%'
+    			              }, 1500);
+    			            });
+    			          }, randomnum);
+    			        }
+    					current_page++;
+    				}else if(data == null){
+    					alert('data null');
+    				}
+    				
+    				if (count == 0) {
+    					$( '.moreBtn' ).remove();
+    					$(window).unbind('scrollstop');
+					}
+    			},
+    			error: function(request, status, error) {
+    				console.log("request>>"+request);
+    				console.log("status>>"+status);
+    				console.log("error>>" +error);
+    			}
+    		});
       });
 
       $('.moreBtn').on('click', function() {
-        var randomarti = Math.ceil(Math.random() * 6)
-        var randomnum = (randomarti + 4) * 100
-        var clonedata = $('.mom_box').html();
+    	  $.ajax({
+    			type: "POST",
+    			url: "./ListSearchAction.bd",
+    			dataType: "json", 
+    			contentType: "application/x-www-form-urlencoded;charset=utf-8",
+    			data: {
+    				"page" : current_page,
+    				"list_sector": list_sector,
+    				"list_city": list_city,
+    				"list_status": list_status,
+    				"select_value": getSelect,
+    				"getKeyword": getKeyword,
+    			},
+    			success: function(data, idx, val,response) {
+    				if(data != null) {
+    					var count = 0;
+    					companyListHTML = "<div class='boxwrap'>";
+    					$.each(data, function(idx, val) {
+    						var resultData = {
+    								cp_idx: val.cp_idx,
+    								cp_name: val.cp_name,
+    								cp_percent: val.percent,
+    								cp_current: val.cp_current_amount,
+    								cp_goal: val.cp_goal_amount,
+    								cp_profit: val.cp_monthly_profit,
+    								cp_branch: val.cp_branch,
+    								cp_sector: val.cp_sector
+    						}
+    						count++;
+    						makeMoreCompanyListHTML(resultData);
+    					});
+    					companyListHTML += "</div>";
+    					var clonedata = companyListHTML;         
+    			        var randomarti = Math.ceil(Math.random() * 6)
+    			        var randomnum = (randomarti + 4) * 100
+    			        $('.loader').stop().fadeIn(100);
+    			        $('.scrolload').stop().append(clonedata)
 
-        $('.loader').stop().fadeIn(100);
-        $('.scrolload').stop().append(clonedata)
+    			        setTimeout(function() {
+    			          $('.scrolload > .boxwrap').addClass('on')
+    			          $('.loader').stop().fadeOut(randomnum);
 
-        setTimeout(function() {
-          $('.scrolload > .boxwrap').addClass('on')
-          $('.loader').stop().fadeOut(randomnum);
+    			          $('.gage').each(function() {
+    			            var percent = $(this).find('.per > span').text();
 
-          $('.gage').each(function() {
-            var percent = $(this).find('.per > span').text();
-
-            $(this).find('.gage_fill').animate({
-              'width': percent + '%'
-            }, 1500);
-          });
-        }, randomnum);
+    			            $(this).find('.gage_fill').animate({
+    			              'width': percent + '%'
+    			            }, 1500);
+    			          });
+    			        }, randomnum);
+    					current_page++;
+    				}else if(data == null){
+    					alert('data null');
+    					console.log(companyListHTML);
+    				}
+    				if (count == 0) {
+    					$(window).unbind('scrollstop');
+    					$( '.moreBtn' ).remove();
+					}
+    			},
+    			error: function(request, status, error) {
+    				console.log("request>>"+request);
+    				console.log("status>>"+status);
+    				console.log("error>>" +error);
+    			}
+    			
+    		});    	
       });
 
     });
@@ -364,6 +457,34 @@
     	if(cityName != null){
 	    	$('.search_bar').toggleClass('on');
     	}
+    	 $('.moreBtn').trigger('click');
     });
+  </script>
+  <script type="text/javascript">
+  /* function initList() {
+	    var randomarti = Math.ceil(Math.random() * 6)
+	    var randomnum = (randomarti + 4) * 100
+	    var clonedata = $('.mom_box').html(); 
+	    makeMoreCompanyListHTML();
+	    var clonedata = companyListHTML;
+
+	    $('.loader').stop().fadeIn(100);
+	    $('.scrolload').stop().append(clonedata)
+
+	    setTimeout(function() {
+	      $('.scrolload > .boxwrap').addClass('on')
+	      $('.loader').stop().fadeOut(randomnum);
+
+	      $('.gage').each(function() {
+	        var percent = $(this).find('.per > span').text();
+
+	        $(this).find('.gage_fill').animate({
+	          'width': percent + '%'
+	        }, 1500);
+	      });
+	    }, randomnum);
+	  }
+	initList(); 
+	*/
   </script>
 </body></html>
