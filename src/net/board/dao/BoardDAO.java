@@ -605,31 +605,31 @@ public class BoardDAO {
 				for(int i = 0; i<list_all.size(); i++) {
 					if(i == 0) {
 						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
-							sql += "WHERE CONCAT(cp.cp_funding_status) REGEXP ? ";
+							sql += "WHERE CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
-						if(list_all.get(i) == "21" || list_all.get(i) == "22") {
-							sql += "WHERE CONCAT(cp.cp_revenue_distribution_status) REGEXP ? ";
+						if(list_all.get(i).equals("21") || list_all.get(i).equals("22")) {
+							sql += "WHERE CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
-						if(list_all.get(i) == "30") {
+						if(list_all.get(i).equals("30")) {
 							sql += "WHERE CONCAT(cp.cp_overdue_status) REGEXP ? ";
 						}
 						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
 								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
-							sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) REGEXP ? ";
+							sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
 						}
 					} else if(i != 0){
-						if(list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
-							sql += "OR CONCAT(cp.cp_funding_status) REGEXP ? ";
+						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
+							sql += "OR CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
-						if(list_all.get(i) == "21" || list_all.get(i) == "22") {
-							sql += "OR CONCAT(cp.cp_revenue_distribution_status) REGEXP ? ";
+						if(list_all.get(i).equals("21") || list_all.get(i).equals("22")) {
+							sql += "OR CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
-						if(list_all.get(i) == "30") {
-							sql += "OR CONCAT(cp.cp_overdue_status) REGEXP ? ";
+						if(list_all.get(i).equals("30")) {
+							sql += "OR CONCAT(cp.cp_overdue_status) LIKE ? ";
 						}
 						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
 								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
-							sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) REGEXP ? ";
+							sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
 						}
 					}
 				}
@@ -654,7 +654,7 @@ public class BoardDAO {
 			System.out.println(">>>>>>>"+sql);
 			if(list_all != null) {
 				for(int i=0; i<list_all.size(); i++) {
-					pstmt.setString(i+1, list_all.get(i));
+					pstmt.setString(i+1, "%"+list_all.get(i)+"%");
 					System.out.println(">>>>>>>>>>>>>pstmt"+list_all.size());
 					System.out.println(">>>>>>>>>>>>>pstmt"+list_all.get(i));
 				}

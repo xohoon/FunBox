@@ -1,10 +1,10 @@
 ////////////////태훈 추가 - 메인페이지 실시간 순위
-
+/*
 $(document).ready(function() {
 	main_list();
 	realtime_like();
 });
-
+*/
 var select_key = null;
 
 function realtime_like() {
