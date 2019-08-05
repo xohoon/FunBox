@@ -99,33 +99,33 @@ public class CompanyApplication04Action implements Action {
 					company.setApp_cp_registrantion(fileName);
 					company.setApp_cp_alias_registrantion(alias + "app_cp_registrantion"+fileFormat);
 					//System.out.println(real_path + "/" + alias+"app_cp_registrantion"+fileFormat);
-					//part.write(real_path + "/" + alias+"app_cp_registrantion"+fileFormat);
+					part.write(real_path + "/" + alias+"app_cp_registrantion"+fileFormat);
 					break;
 				case "app_cp_financial":
 					company.setApp_cp_financial(fileName);
 					company.setApp_cp_financial(alias + "app_cp_financial"+fileFormat);
 					//System.out.println(real_path + "/" + alias+"app_cp_financial"+fileFormat);
-					//part.write(real_path + "/" + alias+"app_cp_financial"+fileFormat);
+					part.write(real_path + "/" + alias+"app_cp_financial"+fileFormat);
 					break;
 				case "app_cp_estate_contract":
 					company.setApp_cp_estate_contract(fileName);
 					company.setApp_cp_alias_estate_contract(alias + "app_cp_estate_contract"+fileFormat);
 					//System.out.println(real_path + "/" + alias+"app_cp_estate_contract"+fileFormat);
-					//part.write(real_path + "/" + alias+"app_cp_estate_contract"+fileFormat);
+					part.write(real_path + "/" + alias+"app_cp_estate_contract"+fileFormat);
 					break;
 				case "app_cp_images":
 					image_count++;
 					app_cp_image_list.add(fileName);
 					app_cp_alias_image_list.add(alias + "app_cp_image"+ image_count+fileFormat);
 					//System.out.println(real_path + "/" + alias+"app_cp_image"+image_count+fileFormat);
-					//part.write(real_path + "/" + alias+"app_cp_image"+image_count+fileFormat);
+					part.write(real_path + "/" + alias+"app_cp_image"+image_count+fileFormat);
 					break;
 				case "app_cp_other_documents":
 					document_count++;
 					app_cp_document_list.add(fileName);
 					app_cp_alias_document_list.add(alias + "app_cp_other_document" + document_count+fileFormat);
 					//System.out.println(real_path + "/" + alias+"app_cp_other_document"+document_count+fileFormat);
-					//part.write(real_path + "/" + alias+"app_cp_other_document"+document_count+fileFormat);
+					part.write(real_path + "/" + alias+"app_cp_other_document"+document_count+fileFormat);
 					break;
 				default:
 					break;
