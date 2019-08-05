@@ -24,6 +24,7 @@ public class MypagePINCheckAction implements Action {
 		
 		JSONObject jsondata = new JSONObject();
 		String pin = request.getParameter("pin");
+		System.out.println("Action>>>>>>"+id+pin);
 		
 		try {
 			pin = Sha1_SecretCode.sha1(pin);

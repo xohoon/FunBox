@@ -51,7 +51,7 @@
 			<div class="asset">
 				<div class="btn">
 					<button class="on" onclick="location.href='./Mypage2_1.mb'">입출금관리</button>
-					<button onclick="location.href='./Mypage2_2Action.mb'">포인트관리</button>
+					<button onclick="location.href='./Mypage2_2.mb'">포인트관리</button>
 				</div>
 				<!--btn-->
 				<div class="b1">

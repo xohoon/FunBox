@@ -61,8 +61,8 @@ public class CompanyDAO {
 				// application03
 				+ "app_cp_introduction, app_cp_purpose, app_cp_point, "
 				// application04
-				+ "app_cp_registrantion, app_cp_financial, app_cp_estate_contract, app_cp_image1, app_cp_image2, app_cp_image3, app_cp_image4, app_cp_image5, app_cp_other_document1, app_cp_other_document2, app_cp_other_document3, app_cp_other_document4, app_cp_other_document5, app_cp_real_path, mb_idx) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "app_cp_registrantion, app_cp_financial, app_cp_estate_contract, app_cp_image1, app_cp_image2, app_cp_image3, app_cp_image4, app_cp_image5, app_cp_other_document1, app_cp_other_document2, app_cp_other_document3, app_cp_other_document4, app_cp_other_document5, app_cp_alias_registrantion,app_cp_alias_financial, app_cp_estate_alias_contract, app_cp_alias_image1, app_cp_alias_image2, app_cp_alias_image3, app_cp_alias_image4, app_cp_alias_image5, app_cp_alias_other_document1, app_cp_alias_other_document2, app_cp_alias_other_document3, app_cp_alias_other_document4, app_cp_alias_other_document5, app_cp_real_path,mb_idx) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?  )";
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -109,8 +109,23 @@ public class CompanyDAO {
 			pstmt.setString(32, company.getApp_cp_other_document3());
 			pstmt.setString(33, company.getApp_cp_other_document4());
 			pstmt.setString(34, company.getApp_cp_other_document5());
-			pstmt.setString(35, company.getApp_cp_real_path());
-			pstmt.setString(36, company.getMb_idx());
+			
+			pstmt.setString(35, company.getApp_cp_alias_registrantion());
+			pstmt.setString(36, company.getApp_cp_alias_financial());
+			pstmt.setString(37, company.getApp_cp_alias_estate_contract());
+			pstmt.setString(38, company.getApp_cp_alias_image1());
+			pstmt.setString(39, company.getApp_cp_alias_image2());
+			pstmt.setString(40, company.getApp_cp_alias_image3());
+			pstmt.setString(41, company.getApp_cp_alias_image4());
+			pstmt.setString(42, company.getApp_cp_alias_image5());
+			pstmt.setString(43, company.getApp_cp_alias_other_document1());
+			pstmt.setString(44, company.getApp_cp_alias_other_document2());
+			pstmt.setString(45, company.getApp_cp_alias_other_document3());
+			pstmt.setString(46, company.getApp_cp_alias_other_document4());
+			pstmt.setString(47, company.getApp_cp_alias_other_document5());
+			
+			pstmt.setString(48, company.getApp_cp_real_path());
+			pstmt.setString(49, company.getMb_idx());
 			
 			result = pstmt.executeUpdate();
 			System.out.println(pstmt);
