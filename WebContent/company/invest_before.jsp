@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <title></title>
+  <title>투자 하기</title>
 
   <!--[if lt IE 9]>
       <script src="./js/html5.js"></script>
@@ -66,19 +66,25 @@ pageEncoding="UTF-8"%>
             <p><%=companyBean.getCp_intro_content() %></p>
             
             <div class="gage">
-              <div class="per"><span><%=companyBean.getIv_percent() %></span>%</div>
+              <div class="per">
+              <fmt:parseNumber var="test" value="<%=companyBean.getIv_percent() %>" integerOnly = "true" />
+              	<span>${test}</span>%
+              </div>
               <div class="gage_full">
                 <div class="gage_fill"></div>
+                <span></span>
               </div>
             </div>
             
-			<div class="cost"><span><%=companyBean.getIv_min_amount() %></span> point</div>
+			<div class="cost">
+				<fmt:formatNumber var="minAmount" value="<%=companyBean.getIv_min_amount() %>" pattern="#,###"/>
+				<span>${minAmount}</span> point</div>
             <div class="quantity">
               <input type="number" name="select" min="1" step="1" value="1">
             </div>
             <hr>
-            <div class="sum">
-              합계<span>0</span> point
+            <div class="sum">합계
+ 				<span>0</span> point 
             </div>
             <input type="hidden" name="invest_point" id="invest_point" value="20000"> 
             <input type="hidden" name="invest_amount" id="invest_amount" value="1"> 
@@ -148,24 +154,38 @@ pageEncoding="UTF-8"%>
     });
     
     $(function(){
-       var price = $('.cost span').text();
-      $('.sum span').text(price)
+     var price = $('.cost span').text();
+     var resultPrice = price.replace(",","");
+     
+     $('.sum span').text(resultPrice) 
       
-      $('.quantity-button').click(function(){
+     $('.quantity-button').click(function(){
        
-        var amount = $('.quantity input').val();
-        var sum = price * amount
-        
+     var amount = $('.quantity input').val();
+     var sum = resultPrice * amount
+ //    console.log("sum : "+ sum);
+     
         $('.sum span').text(sum)
-        $('#invest_amount').val(amount);
-        $('#invest_point').val(sum);
+        $('#invest_amount').val(amount); // 투자하기 넘길때 사용
+        $('#invest_point').val(sum); // 투자하기 넘길때 사용
       });
       
       setInterval(function(){
         var amount = $('.quantity input').val();
-        var sum = price * amount
+        var sum = resultPrice * amount
+        var addCommaSum;
         
-        $('.sum span').text(sum)
+        sum = sum + ""; 
+        point = sum.length % 3 ;
+        len = sum.length; 
+       
+        addCommaSum = sum.substring(0, point); 
+        while (point < len) { 
+            if (addCommaSum != "") addCommaSum += ","; 
+            addCommaSum += sum.substring(point, point + 3); 
+            point += 3; 
+        }         
+        $('.sum span').text(addCommaSum) // 여기에 합계 표시
       },1000);
       
     });

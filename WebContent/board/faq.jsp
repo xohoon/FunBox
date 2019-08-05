@@ -10,19 +10,17 @@
 
 <%
 	ArrayList<FaqVO> faq = (ArrayList<FaqVO>)request.getAttribute("faq");
-//	ArrayList<FaqVO> faq1 = (ArrayList<FaqVO>)request.getAttribute("faq1");
-//	ArrayList<FaqVO> faq2 = (ArrayList<FaqVO>)request.getAttribute("faq2");
-//	ArrayList<FaqVO> faq3 = (ArrayList<FaqVO>)request.getAttribute("faq3");
 	ArrayList<FaqVO> faq_list = (ArrayList<FaqVO>)request.getAttribute("faq_list");
 	int cate = (Integer)request.getAttribute("cate");
 	int category = (Integer)request.getAttribute("caetgory");
 %>
 <head>
+  <title>FAQ</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>FAQ</title>
   <link href="css/common.css" rel="stylesheet" type="text/css">
+   <link href="css/loader.css" rel="stylesheet" type="text/css">
   <link href="css/jquery.bxslider.css" rel="stylesheet">
   <link href="css/service.css" rel="stylesheet">
   <link href="css/list_box.css" rel="stylesheet">
@@ -32,16 +30,8 @@
   <script type="text/javascript" src="jquery-2.2.2.min.js"></script>
   <script type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="../node_modules/dist/fakeLoader.min.js"></script>
-  <style type ="text/css">
-  	
-  </style>
-  <script> 
   
-  $( document ).ready(function() {
-	  // 제이쿼리 페이지 로딩 추가
-  });
-
+  <script> 
 	  $(function(){
 		  var onOff = false;
         $('.depth1').on('click',function(){
@@ -60,41 +50,6 @@
 	  
 	  
 	  $(function(){
-		  
-		  /* $('.faq > button').on('click',function(){
-			  $('.faq > button').removeClass('on');
-			  $(this).addClass('on');
-		  });
-		  $('.faq > button').eq(0).on('click',function(){
-			  $('.table > div').css({
-				  'display':'block'
-			  });
-		  });
-		  $('.faq > button').eq(1).on('click',function(){
-			  $('.table > div').css({
-				  'display':'none'
-			  });
-			  $('.btn1').css({
-				  'display':'block'
-			  });
-		  });
-		  $('.faq > button').eq(2).on('click',function(){
-			  $('.table > div').css({
-				  'display':'none'
-			  });
-			  $('.btn2').css({
-				  'display':'block'
-			  });
-		  });
-		  $('.faq > button').eq(3).on('click',function(){
-			  $('.table > div').css({
-				  'display':'none'
-			  });
-			  $('.btn3').css({
-				  'display':'block'
-			  });
-		  });
-		   */
 		  if($('#cate_color').val() == '0'){
 			$('.faq > button').removeClass('on');
 			$('#button1').addClass('on');
@@ -138,10 +93,18 @@
 		  location.href='./Faq.bd?category='+category+ '&pageNum='+pageNum;
 	}
   </script>
-
 </head>
 
 <body> 
+  
+  <div class="loader">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+  
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div> 
@@ -233,27 +196,7 @@
 				<form name="cateForm">
 					<input type="hidden" name="cate" value="${cate }">
 				</form>
-				<!-- <script>
-				 $(function(){
-					var f = document.cateForm;
-					
-					if(f.cate.value == 1){
-						$('.faq > button').removeClass('on');
-						$('#button1').addClass('on');
-					}else if(f.cate.value == 2){
-						$('.faq > button').removeClass('on');
-						$('#button2').addClass('on');
-					}else if(f.cate.value == 3){
-						$('.faq > button').removeClass('on');
-						$('#button3').addClass('on');
-					}else if(f.cate.value == 0){
-						$('.faq > button').removeClass('on');
-						$('#button0').addClass('on');
-					}
-				});
-				</script> -->
-				
-				
+								
 				<!-- 검색한 값 보여주기 -->
 				<c:set var="cate" value="${cate }"/>
 				<c:if test="${cate == 0}">
@@ -368,9 +311,17 @@
     <footer></footer>
   </div>
 <script type="text/javascript">
-  $(function() {
-    $('header').load('./header/header.jsp')
-    $('footer').load('./footer/footer.jsp')
-  });
+	$( document ).ready(function() {
+		  // 제이쿼리 페이지 로딩 추가
+		 // alert("로딩 완료");
+		$('header').load('./header/header.jsp')
+    	$('footer').load('./footer/footer.jsp')
+	});
+  
+    $(function() {
+      setTimeout(function() {
+        $('.loader').fadeOut(1000);
+      }, 1000)
+    });
 </script>
 </body></html>

@@ -9,18 +9,16 @@ import net.common.action.Action;
 import net.common.action.ActionForward;
 import net.member.dao.MemberDAO;
 
-public class Member_Invest_check implements Action {
+//태훈 - 기업 투자 현황 페에지 제어
+public class MemberInvestcheck implements Action {
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		JSONObject JSONdata = new JSONObject();
-		System.out.println("memberController>>>>>>>>>>>>>>>>");
 		String sessionID = request.getParameter("sessionID");
-		System.out.println("member action >>>"+sessionID);
 		MemberDAO memberDAO = new MemberDAO();
 		String result = memberDAO.Member_Invest_check(sessionID);
-		System.out.println("member action >>>"+sessionID+">>"+result);
 		
 		if(result.equals("0")) {
 			JSONdata.put("result", "0");

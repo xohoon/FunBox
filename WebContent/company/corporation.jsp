@@ -35,8 +35,6 @@
 <body>
   <div id="wrap">
     <header></header>
-    <div class="hdbck"></div>
-    <div class="toppdng"></div>
     <!--여기에 내용 입력-->
     <div class="bodyWrap">
       <div class="inner">
@@ -93,7 +91,7 @@
                 <div>
                   <i><img src="img/corpor_icon1.png"></i>
                   <p>월 수익률</p>
-                  <p>${companyBean.cp_monthly_profit}</p>
+                  <p>${companyBean.cp_monthly_profit}%</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon2.png"></i>
@@ -166,7 +164,7 @@
                     </div>
                     <input type="text" value="7 배" readonly>
                   </div>
-                  <a href="#">예상 지급스케쥴 자세히 보러가기</a>
+                  <a href="#rwdsd">예상 지급스케쥴 자세히 보러가기</a>
                 </div>
                 <div class="invest" onclick= investClick()>투자하기</div>
               </div>
@@ -181,8 +179,8 @@
                 </div>
               </div>
               <div>
-                <p><fmt:formatNumber value="<%=companyBean.getIv_current_amount() %>" pattern="#,###" /></p>
-                <p><fmt:formatNumber value="<%=companyBean.getIv_goal_amount() %>" pattern="#,###" /></p>
+                <p><fmt:formatNumber value="<%=companyBean.getIv_current_amount() %>" pattern="#,###" />P</p>
+                <p><fmt:formatNumber value="<%=companyBean.getIv_goal_amount() %>" pattern="#,###" />P</p>
               </div>
             </div>
             <div class="bg">
@@ -414,15 +412,16 @@
                   <th>실 지급금액</th>
                   <th>실 수익률</th>
                 </tr>
+                <!-- 관리자 페이지에서 값을 지정할때 지급회차 수를 입력할시 수정 필요 현재는 for문 사용 -->
                 <c:forEach var = "i" begin = "1" end = "12"> 
 	                <tr>
 	                  <td>${i}</td>
-	                  <td><%=companyBean.getCp_pay_expected_payment_date() %></td>	                  
-	                  <td><%=companyBean.getCp_pay_principal() %></td>
-	                  <td><%=companyBean.getCp_pay_interest_paid() %></td>                  
-	                  <td><%=companyBean.getCp_pay_fees() %></td>
-	                  <td><%=companyBean.getCp_pay_actual_payment_amout() %></td>
-	                  <td><%=companyBean.getCp_pay_actual_rate_return() %></td>
+	                  <td><%=companyBean.getCp_pay_expected_payment_date() %></td>
+	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_principal() %>" pattern="#,###" /></td>
+	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_interest_paid() %>" pattern="#,###" /></td>
+	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_fees() %>" pattern="#,###" /></td>
+	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_actual_payment_amout() %>" pattern="#,###" /></td>
+	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_actual_rate_return() %>" pattern="#,###" /></td>
 	                </tr>
               	</c:forEach>
                 <tr>
