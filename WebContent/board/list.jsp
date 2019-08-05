@@ -298,9 +298,9 @@
     			contentType: "application/x-www-form-urlencoded;charset=utf-8",
     			data: {
     				"page" : current_page,
-    				"list_sector": list_sector,
-    				"list_city": list_city,
-    				"list_status": list_status,
+    				"sector_array": sector_array,
+    				"city_array": city_array,
+    				"city_status": city_status,
     				"select_value": getSelect,
     				"getKeyword": getKeyword,
     			},
@@ -360,13 +360,11 @@
     			          }, randomnum);
     			        }
     					current_page++;
-    				}else if(data == null){
-    					alert('data null');
     				}
-    				
-    				if (count == 0) {
-    					$( '.moreBtn' ).remove();
-    					$(window).unbind('scrollstop');
+    				if (count < 8) {
+    					$('.moreBtn').off('click');
+    					$('.moreBtn').hide();
+    					$(window).off('scrollstop');
 					}
     			},
     			error: function(request, status, error) {
@@ -385,9 +383,9 @@
     			contentType: "application/x-www-form-urlencoded;charset=utf-8",
     			data: {
     				"page" : current_page,
-    				"list_sector": list_sector,
-    				"list_city": list_city,
-    				"list_status": list_status,
+    				"sector_array": sector_array,
+    				"city_array": city_array,
+    				"city_status": city_status,
     				"select_value": getSelect,
     				"getKeyword": getKeyword,
     			},
@@ -429,13 +427,11 @@
     			          });
     			        }, randomnum);
     					current_page++;
-    				}else if(data == null){
-    					alert('data null');
-    					console.log(companyListHTML);
     				}
-    				if (count == 0) {
-    					$(window).unbind('scrollstop');
-    					$( '.moreBtn' ).remove();
+    				if (count < 8) {
+    					$('.moreBtn').off('click');
+    					$('.moreBtn').hide();
+    					$(window).off('scrollstop');
 					}
     			},
     			error: function(request, status, error) {
@@ -459,32 +455,6 @@
     	}
     	 $('.moreBtn').trigger('click');
     });
-  </script>
-  <script type="text/javascript">
-  /* function initList() {
-	    var randomarti = Math.ceil(Math.random() * 6)
-	    var randomnum = (randomarti + 4) * 100
-	    var clonedata = $('.mom_box').html(); 
-	    makeMoreCompanyListHTML();
-	    var clonedata = companyListHTML;
-
-	    $('.loader').stop().fadeIn(100);
-	    $('.scrolload').stop().append(clonedata)
-
-	    setTimeout(function() {
-	      $('.scrolload > .boxwrap').addClass('on')
-	      $('.loader').stop().fadeOut(randomnum);
-
-	      $('.gage').each(function() {
-	        var percent = $(this).find('.per > span').text();
-
-	        $(this).find('.gage_fill').animate({
-	          'width': percent + '%'
-	        }, 1500);
-	      });
-	    }, randomnum);
-	  }
-	initList(); 
-	*/
-  </script>
-</body></html>
+  </script>  
+</body>
+</html>
