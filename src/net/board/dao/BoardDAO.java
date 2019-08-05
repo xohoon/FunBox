@@ -535,89 +535,114 @@ public class BoardDAO {
 	}
 
 	@SuppressWarnings({ "unchecked", "unused" })
-	public JSONArray Search_ListInfo(ArrayList<String> list_all, String select_value,int page) throws Exception {
-		if (page < 0) {
-			return null;
-		}
-		int n = 8*page;
-		System.out.println("n의값 :: " + n);
+	public JSONArray Search_ListInfo(ArrayList<String> list_all, String select_value) throws Exception {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// ArrayList<Board_Search_ListVO> search_list = new
-		// ArrayList<Board_Search_ListVO>();
+		//ArrayList<Board_Search_ListVO> search_list = new ArrayList<Board_Search_ListVO>();
 		JSONArray jsonArr = new JSONArray();
-//		System.out.println("DAO ALL>>1" + list_all);
-//		System.out.println("DAO value>>1" + select_value);
+		System.out.println("DAO ALL>>1"+list_all);
+		System.out.println("DAO value>>1"+select_value);
 		// pstmt 변수로 지정
 		int pstmt_num = 0;
-
+		/*
+		ArrayList<String> city_all = new ArrayList<String>();
+		city_all.add("서울");
+		city_all.add("경기");
+		city_all.add("인천");
+		city_all.add("강원");
+		city_all.add("대전/충천");
+		city_all.add("대구");
+		city_all.add("부산");
+		city_all.add("울산");
+		city_all.add("경상");
+		city_all.add("광주/전라");
+		city_all.add("제주");
+		*/
 		String nothing = "검색어없음";
-
-		for (int i = 0; i < list_all.size(); i++) {
-			if (list_all.get(i).equals(nothing)) {
+		
+		for(int i=0; i<list_all.size(); i++) {
+			if(list_all.get(i).equals(nothing)) {
 				list_all.remove(i);
 			}
 		}
-
+		/*
+		for(int i=0; i<list_all.size(); i++) {
+			System.out.println("도시전체 있나없나 >>>>>>>>"+list_all.get(i));
+			if(list_all.get(i).equals("도시전체")) {
+				list_all.clear();
+				for(int j=0; j<city_all.size(); j++) {
+					list_all.add(city_all.get(j));
+				}
+			}
+		}
+		System.out.println("도시전체테스트>>>>>111"+city_all.toString());
+		System.out.println("도시전체테스트>>>>>222"+list_all.toString());
+		 */
+		
 		try {
 			// 쪼인해도되고안해도되고
 			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime "
-					+ "FROM company as cp " + "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
-
-			if (list_all != null) {
-				for (int i = 0; i < list_all.size(); i++) {
-					if (i == 0) {
-						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
+					+ "FROM company as cp "
+					+ "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
+			
+			if(list_all != null) {
+				for(int i = 0; i<list_all.size(); i++) {
+					if(i == 0) {
+						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
 							sql += "WHERE CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
-						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
+						if(list_all.get(i).equals("21") || list_all.get(i).equals("22")) {
 							sql += "WHERE CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
-						if (list_all.get(i) == "30") {
-							sql += "WHERE CONCAT(cp.cp_overdue_status) LIKE ? ";
+						if(list_all.get(i).equals("30")) {
+							sql += "WHERE CONCAT(cp.cp_overdue_status) REGEXP ? ";
 						}
-						sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
-					} else {
-						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
+						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
+								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
+							sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+						}
+					} else if(i != 0){
+						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
 							sql += "OR CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
-						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
+						if(list_all.get(i).equals("21") || list_all.get(i).equals("22")) {
 							sql += "OR CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
-						if (list_all.get(i) == "30") {
+						if(list_all.get(i).equals("30")) {
 							sql += "OR CONCAT(cp.cp_overdue_status) LIKE ? ";
 						}
-						sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
+								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
+							sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+						}
 					}
 				}
-				if (select_value.equals("1")) {
+				if(select_value.equals("1")) {
 					sql += "ORDER BY cp.cp_recommand_count DESC";
-				} else if (select_value.equals("2")) {
+				}else if(select_value.equals("2")) {
 					sql += "ORDER BY cp.cp_monthly_profit DESC";
-				} else {
+				}else {
 					sql += "ORDER BY cp.cp_reg_datetime DESC";
 				}
-			} else {
-				if (select_value.equals("1")) {
+			}else {
+				if(select_value.equals("1")) {
 					sql += "ORDER BY cp.cp_recommand_count DESC";
-				} else if (select_value.equals("2")) {
+				}else if(select_value.equals("2")) {
 					sql += "ORDER BY cp.cp_monthly_profit DESC";
-				} else {
+				}else {
 					sql += "ORDER BY cp.cp_reg_datetime DESC";
 				}
 			}
-			sql += " limit ?, 8";
-
+			
 			pstmt = conn.prepareStatement(sql);
-			System.out.println(">>>>>>>" + sql);
-			if (list_all != null) {
-				int i = 0;
-				for (i=0; i < list_all.size(); i++) {
-					pstmt.setString(i + 1, "%"+list_all.get(i)+"%");
+			System.out.println(">>>>>>>"+sql);
+			if(list_all != null) {
+				for(int i=0; i<list_all.size(); i++) {
+					pstmt.setString(i+1, "%"+list_all.get(i)+"%");
+					System.out.println(">>>>>>>>>>>>>pstmt"+list_all.size());
+					System.out.println(">>>>>>>>>>>>>pstmt"+list_all.get(i));
 				}
-				pstmt.setInt(i+1, n);
-				System.out.println("IIIIIIIIII>"+i);
 			}
 			rs = pstmt.executeQuery();
 
@@ -631,11 +656,11 @@ public class BoardDAO {
 				jsonObj.put("percent", rs.getString("percent"));
 				jsonObj.put("cp_monthly_profit", rs.getString("cp_monthly_profit"));
 				jsonObj.put("cp_sector", rs.getString("cp_sector"));
-
+				
 				jsonArr.add(jsonObj);
 			}
 			return jsonArr;
-
+			
 		} catch (Exception ex) {
 			System.out.println("검색 ERROR: " + ex);
 		} finally {
