@@ -15,7 +15,15 @@ public class QnaVO {
 	private int email_chk;			//이메일 답변 알림 동의:1 미동의:0
 	private int mobile_chk;			//문자 답변 알림 동의:1 미동의:0
 	private Timestamp reg_date_time;
+	private String qna_reply;
 	
+	
+	public String getQna_reply() {
+		return qna_reply;
+	}
+	public void setQna_reply(String qna_reply) {
+		this.qna_reply = qna_reply;
+	}
 	public int getEmail_chk() {
 		return email_chk;
 	}

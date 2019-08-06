@@ -550,7 +550,6 @@ public class BoardDAO {
 			return null;
 		}
 		int n = 8 * page;
-		System.out.println("n의값 :: " + n);
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -567,17 +566,19 @@ public class BoardDAO {
 		for (int i = 0; i < list_all.size(); i++) {
 			if (list_all.get(i).equals(nothing)) {
 				list_all.remove(i);
+				break;
 			}
 		}
 
 		try {
 			// 쪼인해도되고안해도되고
-			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime "
+			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime, cp_iv.iv_appl_stop_date_time "
 					+ "FROM company as cp " + "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
 
 			if (list_all != null) {
+				boolean AndFlag = false;
 				for (int i = 0; i < list_all.size(); i++) {
-					if (i == 0) {
+					if(i == 0) {
 						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
 							sql += "WHERE CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
@@ -590,20 +591,45 @@ public class BoardDAO {
 						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
 								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
 							sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+							AndFlag = true;
 						}
-					} else {
+					} else if(i != 0){
 						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
-							sql += "OR CONCAT(cp.cp_funding_status) LIKE ? ";
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
 						if(list_all.get(i).equals("21") || list_all.get(i).equals("22")) {
-							sql += "OR CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
 						if(list_all.get(i).equals("30")) {
-							sql += "OR CONCAT(cp.cp_overdue_status) LIKE ? ";
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_overdue_status) LIKE ? ";
 						}
 						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
 								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
-							sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
 						}
 					}
 				}
@@ -624,16 +650,15 @@ public class BoardDAO {
 				}
 			}
 			sql += " limit ?, 8";
-
+			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
-			System.out.println(">>>>>>>" + sql);
 			if (list_all != null) {
 				int i = 0;
 				for (i = 0; i < list_all.size(); i++) {
+					System.out.println(i+"박신규"+list_all.get(i));
 					pstmt.setString(i + 1, "%" + list_all.get(i) + "%");
 				}
 				pstmt.setInt(i + 1, n);
-				System.out.println("IIIIIIIIII>" + i);
 			}
 			rs = pstmt.executeQuery();
 
@@ -647,7 +672,7 @@ public class BoardDAO {
 				jsonObj.put("percent", rs.getString("percent"));
 				jsonObj.put("cp_monthly_profit", rs.getString("cp_monthly_profit"));
 				jsonObj.put("cp_sector", rs.getString("cp_sector"));
-
+				jsonObj.put("cp_stop_date_time", rs.getString("iv_appl_stop_date_time"));
 				jsonArr.add(jsonObj);
 			}
 			return jsonArr;

@@ -400,12 +400,9 @@ function city_click() {
           i = i + 1;
           if (i == 11) {
             i = 1;
-            realtime_like();
+            Delay_func();
           }
-//	alert("마지막3");
         }, 1000);
-//	alert("마지막1");
-
       }, 2000)
 
       $('.live_chart span:contains(▼)').css({
