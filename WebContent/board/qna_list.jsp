@@ -98,7 +98,13 @@
 						<span><%=qna_list.get(i).getContent().replace("\r\n", "<br>")%></span>
 						<!-- <span>답변입니다</span> -->
 						<span>
+						<%
+							if(qna_list.get(i).getQna_reply() != null){
+						%>
 						<%=qna_list.get(i).getQna_reply().replace("\r\n", "<br>") %>
+						<%
+							}else{	}
+						%>
 						</span>
 					</p> 
 				</div>
