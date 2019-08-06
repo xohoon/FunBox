@@ -74,6 +74,13 @@ public class BoardController extends HttpServlet implements Servlet{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if (command.equals("/BoardQnaAction.bd")) { // 1:1문의 리스트 update
+			action = new BoardQnaAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}else if (command.equals("/ListAction.bd")) { // 메인 지도에서 지역 선택하면 해당하는 기업리스트 불러오기
 			action = new ListAction();
 			try {
