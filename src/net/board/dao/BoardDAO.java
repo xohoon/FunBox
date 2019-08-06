@@ -509,7 +509,6 @@ public class BoardDAO {
 			return null;
 		}
 		int n = 8 * page;
-		System.out.println("n의값 :: " + n);
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -526,6 +525,7 @@ public class BoardDAO {
 		for (int i = 0; i < list_all.size(); i++) {
 			if (list_all.get(i).equals(nothing)) {
 				list_all.remove(i);
+				break;
 			}
 		}
 
@@ -535,29 +535,61 @@ public class BoardDAO {
 					+ "FROM company as cp " + "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
 
 			if (list_all != null) {
+				boolean AndFlag = false;
 				for (int i = 0; i < list_all.size(); i++) {
-					if (i == 0) {
-						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
+					if(i == 0) {
+						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
 							sql += "WHERE CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
-						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
+						if(list_all.get(i).equals("21") || list_all.get(i).equals("22")) {
 							sql += "WHERE CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
-						if (list_all.get(i) == "30") {
-							sql += "WHERE CONCAT(cp.cp_overdue_status) LIKE ? ";
+						if(list_all.get(i).equals("30")) {
+							sql += "WHERE CONCAT(cp.cp_overdue_status) REGEXP ? ";
 						}
-						sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
-					} else {
-						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
-							sql += "OR CONCAT(cp.cp_funding_status) LIKE ? ";
+						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
+								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
+							sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+							AndFlag = true;
 						}
-						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
-							sql += "OR CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
+					} else if(i != 0){
+						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
-						if (list_all.get(i) == "30") {
-							sql += "OR CONCAT(cp.cp_overdue_status) LIKE ? ";
+						if(list_all.get(i).equals("21") || list_all.get(i).equals("22")) {
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
-						sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+						if(list_all.get(i).equals("30")) {
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_overdue_status) LIKE ? ";
+						}
+						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
+								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+						}
 					}
 				}
 				if (select_value.equals("1")) {
@@ -577,16 +609,15 @@ public class BoardDAO {
 				}
 			}
 			sql += " limit ?, 8";
-
+			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
-			System.out.println(">>>>>>>" + sql);
 			if (list_all != null) {
 				int i = 0;
 				for (i = 0; i < list_all.size(); i++) {
+					System.out.println(i+"박신규"+list_all.get(i));
 					pstmt.setString(i + 1, "%" + list_all.get(i) + "%");
 				}
 				pstmt.setInt(i + 1, n);
-				System.out.println("IIIIIIIIII>" + i);
 			}
 			rs = pstmt.executeQuery();
 
