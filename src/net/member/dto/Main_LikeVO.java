@@ -1,5 +1,6 @@
 package net.member.dto;
 
+import java.util.Date;
 
 // 태훈 - (추천)인원, 수익율 순서 불러오기
 public class Main_LikeVO {
@@ -13,6 +14,7 @@ public class Main_LikeVO {
 	private String lk_cp_profit;			// 기업 수익율
 	private String lk_cp_current_amount;	// 현재 투자
 	private String lk_cp_goal_amount;		// 목표 투자
+	private Date lk_appl_stop_date_time;
 	/*
 	 * public String getImage() { return image; } public void setImage(String image)
 	 * { this.image = image; }
@@ -65,6 +67,12 @@ public class Main_LikeVO {
 	}
 	public void setLk_cp_goal_amount(String lk_cp_goal_amount) {
 		this.lk_cp_goal_amount = lk_cp_goal_amount;
+	}
+	public Date getLk_appl_stop_date_time() {
+		return lk_appl_stop_date_time;
+	}
+	public void setLk_appl_stop_date_time(Date lk_appl_stop_date_time) {
+		this.lk_appl_stop_date_time = lk_appl_stop_date_time;
 	}
 	@Override
 	public String toString() {

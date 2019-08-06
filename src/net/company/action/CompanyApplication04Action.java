@@ -225,7 +225,7 @@ public class CompanyApplication04Action implements Action {
 				return s.substring(s.indexOf("=") + 2, s.length() - 1);
 			}
 		}
-		return "";
+		return "NULL";
 	}
 
 	private String getFileFormat(Part part) {
