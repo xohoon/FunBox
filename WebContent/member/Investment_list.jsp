@@ -168,7 +168,7 @@
   </p>
   <ul>
       <c:forEach var="memberInvestCompanyVO" items="${memberInvestCompanyVOList}" >
-      	<c:choose>
+      	<c:choose> 
       		<c:when test="${memberInvestCompanyVO.cp_idx eq selectedCp_idx }">
 		      	<li class="on" id="cp_${memberInvestCompanyVO.cp_idx }"><a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a></li>      		
       		</c:when>

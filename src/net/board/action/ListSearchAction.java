@@ -49,12 +49,11 @@ public class ListSearchAction implements Action {
 		
 		
 		
-		list_all.add(getKeyword);
 		list_all.addAll(sector_list);
 		list_all.addAll(city_list);
 		list_all.addAll(status_list);
 	
-		JSONArray search_list = boardDAO.Search_ListInfo(list_all, select_value,page); 
+		JSONArray search_list = boardDAO.Search_ListInfo(list_all, select_value, page); 
 
 		response.setContentType("application/x-json;charset=UTF-8");
 		response.getWriter().print(search_list);

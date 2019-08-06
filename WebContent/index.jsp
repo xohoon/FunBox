@@ -45,7 +45,6 @@
 </head>
 
 <body>
- 
 <input type="hidden" id="select_k" value="0">
   <div id="wrap">
     <header></header>
@@ -375,6 +374,7 @@ function city_click() {
 
       var i = 1;
 
+      
       setInterval(function() {
         var liheight = $('.live_chart li').height();
         
@@ -383,7 +383,7 @@ function city_click() {
           $('.live_chart li:nth-child(' + i + ') *').fadeOut(0);
           $('.live_chart li:nth-child(' + i + ') *').css('transform', 'translateY('+ liheight*4 +'%)');
 
-          $('.live_chart li:nth-child(' + i + ') a').text('바뀐 택스트')
+          $('.live_chart li:nth-child(' + i + ') a').text(cp_name_list[i-1]);
           /*변수 값 바꾸는 스크립트를 넣어주시오*/
         }, 800);
         setTimeout(function() {
@@ -400,11 +400,10 @@ function city_click() {
           i = i + 1;
           if (i == 11) {
             i = 1;
+            Delay_func();
           }
         }, 1000);
-
       }, 2000)
-
 
       $('.live_chart span:contains(▼)').css({
         'color': '#ff9124'
@@ -435,7 +434,6 @@ function city_click() {
         var classname = $(this).attr('class')
         $('#map .' + classname).css('color', '#73a6d6').css('transform', 'scale(1)');
       });
-      
     });
     //지도
     
@@ -458,7 +456,7 @@ function city_click() {
 		  var timer_hour = document.getElementById('timer_'+cp_idx).childNodes.item(3).childNodes.item(0);
 		  var timer_minute = document.getElementById('timer_'+cp_idx).childNodes.item(5).childNodes.item(0);
 		  var timer_second = document.getElementById('timer_'+cp_idx).childNodes.item(7).childNodes.item(0);
-		  var DDay = document.getElementById('DDay_'+cp_idx);
+		  var DDay_tag = document.getElementById('DDay_'+cp_idx);
 		  let countDown = new Date(stopDate).getTime(),
 		  
 		  x = setInterval(function() {
@@ -467,11 +465,33 @@ function city_click() {
 			  timer_day.innerText = Math.floor(distance / (day)),
 			  timer_hour.innerText = Math.floor((distance % (day)) / (hour)),
 			  timer_minute.innerText = Math.floor((distance % (hour)) / (minute)),
-			  timer_second.innerText = Math.floor((distance % (minute)) / second),
-			  DDay.innerText= Math.floor(distance / (day))
-			  
+			  timer_second.innerText = Math.floor((distance % (minute)) / second)
+			  var Dday = Math.floor(distance / (day));
+			  if (Dday == 0) {
+				  DDay_tag.parentNode.innerText = '펀딩 기간 종료';
+			  }else{
+				  DDay_tag.innerText = Dday;
+			  }
 			  }, second)
 	  };
+<<<<<<< HEAD
+=======
+	  
+	  function setDday(cp_idx,stopDate){
+		  var DDay_tag = document.getElementById('like_DDay_'+cp_idx);
+		  let countDown = new Date(stopDate).getTime();
+		  let now = new Date().getTime();
+		  distance = countDown - now;
+		  var Dday = Math.floor(distance / (day));
+		  if (Dday == 0) {
+			  DDay_tag.parentNode.innerText = '펀딩 기간 종료';
+		  }else{
+			  DDay_tag.innerText = Dday;
+		  }
+	  };
+	  
+	  
+>>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
   </script>
 
 </body></html>

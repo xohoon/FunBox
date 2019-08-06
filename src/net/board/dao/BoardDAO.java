@@ -14,7 +14,6 @@ import org.json.simple.JSONObject;
 import net.board.dto.Board_Search_ListVO;
 import net.board.dto.FaqVO;
 import net.board.dto.NoticeVO;
-import net.board.dto.QnaReplyVO;
 import net.board.dto.QnaVO;
 
 public class BoardDAO {
@@ -263,47 +262,6 @@ public class BoardDAO {
 		return null;
 	}
 
-	// 1:1 문의내역 - 답변 가져오기
-	public List<QnaReplyVO> getQnaReply(int idx) throws Exception {
-		String sql = "select idx,content,reg_date_time from qna_reply where idx = ?";
-
-		List<QnaReplyVO> qna_reply_list = new ArrayList<QnaReplyVO>();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-
-		try {
-			pstm = conn.prepareStatement(sql);
-			pstm.setInt(1, idx);
-			rs = pstm.executeQuery();
-
-			if (rs.next()) {
-				QnaReplyVO qna_reply = new QnaReplyVO();
-
-				qna_reply.setIdx(rs.getInt("idx"));
-				qna_reply.setContent(rs.getString("content"));
-				qna_reply.setReg_date_time(rs.getTimestamp("reg_date_time"));
-				qna_reply_list.add(qna_reply);
-			}
-			return qna_reply_list;
-
-		} catch (Exception ex) {
-
-			System.out.println("getQnaReply 에러: " + ex);
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstm != null)
-					pstm.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				System.out.println("연결 해제 실패: " + e.getMessage());
-			}
-		}
-
-		return null;
-	}
 
 	// 고객지원 - 공지사항 불러오기
 	public ArrayList<NoticeVO> getNotice() throws Exception {
@@ -550,7 +508,6 @@ public class BoardDAO {
 			return null;
 		}
 		int n = 8 * page;
-		System.out.println("n의값 :: " + n);
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -567,38 +524,71 @@ public class BoardDAO {
 		for (int i = 0; i < list_all.size(); i++) {
 			if (list_all.get(i).equals(nothing)) {
 				list_all.remove(i);
+				break;
 			}
 		}
 
 		try {
 			// 쪼인해도되고안해도되고
-			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime "
+			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime, cp_iv.iv_appl_stop_date_time "
 					+ "FROM company as cp " + "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
 
 			if (list_all != null) {
+				boolean AndFlag = false;
 				for (int i = 0; i < list_all.size(); i++) {
-					if (i == 0) {
-						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
+					if(i == 0) {
+						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
 							sql += "WHERE CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
-						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
+						if(list_all.get(i).equals("21") || list_all.get(i).equals("22")) {
 							sql += "WHERE CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
-						if (list_all.get(i) == "30") {
-							sql += "WHERE CONCAT(cp.cp_overdue_status) LIKE ? ";
+						if(list_all.get(i).equals("30")) {
+							sql += "WHERE CONCAT(cp.cp_overdue_status) REGEXP ? ";
 						}
-						sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
-					} else {
-						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
-							sql += "OR CONCAT(cp.cp_funding_status) LIKE ? ";
+						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
+								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
+							sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+							AndFlag = true;
 						}
-						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
-							sql += "OR CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
+					} else if(i != 0){
+						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
-						if (list_all.get(i) == "30") {
-							sql += "OR CONCAT(cp.cp_overdue_status) LIKE ? ";
+						if(list_all.get(i).equals("21") || list_all.get(i).equals("22")) {
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
-						sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+						if(list_all.get(i).equals("30")) {
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_overdue_status) LIKE ? ";
+						}
+						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
+								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
+							if (AndFlag) {
+								sql += "AND ";
+								AndFlag = false;
+							}else {
+								sql += "OR ";
+							}
+							sql += "CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+						}
 					}
 				}
 				if (select_value.equals("1")) {
@@ -618,16 +608,15 @@ public class BoardDAO {
 				}
 			}
 			sql += " limit ?, 8";
-
+			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
-			System.out.println(">>>>>>>" + sql);
 			if (list_all != null) {
 				int i = 0;
 				for (i = 0; i < list_all.size(); i++) {
+					System.out.println(i+"박신규"+list_all.get(i));
 					pstmt.setString(i + 1, "%" + list_all.get(i) + "%");
 				}
 				pstmt.setInt(i + 1, n);
-				System.out.println("IIIIIIIIII>" + i);
 			}
 			rs = pstmt.executeQuery();
 
@@ -641,7 +630,7 @@ public class BoardDAO {
 				jsonObj.put("percent", rs.getString("percent"));
 				jsonObj.put("cp_monthly_profit", rs.getString("cp_monthly_profit"));
 				jsonObj.put("cp_sector", rs.getString("cp_sector"));
-
+				jsonObj.put("cp_stop_date_time", rs.getString("iv_appl_stop_date_time"));
 				jsonArr.add(jsonObj);
 			}
 			return jsonArr;
