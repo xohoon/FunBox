@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.common.action.Action;
 import net.common.action.ActionForward;
+import net.company.action.BookmarkAction;
 import net.company.action.CompanyApplication01Action;
 import net.company.action.CompanyApplication02Action;
 import net.company.action.CompanyApplication03Action;
@@ -69,6 +70,14 @@ public class CompanyController extends HttpServlet implements Servlet {
 
 		}else if (command.equals("/InvestAction.cp")) {
 			action = new InvestAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else if (command.equals("/BookmarkAction.cp")) {
+			action = new BookmarkAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
