@@ -19,11 +19,9 @@ import net.member.dto.MemberBean;
 import net.member.dto.MemberInvestCompanyVO;
 import net.member.dto.MemberInvestPageVO;
 import net.member.dto.MemberIplog;
+import net.member.dto.MemberTransactionVO;
 import net.member.dto.Member_headerVO;
 import net.member.dto.Member_likeboxVO;
-import net.money.dto.PointTransactionVO;
-import net.money.dto.TokenDepositVO;
-import net.money.dto.TokenTransaction;
 
 public class MemberDAO {
 
@@ -84,7 +82,6 @@ public class MemberDAO {
 			pstmt.setInt(13, member.getAgree2());
 
 			result = pstmt.executeUpdate();
-			System.out.println(pstmt);
 			if (result != 0) {
 				return true;
 			}
@@ -164,8 +161,6 @@ public class MemberDAO {
 			// 쿼리
 			String sql = "SELECT count(*) as cnt FROM member WHERE (mb_phone=? or mb_phone=?)";
 			pstm = conn.prepareStatement(sql);
-			System.out.println("mb_phone : " + ph);
-			System.out.println("mb_phone2 : " + ph2);
 			pstm.setString(1, ph2);
 			pstm.setString(2, ph);
 
@@ -1234,24 +1229,21 @@ public class MemberDAO {
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
 	// 윤식 추가/////////////////////////////////////////////////
-	public MemberInvestPageVO getMyPageInvestment(int cp_idx, String id) {
-		String sql = "select B.mi_idx AS mi_idx, A.mb_idx AS mb_idx, B.mi_name AS mi_name, B.mi_point AS mi_point, B.cp_idx AS cp_idx, B.mi_hoiling_stock AS mi_hoiling_stock, B.mi_stock_value AS mi_stock_value, B.mi_monthly_profit AS mi_monthly_profit, B.mi_cumulative_profit AS mi_cumulative_profit, C.cp_number AS cp_number,C.cp_name AS cp_name ,C.cp_manager AS cp_manager,C.cp_name AS cp_capital , C.cp_add_ch AS cp_add_ch, cf.cf_certificate AS cf_certificate, cf.cf_estate_contract AS cf_estate_contract, cf.cf_registration AS cf_registration, cf.cf_financial AS cf_financial  from member A, member_invest B, company C,company_file cf WHERE A.mb_idx = B.mb_idx AND B.cp_idx = ? AND A.mb_id = ? AND cf.cp_idx = ?";
+	public MemberInvestPageVO getMyPageInvestment(int cp_idx, int mb_idx) {
+		
+		String sql = "select mb_iv.mi_idx, mb.mb_idx,mb_iv.mi_point, mb_iv.cp_idx, mb_iv.mi_hoiling_stock, mb_iv.mi_stock_value, mb_iv.mi_monthly_profit, mb_iv.mi_cumulative_profit, mb_iv.mi_hoiling_stock, mb_iv.mi_monthly_profit, mb_iv.mi_cumulative_profit, cp.cp_number,cp.cp_name,cp.cp_manager ,cp.cp_name, cp.cp_add_ch, cp_capital, cp_f.cf_certificate, cp_f.cf_estate_contract, cp_f.cf_registration, cp_f.cf_financial from member mb, member_invest mb_iv, company cp,company_file cp_f where cp.cp_idx = mb_iv.cp_idx AND mb.mb_idx = mb_iv.mb_idx AND cp_f.cp_idx = mb_iv.cp_idx AND mb.mb_idx = ? AND mb_iv.cp_idx = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("mypageInvest 실행 : " + id);
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cp_idx);
-			pstmt.setString(2, id);
-			pstmt.setInt(3, cp_idx);
+			pstmt.setInt(1, mb_idx);
+			pstmt.setInt(2, cp_idx);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
-
 			if (rs.next()) {
 				MemberInvestPageVO memberInvestVO = new MemberInvestPageVO();
 				memberInvestVO.setMi_idx(rs.getInt("mi_idx"));
 				memberInvestVO.setMb_idx(rs.getInt("mb_idx"));
-				memberInvestVO.setMi_name(rs.getString("mi_name"));
+				//memberInvestVO.setMi_name(rs.getString("mi_name"));
 				memberInvestVO.setMi_point(rs.getString("mi_point"));
 				memberInvestVO.setCp_idx(rs.getInt("cp_idx"));
 				memberInvestVO.setMi_hoiling_stock(rs.getString("mi_hoiling_stock"));
@@ -1272,9 +1264,7 @@ public class MemberDAO {
 			}
 
 		} catch (Exception ex) {
-
-			System.out.println("get_Find_pin 에러: " + ex);
-
+			System.out.println("getMyPageInvestment 에러: " + ex);
 		} finally {
 			try {
 				if (rs != null)
@@ -1314,7 +1304,7 @@ public class MemberDAO {
 			return memberInvestCompanyVOList;
 
 		} catch (Exception ex) {
-
+			
 		} finally {
 			try {
 				if (rs != null)
@@ -1364,7 +1354,54 @@ public class MemberDAO {
 
 		return false;
 	}
-	
+	//////////////김윤식 추가 마이페이지 3 거래내역 가져오기 ///////////////////
+	public ArrayList<MemberTransactionVO> getTranscationList(String mb_idx) {
+		String sql = "SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_deposit WHERE mb_idx = ? UNION " 
+					 +"SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_withdraw WHERE mb_idx = ? ORDER BY td_date_time DESC"; 
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("mb idx : " + mb_idx);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mb_idx);
+			pstmt.setString(2, mb_idx);
+			rs = pstmt.executeQuery();
+			
+			ArrayList<MemberTransactionVO> membertransactionList = new ArrayList<MemberTransactionVO>();	
+			
+			while (rs.next()) {
+				
+				MemberTransactionVO membertransaction = new MemberTransactionVO();
+			
+				membertransaction.setTd_to_address(rs.getString("td_to_address"));
+				membertransaction.setTd_from_address(rs.getString("td_from_address"));
+				membertransaction.setTd_amount(rs.getString("td_amount"));
+				membertransaction.setTd_status(rs.getString("td_status"));
+				membertransaction.setTd_date_time(rs.getString("td_date_time"));
+				membertransactionList.add(membertransaction);
+								
+			}
+			
+			return membertransactionList;					
+
+		} catch (Exception ex) {
+			System.out.println("getTranscationList 에러: " + ex);	
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+
+		return null;
+	}
 	
 	//String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx, tk_price, po_amount, po_content, po_date_time) VALUES (2,1,1,100,?,?,now())";
 	//String sql = "INSERT INTO token_transaction(tk_category, po_idx, tk_amount, tk_price, po_amount, tk_content, tk_date_time) VALUES (3,1,?,10,?,'비고',now())";

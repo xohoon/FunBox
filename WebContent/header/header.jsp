@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
   <link href="css/HF.css" rel="stylesheet" type="text/css">
-  
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!--로그인 전-->
   <c:choose>
   <c:when test="${sessionScope.id eq null}">

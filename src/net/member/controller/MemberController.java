@@ -13,6 +13,7 @@ import net.common.action.Action;
 import net.common.action.ActionForward;
 import net.member.action.MainAction;
 import net.member.action.MemberIDCheckAction;
+import net.member.action.MemberInvestcheck;
 import net.member.action.MemberInvestmentListAction;
 import net.member.action.MemberJoinAction;
 import net.member.action.MemberLoginAction;
@@ -31,6 +32,8 @@ import net.member.action.MypagePINCheckAction;
 import net.member.action.MypagePWCheckAction;
 import net.member.action.MypagePWPINCheckAction;
 import net.member.action.MypageSendTokenAction;
+import net.member.action.MypageTransAction;
+import net.member.action.MypageTransAction_s;
 import net.member.action.Point_DepositAction;
 import net.member.action.Point_WithdrawAction;
 import net.member.action.Token_DepositAction;
@@ -81,12 +84,7 @@ public class MemberController extends HttpServlet implements Servlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/find_pin.jsp");
-		}else if (command.equals("/Mypage2_1.mb")) {
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("./member/mypage2_1.jsp");
-		}
-		else if (command.equals("/Mypage2_1_1.mb")) {
+		}else if (command.equals("/Mypage2_1_1.mb")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/mypage2_1_1.jsp");
@@ -102,10 +100,6 @@ public class MemberController extends HttpServlet implements Servlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/mypage2_2_2.jsp");
-		}else if (command.equals("/Mypage3.mb")) {
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("./member/mypage3.jsp");
 		}else if (command.equals("/Mypage4_1.mb")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
@@ -297,11 +291,23 @@ public class MemberController extends HttpServlet implements Servlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if (command.equals("/Mypage2_1.mb")) { // 윤식 추가
+			action = new MypageTransAction_s();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/Mypage3.mb")) { // 윤식 추가
+			action = new MypageTransAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		
 		/*박신규 끝*/
-		
-		
-		
 		if (forward != null) {
 			if (forward.isRedirect()) {
 				response.sendRedirect(forward.getPath());
