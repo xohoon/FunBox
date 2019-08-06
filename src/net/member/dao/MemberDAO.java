@@ -84,7 +84,6 @@ public class MemberDAO {
 			pstmt.setInt(13, member.getAgree2());
 
 			result = pstmt.executeUpdate();
-			System.out.println(pstmt);
 			if (result != 0) {
 				return true;
 			}
@@ -164,8 +163,6 @@ public class MemberDAO {
 			// 쿼리
 			String sql = "SELECT count(*) as cnt FROM member WHERE (mb_phone=? or mb_phone=?)";
 			pstm = conn.prepareStatement(sql);
-			System.out.println("mb_phone : " + ph);
-			System.out.println("mb_phone2 : " + ph2);
 			pstm.setString(1, ph2);
 			pstm.setString(2, ph);
 
@@ -1234,24 +1231,21 @@ public class MemberDAO {
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
 	// 윤식 추가/////////////////////////////////////////////////
-	public MemberInvestPageVO getMyPageInvestment(int cp_idx, String id) {
-		String sql = "select B.mi_idx AS mi_idx, A.mb_idx AS mb_idx, B.mi_name AS mi_name, B.mi_point AS mi_point, B.cp_idx AS cp_idx, B.mi_hoiling_stock AS mi_hoiling_stock, B.mi_stock_value AS mi_stock_value, B.mi_monthly_profit AS mi_monthly_profit, B.mi_cumulative_profit AS mi_cumulative_profit, C.cp_number AS cp_number,C.cp_name AS cp_name ,C.cp_manager AS cp_manager,C.cp_name AS cp_capital , C.cp_add_ch AS cp_add_ch, cf.cf_certificate AS cf_certificate, cf.cf_estate_contract AS cf_estate_contract, cf.cf_registration AS cf_registration, cf.cf_financial AS cf_financial  from member A, member_invest B, company C,company_file cf WHERE A.mb_idx = B.mb_idx AND B.cp_idx = ? AND A.mb_id = ? AND cf.cp_idx = ?";
+	public MemberInvestPageVO getMyPageInvestment(int cp_idx, int mb_idx) {
+		
+		String sql = "select mb_iv.mi_idx, mb.mb_idx,mb_iv.mi_point, mb_iv.cp_idx, mb_iv.mi_hoiling_stock, mb_iv.mi_stock_value, mb_iv.mi_monthly_profit, mb_iv.mi_cumulative_profit, mb_iv.mi_hoiling_stock, mb_iv.mi_monthly_profit, mb_iv.mi_cumulative_profit, cp.cp_number,cp.cp_name,cp.cp_manager ,cp.cp_name, cp.cp_add_ch, cp_capital, cp_f.cf_certificate, cp_f.cf_estate_contract, cp_f.cf_registration, cp_f.cf_financial from member mb, member_invest mb_iv, company cp,company_file cp_f where cp.cp_idx = mb_iv.cp_idx AND mb.mb_idx = mb_iv.mb_idx AND cp_f.cp_idx = mb_iv.cp_idx AND mb.mb_idx = ? AND mb_iv.cp_idx = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("mypageInvest 실행 : " + id);
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cp_idx);
-			pstmt.setString(2, id);
-			pstmt.setInt(3, cp_idx);
+			pstmt.setInt(1, mb_idx);
+			pstmt.setInt(2, cp_idx);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
-
 			if (rs.next()) {
 				MemberInvestPageVO memberInvestVO = new MemberInvestPageVO();
 				memberInvestVO.setMi_idx(rs.getInt("mi_idx"));
 				memberInvestVO.setMb_idx(rs.getInt("mb_idx"));
-				memberInvestVO.setMi_name(rs.getString("mi_name"));
+				//memberInvestVO.setMi_name(rs.getString("mi_name"));
 				memberInvestVO.setMi_point(rs.getString("mi_point"));
 				memberInvestVO.setCp_idx(rs.getInt("cp_idx"));
 				memberInvestVO.setMi_hoiling_stock(rs.getString("mi_hoiling_stock"));

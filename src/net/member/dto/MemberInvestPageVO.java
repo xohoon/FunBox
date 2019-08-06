@@ -10,12 +10,12 @@ public class MemberInvestPageVO {
 	private String mi_hoiling_stock;
 	private String mi_stock_value;
 	private String mi_monthly_profit;
+	private String mi_cumulative_profit;
 	private String cp_number;
 	private String cp_capital;
 	private String cp_add_ch;
 	private String cp_name;
-	private String cp_manager;
-	private String mi_cumulative_profit;
+	private String cp_manager;	
 	private String cf_certificate;
 	private String cf_estate_contract;
 	private String cf_registration;

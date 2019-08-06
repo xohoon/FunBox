@@ -400,7 +400,7 @@ function city_click() {
           i = i + 1;
           if (i == 11) {
             i = 1;
-            Delay_func();
+            //Delay_func();
           }
         }, 1000);
       }, 2000)
@@ -474,9 +474,6 @@ function city_click() {
 			  }
 			  }, second)
 	  };
-<<<<<<< HEAD
-=======
-	  
 	  function setDday(cp_idx,stopDate){
 		  var DDay_tag = document.getElementById('like_DDay_'+cp_idx);
 		  let countDown = new Date(stopDate).getTime();
@@ -489,9 +486,6 @@ function city_click() {
 			  DDay_tag.innerText = Dday;
 		  }
 	  };
-	  
-	  
->>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
   </script>
 
 </body></html>

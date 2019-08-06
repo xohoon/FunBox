@@ -22,9 +22,12 @@ public class MemberInvestmentListAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = new ActionForward();
 		HttpSession session = request.getSession();
-		String mb_id = (String) session.getAttribute("id");
 		
-		if (mb_id == null ) {
+		String mb_id = (String) session.getAttribute("id");
+		Integer mb_idx = Integer.parseInt((String) session.getAttribute("idx"));
+		
+		
+		if (mb_id == null || mb_idx == null ) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('1잘못된 접근 입니다.');</script>");
@@ -39,8 +42,7 @@ public class MemberInvestmentListAction implements Action {
 		int cp_idx = 0;
 		
 		if (cp_idx_string == null) {
-			System.out.println("null");
-			System.out.println(mb_id);
+			cp_idx = 2;
 		}else {
 			cp_idx = Integer.parseInt(cp_idx_string);
 		}
@@ -70,12 +72,10 @@ public class MemberInvestmentListAction implements Action {
 			return forward;
 		}
 		memberDAO = new MemberDAO();
-		MemberInvestPageVO memberInvestVO = memberDAO.getMyPageInvestment(cp_idx,mb_id);
-		
+		MemberInvestPageVO memberInvestVO = memberDAO.getMyPageInvestment(cp_idx,mb_idx);
 		/// 윤식 추가
 		CompanyDAO companyDAO2 = new CompanyDAO();
 		ArrayList<Company_pay_scheduleVO> CompanyPayScheduleVO = companyDAO2.getCompanySchedule(cp_idx);
-		System.out.println("pay_schedule :" + CompanyPayScheduleVO.toString());
 				
 		// 유정 추가
 		// 투자현황 - 투자내역 불러오기
@@ -104,13 +104,10 @@ public class MemberInvestmentListAction implements Action {
 		if (count > 0) {
 			if (endRow > count)
 				endRow = count;
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>들옴");
 			member_invest_list = company_dao.getInvestment(mb_id, startRow - 1, endRow);// 현재 페이지에 해당하는 글 목록불러오기
 		} else {
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>에러");
 			member_invest_list = company_dao.getInvestment(mb_id, startRow - 1, endRow);
 		}
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>나옴");
 
 		number = count - (currentPage - 1) * pageSize;// 글목록에 표시할 글번호
 		// 페이지그룹의 갯수
@@ -134,11 +131,6 @@ public class MemberInvestmentListAction implements Action {
 		request.setAttribute("numPageGroup", new Integer(numPageGroup));
 		request.setAttribute("pageGroupCount", new Integer(pageGroupCount));
 		
-//		CompanyDAO company_dao = new CompanyDAO();
-//		ArrayList<MemberInvestVO> member_invest_list = company_dao.getInvestment(mb_id);
-//		
-//		CompanyDAO company_dao2 = new CompanyDAO();
-//		int count = company_dao2.getInvestmentCount(mb_id);
 		
 		request.setAttribute("member_invest_list", member_invest_list);
 		request.setAttribute("memberInvestVO", memberInvestVO);
@@ -149,44 +141,6 @@ public class MemberInvestmentListAction implements Action {
 		forward.setPath("./member/Investment_list.jsp");
 		return forward;
 		
-		/*
-		if (mb_id == null ) {
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('잘못된 접근 입니다.');</script>");
-			out.println("<script>location.href = './Index.mb'</script>");
-			out.close();
-		}
-		int cp_idx = Integer.parseInt(cp_idx_string);
-
-		MemberDAO memberDAO = new MemberDAO();
-		ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = memberDAO.getInvestmentCompanyList(mb_id);
-		
-		for (MemberInvestCompanyVO memberInvestVO : memberInvestCompanyVOList ) {
-			if (memberInvestVO.getCp_idx() == cp_idx) {
-				flag = true;
-				break;
-			}
-		}
-		if (!flag) {
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('flag 잘못된 접근 입니다.');</script>");
-			out.println("<script>location.href = './Index.mb'</script>");
-			out.close();
-		}
-		
-		memberDAO = new MemberDAO();
-		MemberInvestVO memberInvestVO = memberDAO.getMyPageInvestment(cp_idx,mb_id);
-		
-		
-		
-		request.setAttribute("memberInvestVO", memberInvestVO);
-		request.setAttribute("memberInvestCompanyVOList", memberInvestCompanyVOList);
-		request.setAttribute("selectedCp_idx", cp_idx);		
-		forward.setRedirect(false);
-		forward.setPath("./member/Investment_list.jsp");
-		*/
 		
 	}
 }
