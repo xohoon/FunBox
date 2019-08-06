@@ -436,7 +436,7 @@ function city_click() {
 	  
 	  $(document).ready(function(){
 		  <c:forEach var="item" items="${likeVO}">
-	      	setLikeDday('${item.lk_cp_idx}','${item.lk_appl_stop_date_time}');
+	      	setDday('${item.lk_cp_idx}','${item.lk_appl_stop_date_time}');
 	      </c:forEach>
 	      <c:forEach var="mainPageDeadLineVO" items="${mainPageDeadLineVOs}">
 	      	setCountDown('${mainPageDeadLineVO.cp_idx}','${mainPageDeadLineVO.iv_appl_stop_date_time}');
@@ -463,7 +463,7 @@ function city_click() {
 			  }, second)
 	  };
 	  
-	  function setLikeDday(cp_idx,stopDate){
+	  function setDday(cp_idx,stopDate){
 		  var DDay = document.getElementById('like_DDay_'+cp_idx);
 		  let countDown = new Date(stopDate).getTime();
 		  let now = new Date().getTime();

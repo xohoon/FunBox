@@ -196,43 +196,7 @@
 
     <section id="sec2">
       <div class="inner">
-	        <div class="mom_box">
-	          <%-- <div class="boxwrap">
-     	   <c:forEach var="searchVO" items="${searchVO }">
-	            <div class="corp_box" onclick="location.href='./CorporationAction.cp?cp_idx=${searchVO.search_cp_idx}'">
-	              <div class="c_img">
-	                <img src="./img/row1_anotherminae.jpg" alt="">
-	              </div>
-	              <div class="c_txt">
-	                <p>${searchVO.search_cp_sector }</p>
-	                <h5>${searchVO.search_cp_name } <span>추천</span></h5>
-	                <p>${searchVO.search_cp_branch }</p>
-	              </div>
-	              <div class="gage">
-	                <div class="per">
-	                	<span><fmt:parseNumber value ="${searchVO.search_cp_percent }" integerOnly ="true" /></span>%
-	                </div>
-	                <div class="gage_full">
-	                  <div class="gage_fill">
-						<span></span>	                  
-	                  </div>
-	                </div>
-	                <div>
-	                  <span class="p_amt"><span><fmt:formatNumber value="${searchVO.search_cp_current_amount }" pattern="#,###" />
-	                  </span> / <span> <fmt:formatNumber value="${searchVO.search_cp_goal_amount }" pattern="#,###" /> 
-	                  </span> P</span>
-	                  <span class="d_day">D-<span>27</span></span>
-	                </div>
-	              </div>
-	              <div class="reward_per">
-	                수익률
-	                <span>${searchVO.search_cp_profit }%</span>
-	              </div>
-	            </div>
-       	 </c:forEach>
-	          </div> --%>
-	        </div>
-
+	        <div class="mom_box"></div>
         <div class="scrolload">
           <div class="loader">
             <div class="circle"></div>
@@ -317,7 +281,8 @@
     								cp_goal: val.cp_goal_amount,
     								cp_profit: val.cp_monthly_profit,
     								cp_branch: val.cp_branch,
-    								cp_sector: val.cp_sector
+    								cp_sector: val.cp_sector,
+    								cp_stop_date_time : val.cp_stop_date_time
     						}
     						count++;
     						makeMoreCompanyListHTML(resultData);
@@ -402,7 +367,8 @@
     								cp_goal: val.cp_goal_amount,
     								cp_profit: val.cp_monthly_profit,
     								cp_branch: val.cp_branch,
-    								cp_sector: val.cp_sector
+    								cp_sector: val.cp_sector,
+    								cp_stop_date_time : val.cp_stop_date_time
     						}
     						count++;
     						makeMoreCompanyListHTML(resultData);

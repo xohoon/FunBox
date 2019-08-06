@@ -73,7 +73,8 @@ function checkboxTrriger() {
 																		cp_goal : val.cp_goal_amount,
 																		cp_profit : val.cp_monthly_profit,
 																		cp_branch : val.cp_branch,
-																		cp_sector : val.cp_sector
+																		cp_sector : val.cp_sector,
+																		cp_stop_date_time : val.cp_stop_date_time
 																	}
 																	count++;
 																	makeMoreCompanyListHTML(resultData);
@@ -196,7 +197,8 @@ function checkboxTrriger() {
 																		cp_goal : val.cp_goal_amount,
 																		cp_profit : val.cp_monthly_profit,
 																		cp_branch : val.cp_branch,
-																		cp_sector : val.cp_sector
+																		cp_sector : val.cp_sector,
+																		cp_stop_date_time : val.cp_stop_date_time
 																	}
 																	count++;
 																	makeMoreCompanyListHTML(resultData);
@@ -293,6 +295,12 @@ function ckbox_clickFunc() {
 }
 
 function makeMoreCompanyListHTML(resultData) {
+	var Dday = getDday(resultData.cp_stop_date_time);
+	var Dday_text = "D-";
+	if (Dday == 0) {
+		Dday_text = "";
+		Dday = "편딩 기간 종료"
+	}
 	companyListHTML += "<div class='corp_box' onclick='location.href='./CorporationAction.cp?cp_idx="
 			+ resultData.cp_idx
 			+ "'><div class='c_img'><img src='./img/row1_anotherminae.jpg' alt=''></div><div class='c_txt'><p>"
@@ -304,10 +312,10 @@ function makeMoreCompanyListHTML(resultData) {
 			+ "</p></div><div class='gage'><div class='per'><span>"
 			+ resultData.cp_percent
 			+ "</span>%</div><div class='gage_full'><div class='gage_fill' style='overflow: hidden; width: 2.155%;'><span></span></div></div><div><span class='p_amt'><span>"
-			+ resultData.cp_current
+			+ comma(resultData.cp_current)
 			+ "</span> / <span>"
-			+ resultData.cp_goal
-			+ "</span> P</span><span class='d_day'>D-<span>27</span></span></div></div><div class='reward_per'>수익률<span>"
+			+ comma(resultData.cp_goal)
+			+ "</span> P</span><span class='d_day'>"+Dday_text+"<span>"+Dday+"</span></span></div></div><div class='reward_per'>수익률<span>"
 			+ resultData.cp_profit + "%</span></div></div>";
 };
 function search_ajax() {
@@ -336,7 +344,8 @@ function search_ajax() {
 						cp_goal : val.cp_goal_amount,
 						cp_profit : val.cp_monthly_profit,
 						cp_branch : val.cp_branch,
-						cp_sector : val.cp_sector
+						cp_sector : val.cp_sector,
+						cp_stop_date_time : val.cp_stop_date_time
 					}
 					makeMoreCompanyListHTML(resultData);
 					str += "1";
@@ -746,3 +755,32 @@ function main_chkbox() {
 		}
 	}
 }
+
+//숫자 콤마~
+function comma(num){
+    var len, point, str; 
+       
+    num = num + ""; 
+    point = num.length % 3 ;
+    len = num.length; 
+   
+    str = num.substring(0, point); 
+    while (point < len) { 
+        if (str != "") str += ","; 
+        str += num.substring(point, point + 3); 
+        point += 3; 
+    } 
+     
+    return str;
+}
+const second = 1000,
+minute = second * 60,
+hour = minute * 60,
+day = hour * 24;
+//Dday 구하깅?
+function getDday(stopDate){
+	  let countDown = new Date(stopDate).getTime();
+	  let now = new Date().getTime();
+	  distance = countDown - now;
+	  return Math.floor(distance / (day));
+};
