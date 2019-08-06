@@ -42,16 +42,15 @@
   <link href="css/index.css" rel="stylesheet">
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="js/jquery.bxslider.min.js"></script>
-
+  <script src="js/index_function.js"></script>
 </head>
 
 <body>
+<input type="hidden" id="select_k" value="0">
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div>
     <div class="toppdng"></div>
-
-
     <section id="sec1">
       <div class="inner">
         <div class="regular slider">
@@ -83,10 +82,10 @@
             });
           });
         </script>
-
         <div class="live_chart">
           <h3>실시간 인기순위</h3>
-          <ul>
+          <ul class="list_ul">
+          <!-- 
             <li>
               <span>1</span>&nbsp;
               <a href="#">어나더 미네스</a>
@@ -137,6 +136,7 @@
               <a href="#">-</a>
               <span>-</span>
             </li>
+             -->
           </ul>
         </div>
       </div>
@@ -156,10 +156,13 @@
 	            <p>${likeVO.lk_cp_branch }</p>
 	          </div>
 	          <div class="gage">
-	            <div class="per"><span><fmt:parseNumber value ="${likeVO.lk_cp_percent }" integerOnly ="true" /> 
-	            </span>%</div>
+	            <div class="per">
+	            	<span><fmt:parseNumber value ="${likeVO.lk_cp_percent }" integerOnly ="true" /></span>%
+	            </div>	            
 	            <div class="gage_full">
-	              <div class="gage_fill"></div>
+	              <div class="gage_fill">
+	              	<span></span>
+	              </div>
 	            </div>
 	            <div>
 	              <span class="p_amt"><span><fmt:formatNumber value="${likeVO.lk_cp_current_amount}" pattern="#,###" />
@@ -240,16 +243,18 @@
 	                <p>${mainPageDeadLineVO.cp_branch }</p>
               	</div>
               	<div class="gage">
-              		<div class="per"><span><fmt:parseNumber value ="${mainPageDeadLineVO.persent }" integerOnly ="true" />
-              		</span>%
+              		<div class="per"><span><fmt:parseNumber value ="${mainPageDeadLineVO.persent }" integerOnly ="true" /></span>%
               			<ul id="timer_${mainPageDeadLineVO.cp_idx }">
               				<li><span id="days"></span>일</li>
 		                    <li><span id="hours"></span> :</li>
 		                    <li><span id="minutes"></span> :</li>
 		                    <li><span id="seconds"></span></li>		                    
               			</ul>
+              		</div>
               			<div class="gage_full">
-                  			<div class="gage_fill"></div>
+                  			<div class="gage_fill">
+                  				<span></span>
+                  			</div>                  			
                 		</div>
                 		<div>
 		                  <span class="p_amt"><span><fmt:formatNumber value="${mainPageDeadLineVO.iv_current_amount }" pattern="#,###" />
@@ -258,7 +263,7 @@
 		                  </span> P</span>
 		                  <span class="d_day">D-<span id="DDay_${mainPageDeadLineVO.cp_idx }">1</span></span>
 		                </div>
-              		</div>
+              		
               	</div>
               	<div class="reward_per">
               		수익률<span>${mainPageDeadLineVO.cp_monthly_profit}%</span>

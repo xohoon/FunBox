@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.common.action.Action;
 import net.common.action.ActionForward;
@@ -20,6 +21,7 @@ public class CorporationAction implements Action {
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		ActionForward forward = new ActionForward();
 		System.out.println("CorporationAction OK!");
+		HttpSession session = request.getSession();
 		
 		CompanyBean company = new CompanyBean();		
 		ArrayList<CompanyListVO> leftCompanyList = new ArrayList<CompanyListVO>();
@@ -33,22 +35,22 @@ public class CorporationAction implements Action {
 			System.out.println("NumberFormatException 에러: " + e);
 		}
 		
+		String mb_idx = (String)session.getAttribute("idx");
 		
 		CompanyDAO company_dao = new CompanyDAO();
-		
 		company = company_dao.getCompanyInfo2(cp_idx);		
 		request.setAttribute("companyBean", company);
 		
 		CompanyDAO company_dao2 = new CompanyDAO();
-		
 		leftCompanyList = company_dao2.getCompanyList();
 		request.setAttribute("leftCompanyList", leftCompanyList);
 		
-		System.out.println(leftCompanyList.size());
+		CompanyDAO company_dao3 = new CompanyDAO();
+		int count = company_dao3.getLikeBoxCount(mb_idx, cp_idx);
+		request.setAttribute("count", count);
 		
 		forward.setRedirect(false);
 		forward.setPath("./company/corporation.jsp");
-		
 		return forward;
 	}
 	

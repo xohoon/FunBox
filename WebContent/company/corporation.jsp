@@ -10,8 +10,7 @@
 	ArrayList<CompanyListVO> leftCompanyList = (ArrayList<CompanyListVO>)request.getAttribute("leftCompanyList");
 	int sumPayPrincipal;	
   	String idx = (String)session.getAttribute("idx");
-	System.out.println("idx 값 확인 : "+idx);
-	
+	int count = (Integer)request.getAttribute("count");
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -87,9 +86,19 @@
             <h2 class="logo"></h2>
             <h3>${companyBean.cp_sector}</h3>
             <h1>${companyBean.cp_name}<span>${companyBean.cp_branch}</span></h1>
-            <button class="like"><span class="icon"></span> 즐겨찾기</button>
+            <%
+            if(count != 0){
+            %>
+            	<button class="like" value="1"><span class="icon"></span> 즐겨찾기</button>
+            <%
+            }else{
+            %>
+            	<button class="like" value="0"><span class="icon"></span> 즐겨찾기</button>
+            <%
+            }
+            %>
             <div class="info-content">
-              <div class="data">
+              <div class="data">..
                 <div>
                   <i><img src="img/corpor_icon1.png"></i>
                   <p>월 수익률</p>
@@ -289,7 +298,7 @@
                       <div class="box"><a href="#">
                           <div class="img"></div>
                           <div class="text">
-                            <a href="./CompanyFileDownload?filename=<%=companyBean.getCf_certificate() %>&cp_idx=<%=companyBean.getCp_idx() %>" download>해당 업종 자격증 사본 다운로드</a>
+                            <a href="./CompanyFileDownload?filename=<%=companyBean.getCf_certificate() %>&=<%=companyBean.getCp_idx() %>" download>해당 업종 자격증 사본 다운로드</a>
                           </div>
                         </a></div>
                     </li>
@@ -487,6 +496,7 @@
   </div>
   <input type="hidden" value="${companyBean.cp_add_ch }" name="cp_add_ch" id="cp_add_ch">
   <input type="hidden" value="${companyBean.cp_name }" name="cp_name" id="cp_name">
+  <input type="hidden" value="${companyBean.cp_idx }" name="cp_idx" id="cp_idx">
   </body>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3fd911319378df3f4ed86e94c8737483&libraries=services,clusterer,drawing"></script>
   <script type="text/javascript" src="company/js/map.js"></script>
@@ -549,6 +559,7 @@
     });
   </script>
   <script>
+     	
     $(function() {
       var winh = $(window).height();
 
@@ -557,6 +568,82 @@
           $('.content .list').slideToggle(500);
         return false;
       });
+      
+      //찜하기 되어 있으면 즐겨찾기 아이콘 클릭처리
+      if($('.like').val() == '1'){
+    	  $('.like').toggleClass('on');
+      }
+      
+      
+    });
+    
+      //유정 추가 - 찜버튼에 값 넣기
+      $(".like").click(function(){
+    	  var idx = <%=idx %>;
+    	  if(idx == null){
+    		  alert('로그인이 필요한 서비스입니다.');
+    	  }else{
+	        if($(".like").val() == '0'){
+	        	like_q = confirm('즐겨찾기에 추가하시겠습니까?');
+	        	if(like_q){
+		        	$(this).val('1');
+			        $(this).toggleClass('on');
+			        bookmark('1');
+	        	}else{
+	        		$(this).val('0');
+	        		$(this).removeClass('on');
+	        	}
+	        }
+	        else{
+	        	like_q = confirm('즐겨찾기에서 제외하시겠습니까?');
+	        	if(like_q){
+		        	$(this).val('0');
+	        		$(this).removeClass('on');
+	        		bookmark('0');
+	        	}else{
+	        		$(this).val('1');
+	        	}
+	        }
+    	  }
+      });
+
+      //찜하기 추가
+      function bookmark(val){
+    	  var cp_idx = $('#cp_idx').val();
+    	  var cp_name = $('#cp_name').val();
+
+    	  $.ajax({
+    		 url : "./BookmarkAction.cp",
+    		 data : {
+    			 "val" : val,
+    			 "cp_idx" : cp_idx,
+    			 "cp_name" : cp_name
+    		 },
+    		 type : "POST",
+    		 dataType : "JSON",
+    		 
+    		 success : function(data){
+    			 if(String(data.result) == "add_likebox_success"){
+    				 alert('즐겨찾기에 추가되었습니다.');
+    				 return false;
+    			 }else if(String(data.result) == "add_likebox_fail"){
+    				 alert('즐겨찾기 추가에 실패했습니다.\n다시 시도해주세요.');
+    				 return false;
+    			 }else if(String(data.result) == "remove_likebox_success"){
+    				 alert('즐겨찾기에서 제외되었습니다.');
+    				 return false;
+    			 }else if(String(data.result) == "remove_likebox_fail"){
+    				 alert('즐겨찾기 제외에 실패했습니다.\n다시 시도해주세요.');
+    				 return false;
+    			 }
+    		 },
+    		 error : function(e){
+    			 alert('error');
+    			 console.log(e.responseText);
+    		 }
+    	  });
+    }
+    
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>

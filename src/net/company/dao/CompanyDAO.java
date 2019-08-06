@@ -11,6 +11,7 @@ import net.company.dto.ApplicationVO;
 import net.company.dto.CompanyBean;
 import net.company.dto.CompanyFileVO;
 import net.company.dto.CompanyListVO;
+import net.company.dto.LikeBoxVO;
 import net.member.dto.MemberInvestVO;
 import net.page.dto.MainPageDateOfOpenVO;
 import net.page.dto.MainPageDeadLineVO;
@@ -688,6 +689,110 @@ public class CompanyDAO {
 			String sql = "select count(*) from member_invest where mb_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				total = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+		}
+		System.out.println("total: "+total);
+		return total;
+	}
+	
+	
+	// 즐겨찾기 insert
+	public boolean insertLikeBox(LikeBoxVO likebox) {
+		String sql = "insert into member_likebox (mb_idx,cp_idx,like_cp_name,like_cp_date) values (?,?,?,CURRENT_TIMESTAMP)";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, likebox.getMb_idx());
+			pstmt.setInt(2, likebox.getCp_idx());
+			pstmt.setString(3, likebox.getLike_cp_name());
+
+			result = pstmt.executeUpdate();
+			System.out.println(pstmt);
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("insertLikeBox 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+		return false;
+	}
+	
+	
+	// 즐겨찾기 delete
+	public boolean deleteLikeBox(int cp_idx, String mb_idx) {
+		String sql = "delete from member_likebox where cp_idx=? and mb_idx=?";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cp_idx);
+			pstmt.setString(2, mb_idx);
+
+			result = pstmt.executeUpdate();
+			System.out.println(pstmt);
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("deleteLikeBox 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+	
+	
+	// 즐겨찾기한 기업 수 - 찜한 기업 addClass('on') 되도록 하기
+	public int getLikeBoxCount(String mb_idx, int cp_idx) {
+		int total = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+
+			String sql = "select count(*) from member_likebox where mb_idx=? and cp_idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mb_idx);
+			pstmt.setInt(2, cp_idx);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				total = rs.getInt(1);
