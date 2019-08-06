@@ -21,8 +21,8 @@ public class Invest_beforeAction  implements Action {
 		
 		CompanyBean company = new CompanyBean();
 		
-//		int idx = Integer.parseInt(request.getParameter("idx"));
-		
+//		int cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
+//		System.out.println("cp_idx: "+cp_idx);
 		CompanyDAO company_dao = new CompanyDAO();
 		company = company_dao.getCompanyInfo2(1);
 				
