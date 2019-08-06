@@ -14,7 +14,6 @@ import org.json.simple.JSONObject;
 import net.board.dto.Board_Search_ListVO;
 import net.board.dto.FaqVO;
 import net.board.dto.NoticeVO;
-import net.board.dto.QnaReplyVO;
 import net.board.dto.QnaVO;
 
 public class BoardDAO {
@@ -263,47 +262,6 @@ public class BoardDAO {
 		return null;
 	}
 
-	// 1:1 문의내역 - 답변 가져오기
-	public List<QnaReplyVO> getQnaReply(int idx) throws Exception {
-		String sql = "select idx,content,reg_date_time from qna_reply where idx = ?";
-
-		List<QnaReplyVO> qna_reply_list = new ArrayList<QnaReplyVO>();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-
-		try {
-			pstm = conn.prepareStatement(sql);
-			pstm.setInt(1, idx);
-			rs = pstm.executeQuery();
-
-			if (rs.next()) {
-				QnaReplyVO qna_reply = new QnaReplyVO();
-
-				qna_reply.setIdx(rs.getInt("idx"));
-				qna_reply.setContent(rs.getString("content"));
-				qna_reply.setReg_date_time(rs.getTimestamp("reg_date_time"));
-				qna_reply_list.add(qna_reply);
-			}
-			return qna_reply_list;
-
-		} catch (Exception ex) {
-
-			System.out.println("getQnaReply 에러: " + ex);
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstm != null)
-					pstm.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				System.out.println("연결 해제 실패: " + e.getMessage());
-			}
-		}
-
-		return null;
-	}
 
 	// 고객지원 - 공지사항 불러오기
 	public ArrayList<NoticeVO> getNotice() throws Exception {
