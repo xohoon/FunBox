@@ -720,11 +720,8 @@ public class CompanyDAO {
 			if (pstmt != null)
 				try {
 					pstmt.close();
-				if (conn != null) 
-					conn.close();
-			} catch (Exception e) {
-				System.out.println("연결 해제 실패: " + e.getMessage());
-			}
+				} catch (SQLException ex) {
+				}
 		}
 		System.out.println("total: "+total);
 		return total;
