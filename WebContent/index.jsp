@@ -34,7 +34,6 @@
       <script src="./js/html5.js"></script>
    <![endif]-->
   <link href="css/common.css" rel="stylesheet" type="text/css">
-  <link href="css/loader.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" href="./css/slick.css">
   <link rel="stylesheet" type="text/css" href="./css/slick-theme.css">
   
@@ -46,13 +45,6 @@
 </head>
 
 <body>
- <div class="loader">
-    <div class="loadercircle"></div>
-    <div class="loadercircle"></div>
-    <div class="loadercircle"></div>
-    <div class="loadercircle"></div>
-    <div class="loadercircle"></div>
-  </div>
 <input type="hidden" id="select_k" value="0">
   <div id="wrap">
     <header></header>
@@ -442,10 +434,6 @@ function city_click() {
         var classname = $(this).attr('class')
         $('#map .' + classname).css('color', '#73a6d6').css('transform', 'scale(1)');
       });
-      
-      setTimeout(function() {
-          $('.loader').fadeOut(1000);
-        }, 1000)
     });
     //지도
     

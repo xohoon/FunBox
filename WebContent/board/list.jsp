@@ -7,7 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-	ArrayList<Board_Search_ListVO> searchVO = (ArrayList<Board_Search_ListVO>)request.getAttribute("searchVO");
+	/* ArrayList<Board_Search_ListVO> searchVO = (ArrayList<Board_Search_ListVO>)request.getAttribute("searchVO"); */
 	String cityName = (String)request.getAttribute("cityName");
 %>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -447,13 +447,15 @@
     
     $(document).ready(function(){
     	
-    	$("input[name$='"+<%=cityName%>+"']").prop("checked", true);
+    	//$("input[name$='"+<%=cityName%>+"']").prop("checked", true);
     	
     	var cityName = <%=cityName%>
     	if(cityName != null){
 	    	$('.search_bar').toggleClass('on');
+	    	$("input[name$='"+<%=cityName%>+"']").click();
+    	}else{
+    		$('.moreBtn').trigger('click');
     	}
-    	 $('.moreBtn').trigger('click');
     });
   </script>  
 </body>
