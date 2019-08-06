@@ -13,8 +13,10 @@
 <%
 	ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = (ArrayList<MainPageDateOfOpenVO>)request.getAttribute("mainPageDateOfOpenVOs");
 	ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = (ArrayList<MainPageDeadLineVO>)request.getAttribute("mainPageDeadLineVOs");
+	
 	List<Main_SlideVO> slideVO = (List<Main_SlideVO>)request.getAttribute("slideVO");
 	List<Main_LikeVO> likeVO = (List<Main_LikeVO>)request.getAttribute("likeVO");
+	
 	Main_CityVO cityVO = (Main_CityVO)request.getAttribute("cityVO");
 %>
 
@@ -175,7 +177,7 @@
 	              <span class="p_amt"><span><fmt:formatNumber value="${likeVO.lk_cp_current_amount}" pattern="#,###" />
 	              </span> / <span> <fmt:formatNumber value="${likeVO.lk_cp_goal_amount }" pattern="#,###" />
 	              </span> P</span>
-	              <span class="d_day">D-<span>27</span></span>
+	              <span class="d_day">D-<span id="like_DDay_${likeVO.lk_cp_idx }">1</span></span>
 	            </div>
 	          </div>
 	          <div class="reward_per">
@@ -379,9 +381,7 @@ function city_click() {
     });
     
     $(function() {
-
       var i = 1;
-
       setInterval(function() {
         var liheight = $('.live_chart li').height();
         
@@ -389,12 +389,10 @@ function city_click() {
         setTimeout(function() {
           $('.live_chart li:nth-child(' + i + ') *').fadeOut(0);
           $('.live_chart li:nth-child(' + i + ') *').css('transform', 'translateY('+ liheight*4 +'%)');
-
           $('.live_chart li:nth-child(' + i + ') a').text('바뀐 택스트')
           /*변수 값 바꾸는 스크립트를 넣어주시오*/
         }, 800);
         setTimeout(function() {
-
           $('.live_chart span:contains(▼)').css({
             'color': '#ff9124'
           });
@@ -403,16 +401,12 @@ function city_click() {
           });
           $('.live_chart li:nth-child(' + i + ') *').fadeIn(0);
           $('.live_chart li:nth-child(' + i + ') *').css('transform', 'translateY(0px)');
-
           i = i + 1;
           if (i == 11) {
             i = 1;
           }
         }, 1000);
-
       }, 2000)
-
-
       $('.live_chart span:contains(▼)').css({
         'color': '#ff9124'
       });
@@ -421,20 +415,16 @@ function city_click() {
       });
     });
     //실시간 인기순위
-
     $(function() {
       $('.gage').each(function() {
         var percent = $(this).find('.per > span').text();
-
         $(this).find('.gage_fill').animate({
           'width': percent + '%'
         }, 1500);
       });
     });
     //게이지 바
-
     $(function() {
-
       $('.location li').hover(function() {
         var classname = $(this).attr('class')
         $('#map .' + classname).css('color', 'ff9124').css('transform', 'scale(1.05)');
@@ -449,7 +439,6 @@ function city_click() {
     });
     //지도
     
-
     </script>
   <script>
 	  const second = 1000,
@@ -458,6 +447,9 @@ function city_click() {
       day = hour * 24;
 	  
 	  $(document).ready(function(){
+		  <c:forEach var="item" items="${likeVO}">
+	      	setLikeDday('${item.lk_cp_idx}','${item.lk_appl_stop_date_time}');
+	      </c:forEach>
 	      <c:forEach var="mainPageDeadLineVO" items="${mainPageDeadLineVOs}">
 	      	setCountDown('${mainPageDeadLineVO.cp_idx}','${mainPageDeadLineVO.iv_appl_stop_date_time}');
 	      </c:forEach>
@@ -482,6 +474,16 @@ function city_click() {
 			  
 			  }, second)
 	  };
+	  
+	  function setLikeDday(cp_idx,stopDate){
+		  var DDay = document.getElementById('like_DDay_'+cp_idx);
+		  let countDown = new Date(stopDate).getTime();
+		  let now = new Date().getTime();
+		  distance = countDown - now;
+		  DDay.innerText= Math.floor(distance / (day));
+	  };
+	  
+	  
   </script>
 
 </body></html>

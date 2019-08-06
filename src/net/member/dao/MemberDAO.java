@@ -850,7 +850,7 @@ public class MemberDAO {
 			List<Main_LikeVO> LikeVO = new ArrayList<Main_LikeVO>();
 
 			try {
-				String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount "
+				String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp_iv.iv_appl_stop_date_time "
 						+ "FROM company as cp, company_invest as cp_iv "
 						+ "WHERE cp.cp_idx = cp_iv.cp_idx "
 						+ "ORDER BY cp_iv_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
@@ -869,7 +869,7 @@ public class MemberDAO {
 					like.setLk_cp_profit(rs.getString("cp_monthly_profit"));
 					like.setLk_cp_sector(rs.getString("cp_sector"));
 					like.setLk_cp_idx(rs.getInt("cp_idx"));
-					
+					like.setLk_appl_stop_date_time(rs.getDate("iv_appl_stop_date_time"));
 					LikeVO.add(like);
 				}
 			} catch (Exception ex) {

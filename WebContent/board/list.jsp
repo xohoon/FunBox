@@ -446,9 +446,6 @@
     });
     
     $(document).ready(function(){
-    	
-    	//$("input[name$='"+<%=cityName%>+"']").prop("checked", true);
-    	
     	var cityName = <%=cityName%>
     	if(cityName != null){
 	    	$('.search_bar').toggleClass('on');
