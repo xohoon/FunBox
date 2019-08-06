@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ page import="net.board.dao.BoardDAO" %>
 <%@ page import="net.board.dto.QnaVO" %>
-<%@ page import="net.board.dto.QnaReplyVO" %>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
@@ -39,7 +38,6 @@
   </div>
 <%
 	List<QnaVO> qna_list = (List<QnaVO>)request.getAttribute("qna_list");
-	List<QnaReplyVO> qna_reply_list = null;
 %>
   <div id="wrap">
     <header></header>
@@ -88,18 +86,11 @@
 							</span>
 						<span>
 						<%
-							BoardDAO qna_dao = new BoardDAO();
-										qna_reply_list = qna_dao.getQnaReply(qna_list.get(i).getIdx());
-										
-										for(int j=0; j<qna_reply_list.size(); j++) {
-											if(qna_reply_list.get(j).getContent() != null){
+							if(qna_list.get(i).getQna_reply() != null){
 						%>
 						OK
 						<%
-							}else{
-										
-											}
-										}
+							}else{	}
 						%>
 						</span>
 					</p>
@@ -107,21 +98,12 @@
 						<span><%=qna_list.get(i).getContent().replace("\r\n", "<br>")%></span>
 						<!-- <span>답변입니다</span> -->
 						<span>
-						<%
-							BoardDAO qna_dao2 = new BoardDAO();
-										qna_reply_list = qna_dao2.getQnaReply(qna_list.get(i).getIdx());
-										
-										for(int k=0; k<qna_reply_list.size(); k++) {
-						%>
-						<%=qna_reply_list.get(k).getContent() %>
-						<%
-						}
-						%>
+						<%=qna_list.get(i).getQna_reply().replace("\r\n", "<br>") %>
 						</span>
 					</p> 
 				</div>
 				<%
-						}
+							}
 					}
 				%>
 			</div><!--.table-->
