@@ -7,7 +7,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="net.page.dto.MainPageDateOfOpenVO"%>
 <%@page import="net.page.dto.MainPageDeadLineVO"%>
-<%@page import="mapperController.mapper"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -17,7 +16,6 @@
 	List<Main_SlideVO> slideVO = (List<Main_SlideVO>)request.getAttribute("slideVO");
 	List<Main_LikeVO> likeVO = (List<Main_LikeVO>)request.getAttribute("likeVO");
 	Main_CityVO cityVO = (Main_CityVO)request.getAttribute("cityVO");
-	mapper mapper = new mapper();
 %>
 
 <!DOCTYPE html>
