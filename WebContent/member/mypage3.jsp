@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <title></title>
+  <title>거래내역</title>
 
   <!--[if lt IE 9]>
       <script src="./js/html5.js"></script>

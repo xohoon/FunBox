@@ -3,12 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="net.member.dto.MemberInvestPageVO"%>
 <%@page import="net.member.dto.MemberInvestVO"%>
+<%@page import="net.company.dto.Company_pay_scheduleVO"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	request.setCharacterEncoding("utf-8"); // 한글처리
 	MemberInvestPageVO memberInvestVO = (MemberInvestPageVO)request.getAttribute("memberInvestVO");
 	ArrayList<MemberInvestVO> member_invest_list = (ArrayList<MemberInvestVO>)request.getAttribute("member_invest_list");
+	ArrayList<Company_pay_scheduleVO> companypayscheduleVO = (ArrayList<Company_pay_scheduleVO>)request.getAttribute("CompanyPayScheduleVO");
+	
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -68,17 +71,20 @@
     <li>
       <img src="img/ico_fin3.jpg" alt="투자현황"><p>
       구좌가치</p>
-      <span><%=memberInvestVO.getMi_stock_value() %>P</span>
+      <fmt:formatNumber var= "possible_amount" value="<%=memberInvestVO.getMi_stock_value() %>" pattern="#,###" />
+      <span>${possible_amount}P</span>
     </li>
     <li>
       <img src="img/ico_fin4.jpg" alt="투자현황"><p>
       당월수익</p>
-      <span><%=memberInvestVO.getMi_monthly_profit() %>P</span>
+      <fmt:formatNumber var= "monthly_profit" value="<%=memberInvestVO.getMi_monthly_profit() %>" pattern="#,###" />
+      <span>${monthly_profit}P</span>
     </li>
     <li>
       <img src="img/ico_fin5.png" alt="투자현황"><p>
       누적수익</p>
-      <span><%=memberInvestVO.getMi_cumulative_profit() %>P</span>
+      <fmt:formatNumber var= "cumulative_profit" value="<%=memberInvestVO.getMi_cumulative_profit() %>" pattern="#,###" />
+      <span>${cumulative_profit}P</span>
     </li>
   </ul>
   <button class="list_show">투자리스트보기</button>
@@ -130,123 +136,26 @@
             <th>실 지급금액</th>
             <th>실 수익률</th>
           </tr>
-          <tr>
-            <td>1 회차</td>
-            <td>2019.09.01</td>
-            <td>0원</td>
-            <td>25,111원</td>
-            <td>2,636원</td>
-            <td>22,475원</td>
-            <td>0.75%</td>
-          </tr>
-          <tr>
-            <td>2 회차</td>
-            <td>2019.10.01</td>
-            <td>0원</td>
-            <td>25,948원</td>
-            <td>2,724원</td>
-            <td>23,224원</td>
-            <td>0.77%</td>
-          </tr>
-          <tr>
-            <td>3 회차</td>
-            <td>2019.11.01</td>
-            <td>0원</td>
-            <td>25,111원</td>
-            <td>2,636원</td>
-            <td>22,475원</td>
-            <td>0.75%</td>
-          </tr>
-          <tr>
-            <td>4 회차</td>
-            <td>2019.12.01</td>
-            <td>0원</td>
-            <td>25,948원</td>
-            <td>2,724원</td>
-            <td>23,224원</td>
-            <td>0.77%</td>
-          </tr>
-          <tr>
-            <td>5 회차</td>
-            <td>2020.01.01</td>
-            <td>0원</td>
-            <td>25,948원</td>
-            <td>2,724원</td>
-            <td>23,224원</td>
-            <td>0.77%</td>
-          </tr>
-          <tr>
-            <td>6 회차</td>
-            <td>2020.02.01</td>
-            <td>0원</td>
-            <td>23,437원</td>
-            <td>2,460원</td>
-            <td>20,997원</td>
-            <td>0.74%</td>
-          </tr>
-          <tr>
-            <td>7 회차</td>
-            <td>2020.03.01</td>
-            <td>0원</td>
-            <td>25,948원</td>
-            <td>2,724원</td>
-            <td>23,224원</td>
-            <td>0.77%</td>
-          </tr>
-          <tr>
-            <td>8 회차</td>
-            <td>2020.04.01</td>
-            <td>0원</td>
-            <td>25,111원</td>
-            <td>2,636원</td>
-            <td>22,475원</td>
-            <td>0.75%</td>
-          </tr>
-          <tr>
-            <td>9 회차</td>
-            <td>2020.05.01</td>
-            <td>0원</td>
-            <td>25,948원</td>
-            <td>2,724원</td>
-            <td>23,224원</td>
-            <td>0.77%</td>
-          </tr>
-          <tr>
-            <td>10 회차</td>
-            <td>2020.06.01</td>
-            <td>0원</td>
-            <td>25,111원</td>
-            <td>2,636원</td>
-            <td>22,475원</td>
-            <td>0.75%</td>
-          </tr>
-          <tr>
-            <td>11 회차</td>
-            <td>2020.07.01</td>
-            <td>0원</td>
-            <td>25,948원</td>
-            <td>2,724원</td>
-            <td>23,224원</td>
-            <td>0.77%</td>
-          </tr>
-          <tr>
-            <td>12 회차</td>
-            <td>2020.08.01</td>
-            <td>3,000,000원</td>
-            <td>25,948원</td>
-            <td>2,724원</td>
-            <td>23,224원</td>
-            <td>0.77%</td>
-          </tr>
-          <tr>
-            <td>총 합계</td>
-            <td>-</td>
-            <td>3,000,000원</td>
-            <td>305,520원</td>
-            <td>32,080원</td>
-            <td>273,470원</td>
-            <td>9.13%</td>
-          </tr>
+            <c:forEach var = "i" begin = "1" end = "12"> 
+             <tr>
+               <td>${i}</td>
+               <td><%= companypayscheduleVO.get(0).getCp_pay_expected_payment_date() %></td>
+               <td><fmt:formatNumber value="<%= companypayscheduleVO.get(0).getCp_pay_principal() %>" pattern="#,###" /></td>
+               <td><fmt:formatNumber value="<%= companypayscheduleVO.get(0).getCp_pay_interest_paid() %>" pattern="#,###" /></td>
+               <td><fmt:formatNumber value="<%= companypayscheduleVO.get(0).getCp_pay_fees() %>" pattern="#,###" /></td>
+               <td><fmt:formatNumber value="<%= companypayscheduleVO.get(0).getCp_pay_actual_payment_amout() %>" pattern="#,###" /></td>
+               <td><fmt:formatNumber value="<%= companypayscheduleVO.get(0).getCp_pay_actual_rate_return() %>" pattern="#,###" /></td>            
+             </tr>             
+          	</c:forEach>
+              <tr>
+                <td>총 합계</td>
+                <td>-</td>                 
+                <td>100,000,000</td>               
+                <td>305,520원</td>
+                <td>32,080원</td>
+                <td>273,470원</td>
+                <td>9.13%</td>
+              </tr>
         </table>
       </div>
     </div>
@@ -255,7 +164,7 @@
 <div class="list">
   <p>
     내가 투자한 BOX<br>
-    <span>20건</span>
+    <span>${count}건</span>
   </p>
   <ul>
       <c:forEach var="memberInvestCompanyVO" items="${memberInvestCompanyVOList}" >
@@ -410,6 +319,8 @@ $(function(){
     	cf_financial_download.attr("href", "./CompanyFileDownload?filename="+$("#cf_financial_selector").val()+"&cp_idx=${memberInvestVO.cp_idx}");
     });
 });
+
 </script>
+
 </body>
 </html>

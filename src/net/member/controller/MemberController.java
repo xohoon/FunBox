@@ -19,12 +19,21 @@ import net.member.action.MemberJoinAction;
 import net.member.action.MemberLoginAction;
 import net.member.action.MemberLoginCheckAction;
 import net.member.action.MemberPhoneCheckAction;
+import net.member.action.MemberSelectKeyAction;
 import net.member.action.MemberUpdateAction;
-import net.member.action.Member_Invest_check;
+import net.member.action.MemberInvestcheck;
 import net.member.action.Mypage2_2Action;
+import net.member.action.MypageChargePointAction;
+import net.member.action.MypageDepositAction;
+import net.member.action.MypageExchangePointToTokenAction;
 import net.member.action.MypagePINCheckAction;
 import net.member.action.MypagePWCheckAction;
 import net.member.action.MypagePWPINCheckAction;
+import net.member.action.MypageSendTokenAction;
+import net.member.action.Point_DepositAction;
+import net.member.action.Point_WithdrawAction;
+import net.member.action.Token_DepositAction;
+import net.member.action.Token_WithdrawAction;
 
 
 public class MemberController extends HttpServlet implements Servlet {
@@ -75,7 +84,8 @@ public class MemberController extends HttpServlet implements Servlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/mypage2_1.jsp");
-		}else if (command.equals("/Mypage2_1_1.mb")) {
+		}
+		else if (command.equals("/Mypage2_1_1.mb")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/mypage2_1_1.jsp");
@@ -159,6 +169,7 @@ public class MemberController extends HttpServlet implements Servlet {
 				e.printStackTrace();
 			}
 		}else if (command.equals("/MypagePINCheckAction.mb")) { 
+			System.out.println("Controller>>>>>");
 			action = new MypagePINCheckAction();
 			try {
 				forward = action.execute(request, response);
@@ -183,20 +194,89 @@ public class MemberController extends HttpServlet implements Servlet {
 			
 		///////////////////////유정 추가 end///////////////////////
 		/////////////////////////태훈 추가 / 시작//////////////////////////
-		else if(command.equals("/Member_Invest_check.mb")) {
-			System.out.println("controller>>>>>>>>>>>1");
-			action = new Member_Invest_check();
+		else if(command.equals("/MemberInvestcheck.mb")) {
+			action = new MemberInvestcheck();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if(command.equals("/MemberSelectKey.mb")) {
+			action = new MemberSelectKeyAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/TokenDepositAction.mb")) {
+			action = new Token_DepositAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/TokenWithdrawAction.mb")) {
+			action = new Token_WithdrawAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/PointDepositAction.mb")) {
+			action = new Point_DepositAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/PointWithdrawAction.mb")) {
+			action = new Point_WithdrawAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
+		
+		
+		else if (command.equals("/socket_test.mb")) {
+				forward = new ActionForward();
+				forward.setRedirect(false);
+				forward.setPath("./socket_test.jsp");
+			}
 		/////////////////////////태훈 추가 끝///////////////////////////
 		
 		/*박신규 시작*/
 		else if (command.equals("/MemberInvestmentList.mb")) {
 			action = new MemberInvestmentListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/MypageDeposit.mb")) {
+			action = new MypageDepositAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/MypageSendToken.mb")) {
+			action = new MypageSendTokenAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/MypageChargePoint.mb")) {
+			action = new MypageChargePointAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/MypageExchangePointToToken.mb")) {
+			action = new MypageExchangePointToTokenAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

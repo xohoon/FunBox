@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +29,7 @@ public class CompanyApplication04Action implements Action {
 		System.out.println("CompanyApplication04Action");
 
 		// page1 파라미터값
-		String idx = (String)session.getAttribute("idx");
+		String idx = (String) session.getAttribute("idx");
 		String app_cp_name = request.getParameter("name");
 		String app_cp_manager = request.getParameter("manager");
 		String app_cp_hp = request.getParameter("phone");
@@ -54,7 +55,7 @@ public class CompanyApplication04Action implements Action {
 		String app_cp_introduction = request.getParameter("app_cp_introduction");
 		String app_cp_purpose = request.getParameter("app_cp_purpose");
 		String app_cp_point = request.getParameter("app_cp_point");
-		
+
 		// page4 파라미터값
 
 		// 날짜변환 기능
@@ -82,33 +83,58 @@ public class CompanyApplication04Action implements Action {
 		// 받아온 파일들을 담는 ArrayList
 		ArrayList<String> app_cp_image_list = new ArrayList<String>();
 		ArrayList<String> app_cp_document_list = new ArrayList<String>();
+		ArrayList<String> app_cp_alias_image_list = new ArrayList<String>();
+		ArrayList<String> app_cp_alias_document_list = new ArrayList<String>();
 
 		// view 에서 들고온 파일들을 VO에 저장하는 단계
+		int image_count = 0;
+		int document_count = 0;
 		for (Part part : request.getParts()) {
 			if (part.getContentType() != null) {
 				String fileName = extractFileName(part);
+				String alias = UUID.randomUUID().toString().substring(0, 9);
+				String fileFormat = getFileFormat(part);
 				switch (part.getName()) {
 				case "app_cp_registrantion":
 					company.setApp_cp_registrantion(fileName);
+					company.setApp_cp_alias_registrantion(alias + "app_cp_registrantion"+fileFormat);
+					//System.out.println(real_path + "/" + alias+"app_cp_registrantion"+fileFormat);
+					part.write(real_path + "/" + alias+"app_cp_registrantion"+fileFormat);
 					break;
 				case "app_cp_financial":
 					company.setApp_cp_financial(fileName);
+					company.setApp_cp_financial(alias + "app_cp_financial"+fileFormat);
+					//System.out.println(real_path + "/" + alias+"app_cp_financial"+fileFormat);
+					part.write(real_path + "/" + alias+"app_cp_financial"+fileFormat);
 					break;
 				case "app_cp_estate_contract":
 					company.setApp_cp_estate_contract(fileName);
+					company.setApp_cp_alias_estate_contract(alias + "app_cp_estate_contract"+fileFormat);
+					//System.out.println(real_path + "/" + alias+"app_cp_estate_contract"+fileFormat);
+					part.write(real_path + "/" + alias+"app_cp_estate_contract"+fileFormat);
 					break;
 				case "app_cp_images":
+					image_count++;
 					app_cp_image_list.add(fileName);
+					app_cp_alias_image_list.add(alias + "app_cp_image"+ image_count+fileFormat);
+					//System.out.println(real_path + "/" + alias+"app_cp_image"+image_count+fileFormat);
+					part.write(real_path + "/" + alias+"app_cp_image"+image_count+fileFormat);
 					break;
 				case "app_cp_other_documents":
+					document_count++;
 					app_cp_document_list.add(fileName);
+					app_cp_alias_document_list.add(alias + "app_cp_other_document" + document_count+fileFormat);
+					//System.out.println(real_path + "/" + alias+"app_cp_other_document"+document_count+fileFormat);
+					part.write(real_path + "/" + alias+"app_cp_other_document"+document_count+fileFormat);
 					break;
 				default:
 					break;
 				}
-				if (!fileName.equals("")) {
-					part.write(real_path + "/" + fileName);
-				}
+				
+				/*if (!fileName.equals("")) {
+					// part.write(real_path + "/" + fileName);
+					// part.write(real_path + "/" + fileName);
+				}*/
 			}
 		}
 
@@ -116,8 +142,14 @@ public class CompanyApplication04Action implements Action {
 		for (int i = app_cp_image_list.size(); i < 5; i++) {
 			app_cp_image_list.add(null);
 		}
+		for (int i = app_cp_alias_image_list.size(); i < 5; i++) {
+			app_cp_alias_image_list.add(null);
+		}
 		for (int i = app_cp_document_list.size(); i < 5; i++) {
 			app_cp_document_list.add(null);
+		}
+		for (int i = app_cp_alias_document_list.size(); i < 5; i++) {
+			app_cp_alias_document_list.add(null);
 		}
 
 		// page1 company에 데이터 추가
@@ -150,15 +182,17 @@ public class CompanyApplication04Action implements Action {
 
 		// page4 company에 데이터 추가
 		company.setApp_cp_images(app_cp_image_list);
+		company.setApp_cp_alias_images(app_cp_alias_image_list);
 		company.setApp_cp_other_documents(app_cp_image_list);
+		company.setApp_cp_alias_other_documents(app_cp_alias_document_list);
 		company.setApp_cp_real_path(real_path);
 
 		CompanyDAO companyDAO2 = new CompanyDAO();
 
 		result = companyDAO2.insertApp(company);
 
-		//return null;
-		if(result==false){
+		// return null;
+		if (result == false) {
 			System.out.println("기업신청 실패");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
@@ -167,10 +201,10 @@ public class CompanyApplication04Action implements Action {
 			out.println("location.href='./Application1.cp';");
 			out.println("</script>");
 			out.close();
-			
+
 			return null;
 		}
-		
+
 		System.out.println("기업신청 성공");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -179,7 +213,7 @@ public class CompanyApplication04Action implements Action {
 		out.println("location.href='./Index.mb';");
 		out.println("</script>");
 		out.close();
-		
+
 		return null;
 	}
 
@@ -193,5 +227,16 @@ public class CompanyApplication04Action implements Action {
 		}
 		return "";
 	}
-	
+
+	private String getFileFormat(Part part) {
+		String contentDisp = part.getHeader("content-disposition");
+		String[] items = contentDisp.split(";");
+		for (String s : items) {
+			if (s.trim().startsWith("filename")) {
+				return "." + s.substring(s.lastIndexOf(".") + 1,s.length()-1);
+			}
+		}
+		return "";
+	}
+
 }

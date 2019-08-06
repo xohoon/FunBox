@@ -8,14 +8,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import net.member.dto.Main_CityVO;
 import net.member.dto.Main_LikeVO;
 import net.member.dto.Main_SlideVO;
 import net.member.dto.MemberBean;
 import net.member.dto.MemberInvestCompanyVO;
 import net.member.dto.MemberInvestPageVO;
+import net.member.dto.MemberIplog;
 import net.member.dto.Member_headerVO;
 import net.member.dto.Member_likeboxVO;
+import net.money.dto.PointTransactionVO;
+import net.money.dto.TokenDepositVO;
+import net.money.dto.TokenTransaction;
 
 public class MemberDAO {
 
@@ -944,25 +951,26 @@ public class MemberDAO {
 			return null;
 		}
 		
+		// 태훈 - 기업 투자 현황 페에지 제어
 		public String Member_Invest_check(String sessionID) {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			String result = "0";
 
 			try {
-				String sql = "select count(*) from member_invest where mb_id = ?";
+				String sql = "SELECT count(*) FROM member_invest WHERE mb_id = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, sessionID);
 				rs = pstmt.executeQuery();
 
 				if (rs.next()) {
 					if (rs.getInt("count(*)") > 0) {
-						result = "1"; // 아이디와 비밀번호 일치하는 경우
+						result = "1"; 
 					} else {
-						result = "0"; // 아이디는 있으나 비밀번호 맞지 않는 경우
+						result = "0";
 					}
 				} else {
-					result = "0";// 잘못된 정보 또는 관리자가 아닙니다. 아이디가 없는 경우
+					result = "0";
 				}
 			} catch (Exception ex) {
 				System.out.println("Member_Invest_check 에러: " + ex);
@@ -981,8 +989,255 @@ public class MemberDAO {
 
 			return result;
 		}
+	
+		
+		// 태훈 추가 - 실시간 즐겨찾기 순서 AJAX 및 수동 자동 제어
+		public int getSelectKey() {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int select_key = 0;
+	
+			try {
+				String sql = "SELECT cp_select_key FROM realtime_select_key";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+	
+				if (rs.next()) {
+					if (rs.getInt("cp_select_key") == 1) {
+						select_key = 1; 
+					} else if (rs.getInt("cp_select_key") == 2){
+						select_key = 2;
+					}
+				} else {
+					select_key = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("getSelectKey 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+				/*
+				 * if (conn != null) conn.close();
+				 */
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+	
+			return select_key;
+		}
+		
+		// 탑10 SQL
+		@SuppressWarnings({ "unchecked", "unused" })
+		public JSONArray getRealList(int select_key) throws Exception {
+			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			JSONArray jsonArr = new JSONArray();
+			
+			try {
+				// 쪼인해도되고안해도되고
+				String sql = "SELECT cp_name "
+						+ "FROM company "
+						+ "ORDER BY cp_recommand_count DESC limit 10";
+				
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					JSONObject jsonObj = new JSONObject();
+					jsonObj.put("cp_name1", rs.getString("cp_name"));
+					jsonObj.put("cp_name2", rs.getString("cp_name"));
+					jsonObj.put("cp_name3", rs.getString("cp_name"));
+					jsonObj.put("cp_name4", rs.getString("cp_name"));
+					jsonObj.put("cp_name5", rs.getString("cp_name"));
+					jsonObj.put("cp_name6", rs.getString("cp_name"));
+					jsonObj.put("cp_name7", rs.getString("cp_name"));
+					jsonObj.put("cp_name8", rs.getString("cp_name"));
+					jsonObj.put("cp_name9", rs.getString("cp_name"));
+					jsonObj.put("cp_name10", rs.getString("cp_name"));
+					
+					jsonArr.add(jsonObj);
+				}
+				return jsonArr;
+				
+			} catch (Exception ex) {
+				System.out.println("getRealList ERROR: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+			return null;
+		}
+		
+		// 태훈 추가 - 자산관리 토큰 입금
+		public int Token_Deposit(String token_sum, String token_wallet, String token_hash, String session_idx, String bar) throws Exception{
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int result = 0;
+
+			try {
+				String sql = "INSERT INTO token_deposit(mb_idx, td_to_address, td_from_address, td_tx_hash, td_amount, td_status, td_date_time)"
+						+ "VALUES(?, ?, ?, ?, ?, 0, now())";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, session_idx);
+				pstmt.setString(2, token_wallet);
+				pstmt.setString(3, bar);
+				pstmt.setString(4, token_hash);
+				pstmt.setString(5, token_sum);
+				result = pstmt.executeUpdate();
+
+				if (result != 0) {
+					result = 1;
+					return result;
+				}else {
+					result = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("Token_Deposit 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
 		
 		
+		// 태훈 추가 - 자산관리 토큰 출금
+		public int Token_Withdraw(String token_sum, String token_wallet, String session_idx, String bar) throws Exception{
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int result = 0;
+				
+			try {
+				String sql = "INSERT INTO token_withdraw(mb_idx, td_to_address, td_from_address, td_amount, td_status, td_date_time) "
+						+ "VALUES(?, ?, ?, ?, 0, now())";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, session_idx);
+				pstmt.setString(2, bar);
+				pstmt.setString(3, token_wallet);
+				pstmt.setString(4, token_sum);
+				result = pstmt.executeUpdate();
+				
+				if (result != 0) {
+					result = 1;
+					return result;
+				}else {
+					result = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("Token_Withdraw 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
+		
+		// 태훈 추가 - 자산관리 포인트 충전
+		public int Point_Deposit(String point_sum, String session_idx) throws Exception{
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int result = 0;
+			
+			try {
+				String sql = "INSERT INTO  point_transaction(po_category, mb_idx, po_amount, po_date_time)"
+						+ "VALUES(3, ?, ?, now())";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, session_idx);
+				pstmt.setString(2, point_sum);
+				result = pstmt.executeUpdate();
+
+				if (result != 0) {
+					result = 1;
+					return result;
+				}else {
+					result = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("Token_Deposit 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
+		
+		// 태훈 추가 - 자산관리 포인트 환전
+		public int Point_Withdraw(String point_sum, String session_idx) throws Exception{
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int result = 0;
+					
+			try {
+				String sql = "INSERT INTO  point_transaction(po_category, mb_idx, po_amount, po_date_time)"
+						+ "VALUES(2, ?, ?, now())";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, session_idx);
+				pstmt.setString(2, point_sum);
+				result = pstmt.executeUpdate();
+
+				if (result != 0) {
+					result = 1;
+					return result;
+				}else {
+					result = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("Token_Deposit 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
 	// 윤식 추가/////////////////////////////////////////////////
@@ -1082,5 +1337,44 @@ public class MemberDAO {
 
 		return null;
 	}
+	
+	public boolean insertMemberLoginLog(MemberIplog memberIplog) {
+		String sql = "INSERT INTO member_iplog(ip, id, date, content) VALUES (?,?,now(),?)";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberIplog.getIp());
+			pstmt.setString(2, memberIplog.getId());
+			pstmt.setString(3, memberIplog.getContent());
+			result = pstmt.executeUpdate();
+			
+
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("MemberLoginLog 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+	
+	
+	//String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx, tk_price, po_amount, po_content, po_date_time) VALUES (2,1,1,100,?,?,now())";
+	//String sql = "INSERT INTO token_transaction(tk_category, po_idx, tk_amount, tk_price, po_amount, tk_content, tk_date_time) VALUES (3,1,?,10,?,'비고',now())";
+	//String sql = "UPDATE member SET mb_point = mb_point + ?, mb_token = mb_token - ? WHERE mb_idx = ?";
 	// 박신규 끝~ ///////////////////////////////////////////////////
 }

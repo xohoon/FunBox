@@ -1,6 +1,8 @@
 <%@page import="net.member.dto.MemberInvestVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -17,7 +19,7 @@
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/mypage.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/947fdcffe2.js"></script>
-   <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="js/jquery-3.1.1.min.js"></script>
   <script>
     $(function() {
     	$('header').load('./header/header.jsp')
@@ -34,7 +36,8 @@
     <header></header>
     <div class="hdbck"></div>
     <div class="toppdng"></div>
-    
+    <input type="hidden" value="${sessionScope.id }" id="session_value">
+	<input type="hidden" value="${sessionScope.idx }" id="session_idx">
     <section>
     	<div class="like_box"></div>
     	<ul class="tab">
@@ -46,7 +49,7 @@
  		<div class="asset">
 			<div class="btn">
 				<button onclick="location.href='./Mypage2_1.mb'">입출금관리</button>
-				<button class="on" onclick="location.href='./Mypage2_2Action.mb'">포인트관리</button>
+				<button class="on" onclick="location.href='./Mypage2_2.mb'">포인트관리</button>
 			</div><!--btn-->
 			<div class="b1 brif">
 			<div>
@@ -69,53 +72,53 @@
 				</div>
 			</div>
 			<div>
-				<div class="b2 cf">
-					<h5>포인트 충전하기</h5>
-					<div>
-						<label>충전할 포인트</label>
-						<p class="cf">
-							<span>100,000 POINT</span>
-							<span>
-								<button class="down">-</button>
-								<input type="number" min="0" step="1" value="0" class="num1">
-								<button class="up">+</button>
-							</span>
-						</p>
-						<p class="cf">
-							<span>500,000 POINT</span>
-							<span>
-								<button class="down">-</button>
-								<input type="number" min="0" step="1" value="0" class="num2">
-								<button class="up">+</button>
-							</span>
-						</p>
-						<p class="cf">
-							<span>1,000,000 POINT</span>
-							<span>
-								<button class="down">-</button>
-								<input type="number" min="0" step="1" value="0" class="num3">
-								<button class="up">+</button>
-							</span>
-						</p>
-						<p class="cf">
-							<span>10,000,000 POINT</span>
-							<span>
-								<button class="down">-</button>
-								<input type="number" min="0" step="1" value="0" class="num4">
-								<button class="up">+</button>
-							</span>
-						</p>
-					</div>
-					<hr>
-					<div class="coinout">-1,000,000 Coin</div>
-					<div class="sum po">
-					    합계 <span class="sumcomma1">0</span> point
-					</div>
-					<input type="button" value="충전하기" class="char_btn">
-					<div id="char"></div>
-				</div><!--입금-->
+					<div class="b2 cf">
+						<h5>포인트 충전하기</h5>
+						<div>
+							<label>충전할 포인트</label>
+							<p class="cf">
+								<span>100,000 POINT</span>
+								<span>
+									<button class="down">-</button>
+									<input type="number" min="0" step="1" value="0" class="num1">
+									<button class="up">+</button>
+								</span>
+							</p>
+							<p class="cf">
+								<span>500,000 POINT</span>
+								<span>
+									<button class="down">-</button>
+									<input type="number" min="0" step="1" value="0" class="num2">
+									<button class="up">+</button>
+								</span>
+							</p>
+							<p class="cf">
+								<span>1,000,000 POINT</span>
+								<span>
+									<button class="down">-</button>
+									<input type="number" min="0" step="1" value="0" class="num3">
+									<button class="up">+</button>
+								</span>
+							</p>
+							<p class="cf">
+								<span>10,000,000 POINT</span>
+								<span>
+									<button class="down">-</button>
+									<input type="number" min="0" step="1" value="0" class="num4">
+									<button class="up">+</button>
+								</span>
+							</p>
+						</div>
+						<hr>
+						<div class="coinout">-1,000,000 Coin</div>
+						<div class="sum po">
+						    합계 <span class="sumcomma1">0</span> point
+						</div>
+						<input type="button" value="충전하기" class="char_btn">
+						<div id="char"></div>
+					</div><!--입금-->
 				<div class="b3 cf">
-					<h5>코인으로 환전하기</h5>
+					<h5>토큰으로 환전하기</h5>
 					<div>
 						<label>환전할 포인트</label>
 						<input type="text" class="coin" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/><span>POINT</span>
@@ -145,6 +148,7 @@
 					var numre2 = numberWithCommas(sumstr2);
 				  document.querySelector('.sumcomma1').innerHTML=numre1;
 				  document.querySelector('.sumcomma2').innerHTML=numre2;
+				  document.getElementById('charge_point').value=numre1;
 				}
 
 				$('.down').on('click', function(){

@@ -12,6 +12,7 @@ import net.company.dto.CompanyBean;
 import net.company.dto.CompanyFileVO;
 import net.company.dto.CompanyListVO;
 import net.company.dto.LikeBoxVO;
+import net.company.dto.Company_pay_scheduleVO;
 import net.member.dto.MemberInvestVO;
 import net.page.dto.MainPageDateOfOpenVO;
 import net.page.dto.MainPageDeadLineVO;
@@ -61,8 +62,8 @@ public class CompanyDAO {
 				// application03
 				+ "app_cp_introduction, app_cp_purpose, app_cp_point, "
 				// application04
-				+ "app_cp_registrantion, app_cp_financial, app_cp_estate_contract, app_cp_image1, app_cp_image2, app_cp_image3, app_cp_image4, app_cp_image5, app_cp_other_document1, app_cp_other_document2, app_cp_other_document3, app_cp_other_document4, app_cp_other_document5, app_cp_real_path, mb_idx) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "app_cp_registrantion, app_cp_financial, app_cp_estate_contract, app_cp_image1, app_cp_image2, app_cp_image3, app_cp_image4, app_cp_image5, app_cp_other_document1, app_cp_other_document2, app_cp_other_document3, app_cp_other_document4, app_cp_other_document5, app_cp_alias_registrantion,app_cp_alias_financial, app_cp_estate_alias_contract, app_cp_alias_image1, app_cp_alias_image2, app_cp_alias_image3, app_cp_alias_image4, app_cp_alias_image5, app_cp_alias_other_document1, app_cp_alias_other_document2, app_cp_alias_other_document3, app_cp_alias_other_document4, app_cp_alias_other_document5, app_cp_real_path,mb_idx) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?  )";
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -109,8 +110,23 @@ public class CompanyDAO {
 			pstmt.setString(32, company.getApp_cp_other_document3());
 			pstmt.setString(33, company.getApp_cp_other_document4());
 			pstmt.setString(34, company.getApp_cp_other_document5());
-			pstmt.setString(35, company.getApp_cp_real_path());
-			pstmt.setString(36, company.getMb_idx());
+			
+			pstmt.setString(35, company.getApp_cp_alias_registrantion());
+			pstmt.setString(36, company.getApp_cp_alias_financial());
+			pstmt.setString(37, company.getApp_cp_alias_estate_contract());
+			pstmt.setString(38, company.getApp_cp_alias_image1());
+			pstmt.setString(39, company.getApp_cp_alias_image2());
+			pstmt.setString(40, company.getApp_cp_alias_image3());
+			pstmt.setString(41, company.getApp_cp_alias_image4());
+			pstmt.setString(42, company.getApp_cp_alias_image5());
+			pstmt.setString(43, company.getApp_cp_alias_other_document1());
+			pstmt.setString(44, company.getApp_cp_alias_other_document2());
+			pstmt.setString(45, company.getApp_cp_alias_other_document3());
+			pstmt.setString(46, company.getApp_cp_alias_other_document4());
+			pstmt.setString(47, company.getApp_cp_alias_other_document5());
+			
+			pstmt.setString(48, company.getApp_cp_real_path());
+			pstmt.setString(49, company.getMb_idx());
 			
 			result = pstmt.executeUpdate();
 			System.out.println(pstmt);
@@ -704,8 +720,11 @@ public class CompanyDAO {
 			if (pstmt != null)
 				try {
 					pstmt.close();
-				} catch (SQLException ex) {
-				}
+				if (conn != null) 
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
 		}
 		System.out.println("total: "+total);
 		return total;
@@ -855,6 +874,61 @@ public class CompanyDAO {
 			}
 		}
 
+		return null;
+	}
+	
+	/// 윤식 추가 기업 스케줄 리스트 불러오기
+	public ArrayList<Company_pay_scheduleVO> getCompanySchedule(int cp_idx) {
+		String sql = " select * from company_pay_schedule WHERE cp_idx = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Company_pay_scheduleVO> CompanyScheduleList = new ArrayList<Company_pay_scheduleVO>();
+		System.out.println("get Comapnysche cp_idx : " + cp_idx);
+		
+		try {	
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cp_idx);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+
+			while (rs.next()) {
+				Company_pay_scheduleVO companyscheduleVO = new Company_pay_scheduleVO();
+				
+				companyscheduleVO.setCp_pay_count(rs.getString("cp_pay_count"));
+				companyscheduleVO.setCp_pay_expected_payment_date(rs.getString("cp_pay_expected_payment_date"));
+				companyscheduleVO.setCp_pay_principal(rs.getString("cp_pay_principal"));
+				companyscheduleVO.setCp_pay_interest_paid(rs.getString("cp_pay_interest_paid"));
+				companyscheduleVO.setCp_pay_fees(rs.getString("cp_pay_fees"));
+				companyscheduleVO.setCp_pay_actual_payment_amout(rs.getString("cp_pay_actual_payment_amout"));
+				companyscheduleVO.setCp_pay_actual_rate_return(rs.getString("cp_pay_actual_rate_return"));
+							
+				CompanyScheduleList.add(companyscheduleVO);
+				
+			}
+			
+			return CompanyScheduleList;
+
+		} catch (Exception ex) {
+			System.out.println("getCompanySchedule 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+				
+		return null;
+	}
+
+	
+	private PreparedStatement setInt(int i, int cp_idx) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
