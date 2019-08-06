@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 import net.company.dao.CompanyDAO;
+import net.company.dto.Company_pay_scheduleVO;
 import net.member.dao.MemberDAO;
 import net.member.dto.MemberInvestCompanyVO;
 import net.member.dto.MemberInvestPageVO;
@@ -22,6 +23,7 @@ public class MemberInvestmentListAction implements Action {
 		ActionForward forward = new ActionForward();
 		HttpSession session = request.getSession();
 		String mb_id = (String) session.getAttribute("id");
+		
 		if (mb_id == null ) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -35,6 +37,7 @@ public class MemberInvestmentListAction implements Action {
 		String cp_idx_string = null;
 		cp_idx_string = request.getParameter("cp_idx");
 		int cp_idx = 0;
+		
 		if (cp_idx_string == null) {
 			System.out.println("null");
 			System.out.println(mb_id);
@@ -69,6 +72,11 @@ public class MemberInvestmentListAction implements Action {
 		memberDAO = new MemberDAO();
 		MemberInvestPageVO memberInvestVO = memberDAO.getMyPageInvestment(cp_idx,mb_id);
 		
+		/// 윤식 추가
+		CompanyDAO companyDAO2 = new CompanyDAO();
+		ArrayList<Company_pay_scheduleVO> CompanyPayScheduleVO = companyDAO2.getCompanySchedule(cp_idx);
+		System.out.println("pay_schedule :" + CompanyPayScheduleVO.toString());
+				
 		// 유정 추가
 		// 투자현황 - 투자내역 불러오기
 		//////////////// 페이징 처리 ////////////////
@@ -134,9 +142,9 @@ public class MemberInvestmentListAction implements Action {
 		
 		request.setAttribute("member_invest_list", member_invest_list);
 		request.setAttribute("memberInvestVO", memberInvestVO);
+		request.setAttribute("CompanyPayScheduleVO", CompanyPayScheduleVO);
 		request.setAttribute("memberInvestCompanyVOList", memberInvestCompanyVOList);
 		request.setAttribute("selectedCp_idx", cp_idx);		
-		
 		forward.setRedirect(false);
 		forward.setPath("./member/Investment_list.jsp");
 		return forward;

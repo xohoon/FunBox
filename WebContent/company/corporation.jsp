@@ -28,11 +28,19 @@
    <![endif]-->
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/corporation.css" rel="stylesheet">
+  <link href="css/loader.css" rel="stylesheet" type="text/css">
   <script src="js/jquery-3.1.1.min.js"></script>
 
 </head>
 
 <body>
+  <div class="loader">
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+  </div>
   <div id="wrap">
     <header></header>
     <!--여기에 내용 입력-->
@@ -91,7 +99,7 @@
                 <div>
                   <i><img src="img/corpor_icon1.png"></i>
                   <p>월 수익률</p>
-                  <p>${companyBean.cp_monthly_profit}</p>
+                  <p>${companyBean.cp_monthly_profit}%</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon2.png"></i>
@@ -143,7 +151,7 @@
                   <p>을 투자하시면</p>
                 </div>
                 <div class="calc-bottom">
-                  <div>
+                  <div>s
                     <p>예상 세후 총 수익금</p>
                     <div class="circle">!
                       <div>상기 표시된 연 수익률에서 플랫폼 수수료를 제외한 총액이며, 실제 상환 일정에 따라 변동될 수 있습니다.</div>
@@ -164,7 +172,7 @@
                     </div>
                     <input type="text" value="7 배" readonly>
                   </div>
-                  <a href="#">예상 지급스케쥴 자세히 보러가기</a>
+                  <a href="#rwdsd">예상 지급스케쥴 자세히 보러가기</a>
                 </div>
                 <div class="invest" onclick= investClick()>투자하기</div>
               </div>
@@ -179,8 +187,8 @@
                 </div>
               </div>
               <div>
-                <p><fmt:formatNumber value="<%=companyBean.getIv_current_amount() %>" pattern="#,###" /></p>
-                <p><fmt:formatNumber value="<%=companyBean.getIv_goal_amount() %>" pattern="#,###" /></p>
+                <p><fmt:formatNumber value="<%=companyBean.getIv_current_amount() %>" pattern="#,###" />P</p>
+                <p><fmt:formatNumber value="<%=companyBean.getIv_goal_amount() %>" pattern="#,###" />P</p>
               </div>
             </div>
             <div class="bg">
@@ -412,15 +420,16 @@
                   <th>실 지급금액</th>
                   <th>실 수익률</th>
                 </tr>
+                <!-- 관리자 페이지에서 값을 지정할때 지급회차 수를 입력할시 수정 필요 현재는 for문 사용 -->
                 <c:forEach var = "i" begin = "1" end = "12"> 
 	                <tr>
 	                  <td>${i}</td>
-	                  <td><%=companyBean.getCp_pay_expected_payment_date() %></td>	                  
-	                  <td><%=companyBean.getCp_pay_principal() %></td>
-	                  <td><%=companyBean.getCp_pay_interest_paid() %></td>                  
-	                  <td><%=companyBean.getCp_pay_fees() %></td>
-	                  <td><%=companyBean.getCp_pay_actual_payment_amout() %></td>
-	                  <td><%=companyBean.getCp_pay_actual_rate_return() %></td>
+	                  <td><%=companyBean.getCp_pay_expected_payment_date() %></td>
+	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_principal() %>" pattern="#,###" /></td>	                  
+	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_interest_paid() %>" pattern="#,###" /></td>
+	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_fees() %>" pattern="#,###" /></td>
+	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_actual_payment_amout() %>" pattern="#,###" /></td>
+	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_actual_rate_return() %>" pattern="#,###" /></td>
 	                </tr>
               	</c:forEach>
                 <tr>
@@ -639,7 +648,11 @@
 //          break;
 //        }
 //      });
-    
+    	
+    	setTimeout(function() {
+        	$('.loader').fadeOut(1000);
+      	}, 1000)
+      	
     });
     
     $('#lightBox ul').mousewheel(function(event, delta) {
@@ -676,9 +689,10 @@
       document.getElementById('caption2').innerHTML = slideIndex + '&nbsp;/&nbsp;' + slides2.length;
       $('#lightBox').find('li').removeClass('on');
       $('#lightBox').find('li').eq(slideIndex-1).addClass('on');
+      
     }
   </script>
-  
+	  
   <!-- <script charset="UTF-8">
     var mapWidth = $('.corpor-location').innerWidth();
     var mapHeight = $('.corpor-location').innerHeight();
@@ -690,4 +704,5 @@
       "mapHeight": mapHeight
     }).render();
   </script> -->
+  
   </html>

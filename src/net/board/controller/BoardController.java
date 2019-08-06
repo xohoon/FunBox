@@ -63,14 +63,10 @@ public class BoardController extends HttpServlet implements Servlet{
 			forward = new ActionForward();
 		    forward.setRedirect(false); 
 		    forward.setPath("./board/policy_4.jsp"); 
-		}else if (command.equals("/BoardQnaAction.bd")) { // 1:1문의 등록
-			action = new BoardQnaAction();
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
+		}else if (command.equals("/Policy_4.bd")){ 
+			forward = new ActionForward();
+		    forward.setRedirect(false); 
+		    forward.setPath("./board/policy_4.jsp"); 
 		}else if (command.equals("/BoardQnaList.bd")) { // 1:1문의 리스트
 			action = new BoardQnaList();
 			try {
@@ -78,7 +74,6 @@ public class BoardController extends HttpServlet implements Servlet{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
 		}else if (command.equals("/ListAction.bd")) { // 메인 지도에서 지역 선택하면 해당하는 기업리스트 불러오기
 			action = new ListAction();
 			try {
@@ -95,7 +90,7 @@ public class BoardController extends HttpServlet implements Servlet{
 				e.printStackTrace();
 			}
 			
-		}else if (command.equals("/Faq.bd")) { // 고객지원 - FAQ
+		}else if (command.equals("/Faq.bd")) { // 고객지원 - FAQ 리스트 불러오기 윤식
 			action = new FaqAction();
 			try {
 				forward = action.execute(request, response);

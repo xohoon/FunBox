@@ -7,7 +7,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="net.page.dto.MainPageDateOfOpenVO"%>
 <%@page import="net.page.dto.MainPageDeadLineVO"%>
-<%@page import="mapperController.mapper"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -17,7 +16,6 @@
 	List<Main_SlideVO> slideVO = (List<Main_SlideVO>)request.getAttribute("slideVO");
 	List<Main_LikeVO> likeVO = (List<Main_LikeVO>)request.getAttribute("likeVO");
 	Main_CityVO cityVO = (Main_CityVO)request.getAttribute("cityVO");
-	mapper mapper = new mapper();
 %>
 
 <!DOCTYPE html>
@@ -36,8 +34,10 @@
       <script src="./js/html5.js"></script>
    <![endif]-->
   <link href="css/common.css" rel="stylesheet" type="text/css">
+  <link href="css/loader.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" href="./css/slick.css">
   <link rel="stylesheet" type="text/css" href="./css/slick-theme.css">
+  
 
   <link href="css/index.css" rel="stylesheet">
   <script src="js/jquery-3.1.1.min.js"></script>
@@ -46,6 +46,13 @@
 </head>
 
 <body>
+ <div class="loader">
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+    <div class="loadercircle"></div>
+  </div>
 <input type="hidden" id="select_k" value="0">
   <div id="wrap">
     <header></header>
@@ -156,10 +163,13 @@
 	            <p>${likeVO.lk_cp_branch }</p>
 	          </div>
 	          <div class="gage">
-	            <div class="per"><span><fmt:parseNumber value ="${likeVO.lk_cp_percent }" integerOnly ="true" /> 
-	            </span>%</div>
+	            <div class="per">
+	            	<span><fmt:parseNumber value ="${likeVO.lk_cp_percent }" integerOnly ="true" /></span>%
+	            </div>	            
 	            <div class="gage_full">
-	              <div class="gage_fill"></div>
+	              <div class="gage_fill">
+	              	<span></span>
+	              </div>
 	            </div>
 	            <div>
 	              <span class="p_amt"><span><fmt:formatNumber value="${likeVO.lk_cp_current_amount}" pattern="#,###" />
@@ -240,16 +250,18 @@
 	                <p>${mainPageDeadLineVO.cp_branch }</p>
               	</div>
               	<div class="gage">
-              		<div class="per"><span><fmt:parseNumber value ="${mainPageDeadLineVO.persent }" integerOnly ="true" />
-              		</span>%
+              		<div class="per"><span><fmt:parseNumber value ="${mainPageDeadLineVO.persent }" integerOnly ="true" /></span>%
               			<ul id="timer_${mainPageDeadLineVO.cp_idx }">
               				<li><span id="days"></span>일</li>
 		                    <li><span id="hours"></span> :</li>
 		                    <li><span id="minutes"></span> :</li>
 		                    <li><span id="seconds"></span></li>		                    
               			</ul>
+              		</div>
               			<div class="gage_full">
-                  			<div class="gage_fill"></div>
+                  			<div class="gage_fill">
+                  				<span></span>
+                  			</div>                  			
                 		</div>
                 		<div>
 		                  <span class="p_amt"><span><fmt:formatNumber value="${mainPageDeadLineVO.iv_current_amount }" pattern="#,###" />
@@ -258,7 +270,7 @@
 		                  </span> P</span>
 		                  <span class="d_day">D-<span id="DDay_${mainPageDeadLineVO.cp_idx }">1</span></span>
 		                </div>
-              		</div>
+              		
               	</div>
               	<div class="reward_per">
               		수익률<span>${mainPageDeadLineVO.cp_monthly_profit}%</span>
@@ -430,6 +442,10 @@ function city_click() {
         var classname = $(this).attr('class')
         $('#map .' + classname).css('color', '#73a6d6').css('transform', 'scale(1)');
       });
+      
+      setTimeout(function() {
+          $('.loader').fadeOut(1000);
+        }, 1000)
     });
     //지도
     

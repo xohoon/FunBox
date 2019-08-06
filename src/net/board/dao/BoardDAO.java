@@ -347,22 +347,30 @@ public class BoardDAO {
 		return null;
 	}
 
+	// 윤식추가 쿼리문 통일
 	// 고객지원 - FAQ 불러오기
-	public ArrayList<FaqVO> getFaq(int category, int startRow, int pageSize) throws Exception {
-		String sql = "select title,content from faq where category=? order by reg_date_time desc limit " + startRow
-				+ ", " + pageSize;
+	// @SuppressWarnings({ "unchecked", "unused" })
+	public ArrayList<FaqVO> getFaq(String category, int startRow, int pageSize) throws Exception {
 		ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
+		// 0을 넣었을때 다른 sql 구문이 돌수 있게 하자
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
+		String sql = "select title,content from faq where category=? order by reg_date_time desc limit " + startRow
+				+ ", " + pageSize;
 
 		try {
-			pstm = conn.prepareStatement(sql);
-			pstm.setInt(1, category);
-			rs = pstm.executeQuery();
+			if (category.equals("0")) {
+				sql = "select * from faq order by reg_date_time desc limit " + startRow + "," + pageSize;
+				pstm = conn.prepareStatement(sql);
+				rs = pstm.executeQuery();
+			} else {
+				pstm = conn.prepareStatement(sql);
+				pstm.setString(1, category);
+				rs = pstm.executeQuery();
+			}
 
 			while (rs.next()) {
 				FaqVO faq = new FaqVO();
-
 				faq.setTitle(rs.getString("title"));
 				faq.setContent(rs.getString("content"));
 				faq_list.add(faq);
@@ -384,15 +392,16 @@ public class BoardDAO {
 				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
 		}
+
 		return null;
 	}
 
+	// 윤식 추가
 	// FAQ 검색기능 count
 	public int searchFaqCount(String keyword, int category) {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
 		int count = 0;
 
 		try {// 실행
@@ -433,37 +442,38 @@ public class BoardDAO {
 		return 0;
 	}
 
-	
-	// FAQ 검색기능 추가
-    public ArrayList<FaqVO> searchFaq(String keyword, int category, int startRow, int pageSize){
-    	
-    	PreparedStatement pstmt = null;
-		ResultSet rs = null;
-        ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
-       
-        try{//실행
-        	String sql ="select title,content,category from faq ";
-        	
-        	if(keyword != null && !keyword.equals("") && category != 0){
-        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and category=? order by reg_date_time desc limit "+startRow+","+pageSize;
-        	}else{//모든 레코드 검색
-        		sql +="WHERE title LIKE '%"+keyword.trim()+"%' and (category=? or 1 or 2 or 3) order by reg_date_time desc limit "+startRow+","+ pageSize;
-        	}
+	public ArrayList<FaqVO> searchFaq(String keyword, int category, int startRow, int pageSize) {
 
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, category);
-            rs = pstmt.executeQuery();
-            System.out.println(pstmt);
-            
-            while(rs.next()){
-            	FaqVO faq = new FaqVO();
-               
-            	faq.setTitle(rs.getString("title"));
-            	faq.setContent(rs.getString("content"));
-               
-                faq_list.add(faq);
-            }
-        }catch (Exception ex) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
+
+		try {// 실행
+			String sql = "select title,content,category from faq ";
+
+			if (keyword != null && !keyword.equals("") && category != 0) {
+				sql += "WHERE title LIKE '%" + keyword.trim() + "%' and category=? order by reg_date_time desc limit "
+						+ startRow + "," + pageSize;
+			} else {// 모든 레코드 검색
+				sql += "WHERE title LIKE '%" + keyword.trim()
+						+ "%' and (category=? or 1 or 2 or 3) order by reg_date_time desc limit " + startRow + ","
+						+ pageSize;
+			}
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, category);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+
+			while (rs.next()) {
+				FaqVO faq = new FaqVO();
+
+				faq.setTitle(rs.getString("title"));
+				faq.setContent(rs.getString("content"));
+
+				faq_list.add(faq);
+			}
+		} catch (Exception ex) {
 			System.out.println("searchFaq ERROR: " + ex);
 		} finally {
 			try {
@@ -477,181 +487,181 @@ public class BoardDAO {
 				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
 		}
-        return faq_list;
-    } 
+		return faq_list;
+	}
 
 	/////////////////////// 유정 추가 end///////////////////////
 
 	//////////////////// 태훈 추가 start ////////////////////////
 
-    // 태훈 - 기업 리스트(전체 리스트 가져오기)
- 	public ArrayList<Board_Search_ListVO> ListInfo() throws Exception {
+	// 태훈 - 기업 리스트(전체 리스트 가져오기)
+	public ArrayList<Board_Search_ListVO> ListInfo() throws Exception {
 
- 		PreparedStatement pstmt = null;
- 		ResultSet rs = null;
- 		ArrayList<Board_Search_ListVO> Search_list = new ArrayList<Board_Search_ListVO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Board_Search_ListVO> Search_list = new ArrayList<Board_Search_ListVO>();
 
- 		try {
- 			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount "
- 					+ "FROM company as cp, company_invest as cp_iv " + "WHERE cp.cp_idx = cp_iv.cp_idx "
- 					+ "ORDER BY cp_reg_datetime DESC";
+		try {
+			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount "
+					+ "FROM company as cp, company_invest as cp_iv " + "WHERE cp.cp_idx = cp_iv.cp_idx "
+					+ "ORDER BY cp_reg_datetime DESC";
 
- 			pstmt = conn.prepareStatement(sql);
- 			rs = pstmt.executeQuery();
- 			System.out.println(pstmt);
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
 
- 			while (rs.next()) {
- 				Board_Search_ListVO listVO = new Board_Search_ListVO();
+			while (rs.next()) {
+				Board_Search_ListVO listVO = new Board_Search_ListVO();
 
- 				listVO.setSearch_cp_branch(rs.getString("cp_branch"));
- 				listVO.setSearch_cp_current_amount(rs.getString("iv_current_amount"));
- 				listVO.setSearch_cp_goal_amount(rs.getString("iv_goal_amount"));
- 				listVO.setSearch_cp_idx(rs.getString("cp_idx"));
- 				listVO.setSearch_cp_name(rs.getString("cp_name"));
- 				listVO.setSearch_cp_percent(rs.getString("percent"));
- 				listVO.setSearch_cp_profit(rs.getString("cp_monthly_profit"));
- 				listVO.setSearch_cp_sector(rs.getString("cp_sector"));
+				listVO.setSearch_cp_branch(rs.getString("cp_branch"));
+				listVO.setSearch_cp_current_amount(rs.getString("iv_current_amount"));
+				listVO.setSearch_cp_goal_amount(rs.getString("iv_goal_amount"));
+				listVO.setSearch_cp_idx(rs.getString("cp_idx"));
+				listVO.setSearch_cp_name(rs.getString("cp_name"));
+				listVO.setSearch_cp_percent(rs.getString("percent"));
+				listVO.setSearch_cp_profit(rs.getString("cp_monthly_profit"));
+				listVO.setSearch_cp_sector(rs.getString("cp_sector"));
 
- 				Search_list.add(listVO);
- 			}
- 			return Search_list;
+				Search_list.add(listVO);
+			}
+			return Search_list;
 
- 		} catch (Exception ex) {
- 			System.out.println("Board_Search_ListVO ERROR: " + ex);
- 		} finally {
- 			try {
- 				if (rs != null)
- 					rs.close();
- 				if (pstmt != null)
- 					pstmt.close();
- 				if (conn != null)
- 					conn.close();
- 			} catch (Exception e) {
- 				System.out.println("연결 해제 실패: " + e.getMessage());
- 			}
- 		}
- 		return null;
+		} catch (Exception ex) {
+			System.out.println("Board_Search_ListVO ERROR: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+		return null;
 
- 	}
+	}
 
- 	@SuppressWarnings({ "unchecked", "unused" })
- 	public JSONArray Search_ListInfo(List<String> list_all, String select_value,int page) throws Exception {
- 		if (page < 0) {
- 			return null;
- 		}
- 		int n = 8*page;
- 		System.out.println("n의값 :: " + n);
- 		
- 		PreparedStatement pstmt = null;
- 		ResultSet rs = null;
- 		// ArrayList<Board_Search_ListVO> search_list = new
- 		// ArrayList<Board_Search_ListVO>();
- 		JSONArray jsonArr = new JSONArray();
+	@SuppressWarnings({ "unchecked", "unused" })
+	public JSONArray Search_ListInfo(List<String> list_all, String select_value, int page) throws Exception {
+		if (page < 0) {
+			return null;
+		}
+		int n = 8 * page;
+		System.out.println("n의값 :: " + n);
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		// ArrayList<Board_Search_ListVO> search_list = new
+		// ArrayList<Board_Search_ListVO>();
+		JSONArray jsonArr = new JSONArray();
 // 		System.out.println("DAO ALL>>1" + list_all);
 // 		System.out.println("DAO value>>1" + select_value);
- 		// pstmt 변수로 지정
- 		int pstmt_num = 0;
+		// pstmt 변수로 지정
+		int pstmt_num = 0;
 
- 		String nothing = "검색어없음";
+		String nothing = "검색어없음";
 
- 		for (int i = 0; i < list_all.size(); i++) {
- 			if (list_all.get(i).equals(nothing)) {
- 				list_all.remove(i);
- 			}
- 		}
+		for (int i = 0; i < list_all.size(); i++) {
+			if (list_all.get(i).equals(nothing)) {
+				list_all.remove(i);
+			}
+		}
 
- 		try {
- 			// 쪼인해도되고안해도되고
- 			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime "
- 					+ "FROM company as cp " + "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
+		try {
+			// 쪼인해도되고안해도되고
+			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime "
+					+ "FROM company as cp " + "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
 
- 			if (list_all != null) {
- 				for (int i = 0; i < list_all.size(); i++) {
- 					if (i == 0) {
- 						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
- 							sql += "WHERE CONCAT(cp.cp_funding_status) LIKE ? ";
- 						}
- 						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
- 							sql += "WHERE CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
- 						}
- 						if (list_all.get(i) == "30") {
- 							sql += "WHERE CONCAT(cp.cp_overdue_status) LIKE ? ";
- 						}
- 						sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
- 					} else {
- 						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
- 							sql += "OR CONCAT(cp.cp_funding_status) LIKE ? ";
- 						}
- 						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
- 							sql += "OR CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
- 						}
- 						if (list_all.get(i) == "30") {
- 							sql += "OR CONCAT(cp.cp_overdue_status) LIKE ? ";
- 						}
- 						sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
- 					}
- 				}
- 				if (select_value.equals("1")) {
- 					sql += "ORDER BY cp.cp_recommand_count DESC";
- 				} else if (select_value.equals("2")) {
- 					sql += "ORDER BY cp.cp_monthly_profit DESC";
- 				} else {
- 					sql += "ORDER BY cp.cp_reg_datetime DESC";
- 				}
- 			} else {
- 				if (select_value.equals("1")) {
- 					sql += "ORDER BY cp.cp_recommand_count DESC";
- 				} else if (select_value.equals("2")) {
- 					sql += "ORDER BY cp.cp_monthly_profit DESC";
- 				} else {
- 					sql += "ORDER BY cp.cp_reg_datetime DESC";
- 				}
- 			}
- 			sql += " limit ?, 8";
+			if (list_all != null) {
+				for (int i = 0; i < list_all.size(); i++) {
+					if (i == 0) {
+						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
+							sql += "WHERE CONCAT(cp.cp_funding_status) LIKE ? ";
+						}
+						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
+							sql += "WHERE CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
+						}
+						if (list_all.get(i) == "30") {
+							sql += "WHERE CONCAT(cp.cp_overdue_status) LIKE ? ";
+						}
+						sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+					} else {
+						if (list_all.get(i) == "10" || list_all.get(i) == "11" || list_all.get(i) == "12") {
+							sql += "OR CONCAT(cp.cp_funding_status) LIKE ? ";
+						}
+						if (list_all.get(i) == "21" || list_all.get(i) == "22") {
+							sql += "OR CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
+						}
+						if (list_all.get(i) == "30") {
+							sql += "OR CONCAT(cp.cp_overdue_status) LIKE ? ";
+						}
+						sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+					}
+				}
+				if (select_value.equals("1")) {
+					sql += "ORDER BY cp.cp_recommand_count DESC";
+				} else if (select_value.equals("2")) {
+					sql += "ORDER BY cp.cp_monthly_profit DESC";
+				} else {
+					sql += "ORDER BY cp.cp_reg_datetime DESC";
+				}
+			} else {
+				if (select_value.equals("1")) {
+					sql += "ORDER BY cp.cp_recommand_count DESC";
+				} else if (select_value.equals("2")) {
+					sql += "ORDER BY cp.cp_monthly_profit DESC";
+				} else {
+					sql += "ORDER BY cp.cp_reg_datetime DESC";
+				}
+			}
+			sql += " limit ?, 8";
 
- 			pstmt = conn.prepareStatement(sql);
- 			System.out.println(">>>>>>>" + sql);
- 			if (list_all != null) {
- 				int i = 0;
- 				for (i=0; i < list_all.size(); i++) {
- 					pstmt.setString(i + 1, "%"+list_all.get(i)+"%");
- 				}
- 				pstmt.setInt(i+1, n);
- 				System.out.println("IIIIIIIIII>"+i);
- 			}
- 			rs = pstmt.executeQuery();
+			pstmt = conn.prepareStatement(sql);
+			System.out.println(">>>>>>>" + sql);
+			if (list_all != null) {
+				int i = 0;
+				for (i = 0; i < list_all.size(); i++) {
+					pstmt.setString(i + 1, "%" + list_all.get(i) + "%");
+				}
+				pstmt.setInt(i + 1, n);
+				System.out.println("IIIIIIIIII>" + i);
+			}
+			rs = pstmt.executeQuery();
 
- 			while (rs.next()) {
- 				JSONObject jsonObj = new JSONObject();
- 				jsonObj.put("cp_branch", rs.getString("cp_branch"));
- 				jsonObj.put("cp_current_amount", rs.getString("iv_current_amount"));
- 				jsonObj.put("cp_goal_amount", rs.getString("iv_goal_amount"));
- 				jsonObj.put("cp_idx", rs.getString("cp_idx"));
- 				jsonObj.put("cp_name", rs.getString("cp_name"));
- 				jsonObj.put("percent", rs.getString("percent"));
- 				jsonObj.put("cp_monthly_profit", rs.getString("cp_monthly_profit"));
- 				jsonObj.put("cp_sector", rs.getString("cp_sector"));
+			while (rs.next()) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("cp_branch", rs.getString("cp_branch"));
+				jsonObj.put("cp_current_amount", rs.getString("iv_current_amount"));
+				jsonObj.put("cp_goal_amount", rs.getString("iv_goal_amount"));
+				jsonObj.put("cp_idx", rs.getString("cp_idx"));
+				jsonObj.put("cp_name", rs.getString("cp_name"));
+				jsonObj.put("percent", rs.getString("percent"));
+				jsonObj.put("cp_monthly_profit", rs.getString("cp_monthly_profit"));
+				jsonObj.put("cp_sector", rs.getString("cp_sector"));
 
- 				jsonArr.add(jsonObj);
- 			}
- 			return jsonArr;
+				jsonArr.add(jsonObj);
+			}
+			return jsonArr;
 
- 		} catch (Exception ex) {
- 			System.out.println("검색 ERROR: " + ex);
- 		} finally {
- 			try {
- 				if (rs != null)
- 					rs.close();
- 				if (pstmt != null)
- 					pstmt.close();
- 				if (conn != null)
- 					conn.close();
- 			} catch (Exception e) {
- 				System.out.println("연결 해제 실패: " + e.getMessage());
- 			}
- 		}
- 		return null;
- 	}
+		} catch (Exception ex) {
+			System.out.println("검색 ERROR: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+		return null;
+	}
 
 	//////////////////// 태훈 추가 end //////////////////////////
 	//////////////////// 신규 추가 start //////////////////////////

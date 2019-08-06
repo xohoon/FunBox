@@ -11,6 +11,7 @@ import net.company.dto.ApplicationVO;
 import net.company.dto.CompanyBean;
 import net.company.dto.CompanyFileVO;
 import net.company.dto.CompanyListVO;
+import net.company.dto.Company_pay_scheduleVO;
 import net.member.dto.MemberInvestVO;
 import net.page.dto.MainPageDateOfOpenVO;
 import net.page.dto.MainPageDeadLineVO;
@@ -768,6 +769,61 @@ public class CompanyDAO {
 			}
 		}
 
+		return null;
+	}
+	
+	/// 윤식 추가 기업 스케줄 리스트 불러오기
+	public ArrayList<Company_pay_scheduleVO> getCompanySchedule(int cp_idx) {
+		String sql = " select * from company_pay_schedule WHERE cp_idx = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Company_pay_scheduleVO> CompanyScheduleList = new ArrayList<Company_pay_scheduleVO>();
+		System.out.println("get Comapnysche cp_idx : " + cp_idx);
+		
+		try {	
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cp_idx);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+
+			while (rs.next()) {
+				Company_pay_scheduleVO companyscheduleVO = new Company_pay_scheduleVO();
+				
+				companyscheduleVO.setCp_pay_count(rs.getString("cp_pay_count"));
+				companyscheduleVO.setCp_pay_expected_payment_date(rs.getString("cp_pay_expected_payment_date"));
+				companyscheduleVO.setCp_pay_principal(rs.getString("cp_pay_principal"));
+				companyscheduleVO.setCp_pay_interest_paid(rs.getString("cp_pay_interest_paid"));
+				companyscheduleVO.setCp_pay_fees(rs.getString("cp_pay_fees"));
+				companyscheduleVO.setCp_pay_actual_payment_amout(rs.getString("cp_pay_actual_payment_amout"));
+				companyscheduleVO.setCp_pay_actual_rate_return(rs.getString("cp_pay_actual_rate_return"));
+							
+				CompanyScheduleList.add(companyscheduleVO);
+				
+			}
+			
+			return CompanyScheduleList;
+
+		} catch (Exception ex) {
+			System.out.println("getCompanySchedule 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+				
+		return null;
+	}
+
+	
+	private PreparedStatement setInt(int i, int cp_idx) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
