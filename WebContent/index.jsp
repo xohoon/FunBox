@@ -374,6 +374,7 @@ function city_click() {
 
       var i = 1;
 
+      
       setInterval(function() {
         var liheight = $('.live_chart li').height();
         
@@ -382,7 +383,7 @@ function city_click() {
           $('.live_chart li:nth-child(' + i + ') *').fadeOut(0);
           $('.live_chart li:nth-child(' + i + ') *').css('transform', 'translateY('+ liheight*4 +'%)');
 
-          $('.live_chart li:nth-child(' + i + ') a').text('바뀐 택스트')
+          $('.live_chart li:nth-child(' + i + ') a').text(cp_name_list[i-1]);
           /*변수 값 바꾸는 스크립트를 넣어주시오*/
         }, 800);
         setTimeout(function() {
@@ -399,11 +400,13 @@ function city_click() {
           i = i + 1;
           if (i == 11) {
             i = 1;
+            realtime_like();
           }
+//	alert("마지막3");
         }, 1000);
+//	alert("마지막1");
 
       }, 2000)
-
 
       $('.live_chart span:contains(▼)').css({
         'color': '#ff9124'

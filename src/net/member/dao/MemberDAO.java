@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -1047,21 +1048,13 @@ public class MemberDAO {
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 
-				while (rs.next()) {
+				while(rs.next()) {
 					JSONObject jsonObj = new JSONObject();
-					jsonObj.put("cp_name1", rs.getString("cp_name"));
-					jsonObj.put("cp_name2", rs.getString("cp_name"));
-					jsonObj.put("cp_name3", rs.getString("cp_name"));
-					jsonObj.put("cp_name4", rs.getString("cp_name"));
-					jsonObj.put("cp_name5", rs.getString("cp_name"));
-					jsonObj.put("cp_name6", rs.getString("cp_name"));
-					jsonObj.put("cp_name7", rs.getString("cp_name"));
-					jsonObj.put("cp_name8", rs.getString("cp_name"));
-					jsonObj.put("cp_name9", rs.getString("cp_name"));
-					jsonObj.put("cp_name10", rs.getString("cp_name"));
+					jsonObj.put("cp_name", rs.getString("cp_name"));
 					
 					jsonArr.add(jsonObj);
 				}
+				System.out.println(">>>json"+jsonArr);
 				return jsonArr;
 				
 			} catch (Exception ex) {
