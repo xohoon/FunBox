@@ -153,7 +153,15 @@
 						<c:choose>
 							<c:when test="${transaction.td_to_address == 'durlsmswlrkqwnthrkemfdjrksmszksdlqslekdqmfkzpttlftlrksqhrlehwkfdksehlrhdkwnalclfrjtrkxwyejejrlfdjdirlfdlwhwjfdlehlsmswlqhftndlTtmqslek'}"  >
 								<td class="plus">입금</td>
-								<td>${transaction.td_status}</td>
+								<c:if test="${transaction.td_status == '0'}">
+									<td>대기</td>
+								</c:if>
+								<c:if test="${transaction.td_status == '1'}">
+									<td>수락</td>
+								</c:if>
+								<c:if test="${transaction.td_status == '2'}">
+									<td>취소</td>
+								</c:if>
 								<div>
 									<td>${transaction.td_to_address}</td>
 								</div>
@@ -162,7 +170,15 @@
 							</c:when>
 							<c:otherwise> 
 								<td class="minus">출금</td>
-								<td>${transaction.td_status}</td>
+								<c:if test="${transaction.td_status == '0'}">
+									<td>대기</td>
+								</c:if>
+								<c:if test="${transaction.td_status == '1'}">
+									<td>수락</td>
+								</c:if>
+								<c:if test="${transaction.td_status == '2'}">
+									<td>취소</td>
+								</c:if>
 								<td>${transaction.td_to_address}</td>
 								<td class="minus">${transaction.td_amount}</td>
 								<td>${transaction.td_date_time}</td>
