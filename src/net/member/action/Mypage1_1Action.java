@@ -8,16 +8,16 @@ import net.common.action.ActionForward;
 
 
 // 유정 추가 - 자산관리 - 포인트 관리
-public class Mypage2_2Action implements Action {
+public class Mypage1_1Action implements Action {
 
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		ActionForward forward = new ActionForward();
 
-		System.out.println("Mypage2_2Action OK!");
+		System.out.println("Mypage1_1Action OK!");
 		
 		forward.setRedirect(false);
-		forward.setPath("./member/mypage2_2.jsp");
+		forward.setPath("./member/mypage1_1.jsp");
 		return forward;
 	}
 }
