@@ -301,7 +301,7 @@ function makeMoreCompanyListHTML(resultData) {
 		Dday_text = "";
 		Dday = "편딩 기간 종료"
 	}
-	companyListHTML += "<div class='corp_box' onclick='location.href='./CorporationAction.cp?cp_idx="
+	companyListHTML += "<div class='corp_box' onclick=location.href='./CorporationAction.cp?cp_idx="
 			+ resultData.cp_idx
 			+ "'><div class='c_img'><img src='./img/row1_anotherminae.jpg' alt=''></div><div class='c_txt'><p>"
 			+ resultData.cp_sector

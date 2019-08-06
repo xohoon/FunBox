@@ -456,7 +456,7 @@ function city_click() {
 		  var timer_hour = document.getElementById('timer_'+cp_idx).childNodes.item(3).childNodes.item(0);
 		  var timer_minute = document.getElementById('timer_'+cp_idx).childNodes.item(5).childNodes.item(0);
 		  var timer_second = document.getElementById('timer_'+cp_idx).childNodes.item(7).childNodes.item(0);
-		  var DDay = document.getElementById('DDay_'+cp_idx);
+		  var DDay_tag = document.getElementById('DDay_'+cp_idx);
 		  let countDown = new Date(stopDate).getTime(),
 		  
 		  x = setInterval(function() {
@@ -465,11 +465,33 @@ function city_click() {
 			  timer_day.innerText = Math.floor(distance / (day)),
 			  timer_hour.innerText = Math.floor((distance % (day)) / (hour)),
 			  timer_minute.innerText = Math.floor((distance % (hour)) / (minute)),
-			  timer_second.innerText = Math.floor((distance % (minute)) / second),
-			  DDay.innerText= Math.floor(distance / (day))
-			  
+			  timer_second.innerText = Math.floor((distance % (minute)) / second)
+			  var Dday = Math.floor(distance / (day));
+			  if (Dday == 0) {
+				  DDay_tag.parentNode.innerText = '펀딩 기간 종료';
+			  }else{
+				  DDay_tag.innerText = Dday;
+			  }
 			  }, second)
 	  };
+<<<<<<< HEAD
+=======
+	  
+	  function setDday(cp_idx,stopDate){
+		  var DDay_tag = document.getElementById('like_DDay_'+cp_idx);
+		  let countDown = new Date(stopDate).getTime();
+		  let now = new Date().getTime();
+		  distance = countDown - now;
+		  var Dday = Math.floor(distance / (day));
+		  if (Dday == 0) {
+			  DDay_tag.parentNode.innerText = '펀딩 기간 종료';
+		  }else{
+			  DDay_tag.innerText = Dday;
+		  }
+	  };
+	  
+	  
+>>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
   </script>
 
 </body></html>
