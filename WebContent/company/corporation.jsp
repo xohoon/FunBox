@@ -588,9 +588,29 @@
       $(".like").click(function(){
     	  var idx = <%=idx %>;
     	  if(idx == null){
-    		  alert('로그인이 필요한 서비스입니다.');
+    		  swal('로그인이 필요한 서비스입니다.');
     	  }else{
 	        if($(".like").val() == '0'){
+	        	swal({
+	        		title: "즐겨찾기에 추가하시겠습니까?",
+	        		text: "나의 즐겨찾기 목록에 추가됩니다.",
+	        		icon: "warning",
+	        		buttons: true
+	        	}).then((like_q) => {
+	        		if(like_q) {
+		        		swal("즐겨찾기에 추가되었습니다.", {
+		        			icon: "success",
+		        		});
+		        		$(this).val('1');
+				        $(this).toggleClass('on');
+				        bookmark('1');
+	        		}else {
+	        			swal("취소되었습니다.");
+	        			$(this).val('0');
+		        		$(this).removeClass('on');
+	        		}
+	        	});
+	        	/* 
 	        	like_q = confirm('즐겨찾기에 추가하시겠습니까?');
 	        	if(like_q){
 		        	$(this).val('1');
@@ -600,6 +620,7 @@
 	        		$(this).val('0');
 	        		$(this).removeClass('on');
 	        	}
+	        	 */
 	        }
 	        else{
 	        	like_q = confirm('즐겨찾기에서 제외하시겠습니까?');
@@ -631,7 +652,7 @@
     		 
     		 success : function(data){
     			 if(String(data.result) == "add_likebox_success"){
-    				 alert('즐겨찾기에 추가되었습니다.');
+//    				 alert('즐겨찾기에 추가되었습니다.');
     				 return false;
     			 }else if(String(data.result) == "add_likebox_fail"){
     				 alert('즐겨찾기 추가에 실패했습니다.\n다시 시도해주세요.');

@@ -2,9 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="net.member.dto.MemberTransactionVO"%>
 <!DOCTYPE html>
 <html lang="kr">
-
+<% 
+	ArrayList<MemberTransactionVO> transaction = (ArrayList<MemberTransactionVO>)request.getAttribute("transaction");
+%>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
@@ -22,6 +26,15 @@
 <script src="js/clipboard.min.js"></script>
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="member/js/mypage_functions.js"></script>
+ <style>
+	div td {
+  	overflow: hidden; 
+  	text-overflow: ellipsis;
+  	white-space: nowrap; 
+  	width: 300px;
+  	height: 20px;
+	}
+	</style>
 <script>
 	$(function() {
 		$('header').load('./header/header.jsp')
@@ -135,22 +148,44 @@
 							<td>수량</td>
 							<td>날짜</td>
 						</tr>
+						<c:forEach var = "transaction" items="${transaction}">
 						<tr>
-							<td class="plus">입금</td>
-							<td>진행</td>
-							<td>18ThfiqFJkbhLWcfBoZ8geUch2NAgtXzna</td>
-							<td class="plus">+100,000coin</td>
-							<td>2019.07.02<br>10:01:55
-							</td>
-						</tr>
-						<tr>
-							<td class="minus">출금</td>
-							<td>완료</td>
-							<td>18ThfiqFJkbhLWcfBoZ8geUch2NAgtXzna</td>
-							<td class="minus">-100,000coin</td>
-							<td>2019.07.02<br>10:01:55
-							</td>
-						</tr>
+						<c:choose>
+							<c:when test="${transaction.td_to_address == 'durlsmswlrkqwnthrkemfdjrksmszksdlqslekdqmfkzpttlftlrksqhrlehwkfdksehlrhdkwnalclfrjtrkxwyejejrlfdjdirlfdlwhwjfdlehlsmswlqhftndlTtmqslek'}"  >
+								<td class="plus">입금</td>
+								<c:if test="${transaction.td_status == '0'}">
+									<td>대기</td>
+								</c:if>
+								<c:if test="${transaction.td_status == '1'}">
+									<td>수락</td>
+								</c:if>
+								<c:if test="${transaction.td_status == '2'}">
+									<td>취소</td>
+								</c:if>
+								<div>
+									<td>${transaction.td_to_address}</td>
+								</div>
+								<td class="plus">${transaction.td_amount}</td>
+								<td>${transaction.td_date_time}</td>
+							</c:when>
+							<c:otherwise> 
+								<td class="minus">출금</td>
+								<c:if test="${transaction.td_status == '0'}">
+									<td>대기</td>
+								</c:if>
+								<c:if test="${transaction.td_status == '1'}">
+									<td>수락</td>
+								</c:if>
+								<c:if test="${transaction.td_status == '2'}">
+									<td>취소</td>
+								</c:if>
+								<td>${transaction.td_to_address}</td>
+								<td class="minus">${transaction.td_amount}</td>
+								<td>${transaction.td_date_time}</td>
+							</c:otherwise>
+						</c:choose>
+					  </tr>
+					</c:forEach>		
 					</table>
 					<a href="#" class="prev"><i class="fas fa-caret-left"></i></a>
 					<ul class="pager">

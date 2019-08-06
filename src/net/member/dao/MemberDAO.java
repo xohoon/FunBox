@@ -19,11 +19,9 @@ import net.member.dto.MemberBean;
 import net.member.dto.MemberInvestCompanyVO;
 import net.member.dto.MemberInvestPageVO;
 import net.member.dto.MemberIplog;
+import net.member.dto.MemberTransactionVO;
 import net.member.dto.Member_headerVO;
 import net.member.dto.Member_likeboxVO;
-import net.money.dto.PointTransactionVO;
-import net.money.dto.TokenDepositVO;
-import net.money.dto.TokenTransaction;
 
 public class MemberDAO {
 
@@ -1266,9 +1264,7 @@ public class MemberDAO {
 			}
 
 		} catch (Exception ex) {
-
-			System.out.println("get_Find_pin 에러: " + ex);
-
+			System.out.println("getMyPageInvestment 에러: " + ex);
 		} finally {
 			try {
 				if (rs != null)
@@ -1308,7 +1304,7 @@ public class MemberDAO {
 			return memberInvestCompanyVOList;
 
 		} catch (Exception ex) {
-
+			
 		} finally {
 			try {
 				if (rs != null)
@@ -1358,7 +1354,54 @@ public class MemberDAO {
 
 		return false;
 	}
-	
+	//////////////김윤식 추가 마이페이지 3 거래내역 가져오기 ///////////////////
+	public ArrayList<MemberTransactionVO> getTranscationList(String mb_idx) {
+		String sql = "SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_deposit WHERE mb_idx = ? UNION " 
+					 +"SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_withdraw WHERE mb_idx = ? ORDER BY td_date_time DESC"; 
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("mb idx : " + mb_idx);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mb_idx);
+			pstmt.setString(2, mb_idx);
+			rs = pstmt.executeQuery();
+			
+			ArrayList<MemberTransactionVO> membertransactionList = new ArrayList<MemberTransactionVO>();	
+			
+			while (rs.next()) {
+				
+				MemberTransactionVO membertransaction = new MemberTransactionVO();
+			
+				membertransaction.setTd_to_address(rs.getString("td_to_address"));
+				membertransaction.setTd_from_address(rs.getString("td_from_address"));
+				membertransaction.setTd_amount(rs.getString("td_amount"));
+				membertransaction.setTd_status(rs.getString("td_status"));
+				membertransaction.setTd_date_time(rs.getString("td_date_time"));
+				membertransactionList.add(membertransaction);
+								
+			}
+			
+			return membertransactionList;					
+
+		} catch (Exception ex) {
+			System.out.println("getTranscationList 에러: " + ex);	
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+
+		return null;
+	}
 	
 	//String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx, tk_price, po_amount, po_content, po_date_time) VALUES (2,1,1,100,?,?,now())";
 	//String sql = "INSERT INTO token_transaction(tk_category, po_idx, tk_amount, tk_price, po_amount, tk_content, tk_date_time) VALUES (3,1,?,10,?,'비고',now())";

@@ -1,7 +1,6 @@
 package net.member.controller;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
@@ -14,6 +13,7 @@ import net.common.action.Action;
 import net.common.action.ActionForward;
 import net.member.action.MainAction;
 import net.member.action.MemberIDCheckAction;
+import net.member.action.MemberInvestcheck;
 import net.member.action.MemberInvestmentListAction;
 import net.member.action.MemberJoinAction;
 import net.member.action.MemberLoginAction;
@@ -21,6 +21,8 @@ import net.member.action.MemberLoginCheckAction;
 import net.member.action.MemberPhoneCheckAction;
 import net.member.action.MemberSelectKeyAction;
 import net.member.action.MemberUpdateAction;
+import net.member.action.Mypage1_1Action;
+import net.member.action.Mypage1_1_1Action;
 import net.member.action.MemberInvestcheck;
 import net.member.action.Mypage2_2Action;
 import net.member.action.MypageChargePointAction;
@@ -30,6 +32,8 @@ import net.member.action.MypagePINCheckAction;
 import net.member.action.MypagePWCheckAction;
 import net.member.action.MypagePWPINCheckAction;
 import net.member.action.MypageSendTokenAction;
+import net.member.action.MypageTransAction;
+import net.member.action.MypageTransAction_s;
 import net.member.action.Point_DepositAction;
 import net.member.action.Point_WithdrawAction;
 import net.member.action.Token_DepositAction;
@@ -80,12 +84,7 @@ public class MemberController extends HttpServlet implements Servlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/find_pin.jsp");
-		}else if (command.equals("/Mypage2_1.mb")) {
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("./member/mypage2_1.jsp");
-		}
-		else if (command.equals("/Mypage2_1_1.mb")) {
+		}else if (command.equals("/Mypage2_1_1.mb")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/mypage2_1_1.jsp");
@@ -101,10 +100,6 @@ public class MemberController extends HttpServlet implements Servlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/mypage2_2_2.jsp");
-		}else if (command.equals("/Mypage3.mb")) {
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("./member/mypage3.jsp");
 		}else if (command.equals("/Mypage4_1.mb")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
@@ -185,6 +180,20 @@ public class MemberController extends HttpServlet implements Servlet {
 			}
 		}else if (command.equals("/Mypage2_2Action.mb")) { 
 			action = new Mypage2_2Action();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/Mypage1_1Action.mb")) { 
+			action = new Mypage1_1Action();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/Mypage1_1_1Action.mb")) { 
+			action = new Mypage1_1_1Action();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
@@ -282,11 +291,23 @@ public class MemberController extends HttpServlet implements Servlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if (command.equals("/Mypage2_1.mb")) { // 윤식 추가
+			action = new MypageTransAction_s();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/Mypage3.mb")) { // 윤식 추가
+			action = new MypageTransAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		
 		/*박신규 끝*/
-		
-		
-		
 		if (forward != null) {
 			if (forward.isRedirect()) {
 				response.sendRedirect(forward.getPath());
