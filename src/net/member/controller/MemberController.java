@@ -1,7 +1,6 @@
 package net.member.controller;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
@@ -21,6 +20,8 @@ import net.member.action.MemberLoginCheckAction;
 import net.member.action.MemberPhoneCheckAction;
 import net.member.action.MemberSelectKeyAction;
 import net.member.action.MemberUpdateAction;
+import net.member.action.Mypage1_1Action;
+import net.member.action.Mypage1_1_1Action;
 import net.member.action.MemberInvestcheck;
 import net.member.action.Mypage2_2Action;
 import net.member.action.MypageChargePointAction;
@@ -185,6 +186,20 @@ public class MemberController extends HttpServlet implements Servlet {
 			}
 		}else if (command.equals("/Mypage2_2Action.mb")) { 
 			action = new Mypage2_2Action();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/Mypage1_1Action.mb")) { 
+			action = new Mypage1_1Action();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/Mypage1_1_1Action.mb")) { 
+			action = new Mypage1_1_1Action();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
