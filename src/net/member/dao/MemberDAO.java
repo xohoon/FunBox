@@ -663,7 +663,7 @@ public class MemberDAO {
 	
 	// 펀딩 철회하기
 	public boolean deleteInvest(int mb_idx, int cp_idx) {
-		String sql = "delete from member_invest where mb_idx=? and where cp_idx=?";
+		String sql = "delete from member_invest where mb_idx=? and cp_idx=?";
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

@@ -119,7 +119,8 @@
         <input class="pincode" type="password" maxlength="1" id="pin06">
         <font id="pin_check" size="2" color="red"></font>
       </div>
-      <input type="button" value="철회하기" onclick="DropCode_chk();">
+      <input type="hidden" name="cp_idx" value="${cp_idx }" id="cp_idx">
+      <input type="button" value="철회하기" id="IvDrop_btn">
     </form>
   </section>
   <section id="a">
