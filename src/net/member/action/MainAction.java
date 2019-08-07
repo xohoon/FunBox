@@ -41,7 +41,6 @@ public class MainAction implements Action {
 		request.setAttribute("slideVO", slideVO);
 		request.setAttribute("mainPageDateOfOpenVOs", mainPageDateOfOpenVOs);
 		request.setAttribute("mainPageDeadLineVOs", mainPageDeadLineVOs);
-		System.out.println(mainPageDeadLineVOs.toString());
 		
 		forward.setRedirect(false);
 		forward.setPath("./index.jsp");

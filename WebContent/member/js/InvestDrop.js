@@ -1,6 +1,7 @@
 /// 태훈 추가 - 투자 철회기능
 var iv_pincode;
 var isRun = false;
+var cp_idx;
 
 $(document).ready(function() {
 	Drop_key();
@@ -14,9 +15,10 @@ function btn_off() {
 
 // 철회 버튼
 function Invest_DropBtn() {
+	cp_idx = $("#cp_idx").val();
 	btn = document.getElementById('IvDrop_btn');
 	$("#IvDrop_btn").on('click', function() {
-		location.href="./MemberIvDrop.mb";
+		location.href="./MemberIvDrop.mb?cp_idx="+cp_idx;
 	});
 	btn.disabled = false;
 }

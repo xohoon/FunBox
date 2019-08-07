@@ -12,6 +12,9 @@ public class InvestDropAction implements Action {
 		
 		ActionForward forward = new ActionForward();		
 		
+		int cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
+		request.setAttribute("cp_idx", cp_idx);
+		
 		forward.setRedirect(false);
 		forward.setPath("./member/mypage1_1.jsp");
 		return forward;
