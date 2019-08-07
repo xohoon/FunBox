@@ -4,7 +4,7 @@ package net.member.dto;
 public class Main_SlideVO {
 
 	private int sl_cp_idx;				// 기업 식별자
-//	private String sl_image;		 기업 이미지
+	private String banner_image;		// 기업 이미지
 	private String sl_cp_name;		// 기업 이름
 	private String sl_cp_branch;	// 기업 지점
 	private String sl_cp_content;	// 기업 소개
@@ -19,6 +19,12 @@ public class Main_SlideVO {
 	}
 	public void setSl_cp_idx(int sl_cp_idx) {
 		this.sl_cp_idx = sl_cp_idx;
+	}
+	public String getBanner_image() {
+		return banner_image;
+	}
+	public void setBanner_image(String banner_image) {
+		this.banner_image = banner_image;
 	}
 	public String getSl_cp_name() {
 		return sl_cp_name;
@@ -38,15 +44,4 @@ public class Main_SlideVO {
 	public void setSl_cp_content(String sl_cp_content) {
 		this.sl_cp_content = sl_cp_content;
 	}
-	@Override
-	public String toString() {
-		return "Main_SlideVO [sl_cp_name=" + sl_cp_name + ", sl_cp_branch=" + sl_cp_branch
-				+ ", sl_cp_content=" + sl_cp_content + "]";
-	}
-	
-	
-
-	
-	
-	
 }

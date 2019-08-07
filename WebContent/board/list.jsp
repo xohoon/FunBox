@@ -282,7 +282,8 @@
     								cp_profit: val.cp_monthly_profit,
     								cp_branch: val.cp_branch,
     								cp_sector: val.cp_sector,
-    								cp_stop_date_time : val.cp_stop_date_time
+    								cp_stop_date_time : val.cp_stop_date_time,
+    								thumbnail_image : val.thumbnail_image
     						}
     						count++;
     						makeMoreCompanyListHTML(resultData);
@@ -368,7 +369,8 @@
     								cp_profit: val.cp_monthly_profit,
     								cp_branch: val.cp_branch,
     								cp_sector: val.cp_sector,
-    								cp_stop_date_time : val.cp_stop_date_time
+    								cp_stop_date_time : val.cp_stop_date_time,
+    								thumbnail_image : val.thumbnail_image
     						}
     						count++;
     						makeMoreCompanyListHTML(resultData);
