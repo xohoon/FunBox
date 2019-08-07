@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 import net.company.dao.CompanyDAO;
+import net.company.dto.CompanyBean;
 import net.company.dto.Company_pay_scheduleVO;
 import net.member.dao.MemberDAO;
 import net.member.dto.MemberInvestCompanyVO;
@@ -117,6 +118,12 @@ public class MemberInvestmentListAction implements Action {
 		// ex) pageGroupSize가 3일 경우 '[1][2][3]'의 페이지그룹번호는 1 이고 '[2][3][4]'의 페이지그룹번호는 2
 		// 이다.
 		int numPageGroup = (int) Math.ceil((double) currentPage / pageGroupSize);
+		
+		
+		CompanyBean company = new CompanyBean();
+		CompanyDAO company_dao2 = new CompanyDAO();
+		company = company_dao2.getCompanyInfo(cp_idx);
+		request.setAttribute("company", company);
 		
 		
 		request.setAttribute("id", mb_id);

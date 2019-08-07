@@ -17,6 +17,7 @@ public class InvestAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		MemberInvestVO member_invest = new MemberInvestVO();
+		
 		boolean result = false;
 
 		System.out.println("InvestAction OK!");
@@ -41,6 +42,7 @@ public class InvestAction implements Action {
 		
 		CompanyDAO company_dao = new CompanyDAO();
 		result = company_dao.MemberInvest(member_invest);
+		
 		
 		if(result==false){
 			System.out.println("투자하기 실패");
