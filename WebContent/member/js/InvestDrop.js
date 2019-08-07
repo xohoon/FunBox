@@ -28,7 +28,8 @@ function Drop_key() {
 }
 
 function DropCode_chk() {
-	iv_pincode = $("#pin01").val()+$("#pin02").val()+$("#pin03").val()+$("#pin04").val()+$("#pin06").val();
+	iv_pincode = $("#pin01").val()+$("#pin02").val()+$("#pin03").val()+$("#pin04").val()+$("#pin05").val()+$("#pin06").val();
+	console.log(">>>"+iv_pincode);
 	if(isRun == true) {
         return;
     }
@@ -38,7 +39,7 @@ function DropCode_chk() {
 		type: "POST",
 		dataType: "JSON",
 		data : {
-			"iv_pincode": iv_pincode
+			"pin": iv_pincode
 		},
 		success: function(data) {
 			if(String(data.result) == "confirm_pin_success"){
@@ -62,32 +63,3 @@ function DropCode_chk() {
 	});
 	
 }
-/*
-function DropInvest() {
-	$.ajax({
-		type: "POST",
-		dataType: "JSON",
-		url: "./MemberIvDrop.mb",
-		data: {
-			"point_sum": point_sum,
-			"session_idx": session_idx
-		},
-		success: function(data) {
-			if(data.result == 1) {
-				alert("포인트충전이 완료되었습니다.");
-				location.href="./Mypage2_2.mb";
-			}else {
-				alert("내용을 정확히 입력해주세요11");
-				location.href="./Mypage2_2.mb";
-			}
-		},
-		error: function(request, status, error) {
-			console.log("request>>"+request);
-			console.log("status>>"+status);
-			console.log("error>>" +error);
-			alert("입금 내용을 정확히 입력해주세요22");
-			location.href="./Mypage2_2.mb";
-		}
-	});
-}
-*/
