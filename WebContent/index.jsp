@@ -53,10 +53,10 @@
     <section id="sec1">
       <div class="inner">
         <div class="regular slider">
-        <c:forEach var="slideVO" items="${slideVO}">
+        <c:forEach var="slideVO" items="${slideVO}" varStatus="status">
 	        <a href="./CorporationAction.cp?cp_idx=${slideVO.sl_cp_idx }">
 	          <div>
-	            <div class="slide slide1">
+	            <div class="slide" id="slide_${status.count }">
 	              <div class="owop"></div>
 	              <div class="txtbox">
 	                <h2>${slideVO.sl_cp_name }</h2>
@@ -84,58 +84,6 @@
         <div class="live_chart">
           <h3>실시간 인기순위</h3>
           <ul class="list_ul">
-          <!-- 
-            <li>
-              <span>1</span>&nbsp;
-              <a href="#">어나더 미네스</a>
-              <span>-</span>
-            </li>
-            <li>
-              <span>2</span>&nbsp;
-              <a href="#">바른생선회</a>
-              <span>-</span>
-            </li>
-            <li>
-              <span>3</span>&nbsp;
-              <a href="#">바른생선회</a>
-              <span>▲ 4</span>
-            </li>
-            <li>
-              <span>4</span>&nbsp;
-              <a href="#">바른생선회</a>
-              <span>-</span>
-            </li>
-            <li>
-              <span>5</span>&nbsp;
-              <a href="#">바른생선회</a>
-              <span>-</span>
-            </li>
-            <li>
-              <span>6</span>&nbsp;
-              <a href="#">바른생선회</a>
-              <span>-</span>
-            </li>
-            <li>
-              <span>7</span>&nbsp;
-              <a href="#">바른생선회</a>
-              <span>▼ 4</span>
-            </li>
-            <li>
-              <span>8</span>&nbsp;
-              <a href="#">-</a>
-              <span>-</span>
-            </li>
-            <li>
-              <span>9</span>&nbsp;
-              <a href="#">-</a>
-              <span>-</span>
-            </li>
-            <li>
-              <span>10</span>&nbsp;
-              <a href="#">-</a>
-              <span>-</span>
-            </li>
-             -->
           </ul>
         </div>
       </div>
@@ -147,7 +95,7 @@
       <c:forEach var="likeVO" items="${likeVO }">
 	        <div class="corp_box" onclick="location.href='./CorporationAction.cp?cp_idx=${likeVO.lk_cp_idx }'">
 	          <div class="c_img">
-	            <img src="./img/row1_anotherminae.jpg" alt="">
+	            <img src="${likeVO.thumbnail_image }" alt="">
 	          </div>
 	          <div class="c_txt">
 	            <p>${likeVO.lk_cp_sector }</p>
@@ -207,7 +155,7 @@
             <c:forEach var="mainPageDateOfOpenVO" items="${mainPageDateOfOpenVOs}" varStatus="status">
             	<div>
             		<div class="slide slide${status.count}" onclick="location.href = './CorporationAction.cp?cp_idx=${mainPageDateOfOpenVO.cp_idx}';">
-            			<img src="./img/side_${status.count}_portana.jpg" alt="">
+            			<img src="${mainPageDateOfOpenVO.banner_image }" alt="">
             			<div class="cb_inbox">
 		                    <h4>${mainPageDateOfOpenVO.cp_name } <span>${mainPageDateOfOpenVO.cp_open_datetime }오픈예정</span></h4>
 		                    <p><span>${mainPageDateOfOpenVO.cp_intro_headline }</span>${mainPageDateOfOpenVO.cp_intro_content }</p>
@@ -234,7 +182,7 @@
           <c:forEach var="mainPageDeadLineVO" items="${mainPageDeadLineVOs}">
           	<div class="corp_box" onclick="location.href = './CorporationAction.cp?cp_idx=${mainPageDeadLineVO.cp_idx}';">
           		<div class="c_img">
-                	<img src="./img/row3_noodle.jpg" alt="">
+                	<img src="${mainPageDeadLineVO.thumbnail_image }" alt="">
               	</div>
               	<div class="c_txt">
 	                <p>${mainPageDeadLineVO.cp_sector }</p>
@@ -446,6 +394,9 @@ function city_click() {
       day = hour * 24;
 	  
 	  $(document).ready(function(){
+		  <c:forEach var="slideVO" items="${slideVO}" varStatus="status">
+		  	document.getElementById('slide_${status.count}').style.background = 'url(${slideVO.banner_image}) no-repeat center top';
+		  </c:forEach>
 		  <c:forEach var="item" items="${likeVO}">
 	      	setLikeDday('${item.lk_cp_idx}','${item.lk_appl_stop_date_time}');
 	      </c:forEach>

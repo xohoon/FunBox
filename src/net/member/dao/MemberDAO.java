@@ -841,7 +841,7 @@ public class MemberDAO {
 		List<Main_SlideVO> slidVO = new ArrayList<Main_SlideVO>();
 
 		try {
-			String sql = "SELECT cp_idx, cp_name, cp_branch, cp_intro_content FROM company ORDER BY RAND() LIMIT 3";
+			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_branch, cp.cp_intro_content, concat(cp_f.cf_directory,cp_f.cf_image2) as banner_image FROM company as cp, company_file as cp_f ORDER BY RAND() LIMIT 3";
 			
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -853,7 +853,7 @@ public class MemberDAO {
 				slide.setSl_cp_name(rs.getString("cp_name"));
 				slide.setSl_cp_branch(rs.getString("cp_branch"));
 				slide.setSl_cp_idx(rs.getInt("cp_idx"));
-				
+				slide.setBanner_image(rs.getString("banner_image"));
 				slidVO.add(slide);
 			}
 		} catch (Exception ex) {
@@ -881,14 +881,13 @@ public class MemberDAO {
 			List<Main_LikeVO> LikeVO = new ArrayList<Main_LikeVO>();
 
 			try {
-				String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp_iv.iv_appl_stop_date_time "
-						+ "FROM company as cp, company_invest as cp_iv "
+				String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp_iv.iv_appl_stop_date_time, concat(cp_f.cf_directory,cp_f.cf_image1) as thumbnail_image "
+						+ "FROM company as cp, company_invest as cp_iv, company_file as cp_f "
 						+ "WHERE cp.cp_idx = cp_iv.cp_idx "
 						+ "ORDER BY cp_iv_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
 				
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
-				System.out.println(pstmt);
 
 				while (rs.next()) {
 					Main_LikeVO like = new Main_LikeVO();
@@ -901,6 +900,7 @@ public class MemberDAO {
 					like.setLk_cp_sector(rs.getString("cp_sector"));
 					like.setLk_cp_idx(rs.getInt("cp_idx"));
 					like.setLk_appl_stop_date_time(rs.getDate("iv_appl_stop_date_time"));
+					like.setThumbnail_image(rs.getString("thumbnail_image"));
 					LikeVO.add(like);
 				}
 			} catch (Exception ex) {

@@ -56,7 +56,7 @@ section:last-child{
 .regular .slide{
   width: 100%;
   height: 400px;
-  background: url(../img/side_3_bareun.jpg) no-repeat center top;
+  /* background: url(../company_file/image/banner_image_5.jpg) no-repeat center top; */
   background-size: cover;
   position: relative;
   cursor: pointer;

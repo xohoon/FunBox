@@ -74,7 +74,8 @@ function checkboxTrriger() {
 																		cp_profit : val.cp_monthly_profit,
 																		cp_branch : val.cp_branch,
 																		cp_sector : val.cp_sector,
-																		cp_stop_date_time : val.cp_stop_date_time
+																		cp_stop_date_time : val.cp_stop_date_time,
+									    								thumbnail_image : val.thumbnail_image
 																	}
 																	count++;
 																	makeMoreCompanyListHTML(resultData);
@@ -198,7 +199,8 @@ function checkboxTrriger() {
 																		cp_profit : val.cp_monthly_profit,
 																		cp_branch : val.cp_branch,
 																		cp_sector : val.cp_sector,
-																		cp_stop_date_time : val.cp_stop_date_time
+																		cp_stop_date_time : val.cp_stop_date_time,
+									    								thumbnail_image : val.thumbnail_image
 																	}
 																	count++;
 																	makeMoreCompanyListHTML(resultData);
@@ -303,7 +305,7 @@ function makeMoreCompanyListHTML(resultData) {
 	}
 	companyListHTML += "<div class='corp_box' onclick=location.href='./CorporationAction.cp?cp_idx="
 			+ resultData.cp_idx
-			+ "'><div class='c_img'><img src='./img/row1_anotherminae.jpg' alt=''></div><div class='c_txt'><p>"
+			+ "'><div class='c_img'><img src='"+resultData.thumbnail_image+"' alt=''></div><div class='c_txt'><p>"
 			+ resultData.cp_sector
 			+ "</p><h5>"
 			+ resultData.cp_name
