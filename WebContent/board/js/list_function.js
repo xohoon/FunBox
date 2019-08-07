@@ -297,7 +297,7 @@ function ckbox_clickFunc() {
 function makeMoreCompanyListHTML(resultData) {
 	var Dday = getDday(resultData.cp_stop_date_time);
 	var Dday_text = "D-";
-	if (Dday == 0) {
+	if (Dday <= 0) {
 		Dday_text = "";
 		Dday = "편딩 기간 종료"
 	}
