@@ -100,7 +100,7 @@
 <body>
   <section id="q">
     <p>투자를 철회하시겠습니까?</p>
-    <form name="cancelFun" action="./deleteInvestAction.mb">
+    <form name="cancelFun">
       <div class="tit">
       <%-- 
       ${.iv_cp_name }
@@ -119,7 +119,7 @@
         <input class="pincode" type="password" maxlength="1" id="pin06">
         <font id="pin_check" size="2" color="red"></font>
       </div>
-      <input type="button" value="철회하기" id="IvDrop_btn">
+      <input type="button" value="철회하기" onclick="DropCode_chk();">
     </form>
   </section>
   <section id="a">

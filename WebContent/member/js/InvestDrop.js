@@ -16,7 +16,7 @@ function btn_off() {
 function Invest_DropBtn() {
 	btn = document.getElementById('IvDrop_btn');
 	$("#IvDrop_btn").on('click', function() {
-		location.href="./MemberIvDrop.mb";
+		//location.href="./MemberIvDrop.mb";
 	});
 	btn.disabled = false;
 }
