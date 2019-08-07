@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.common.action.Action;
 import net.common.action.ActionForward;
+import net.member.action.InvestDropAction;
 import net.member.action.MainAction;
 import net.member.action.MemberIDCheckAction;
 import net.member.action.MemberInvestcheck;
@@ -23,7 +24,6 @@ import net.member.action.MemberSelectKeyAction;
 import net.member.action.MemberUpdateAction;
 import net.member.action.Mypage1_1Action;
 import net.member.action.Mypage1_1_1Action;
-import net.member.action.MemberInvestcheck;
 import net.member.action.Mypage2_2Action;
 import net.member.action.MypageChargePointAction;
 import net.member.action.MypageDepositAction;
@@ -34,6 +34,7 @@ import net.member.action.MypagePWPINCheckAction;
 import net.member.action.MypageSendTokenAction;
 import net.member.action.MypageTransAction;
 import net.member.action.MypageTransAction_s;
+import net.member.action.PointTransAction;
 import net.member.action.Point_DepositAction;
 import net.member.action.Point_WithdrawAction;
 import net.member.action.Token_DepositAction;
@@ -88,10 +89,6 @@ public class MemberController extends HttpServlet implements Servlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./member/mypage2_1_1.jsp");
-		}else if (command.equals("/Mypage2_2.mb")) {
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("./member/mypage2_2.jsp");
 		}else if (command.equals("/Mypage2_2_1.mb")) {
 			forward = new ActionForward();
 			forward.setRedirect(false);
@@ -245,6 +242,13 @@ public class MemberController extends HttpServlet implements Servlet {
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
+		}else if(command.equals("/MemberInvestmentDrop.mb")) {
+			action = new InvestDropAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		
@@ -291,14 +295,21 @@ public class MemberController extends HttpServlet implements Servlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else if (command.equals("/Mypage2_1.mb")) { // 윤식 추가
+		}else if (command.equals("/Mypage2_1.mb")) { // 윤식 추가 (입출금내역)
 			action = new MypageTransAction_s();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else if (command.equals("/Mypage3.mb")) { // 윤식 추가
+		}else if (command.equals("/Mypage2_2.mb")) { // 윤식 추가(포인트내역)
+			action = new PointTransAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/Mypage3.mb")) { // 윤식 추가(거래내역 - 입출금, 포인트)
 			action = new MypageTransAction();
 			try {
 				forward = action.execute(request, response);

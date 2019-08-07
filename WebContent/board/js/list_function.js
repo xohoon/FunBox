@@ -374,12 +374,12 @@ function search_ajax() {
 }
 
 function search_value() {
-	var b = document.getElementById("search_text").value;
-	if (!b) {
+	getKeyword = document.getElementById("search_text").value;
+	/*if (!b) {
 		getKeyword = c;
 	} else {
 		getKeyword = b;
-	}
+	}*/
 	console.log("text value:::" + getKeyword);
 }
 
