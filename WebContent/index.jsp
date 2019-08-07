@@ -400,7 +400,7 @@ function city_click() {
           i = i + 1;
           if (i == 11) {
             i = 1;
-            Delay_func();
+            //Delay_func();
           }
         }, 1000);
       }, 2000)
@@ -474,7 +474,6 @@ function city_click() {
 			  }
 			  }, second)
 	  };
-	  
 	  function setDday(cp_idx,stopDate){
 		  var DDay_tag = document.getElementById('like_DDay_'+cp_idx);
 		  let countDown = new Date(stopDate).getTime();

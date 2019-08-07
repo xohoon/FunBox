@@ -183,7 +183,7 @@
                   </div>
                   <a href="#rwdsd">예상 지급스케쥴 자세히 보러가기</a>
                 </div>
-                <div class="invest" onclick= investClick()>투자하기</div>
+                <div class="invest" onclick="investClick();">투자하기</div>
               </div>
             </div>
             <div class="gage-bar">
@@ -503,7 +503,7 @@
   </div>
   <input type="hidden" value="${companyBean.cp_add_ch }" name="cp_add_ch" id="cp_add_ch">
   <input type="hidden" value="${companyBean.cp_name }" name="cp_name" id="cp_name">
-  <input type="hidden" value="${companyBean.cp_idx }" name="cp_idx" id="cp_idx">
+  <input type="hidden" value="<%=companyBean.getCp_idx() %>" name="cp_idx" id="cp_idx">
   </body>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3fd911319378df3f4ed86e94c8737483&libraries=services,clusterer,drawing"></script>
   <script type="text/javascript" src="company/js/map.js"></script>
@@ -678,7 +678,9 @@
    <script>
    	function investClick(){
    		var idx = <%= idx%>;
+   		var cp_idx = $('#cp_idx').val();
    		if(idx){
+   			alert(cp_idx);
    			location.href='./Invest_beforeAction.cp';
    		}else{
    			alert("로그인 후 사용해주세요.");
