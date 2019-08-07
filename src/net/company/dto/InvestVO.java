@@ -15,6 +15,7 @@ public class InvestVO {
 	private String contraction_during;		// 투자계약기간
 	private String possible_amount;			// 투자 가능 금액
 	private String current_participants;	// 현재 참여 인원
+
 	
 	
 	public String getCp_idx() {
@@ -77,4 +78,5 @@ public class InvestVO {
 	public void setCurrent_participants(String current_participants) {
 		this.current_participants = current_participants;
 	}
+	
 }

@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -22,6 +21,7 @@ import net.member.dto.MemberIplog;
 import net.member.dto.MemberTransactionVO;
 import net.member.dto.Member_headerVO;
 import net.member.dto.Member_likeboxVO;
+import net.member.dto.MypagePointTransactionVO;
 
 public class MemberDAO {
 
@@ -1356,9 +1356,9 @@ public class MemberDAO {
 		return false;
 	}
 	//////////////김윤식 추가 마이페이지 3 거래내역 가져오기 ///////////////////
-	public ArrayList<MemberTransactionVO> getTranscationList(String mb_idx) {
+	public ArrayList<MemberTransactionVO> getTranscationList(String mb_idx, int startRow, int pageSize) {
 		String sql = "SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_deposit WHERE mb_idx = ? UNION " 
-					 +"SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_withdraw WHERE mb_idx = ? ORDER BY td_date_time DESC"; 
+					 +"SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_withdraw WHERE mb_idx = ? ORDER BY td_date_time DESC limit " + startRow +","+ pageSize; 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		System.out.println("mb idx : " + mb_idx);
@@ -1402,6 +1402,151 @@ public class MemberDAO {
 		}
 
 		return null;
+	}
+	////////// 입출금 내역 count ///////////
+	public int getTranscationListCount(String mb_idx) {
+		
+	String sql = "SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_deposit WHERE mb_idx = ? UNION " 
+			 +"SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_withdraw WHERE mb_idx = ? ORDER BY td_date_time DESC"; 
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	int count = 0;
+	
+	System.out.println("mb idx : " + mb_idx);
+
+		try {
+		//	if (category.equals("0")) {
+		//		sql = "select * from faq ";
+		//		pstmt = conn.prepareStatement(sql);
+		//		rs = pstmt.executeQuery();
+		//	} else {
+		//		pstmt = conn.prepareStatement(sql);
+		//		pstmt.setString(1, category);
+		//		rs = pstmt.executeQuery();
+		//	}
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mb_idx);
+			pstmt.setString(2, mb_idx);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+			rs.last();
+
+			count = rs.getRow();
+
+			rs.beforeFirst();
+
+			return count;
+
+		} catch (Exception ex) {
+			System.out.println("getTranscationListCount 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+		return 0;
+	}
+	
+	//////////////김윤식 추가 포인트 거래내역 가져오기 ///////////////////
+	public ArrayList<MypagePointTransactionVO> getPointTranscationList(String mb_idx, int startRow, int pageSize) {
+		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx  AND A.mb_idx = ? ORDER BY A.po_date_time limit " + startRow + "," + pageSize; 
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("mb idx : " + mb_idx);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mb_idx);
+			rs = pstmt.executeQuery();
+			
+			ArrayList<MypagePointTransactionVO> pointtransactionList = new ArrayList<MypagePointTransactionVO>();	
+			
+			while (rs.next()) {
+				
+				MypagePointTransactionVO pointtransaction = new MypagePointTransactionVO();
+			
+				pointtransaction.setPo_category(rs.getString("A.po_category"));
+				pointtransaction.setPo_amount(rs.getString("A.po_amount"));
+				pointtransaction.setPo_date_time(rs.getString("A.po_date_time"));
+				pointtransaction.setTk_amount(rs.getString("B.tk_amount"));
+				pointtransactionList.add(pointtransaction);
+								
+			}
+			
+			return pointtransactionList;					
+
+		} catch (Exception ex) {
+			System.out.println("getTranscationList 에러: " + ex);	
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+
+		return null;
+	}
+		
+	//////////포인트 내역 count ///////////
+	public int getPointTranscationCount(String mb_idx) {
+		
+	String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx  AND A.mb_idx = ? ORDER BY A.po_date_time"; 
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	int count = 0;
+	
+	System.out.println("mb idx : " + mb_idx);
+	
+		try {
+		//	if (category.equals("0")) {
+		//		sql = "select * from faq ";
+		//		pstmt = conn.prepareStatement(sql);
+		//		rs = pstmt.executeQuery();
+		//	} else {
+		//		pstmt = conn.prepareStatement(sql);
+		//		pstmt.setString(1, category);
+		//		rs = pstmt.executeQuery();
+		//	}
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mb_idx);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+			rs.last();
+	
+			count = rs.getRow();
+	
+			rs.beforeFirst();
+	
+			return count;
+	
+		} catch (Exception ex) {
+			System.out.println("getTranscationListCount 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+		return 0;
 	}
 	
 	//String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx, tk_price, po_amount, po_content, po_date_time) VALUES (2,1,1,100,?,?,now())";

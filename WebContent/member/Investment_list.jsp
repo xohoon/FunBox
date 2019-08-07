@@ -55,6 +55,7 @@
     		<li onclick="location.href='./Mypage3.mb'">거래내역</li>
     		<li onclick="location.href='./Mypage4_1.mb'">내정보</li>
     	</ul>
+    </section>
 		<div class="con">
   <ul>
     <li>

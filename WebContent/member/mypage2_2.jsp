@@ -3,9 +3,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="net.member.dto.MypagePointTransactionVO"%>
 <!DOCTYPE html>
 <html lang="kr">
-
+<% 
+	ArrayList<MypagePointTransactionVO> transaction = (ArrayList<MypagePointTransactionVO>)request.getAttribute("transaction");
+%>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
@@ -219,26 +223,54 @@
 						<td>포인트수량</td>
 						<td>날짜</td>
 					</tr>
-					<tr>
-						<td class="plus">충전</td>
-						<td>-100,000coin</td>
-						<td>+100,000point</td>
-						<td>2019.07.02<br>10:01:55</td>
-					</tr>
-					<tr>
-						<td class="minus">환전</td>
-						<td>+100,000coin</td>
-						<td>-100,000point</td>
-						<td>2019.07.02<br>10:01:55</td>
-					</tr>
+					<c:forEach var = "transaction" items="${transaction}">
+						<tr>
+						<c:choose>
+							<c:when test="${transaction.po_category == '2'}" >
+								<td class="plus">충전</td>																
+								<td>-<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /></td>								
+								<td>-<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /></td>
+								<td>${transaction.po_date_time}</td>					
+							</c:when>
+							<c:when test="${transaction.po_category == '3'}" >
+								<td class="plus">환전</td>
+								<td>+<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /></td>
+								<td>+<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /></td>
+								<td>${transaction.po_date_time}</td>
+							</c:when>
+						</c:choose>
+					  </tr>
+					</c:forEach>		
 				</table>
-				<a href="#" class="prev"><i class="fas fa-caret-left"></i></a>
 				<ul class="pager">
-					<li class="on">1</li>
-					<li>2</li>
-					<li>3</li>
-				</ul>
-				<a href="#" class="next"><i class="fas fa-caret-right"></i></a>
+				<c:if test="${count > 0}">
+					<c:set var="pageCount"
+						value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />
+					<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
+					<c:set var="endPage" value="${startPage + pageGroupSize-1}" />
+						<c:if test="${endPage > pageCount}">
+						<c:set var="endPage" value="${pageCount}" />
+					</c:if>
+						<c:if test="${numPageGroup > 1}">
+						<a href="./Mypage2_2.mb?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">◀</a>
+					</c:if>
+						<ul class="pager">
+						<c:forEach var="i" begin="${startPage}" end="${endPage}">
+							<c:choose>
+								<c:when test="${currentPage == i}">
+									<b><a class="on" href="./Mypage2_2.mb?pageNum=${i}"><font size=3>${i}</font></a></b>
+								</c:when>
+								<c:otherwise>
+									<li><a href="./Mypage2_2.mb?pageNum=${i}"><font size=3>${i}</font></a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</ul>
+						<c:if test="${numPageGroup < pageGroupCount}">
+						<a href="./Mypage2_2.mb?pageNum=${numPageGroup*pageGroupSize+1}" class="next">▶</a>
+						</c:if>
+					</c:if>
+				</ul><!--.pager-->
 			</div>
 		</div>
     </section>

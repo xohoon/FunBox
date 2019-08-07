@@ -165,7 +165,7 @@
 								<div>
 									<td>${transaction.td_to_address}</td>
 								</div>
-								<td class="plus">${transaction.td_amount}</td>
+								<td class="plus">+${transaction.td_amount}</td>
 								<td>${transaction.td_date_time}</td>
 							</c:when>
 							<c:otherwise> 
@@ -180,20 +180,42 @@
 									<td>취소</td>
 								</c:if>
 								<td>${transaction.td_to_address}</td>
-								<td class="minus">${transaction.td_amount}</td>
+								<td class="minus">-${transaction.td_amount}</td>
 								<td>${transaction.td_date_time}</td>
 							</c:otherwise>
 						</c:choose>
 					  </tr>
 					</c:forEach>		
 					</table>
-					<a href="#" class="prev"><i class="fas fa-caret-left"></i></a>
-					<ul class="pager">
-						<li class="on">1</li>
-						<li>2</li>
-						<li>3</li>
+			<ul class="pager">
+				<c:if test="${count > 0}">
+					<c:set var="pageCount"
+						value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />
+					<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
+					<c:set var="endPage" value="${startPage + pageGroupSize-1}" />
+						<c:if test="${endPage > pageCount}">
+						<c:set var="endPage" value="${pageCount}" />
+					</c:if>
+						<c:if test="${numPageGroup > 1}">
+						<a href="./Mypage2_1.mb?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">◀</a>
+					</c:if>
+						<ul class="pager">
+						<c:forEach var="i" begin="${startPage}" end="${endPage}">
+							<c:choose>
+								<c:when test="${currentPage == i}">
+									<b><a class="on" href="./Mypage2_1.mb?pageNum=${i}"><font size=3>${i}</font></a></b>
+								</c:when>
+								<c:otherwise>
+									<li><a href="./Mypage2_1.mb?pageNum=${i}"><font size=3>${i}</font></a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
 					</ul>
-					<a href="#" class="next"><i class="fas fa-caret-right"></i></a>
+						<c:if test="${numPageGroup < pageGroupCount}">
+						<a href="./Mypage2_1.mb?pageNum=${numPageGroup*pageGroupSize+1}" class="next">▶</a>
+						</c:if>
+				</c:if>
+			</ul><!--.pager-->
 				</div>
 			</div>
 		</section>
