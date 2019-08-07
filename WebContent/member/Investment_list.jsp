@@ -11,7 +11,6 @@
 	MemberInvestPageVO memberInvestVO = (MemberInvestPageVO)request.getAttribute("memberInvestVO");
 	ArrayList<MemberInvestVO> member_invest_list = (ArrayList<MemberInvestVO>)request.getAttribute("member_invest_list");
 	ArrayList<Company_pay_scheduleVO> companypayscheduleVO = (ArrayList<Company_pay_scheduleVO>)request.getAttribute("CompanyPayScheduleVO");
-	
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -56,6 +55,7 @@
     		<li onclick="location.href='./Mypage3.mb'">거래내역</li>
     		<li onclick="location.href='./Mypage4_1.mb'">내정보</li>
     	</ul>
+    </section>
 		<div class="con">
   <ul>
     <li>

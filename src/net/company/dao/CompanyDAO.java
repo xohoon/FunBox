@@ -924,9 +924,4 @@ public class CompanyDAO {
 	}
 
 	
-	private PreparedStatement setInt(int i, int cp_idx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
