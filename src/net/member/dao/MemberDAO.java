@@ -1285,7 +1285,7 @@ public class MemberDAO {
 	// 박신규 시작~ ///////////////////////////////////////////////////
 	// 투자 회사 리스트 뽑깅
 	public ArrayList<MemberInvestCompanyVO> getInvestmentCompanyList(String mb_id) {
-		String sql = "select cp.cp_idx, cp.cp_name, mi.mb_idx, mi.mb_id from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_id = ?";
+		String sql = "select cp.cp_idx, cp.cp_name, mi.mb_idx, mi.mb_id, cp.cp_funding_status from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_id = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -1299,6 +1299,7 @@ public class MemberDAO {
 				memberInvestCompanyVO.setCp_name(rs.getString("cp_name"));
 				memberInvestCompanyVO.setMb_idx(rs.getInt("mb_idx"));
 				memberInvestCompanyVO.setMb_id(rs.getString("mb_id"));
+				memberInvestCompanyVO.setCp_funding_status(rs.getString("cp_funding_status"));
 				memberInvestCompanyVOList.add(memberInvestCompanyVO);
 			}
 			return memberInvestCompanyVOList;

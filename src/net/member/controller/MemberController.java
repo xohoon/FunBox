@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.common.action.Action;
 import net.common.action.ActionForward;
+import net.member.action.InvestDropAction;
 import net.member.action.MainAction;
 import net.member.action.MemberIDCheckAction;
 import net.member.action.MemberInvestcheck;
@@ -240,6 +241,13 @@ public class MemberController extends HttpServlet implements Servlet {
 			}
 		}else if(command.equals("/PointWithdrawAction.mb")) {
 			action = new Point_WithdrawAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/MemberInvestmentDrop.mb")) {
+			action = new InvestDropAction();
 			try {
 				forward = action.execute(request, response);
 			}catch(Exception e) {

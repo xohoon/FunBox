@@ -17,12 +17,12 @@
   <script src="js/jquery.mousewheel.js"></script>
   <script src="js/jquery-3.1.1.min.js"></script>
   <link href="css/common.css" rel="stylesheet" type="text/css">
-  <link href="css/mypage.css" rel="stylesheet">
+  <link href="css/mypage1_1.css" rel="stylesheet">
   <script>
     $(function() {
-      $('header').load('./header.html')
-      $('footer').load('./footer.html')
-      $('.like_box').load('./like_box.html')
+      $('header').load('./header/header.jsp')
+      $('footer').load('./footer/footer.jsp')
+      $('.like_box').load('./member/like_box.jsp')
     });
   </script>
 
@@ -34,10 +34,10 @@
     <section>
       <div class="like_box"></div>
       <ul class="tab">
-        <li class="on" onclick="location.href='./mypage1.html'">투자현황</li>
-        <li onclick="location.href='./mypage2_1.html'">자산관리</li>
-        <li onclick="location.href='./mypage3.html'">거래내역</li>
-        <li onclick="location.href='./mypage4_1.html'">내정보</li>
+        <li id="invest_check" onclick="location.href='./MemberInvestmentList.mb'">투자현황</li>
+		<li class="on" onclick="location.href='./Mypage2_1.mb'">자산관리</li>
+		<li onclick="location.href='./Mypage3.mb'">거래내역</li>
+		<li onclick="location.href='./Mypage4_1.mb'">내정보</li>
       </ul>
       <div class="con">
         <div class="cor_info">
