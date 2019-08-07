@@ -100,7 +100,7 @@
 <body>
   <section id="q">
     <p>투자를 철회하시겠습니까?</p>
-    <form name="cancelFun">
+    <form name="cancelFun" action="./deleteInvestAction.mb">
       <div class="tit">
       <%-- 
       ${.iv_cp_name }

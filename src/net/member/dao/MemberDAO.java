@@ -659,6 +659,41 @@ public class MemberDAO {
 
 		return null;
 	}
+	
+	
+	// 펀딩 철회하기
+	public boolean deleteInvest(int mb_idx, int cp_idx) {
+		String sql = "delete from member_invest where mb_idx=? and where cp_idx=?";
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mb_idx);
+			pstmt.setInt(2, cp_idx);
+
+			result = pstmt.executeUpdate();
+			System.out.println(pstmt);
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("deleteInvest 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
 
 	/////////////////////// 유정 추가 end///////////////////////
 

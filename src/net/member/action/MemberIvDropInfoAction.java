@@ -19,7 +19,7 @@ public class MemberIvDropInfoAction implements Action {
 		MemberDAO memberDAO = new MemberDAO();
 		String result = memberDAO.Member_Invest_check(sessionID);
 
-		
+
 		return null;
 	}
 
