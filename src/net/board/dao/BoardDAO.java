@@ -504,7 +504,7 @@ public class BoardDAO {
 	}
 
 	@SuppressWarnings({ "unchecked", "unused" })
-	public JSONArray Search_ListInfo(List<String> list_all, String select_value, int page) throws Exception {
+	public JSONArray Search_ListInfo(List<String> list_all, String select_value, int page,String getKeyword) throws Exception {
 		if (page < 0) {
 			return null;
 		}
@@ -512,21 +512,22 @@ public class BoardDAO {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// ArrayList<Board_Search_ListVO> search_list = new
-		// ArrayList<Board_Search_ListVO>();
+
 		JSONArray jsonArr = new JSONArray();
-// 		System.out.println("DAO ALL>>1" + list_all);
-// 		System.out.println("DAO value>>1" + select_value);
-		// pstmt 변수로 지정
+
 		int pstmt_num = 0;
 
-		String nothing = "검색어없음";
-
-		for (int i = 0; i < list_all.size(); i++) {
-			if (list_all.get(i).equals(nothing)) {
-				list_all.remove(i);
-				break;
-			}
+		//String nothing = "검색어없음";
+		boolean searchWordFlag = false;
+		
+		/*
+		 * for (int i = 0; i < list_all.size(); i++) { if
+		 * (list_all.get(i).equals(nothing)) { list_all.remove(i); AndFlag = false;
+		 * break; } }
+		 */
+		
+		if (!getKeyword.equals("")) {
+			searchWordFlag = true;
 		}
 
 		try {
@@ -534,63 +535,44 @@ public class BoardDAO {
 			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime, cp_iv.iv_appl_stop_date_time "
 					+ "FROM company as cp " + "JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx ";
 
-			if (list_all != null) {
-				boolean AndFlag = false;
+			if (list_all != null) {				
 				for (int i = 0; i < list_all.size(); i++) {
 					if(i == 0) {
 						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
-							sql += "WHERE CONCAT(cp.cp_funding_status) LIKE ? ";
+							sql += "WHERE (CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
 						if(list_all.get(i).equals("21") || list_all.get(i).equals("22")) {
-							sql += "WHERE CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
+							sql += "WHERE (CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
+							
 						}
 						if(list_all.get(i).equals("30")) {
-							sql += "WHERE CONCAT(cp.cp_overdue_status) REGEXP ? ";
+							sql += "WHERE (CONCAT(cp.cp_overdue_status) LIKE ? ";
 						}
 						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
 								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
-							sql += "WHERE CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
-							AndFlag = true;
+							sql += "WHERE (CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_branch) LIKE ? ";
 						}
 					} else if(i != 0){
 						if(list_all.get(i).equals("10") || list_all.get(i).equals("11") || list_all.get(i).equals("12")) {
-							if (AndFlag) {
-								sql += "AND ";
-								AndFlag = false;
-							}else {
-								sql += "OR ";
-							}
-							sql += "CONCAT(cp.cp_funding_status) LIKE ? ";
+							sql += "OR CONCAT(cp.cp_funding_status) LIKE ? ";
 						}
 						if(list_all.get(i).equals("21") || list_all.get(i).equals("22")) {
-							if (AndFlag) {
-								sql += "AND ";
-								AndFlag = false;
-							}else {
-								sql += "OR ";
-							}
-							sql += "CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
+							sql += "OR CONCAT(cp.cp_revenue_distribution_status) LIKE ? ";
 						}
 						if(list_all.get(i).equals("30")) {
-							if (AndFlag) {
-								sql += "AND ";
-								AndFlag = false;
-							}else {
-								sql += "OR ";
-							}
-							sql += "CONCAT(cp.cp_overdue_status) LIKE ? ";
+							sql += "OR CONCAT(cp.cp_overdue_status) LIKE ? ";
 						}
 						if(!list_all.get(i).equals("10") && !list_all.get(i).equals("11") && !list_all.get(i).equals("12")
 								 && !list_all.get(i).equals("21") && !list_all.get(i).equals("22") && !list_all.get(i).equals("30")) {
-							if (AndFlag) {
-								sql += "AND ";
-								AndFlag = false;
-							}else {
-								sql += "OR ";
-							}
-							sql += "CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_name, cp.cp_branch) LIKE ? ";
+							sql += "OR CONCAT(cp.cp_sector, cp.cp_add_ch, cp.cp_branch) LIKE ? ";
 						}
 					}
+				}
+				if (list_all.size() > 0) {
+					sql += ") ";
+				}
+				if (searchWordFlag) {
+					sql += " AND cp.cp_name LIKE ? ";
 				}
 				if (select_value.equals("1")) {
 					sql += "ORDER BY cp.cp_recommand_count DESC";
@@ -609,18 +591,22 @@ public class BoardDAO {
 				}
 			}
 			sql += " limit ?, 8";
-			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 			if (list_all != null) {
 				int i = 0;
 				for (i = 0; i < list_all.size(); i++) {
-					System.out.println(i+"박신규"+list_all.get(i));
 					pstmt.setString(i + 1, "%" + list_all.get(i) + "%");
 				}
-				pstmt.setInt(i + 1, n);
+				if (searchWordFlag) {
+					pstmt.setString(i+1,"%"+getKeyword+"%");
+					pstmt.setInt(i + 2, n);
+				}else {
+					pstmt.setInt(i + 1, n);
+				}
+				
 			}
 			rs = pstmt.executeQuery();
-
+			//System.out.println(sql);
 			while (rs.next()) {
 				JSONObject jsonObj = new JSONObject();
 				jsonObj.put("cp_branch", rs.getString("cp_branch"));
