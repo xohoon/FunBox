@@ -9,17 +9,17 @@ import javax.servlet.http.HttpSession;
 import net.common.action.Action;
 import net.common.action.ActionForward;
 import net.member.dao.MemberDAO;
-import net.member.dto.MemberTransactionVO;
+import net.member.dto.MypagePointTransactionVO;
 
 /////// 김윤식 //////// 추가
-public class MypageTransAction_s implements Action {
+public class PointTransAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = new ActionForward();
 		HttpSession session = request.getSession();
 		
 		String mb_id = (String)session.getAttribute("id");
 		String mb_idx = (String)session.getAttribute("idx");
-		ArrayList<MemberTransactionVO> transaction = new ArrayList<MemberTransactionVO>();
+		ArrayList<MypagePointTransactionVO> transaction = new ArrayList<MypagePointTransactionVO>();
 		
 		int pageSize = 10;
 		int pageGroupSize = 5; // 페이지 단위 [◀] 1 2 3 4 5 [▶]
@@ -42,10 +42,12 @@ public class MypageTransAction_s implements Action {
 		int number = 0;
 		
 		MemberDAO member_dao0 = new MemberDAO();
-		count = member_dao0.getTranscationListCount(mb_idx);
+		count = member_dao0.getPointTranscationCount(mb_idx);
+		
 		System.out.println("해당 DB 글 개수 불러오기" + count);
 		System.out.println("id"+mb_id);
 		System.out.println("idx"+mb_idx);
+		
 		if (mb_id == null || mb_idx == null) {
 			//로그인 안된 사용자 접근 처리
 			System.out.println("로그인 안됨");
@@ -56,13 +58,13 @@ public class MypageTransAction_s implements Action {
 				endRow = count;
 			}
 			MemberDAO member_dao = new MemberDAO();
-			transaction = member_dao.getTranscationList(mb_idx, startRow - 1, pageSize);			
-			System.out.println("transaction : " + transaction.toString());
+			transaction = member_dao.getPointTranscationList(mb_idx, startRow - 1, pageSize);			
+			System.out.println("pointtransaction : " + transaction.toString());
 			
 		}else {
 			MemberDAO member_dao = new MemberDAO();
-			transaction = member_dao.getTranscationList(mb_idx, startRow - 1, pageSize);
-			System.out.println("transaction : " + transaction.toString());
+			transaction = member_dao.getPointTranscationList(mb_idx, startRow - 1, pageSize);
+			System.out.println("pointtransaction : " + transaction.toString());
 			
 		}
 		
@@ -105,7 +107,7 @@ public class MypageTransAction_s implements Action {
 		request.setAttribute("transaction", transaction);	
 		
 		forward.setRedirect(false);
-		forward.setPath("./member/mypage2_1.jsp");
+		forward.setPath("./member/mypage2_2.jsp");
 		
 		return forward;
 	}

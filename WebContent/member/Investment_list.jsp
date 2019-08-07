@@ -11,7 +11,6 @@
 	MemberInvestPageVO memberInvestVO = (MemberInvestPageVO)request.getAttribute("memberInvestVO");
 	ArrayList<MemberInvestVO> member_invest_list = (ArrayList<MemberInvestVO>)request.getAttribute("member_invest_list");
 	ArrayList<Company_pay_scheduleVO> companypayscheduleVO = (ArrayList<Company_pay_scheduleVO>)request.getAttribute("CompanyPayScheduleVO");
-	
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -56,6 +55,7 @@
     		<li onclick="location.href='./Mypage3.mb'">거래내역</li>
     		<li onclick="location.href='./Mypage4_1.mb'">내정보</li>
     	</ul>
+    </section>
 		<div class="con">
   <ul>
     <li>
@@ -170,10 +170,24 @@
       <c:forEach var="memberInvestCompanyVO" items="${memberInvestCompanyVOList}" >
       	<c:choose> 
       		<c:when test="${memberInvestCompanyVO.cp_idx eq selectedCp_idx }">
-		      	<li class="on" id="cp_${memberInvestCompanyVO.cp_idx }"><a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a></li>      		
+		      	<li class="on" id="cp_${memberInvestCompanyVO.cp_idx }">
+	      			<c:if test="${memberInvestCompanyVO.cp_funding_status eq '12'}">
+				      	<a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+    	  			</c:if>
+    	  			<c:if test="${memberInvestCompanyVO.cp_funding_status eq '11'}">
+    	  				<a href="./MemberInvestmentDrop.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+    	  			</c:if>
+		      	</li>
       		</c:when>
       		<c:otherwise>
-      			<li  id="cp_${memberInvestCompanyVO.cp_idx }"><a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a></li>
+      			<li id="cp_${memberInvestCompanyVO.cp_idx }">
+	      			<c:if test="${memberInvestCompanyVO.cp_funding_status eq '12'}">
+      					<a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+      				</c:if>
+      				<c:if test="${memberInvestCompanyVO.cp_funding_status eq '11'}">
+      					<a href="./MemberInvestmentDrop.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+      				</c:if>
+      			</li>
       		</c:otherwise>
       	</c:choose>
       </c:forEach>

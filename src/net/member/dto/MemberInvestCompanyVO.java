@@ -5,6 +5,15 @@ public class MemberInvestCompanyVO {
 	private String cp_name;
 	private int mb_idx;
 	private String mb_id;
+	private String cp_funding_status;
+	
+	
+	public String getCp_funding_status() {
+		return cp_funding_status;
+	}
+	public void setCp_funding_status(String cp_funding_status) {
+		this.cp_funding_status = cp_funding_status;
+	}
 	public int getCp_idx() {
 		return cp_idx;
 	}

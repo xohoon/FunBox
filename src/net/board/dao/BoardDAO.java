@@ -265,9 +265,8 @@ public class BoardDAO {
 
 
 	// 고객지원 - 공지사항 불러오기
-	public ArrayList<NoticeVO> getNotice() throws Exception {
-		String sql = "select idx,title,content,reg_date_time from notice order by reg_date_time desc";
-
+	public ArrayList<NoticeVO> getNotice(int startRow, int pageSize) throws Exception {
+		String sql = "select idx,title,content,reg_date_time from notice order by reg_date_time desc limit " + startRow +","+ pageSize;
 		ArrayList<NoticeVO> notice_list = new ArrayList<NoticeVO>();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;

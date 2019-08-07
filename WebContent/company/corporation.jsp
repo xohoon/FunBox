@@ -598,7 +598,7 @@
 	        		text: "나의 즐겨찾기 목록에 추가됩니다.",
 	        		icon: "warning",
 	        		buttons: true
-	        	}).then((like_q) => {
+	        	}).then((like_q) = {
 	        		if(like_q) {
 		        		swal("즐겨찾기에 추가되었습니다.", {
 		        			icon: "success",

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -17,12 +19,12 @@
   <script src="js/jquery.mousewheel.js"></script>
   <script src="js/jquery-3.1.1.min.js"></script>
   <link href="css/common.css" rel="stylesheet" type="text/css">
-  <link href="css/mypage.css" rel="stylesheet">
+  <link href="css/mypage1_1.css" rel="stylesheet">
   <script>
     $(function() {
-      $('header').load('./header.html')
-      $('footer').load('./footer.html')
-      $('.like_box').load('./like_box.html')
+      $('header').load('./header/header.jsp')
+      $('footer').load('./footer/footer.jsp')
+      $('.like_box').load('./member/like_box.jsp')
     });
   </script>
 
@@ -34,10 +36,10 @@
     <section>
       <div class="like_box"></div>
       <ul class="tab">
-        <li class="on" onclick="location.href='./mypage1.html'">투자현황</li>
-        <li onclick="location.href='./mypage2_1.html'">자산관리</li>
-        <li onclick="location.href='./mypage3.html'">거래내역</li>
-        <li onclick="location.href='./mypage4_1.html'">내정보</li>
+        <li id="invest_check" onclick="location.href='./MemberInvestmentList.mb'">투자현황</li>
+		<li class="on" onclick="location.href='./Mypage2_1.mb'">자산관리</li>
+		<li onclick="location.href='./Mypage3.mb'">거래내역</li>
+		<li onclick="location.href='./Mypage4_1.mb'">내정보</li>
       </ul>
       <div class="con">
         <div class="cor_info">
@@ -45,7 +47,8 @@
             <p>아직 펀딩이 종료되지 않은 기업이에요 !</p>
             <p>펀딩 모집 완료 후에는 투자철회가 불가능합니다.</p>
             <ul>
-              <li onclick="window.open('./mypage1_1_1.html','기업이름','width=640,height=400,top=0,left=0,scrollbars=yes');">펀딩 철회하기</li>
+              <li onclick="window.open('./MemberIvDropInfo.mb?mb_idx=${sessionScope.idx }&cp_idx=${cp_idx }','기업이름','width=640,height=400,top=0,left=0,scrollbars=yes');">펀딩 철회하기</li>
+              <li onclick="window.open('./MemberIvDropInfo.mb','기업이름','width=640,height=400,top=0,left=0,scrollbars=yes');">펀딩 철회하기</li>
               <li onclick="location.href='./corporation.html'">기업정보 보러가기</li>
             </ul>
           </div>

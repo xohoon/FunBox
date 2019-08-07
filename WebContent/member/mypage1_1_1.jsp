@@ -93,6 +93,8 @@
       cursor:pointer;
     }
   </style>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="member/js/InvestDrop.js"></script>
 </head>
 
 <body>
@@ -100,19 +102,24 @@
     <p>투자를 철회하시겠습니까?</p>
     <form name="cancelFun">
       <div class="tit">
+      <%-- 
+      ${.iv_cp_name }
+      ${.iv_point }
+       --%>
         <p>바른생선회</p>
         <p><input type="text" value="1000000" readonly="readonly" name="point">POINT</p>
       </div>
       <div class="pin">
         <label>PINCODE</label>
-        <input class="pincode" type="password" maxlength="1" >
-        <input class="pincode" type="password" maxlength="1">
-        <input class="pincode" type="password" maxlength="1">
-        <input class="pincode" type="password" maxlength="1">
-        <input class="pincode" type="password" maxlength="1">
-        <input class="pincode" type="password" maxlength="1">
+        <input class="pincode" type="password" maxlength="1" id="pin01">
+        <input class="pincode" type="password" maxlength="1" id="pin02">
+        <input class="pincode" type="password" maxlength="1" id="pin03">
+        <input class="pincode" type="password" maxlength="1" id="pin04">
+        <input class="pincode" type="password" maxlength="1" id="pin05">
+        <input class="pincode" type="password" maxlength="1" id="pin06">
+        <font id="pin_check" size="2" color="red"></font>
       </div>
-      <input type="button" value="철회하기" onclick="pointReturned()">
+      <input type="button" value="철회하기" onclick="DropCode_chk();">
     </form>
   </section>
   <section id="a">
