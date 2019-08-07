@@ -16,6 +16,7 @@ import net.member.action.MainAction;
 import net.member.action.MemberIDCheckAction;
 import net.member.action.MemberInvestcheck;
 import net.member.action.MemberInvestmentListAction;
+import net.member.action.MemberIvDropInfoAction;
 import net.member.action.MemberJoinAction;
 import net.member.action.MemberLoginAction;
 import net.member.action.MemberLoginCheckAction;
@@ -248,6 +249,21 @@ public class MemberController extends HttpServlet implements Servlet {
 			}
 		}else if(command.equals("/MemberInvestmentDrop.mb")) {
 			action = new InvestDropAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("/MemberIvDropInfo.mb")) {
+			action = new MemberIvDropInfoAction();
+			try {
+				forward = action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/MemberIvDrop.mb")) {
+			// action = new MemberIvDropAction();
 			try {
 				forward = action.execute(request, response);
 			}catch(Exception e) {

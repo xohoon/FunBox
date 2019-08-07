@@ -112,6 +112,9 @@
         <input class="pincode" type="password" maxlength="1">
         <input class="pincode" type="password" maxlength="1">
       </div>
+      <!-- 
+      MemberIvDrop.mb
+       -->
       <input type="button" value="철회하기" onclick="pointReturned()">
     </form>
   </section>

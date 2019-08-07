@@ -179,7 +179,7 @@
 		      	</li>
       		</c:when>
       		<c:otherwise>
-      			<li  id="cp_${memberInvestCompanyVO.cp_idx }">
+      			<li id="cp_${memberInvestCompanyVO.cp_idx }">
 	      			<c:if test="${memberInvestCompanyVO.cp_funding_status eq '12'}">
       					<a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
       				</c:if>
