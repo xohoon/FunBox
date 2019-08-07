@@ -88,6 +88,7 @@ pageEncoding="UTF-8"%>
             </div>
             <input type="hidden" name="invest_point" id="invest_point" value="20000"> 
             <input type="hidden" name="invest_amount" id="invest_amount" value="1"> 
+            <input type="hidden" name="cp_idx" value="<%=companyBean.getCp_idx()%>">
             <input type="button" value="투자하기" onclick="invest_add();">
           </form>
         </article>
