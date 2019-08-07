@@ -167,8 +167,8 @@
 	              <span class="p_amt"><span><fmt:formatNumber value="${likeVO.lk_cp_current_amount}" pattern="#,###" />
 	              </span> / <span> <fmt:formatNumber value="${likeVO.lk_cp_goal_amount }" pattern="#,###" />
 	              </span> P</span>
-	              <span class="d_day">D-<span>27</span></span>
-	            </div>
+	              <span class="d_day">D-<span id="like_DDay_${likeVO.lk_cp_idx }">1</span></span>
+	            </div>`
 	          </div>
 	          <div class="reward_per">
 	            수익률
@@ -400,7 +400,7 @@ function city_click() {
           i = i + 1;
           if (i == 11) {
             i = 1;
-            Delay_func();
+            //Delay_func();
           }
         }, 1000);
       }, 2000)
@@ -446,6 +446,9 @@ function city_click() {
       day = hour * 24;
 	  
 	  $(document).ready(function(){
+		  <c:forEach var="item" items="${likeVO}">
+	      	setLikeDday('${item.lk_cp_idx}','${item.lk_appl_stop_date_time}');
+	      </c:forEach>
 	      <c:forEach var="mainPageDeadLineVO" items="${mainPageDeadLineVOs}">
 	      	setCountDown('${mainPageDeadLineVO.cp_idx}','${mainPageDeadLineVO.iv_appl_stop_date_time}');
 	      </c:forEach>
@@ -474,9 +477,6 @@ function city_click() {
 			  }
 			  }, second)
 	  };
-<<<<<<< HEAD
-=======
-	  
 	  function setDday(cp_idx,stopDate){
 		  var DDay_tag = document.getElementById('like_DDay_'+cp_idx);
 		  let countDown = new Date(stopDate).getTime();
@@ -490,8 +490,32 @@ function city_click() {
 		  }
 	  };
 	  
-	  
->>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
+	  function setLikeDday(cp_idx,stopDate){
+		  var DDay = document.getElementById('like_DDay_'+cp_idx);
+		  let countDown = new Date(stopDate).getTime();
+		  let now = new Date().getTime();
+		  distance = countDown - now;
+		  
+		  var DdayCount = Math.floor(distance / (day));
+		  
+		  if (DdayCount <= 0) {
+			  DDay.parentElement.innerText = "편딩 기간 종료"
+		  }else{
+			  DDay.innerText= DdayCount;  
+		  }
+	  };
+	  function setDday(cp_idx,stopDate){
+		  var DDay_tag = document.getElementById('like_DDay_'+cp_idx);
+		  let countDown = new Date(stopDate).getTime();
+		  let now = new Date().getTime();
+		  distance = countDown - now;
+		  var Dday = Math.floor(distance / (day));
+		  if (Dday == 0) {
+			  DDay_tag.parentNode.innerText = '펀딩 기간 종료';
+		  }else{
+			  DDay_tag.innerText = Dday;
+		  }
+	  };
   </script>
 
 </body></html>

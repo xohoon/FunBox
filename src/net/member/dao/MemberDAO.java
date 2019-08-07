@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -22,6 +21,7 @@ import net.member.dto.MemberIplog;
 import net.member.dto.MemberTransactionVO;
 import net.member.dto.Member_headerVO;
 import net.member.dto.Member_likeboxVO;
+import net.member.dto.MypagePointTransactionVO;
 
 public class MemberDAO {
 
@@ -82,7 +82,6 @@ public class MemberDAO {
 			pstmt.setInt(13, member.getAgree2());
 
 			result = pstmt.executeUpdate();
-			System.out.println(pstmt);
 			if (result != 0) {
 				return true;
 			}
@@ -162,8 +161,6 @@ public class MemberDAO {
 			// 쿼리
 			String sql = "SELECT count(*) as cnt FROM member WHERE (mb_phone=? or mb_phone=?)";
 			pstm = conn.prepareStatement(sql);
-			System.out.println("mb_phone : " + ph);
-			System.out.println("mb_phone2 : " + ph2);
 			pstm.setString(1, ph2);
 			pstm.setString(2, ph);
 
@@ -1232,24 +1229,21 @@ public class MemberDAO {
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
 	// 윤식 추가/////////////////////////////////////////////////
-	public MemberInvestPageVO getMyPageInvestment(int cp_idx, String id) {
-		String sql = "select B.mi_idx AS mi_idx, A.mb_idx AS mb_idx, B.mi_name AS mi_name, B.mi_point AS mi_point, B.cp_idx AS cp_idx, B.mi_hoiling_stock AS mi_hoiling_stock, B.mi_stock_value AS mi_stock_value, B.mi_monthly_profit AS mi_monthly_profit, B.mi_cumulative_profit AS mi_cumulative_profit, C.cp_number AS cp_number,C.cp_name AS cp_name ,C.cp_manager AS cp_manager,C.cp_name AS cp_capital , C.cp_add_ch AS cp_add_ch, cf.cf_certificate AS cf_certificate, cf.cf_estate_contract AS cf_estate_contract, cf.cf_registration AS cf_registration, cf.cf_financial AS cf_financial  from member A, member_invest B, company C,company_file cf WHERE A.mb_idx = B.mb_idx AND B.cp_idx = ? AND A.mb_id = ? AND cf.cp_idx = ?";
+	public MemberInvestPageVO getMyPageInvestment(int cp_idx, int mb_idx) {
+		
+		String sql = "select mb_iv.mi_idx, mb.mb_idx,mb_iv.mi_point, mb_iv.cp_idx, mb_iv.mi_hoiling_stock, mb_iv.mi_stock_value, mb_iv.mi_monthly_profit, mb_iv.mi_cumulative_profit, mb_iv.mi_hoiling_stock, mb_iv.mi_monthly_profit, mb_iv.mi_cumulative_profit, cp.cp_number,cp.cp_name,cp.cp_manager ,cp.cp_name, cp.cp_add_ch, cp_capital, cp_f.cf_certificate, cp_f.cf_estate_contract, cp_f.cf_registration, cp_f.cf_financial from member mb, member_invest mb_iv, company cp,company_file cp_f where cp.cp_idx = mb_iv.cp_idx AND mb.mb_idx = mb_iv.mb_idx AND cp_f.cp_idx = mb_iv.cp_idx AND mb.mb_idx = ? AND mb_iv.cp_idx = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("mypageInvest 실행 : " + id);
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cp_idx);
-			pstmt.setString(2, id);
-			pstmt.setInt(3, cp_idx);
+			pstmt.setInt(1, mb_idx);
+			pstmt.setInt(2, cp_idx);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
-
 			if (rs.next()) {
 				MemberInvestPageVO memberInvestVO = new MemberInvestPageVO();
 				memberInvestVO.setMi_idx(rs.getInt("mi_idx"));
 				memberInvestVO.setMb_idx(rs.getInt("mb_idx"));
-				memberInvestVO.setMi_name(rs.getString("mi_name"));
+				//memberInvestVO.setMi_name(rs.getString("mi_name"));
 				memberInvestVO.setMi_point(rs.getString("mi_point"));
 				memberInvestVO.setCp_idx(rs.getInt("cp_idx"));
 				memberInvestVO.setMi_hoiling_stock(rs.getString("mi_hoiling_stock"));
@@ -1442,6 +1436,101 @@ public class MemberDAO {
 
 			return count;
 
+		} catch (Exception ex) {
+			System.out.println("getTranscationListCount 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+		return 0;
+	}
+	
+	//////////////김윤식 추가 포인트 거래내역 가져오기 ///////////////////
+	public ArrayList<MypagePointTransactionVO> getPointTranscationList(String mb_idx, int startRow, int pageSize) {
+		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx  AND A.mb_idx = ? ORDER BY A.po_date_time limit " + startRow + "," + pageSize; 
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("mb idx : " + mb_idx);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mb_idx);
+			rs = pstmt.executeQuery();
+			
+			ArrayList<MypagePointTransactionVO> pointtransactionList = new ArrayList<MypagePointTransactionVO>();	
+			
+			while (rs.next()) {
+				
+				MypagePointTransactionVO pointtransaction = new MypagePointTransactionVO();
+			
+				pointtransaction.setPo_category(rs.getString("A.po_category"));
+				pointtransaction.setPo_amount(rs.getString("A.po_amount"));
+				pointtransaction.setPo_date_time(rs.getString("A.po_date_time"));
+				pointtransaction.setTk_amount(rs.getString("B.tk_amount"));
+				pointtransactionList.add(pointtransaction);
+								
+			}
+			
+			return pointtransactionList;					
+
+		} catch (Exception ex) {
+			System.out.println("getTranscationList 에러: " + ex);	
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+
+		return null;
+	}
+		
+	//////////포인트 내역 count ///////////
+	public int getPointTranscationCount(String mb_idx) {
+		
+	String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx  AND A.mb_idx = ? ORDER BY A.po_date_time"; 
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	int count = 0;
+	
+	System.out.println("mb idx : " + mb_idx);
+	
+		try {
+		//	if (category.equals("0")) {
+		//		sql = "select * from faq ";
+		//		pstmt = conn.prepareStatement(sql);
+		//		rs = pstmt.executeQuery();
+		//	} else {
+		//		pstmt = conn.prepareStatement(sql);
+		//		pstmt.setString(1, category);
+		//		rs = pstmt.executeQuery();
+		//	}
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mb_idx);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+			rs.last();
+	
+			count = rs.getRow();
+	
+			rs.beforeFirst();
+	
+			return count;
+	
 		} catch (Exception ex) {
 			System.out.println("getTranscationListCount 에러: " + ex);
 		} finally {

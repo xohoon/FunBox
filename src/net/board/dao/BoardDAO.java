@@ -218,7 +218,7 @@ public class BoardDAO {
 
 	// 1:1 문의내역 - 문의 리스트 가져오기
 	public List<QnaVO> getQnaList(String id, int startRow, int pageSize) throws Exception {// 시작페이지, 끝 페이지
-		String sql = "SELECT idx,category,title,content,reg_date_time FROM qna WHERE id = ? order by idx desc limit "
+		String sql = "SELECT idx,category,title,content,reg_date_time,qna_reply FROM qna WHERE id = ? order by idx desc limit "
 				+ startRow + ", " + pageSize;
 
 		List<QnaVO> qna_list = new ArrayList<QnaVO>();
@@ -239,6 +239,7 @@ public class BoardDAO {
 				qna.setTitle(rs.getString("title"));
 				qna.setContent(rs.getString("content"));
 				qna.setReg_date_time(rs.getTimestamp("reg_date_time"));
+				qna.setQna_reply(rs.getString("qna_reply"));
 				qna_list.add(qna);
 
 			}
