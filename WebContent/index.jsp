@@ -474,8 +474,6 @@ function city_click() {
 			  }
 			  }, second)
 	  };
-<<<<<<< HEAD
-=======
 	  
 	  function setDday(cp_idx,stopDate){
 		  var DDay_tag = document.getElementById('like_DDay_'+cp_idx);
@@ -490,8 +488,6 @@ function city_click() {
 		  }
 	  };
 	  
-	  
->>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
   </script>
 
 </body></html>
