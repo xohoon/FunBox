@@ -187,7 +187,7 @@
 					  </tr>
 					</c:forEach>		
 					</table>
-					<ul class="pager">
+			<ul class="pager">
 				<c:if test="${count > 0}">
 					<c:set var="pageCount"
 						value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />
