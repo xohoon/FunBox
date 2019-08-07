@@ -98,7 +98,7 @@
 <body>
   <section id="q">
     <p>투자를 철회하시겠습니까?</p>
-    <form name="cancelFun">
+    <form name="cancelFun" action="./deleteInvestAction.mb">
       <div class="tit">
         <p>바른생선회</p>
         <p><input type="text" value="1000000" readonly="readonly" name="point">POINT</p>
