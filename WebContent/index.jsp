@@ -490,7 +490,7 @@ function city_click() {
 		  }
 	  };
 	  
-	  function setLikeDday(cp_idx,stopDate){
+	  function setLikeDday2(cp_idx,stopDate){
 		  var DDay = document.getElementById('like_DDay_'+cp_idx);
 		  let countDown = new Date(stopDate).getTime();
 		  let now = new Date().getTime();
@@ -502,6 +502,18 @@ function city_click() {
 			  DDay.parentElement.innerText = "편딩 기간 종료"
 		  }else{
 			  DDay.innerText= DdayCount;  
+		  }
+	  };
+	  function setDday(cp_idx,stopDate){
+		  var DDay_tag = document.getElementById('like_DDay_'+cp_idx);
+		  let countDown = new Date(stopDate).getTime();
+		  let now = new Date().getTime();
+		  distance = countDown - now;
+		  var Dday = Math.floor(distance / (day));
+		  if (Dday == 0) {
+			  DDay_tag.parentNode.innerText = '펀딩 기간 종료';
+		  }else{
+			  DDay_tag.innerText = Dday;
 		  }
 	  };
   </script>
