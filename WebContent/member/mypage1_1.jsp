@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -45,7 +47,7 @@
             <p>아직 펀딩이 종료되지 않은 기업이에요 !</p>
             <p>펀딩 모집 완료 후에는 투자철회가 불가능합니다.</p>
             <ul>
-              <li onclick="window.open('./MemberIvDropInfo.mb','기업이름','width=640,height=400,top=0,left=0,scrollbars=yes');">펀딩 철회하기</li>
+              <li onclick="window.open('./MemberIvDropInfo.mb?mb_idx=${sessionScope.idx }','기업이름','width=640,height=400,top=0,left=0,scrollbars=yes');">펀딩 철회하기</li>
               <li onclick="location.href='./corporation.html'">기업정보 보러가기</li>
             </ul>
           </div>
