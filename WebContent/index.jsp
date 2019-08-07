@@ -490,7 +490,7 @@ function city_click() {
 		  }
 	  };
 	  
-	  function setLikeDday2(cp_idx,stopDate){
+	  function setLikeDday(cp_idx,stopDate){
 		  var DDay = document.getElementById('like_DDay_'+cp_idx);
 		  let countDown = new Date(stopDate).getTime();
 		  let now = new Date().getTime();
