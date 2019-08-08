@@ -1191,7 +1191,6 @@ public class MemberDAO {
 		
 		// 태훈 추가 - 자산관리 포인트 충전
 		public int Point_Deposit(String point_sum, String session_idx) throws Exception{
-			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			int result = 0;
 			CallableStatement cstmt = null;
@@ -1217,8 +1216,8 @@ public class MemberDAO {
 				try {
 					if (rs != null)
 						rs.close();
-					if (pstmt != null)
-						pstmt.close();
+					if (cstmt != null)
+						cstmt.close();
 					if (conn != null)
 						conn.close();
 				} catch (Exception e) {
