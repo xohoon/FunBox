@@ -40,7 +40,7 @@ import net.member.action.Point_DepositAction;
 import net.member.action.Point_WithdrawAction;
 import net.member.action.Token_DepositAction;
 import net.member.action.Token_WithdrawAction;
-import net.member.action.deleteInvestAction;
+import net.member.action.DeleteInvestAction;
 
 
 public class MemberController extends HttpServlet implements Servlet {
@@ -260,7 +260,7 @@ public class MemberController extends HttpServlet implements Servlet {
 			}
 		}
 		else if(command.equals("/MemberIvDrop.mb")) {
-			action = new deleteInvestAction();
+			action = new DeleteInvestAction();
 			try {
 				forward = action.execute(request, response);
 			}catch(Exception e) {
