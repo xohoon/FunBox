@@ -10,7 +10,8 @@ import net.common.action.Action;
 import net.common.action.ActionForward;
 import net.member.dao.MemberDAO;
 
-public class DeleteInvestAction implements Action {
+public class deleteInvestAction implements Action {
+	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		boolean result = false;
@@ -30,25 +31,21 @@ public class DeleteInvestAction implements Action {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('투자 철회하기에 실패했습니다.\n다시 시도해주세요.');");
-			out.println("opener.location.href='./MemberInvestmentList.mb'");
-			out.println("window.close();");
+			out.println("location.href='./MemberInvestmentList.mb';");
 			out.println("</script>");
 			out.close();
 			
 			return null;
 		}
+		
+		System.out.println("투자 철회하기 성공");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.println("<script>");
-		out.println("alert('투자 철회하기에 성공했습니다.');");
-		out.println("opener.location.href='./MemberInvestmentList.mb'");
-		out.println("window.close();");
+		out.println("alert('투자 철회하기가 완료되었습니다.');");
+		out.println("location.href='./MemberInvestmentList.mb';");
 		out.println("</script>");
 		out.close();
-		
-//		ActionForward forward = new ActionForward();
-//		forward.setRedirect(false);
-//		forward.setPath("./member/Investment_list.jsp");
 		
 		return null;
 	}
