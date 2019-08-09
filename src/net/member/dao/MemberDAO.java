@@ -1490,7 +1490,8 @@ public class MemberDAO {
 	
 	//////////////김윤식 추가 포인트 거래내역 가져오기 ///////////////////
 	public ArrayList<MypagePointTransactionVO> getPointTranscationList(String mb_idx, int startRow, int pageSize) {
-		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx  AND A.mb_idx = ? ORDER BY A.po_date_time limit " + startRow + "," + pageSize; 
+		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 2 UNION SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 3 ORDER BY po_date_time limit " + startRow + "," + pageSize; 
+					
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		System.out.println("mb idx : " + mb_idx);
@@ -1498,6 +1499,7 @@ public class MemberDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
+			pstmt.setString(2, mb_idx);
 			rs = pstmt.executeQuery();
 			
 			ArrayList<MypagePointTransactionVO> pointtransactionList = new ArrayList<MypagePointTransactionVO>();	
@@ -1506,10 +1508,10 @@ public class MemberDAO {
 				
 				MypagePointTransactionVO pointtransaction = new MypagePointTransactionVO();
 			
-				pointtransaction.setPo_category(rs.getString("A.po_category"));
-				pointtransaction.setPo_amount(rs.getString("A.po_amount"));
-				pointtransaction.setPo_date_time(rs.getString("A.po_date_time"));
-				pointtransaction.setTk_amount(rs.getString("B.tk_amount"));
+				pointtransaction.setPo_category(rs.getString("po_category"));
+				pointtransaction.setPo_amount(rs.getString("po_amount"));
+				pointtransaction.setPo_date_time(rs.getString("po_date_time"));
+				pointtransaction.setTk_amount(rs.getString("tk_amount"));
 				pointtransactionList.add(pointtransaction);
 								
 			}
