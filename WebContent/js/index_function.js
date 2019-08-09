@@ -25,6 +25,7 @@ function realtime_like() {
 				$.each(data, function(idx, val) {
 					real_list = {
 						cp_name : val.cp_name,
+						cp_idx : val.cp_idx
 					}
 					ajax_list.push(val.cp_name);
 					view_list(real_list, idx + 1);
@@ -41,8 +42,12 @@ function realtime_like() {
 }
 function view_list(real_list, idx) {
 	$('.list_ul').append(
-			"<li>" + "<span>" + idx + "</span>&nbsp;" + "<a href=\"#\">"
-					+ real_list.cp_name + "</a>" + "<span></span>" + "</li>");
+			"<li>"
+			+ "<span>"
+			+ idx + "</span>&nbsp;"
+			+ "<a href=\"./CorporationAction.cp?cp_idx="+real_list.cp_idx+"\">"+ real_list.cp_name + "</a>"
+			+ "<span></span>"
+			+ "</li>");
 }
 
 function main_list() {

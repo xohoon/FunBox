@@ -1074,7 +1074,7 @@ public class MemberDAO {
 			
 			try {
 				// 쪼인해도되고안해도되고
-				String sql = "SELECT cp_name "
+				String sql = "SELECT cp_name, cp_idx "
 						+ "FROM company "
 						+ "ORDER BY cp_recommand_count DESC limit 10";
 				
@@ -1084,6 +1084,7 @@ public class MemberDAO {
 				while(rs.next()) {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("cp_name", rs.getString("cp_name"));
+					jsonObj.put("cp_idx", rs.getString("cp_idx"));
 					
 					jsonArr.add(jsonObj);
 				}
