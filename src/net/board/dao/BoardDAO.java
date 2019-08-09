@@ -281,7 +281,7 @@ public class BoardDAO {
 				notice.setIdx(rs.getInt("idx"));
 				notice.setTitle(rs.getString("title"));
 				notice.setContent(rs.getString("content"));
-				notice.setReg_date_time(rs.getTimestamp("reg_date_time"));
+				notice.setReg_date_time(rs.getString("reg_date_time"));
 				notice_list.add(notice);
 			}
 			return notice_list;
