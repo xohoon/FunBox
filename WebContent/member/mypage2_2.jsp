@@ -231,7 +231,7 @@
 				<table>
 					<tr>
 						<td>구분</td>
-						<td>코인수량</td>
+						<td>토큰수량</td>
 						<td>포인트수량</td>
 						<td>날짜</td>
 					</tr>
@@ -239,15 +239,15 @@
 						<tr>
 						<c:choose>														
 							<c:when test="${transaction.po_category == '2'}" >
-								<td class="plus">환전</td>																
-								<td>-<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /></td>								
-								<td>-<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /></td>
+								<td class="minus">환전</td>																
+								<td>-<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /> FBX</td>
+								<td>+<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /> P</td>								
 								<td>${transaction.po_date_time}</td>					
 							</c:when>
 							<c:when test="${transaction.po_category == '3'}" >
 								<td class="plus">충전</td>																
-								<td>+<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /></td>								
-								<td>+<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /></td>
+								<td>+<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /> FBX</td>
+								<td>-<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /> P</td>								
 								<td>${transaction.po_date_time}</td>					
 							</c:when>						
 						</c:choose>
