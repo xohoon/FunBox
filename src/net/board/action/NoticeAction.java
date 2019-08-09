@@ -51,13 +51,13 @@ public class NoticeAction implements Action{
 			}	
 			BoardDAO bd_dao = new BoardDAO();
 			ArrayList<NoticeVO> notice = bd_dao.getNotice(startRow - 1, pageSize);
-			System.out.println("notice>>>"+notice);
+			System.out.println("notice>>>"+notice.toString());
 			request.setAttribute("notice", notice);
 			
 		}else {
 			BoardDAO bd_dao = new BoardDAO();
 			ArrayList<NoticeVO> notice = bd_dao.getNotice(startRow - 1, pageSize);
-			System.out.println("notice>>>"+notice);
+			System.out.println("notice>>>"+notice.toString());
 			request.setAttribute("notice", notice);
 		}
 		

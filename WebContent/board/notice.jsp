@@ -63,6 +63,7 @@
 						<span>${notice.idx }</span>
 						<span>${notice.title }</span>
 						<span>${notice.reg_date_time }</span>
+						
 					</p>
 					<p class="depth2">
 					<%
