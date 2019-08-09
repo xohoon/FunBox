@@ -116,7 +116,7 @@
 	              </span> / <span> <fmt:formatNumber value="${likeVO.lk_cp_goal_amount }" pattern="#,###" />
 	              </span> P</span>
 	              <span class="d_day">D-<span id="like_DDay_${likeVO.lk_cp_idx }">1</span></span>
-	            </div>`
+	            </div>
 	          </div>
 	          <div class="reward_per">
 	            수익률
