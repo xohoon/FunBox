@@ -166,23 +166,23 @@
 						<table>
 						<tr>
       						<td>구분</td>
-      						<td>코인수량</td>
+      						<td>토큰수량</td>
       						<td>포인트수량</td>
       						<td>날짜</td>
 					     </tr>
 							<c:forEach var = "transactionP" items="${transactionP}">
 								<tr>
 								<c:choose>
-									<c:when test="${transactionP.po_category == '2'}" >
+									<c:when test="${transactionP.po_category eq '2'}" >
 										<td class="minus">환전</td>
-										<td>-<fmt:formatNumber value="${transactionP.po_amount}" pattern="#,###" /></td>
 										<td>+<fmt:formatNumber value="${transactionP.tk_amount}" pattern="#,###" /></td>
+										<td>-<fmt:formatNumber value="${transactionP.po_amount}" pattern="#,###" /></td>
 										<td>${transactionP.po_date_time}</td>
 									</c:when>
-									<c:when test="${transactionP.po_category == '3'}" >
+									<c:when test="${transactionP.po_category eq '3'}" >
 										<td class="plus">충전</td>
-										<td>+<fmt:formatNumber value="${transactionP.po_amount}" pattern="#,###" /></td>
 										<td>-<fmt:formatNumber value="${transactionP.tk_amount}" pattern="#,###" /></td>
+										<td>+<fmt:formatNumber value="${transactionP.po_amount}" pattern="#,###" /></td>
 										<td>${transactionP.po_date_time}</td>
 									</c:when>
 								</c:choose>
