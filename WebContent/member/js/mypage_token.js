@@ -53,7 +53,7 @@ function token_depositAjax() {
 				alert("입금신청이 완료되었습니다.");
 				location.href="./MypageDeposit.mb";
 			}else {
-				alert("입금 내용을 정확히 입력해주세요11");
+				alert("입금 내용을 정확히 입력해주세요1111");
 				location.href="./MypageDeposit.mb";
 			}
 		},
@@ -61,7 +61,7 @@ function token_depositAjax() {
 			console.log("request>>"+request);
 			console.log("status>>"+status);
 			console.log("error>>" +error);
-			alert("입금 내용을 정확히 입력해주세요22");
+			alert("입금 내용을 정확히 입력해주세요2222");
 			location.href="./MypageDeposit.mb";
 		}
 	});

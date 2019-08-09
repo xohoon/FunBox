@@ -23,6 +23,7 @@ import net.member.dto.MemberTransactionVO;
 import net.member.dto.Member_headerVO;
 import net.member.dto.Member_likeboxVO;
 import net.member.dto.MypagePointTransactionVO;
+import net.member.dto.benefitVO;
 
 public class MemberDAO {
 
@@ -742,7 +743,8 @@ public class MemberDAO {
 
 		return null;
 	}
-
+	
+	
 	// session mb_idx
 	public String Session_idx(String mb_id) throws Exception {
 
@@ -1189,17 +1191,18 @@ public class MemberDAO {
 		
 		// 태훈 추가 - 자산관리 포인트 충전
 		public int Point_Deposit(String point_sum, String session_idx) throws Exception{
-			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			int result = 0;
-			
+			CallableStatement cstmt = null;
+			String re_point = point_sum.replaceAll(",", "");
 			try {
-				String sql = "INSERT INTO  point_transaction(po_category, mb_idx, po_amount, po_date_time)"
-						+ "VALUES(3, ?, ?, now())";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, session_idx);
-				pstmt.setString(2, point_sum);
-				result = pstmt.executeUpdate();
+				cstmt = (CallableStatement)conn.prepareCall("call POINT_CHARGE(?,?,?)");
+				cstmt.setString(1, session_idx);
+				cstmt.setString(2, re_point);
+				cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
+				
+				cstmt.execute();
+				result = cstmt.getInt("@RESULT");
 
 				if (result != 0) {
 					result = 1;
@@ -1213,8 +1216,8 @@ public class MemberDAO {
 				try {
 					if (rs != null)
 						rs.close();
-					if (pstmt != null)
-						pstmt.close();
+					if (cstmt != null)
+						cstmt.close();
 					if (conn != null)
 						conn.close();
 				} catch (Exception e) {
@@ -1453,15 +1456,7 @@ public class MemberDAO {
 	System.out.println("mb idx : " + mb_idx);
 
 		try {
-		//	if (category.equals("0")) {
-		//		sql = "select * from faq ";
-		//		pstmt = conn.prepareStatement(sql);
-		//		rs = pstmt.executeQuery();
-		//	} else {
-		//		pstmt = conn.prepareStatement(sql);
-		//		pstmt.setString(1, category);
-		//		rs = pstmt.executeQuery();
-		//	}
+		
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
 			pstmt.setString(2, mb_idx);
@@ -1587,6 +1582,45 @@ public class MemberDAO {
 		return 0;
 	}
 	
+		//////////////김윤식 추가 당월, 누적 수익 가져오기 ///////////////////
+		public benefitVO benefit(String mb_idx) {
+		String sql = "SELECT SUM(mi_monthly_profit) AS month, SUM(mi_cumulative_profit) AS total FROM `member_invest` WHERE mb_idx = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("mb idx : " + mb_idx);
+				
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mb_idx);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {				
+				benefitVO benefitArr = new benefitVO();
+				benefitArr.setMonth_benefit(rs.getString("month"));
+				benefitArr.setTotal_benefit(rs.getString("total"));								
+				return benefitArr;							
+			}
+			
+							
+		} catch (Exception ex) {
+			System.out.println("benefit 에러: " + ex);	
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+		
+		return null;
+		}
+		
 	//String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx, tk_price, po_amount, po_content, po_date_time) VALUES (2,1,1,100,?,?,now())";
 	//String sql = "INSERT INTO token_transaction(tk_category, po_idx, tk_amount, tk_price, po_amount, tk_content, tk_date_time) VALUES (3,1,?,10,?,'비고',now())";
 	//String sql = "UPDATE member SET mb_point = mb_point + ?, mb_token = mb_token - ? WHERE mb_idx = ?";
