@@ -8,10 +8,17 @@ public class Member_likeboxVO {
 	private String cp_branch;			// 지점
 	private String cp_sector;			// 업종
 	private String cp_like_percent;		// 현재 투자률(sql 계산)
+	private String cf_image;
 	private int mb_idx;
 	private int cp_idx;
 	
 	
+	public String getCf_image() {
+		return cf_image;
+	}
+	public void setCf_image(String cf_image) {
+		this.cf_image = cf_image;
+	}
 	public int getMb_idx() {
 		return mb_idx;
 	}
