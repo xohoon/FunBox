@@ -47,7 +47,7 @@ function point_depositAjax() {
 				alert("포인트충전이 완료되었습니다.");
 				location.href="./Mypage2_2.mb";
 			}else {
-				alert("내용을 정확히 입력해주세요11");
+				alert("금액이 정확하지 않습니다.");
 				location.href="./Mypage2_2.mb";
 			}
 		},

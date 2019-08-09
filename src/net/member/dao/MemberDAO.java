@@ -1191,17 +1191,18 @@ public class MemberDAO {
 		
 		// 태훈 추가 - 자산관리 포인트 충전
 		public int Point_Deposit(String point_sum, String session_idx) throws Exception{
-			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			int result = 0;
-			
+			CallableStatement cstmt = null;
+			String re_point = point_sum.replaceAll(",", "");
 			try {
-				String sql = "INSERT INTO  point_transaction(po_category, mb_idx, po_amount, po_date_time)"
-						+ "VALUES(3, ?, ?, now())";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, session_idx);
-				pstmt.setString(2, point_sum);
-				result = pstmt.executeUpdate();
+				cstmt = (CallableStatement)conn.prepareCall("call POINT_CHARGE(?,?,?)");
+				cstmt.setString(1, session_idx);
+				cstmt.setString(2, re_point);
+				cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
+				
+				cstmt.execute();
+				result = cstmt.getInt("@RESULT");
 
 				if (result != 0) {
 					result = 1;
@@ -1215,8 +1216,8 @@ public class MemberDAO {
 				try {
 					if (rs != null)
 						rs.close();
-					if (pstmt != null)
-						pstmt.close();
+					if (cstmt != null)
+						cstmt.close();
 					if (conn != null)
 						conn.close();
 				} catch (Exception e) {
