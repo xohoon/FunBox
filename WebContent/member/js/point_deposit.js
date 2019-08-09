@@ -25,7 +25,7 @@ function point_deposit_btn() {
 			point_depositAjax();
 		}else {
 			console.log("point_sum:::"+point_sum);
-			alert("충전할 포인트를 입력해주세요");
+			alert("충전할 포인트를 입력해주세요1");
 		}
 	});
 	btn.disabled = false;
@@ -47,7 +47,7 @@ function point_depositAjax() {
 				alert("포인트충전이 완료되었습니다.");
 				location.href="./Mypage2_2.mb";
 			}else {
-				alert("금액이 정확하지 않습니다.");
+				alert("보유토큰이 부족합니다1.");
 				location.href="./Mypage2_2.mb";
 			}
 		},
@@ -55,7 +55,7 @@ function point_depositAjax() {
 			console.log("request>>"+request);
 			console.log("status>>"+status);
 			console.log("error>>" +error);
-			alert("입금 내용을 정확히 입력해주세요22");
+			alert("보유토큰이 부족합니다2.");
 			location.href="./Mypage2_2.mb";
 		}
 	});
