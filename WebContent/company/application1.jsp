@@ -95,7 +95,7 @@
 		  </div><!--#app7-->
     		<div class="cf">
      		<input type="button" class="next" value="다음" onclick="company_join_app01();">
-     		<input type="button" class="cancel" value="취소하기" onclick="location.href='./Index.mb''">
+     		<input type="button" class="cancel" value="취소하기" onclick="location.href='./Index.mb'">
      		</div>
       </div><!--.step1-->
     </form>

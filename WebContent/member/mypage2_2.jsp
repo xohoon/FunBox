@@ -1,4 +1,7 @@
 <%@page import="net.member.dto.MemberInvestVO"%>
+<%@page import="net.member.dto.Member_headerVO"%>
+<%@page import="net.member.dto.benefitVO"%>
+<%@page import="net.member.dao.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,6 +12,15 @@
 <html lang="kr">
 <% 
 	ArrayList<MypagePointTransactionVO> transaction = (ArrayList<MypagePointTransactionVO>)request.getAttribute("transaction");
+	String idx = (String)session.getAttribute("idx");
+	MemberDAO memberDAO = new MemberDAO();
+	Member_headerVO member = (Member_headerVO)memberDAO.Member_accumulate(idx);
+	
+	MemberDAO memberDAO2 = new MemberDAO();
+  	benefitVO benefit = (benefitVO)memberDAO2.benefit(idx);
+  	
+  	System.out.println("데이터 확인 : " + benefit.getMonth_benefit());
+  	System.out.println("데이터 확인 : " + benefit.getTotal_benefit());
 %>
 <head>
   <meta charset="UTF-8">
@@ -59,19 +71,19 @@
 			<div>
 				<div class="cf">
 					<p>현재 보유 포인트</p>
-					<p></p>
+					<p><fmt:formatNumber value="<%=member.getMb_point() %>" pattern="#,###" /> P</p>
 				</div>
 				<div class="cf">
 					<p>충전 가능 포인트</p>
-					<p></p>
+					<p><fmt:formatNumber value="<%=member.getMb_token() %>" pattern="#,###" /> P</p>
 				</div>
 				<div class="cf">
 					<p>이번달 수익</p>
-					<p></p>
+					<p><fmt:formatNumber value="<%=benefit.getMonth_benefit() %>" pattern="#,###" /> P</p>
 				</div>
 				<div class="cf">
 					<p>총 누적 수익</p>
-					<p></p>
+					<p><fmt:formatNumber value="<%=benefit.getTotal_benefit()%>" pattern="#,###" /> P</p>
 				</div>
 				</div>
 			</div>
@@ -219,25 +231,25 @@
 				<table>
 					<tr>
 						<td>구분</td>
-						<td>코인수량</td>
+						<td>토큰수량</td>
 						<td>포인트수량</td>
 						<td>날짜</td>
 					</tr>
 					<c:forEach var = "transaction" items="${transaction}">
 						<tr>
-						<c:choose>
+						<c:choose>														
 							<c:when test="${transaction.po_category == '2'}" >
-								<td class="plus">충전</td>																
-								<td>-<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /></td>								
-								<td>-<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /></td>
+								<td class="minus">환전</td>																
+								<td>-<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /> FBX</td>
+								<td>+<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /> P</td>								
 								<td>${transaction.po_date_time}</td>					
 							</c:when>
 							<c:when test="${transaction.po_category == '3'}" >
-								<td class="plus">환전</td>
-								<td>+<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /></td>
-								<td>+<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /></td>
-								<td>${transaction.po_date_time}</td>
-							</c:when>
+								<td class="plus">충전</td>																
+								<td>+<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /> FBX</td>
+								<td>-<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /> P</td>								
+								<td>${transaction.po_date_time}</td>					
+							</c:when>						
 						</c:choose>
 					  </tr>
 					</c:forEach>		

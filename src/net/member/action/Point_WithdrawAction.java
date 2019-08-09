@@ -26,8 +26,8 @@ public class Point_WithdrawAction implements Action {
 			result = memberDAO.Point_Withdraw(point_sum, session_idx);
 		}
 		
-		if(result != 0) {
-			JSONdata.put("result", "1");
+		if(result == 1) {
+			JSONdata.put("result", "1"); // 환전신청 성공
 		}else {
 			JSONdata.put("result", "0");
 		}

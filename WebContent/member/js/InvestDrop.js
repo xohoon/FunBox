@@ -7,6 +7,8 @@ $(document).ready(function() {
 	Drop_key();
 });
 
+
+
 //버튼 비활성
 function btn_off() {
 	btn = document.getElementById('IvDrop_btn');
@@ -21,6 +23,11 @@ function Invest_DropBtn() {
 		location.href="./MemberIvDrop.mb?cp_idx="+cp_idx;
 	});
 	btn.disabled = false;
+//	callback();
+}
+
+function location_action() {
+	location.href="./MemberInvestmentList.mb";
 }
 
 function Drop_key() {

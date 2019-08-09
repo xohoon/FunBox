@@ -59,6 +59,7 @@ function pincode_check(){
 		success : function(data){
 			if(String(data.result) == "confirm_pin_fail"){
 				alert('PIN이 일치하지 않습니다.');
+				history.go(0);
 				f.pin.focus();
 				return false;
 			}else{

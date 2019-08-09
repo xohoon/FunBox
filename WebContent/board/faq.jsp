@@ -268,7 +268,7 @@
 						<c:set var="endPage" value="${pageCount}" />
 					</c:if>
 					<c:if test="${numPageGroup > 1}">
-						<li><a href="./Faq.bd?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">◀</a></li>
+						<li><a href="./Faq.bd?pageNum=${(numPageGroup-2)*pageGroupSize+1 }&category=${categroyFlag}" class="prev">◀</a></li>
 					</c:if>
 					
 					<ul class="pager">
@@ -303,7 +303,7 @@
 					</ul>
 					
 					<c:if test="${numPageGroup < pageGroupCount}">
-						<a href="./Faq.bd?pageNum=${numPageGroup*pageGroupSize+1}" class="next">▶</a>
+						<a href="./Faq.bd?pageNum=${numPageGroup*pageGroupSize+1}&category=${categroyFlag}" class="next">▶</a>
 					</c:if>
 				</c:if>
 			</ul><!--.pager-->
