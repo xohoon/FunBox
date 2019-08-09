@@ -52,7 +52,7 @@ public class InvestDropAction implements Action {
 		boolean flag = false;		
 		MemberDAO memberDAO = new MemberDAO();
 		
-		ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = memberDAO.getInvestmentCompanyList(mb_id);
+		ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = memberDAO.getInvestmentCompanyList(mb_idx);
 		for (MemberInvestCompanyVO memberInvestVO : memberInvestCompanyVOList ) {
 			if (cp_idx_string == null) {
 				cp_idx = memberInvestVO.getCp_idx();
