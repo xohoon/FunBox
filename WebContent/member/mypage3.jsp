@@ -174,15 +174,15 @@
 								<tr>
 								<c:choose>
 									<c:when test="${transactionP.po_category == '2'}" >
-										<td class="plus">충전</td>
+										<td class="minus">환전</td>
 										<td>-<fmt:formatNumber value="${transactionP.po_amount}" pattern="#,###" /></td>
-										<td>-<fmt:formatNumber value="${transactionP.tk_amount}" pattern="#,###" /></td>
+										<td>+<fmt:formatNumber value="${transactionP.tk_amount}" pattern="#,###" /></td>
 										<td>${transactionP.po_date_time}</td>
 									</c:when>
 									<c:when test="${transactionP.po_category == '3'}" >
-										<td class="plus">환전</td>
+										<td class="plus">충전</td>
 										<td>+<fmt:formatNumber value="${transactionP.po_amount}" pattern="#,###" /></td>
-										<td>+<fmt:formatNumber value="${transactionP.tk_amount}" pattern="#,###" /></td>
+										<td>-<fmt:formatNumber value="${transactionP.tk_amount}" pattern="#,###" /></td>
 										<td>${transactionP.po_date_time}</td>
 									</c:when>
 								</c:choose>
