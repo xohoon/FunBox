@@ -1540,7 +1540,7 @@ public class MemberDAO {
 	//////////포인트 내역 count ///////////
 	public int getPointTranscationCount(String mb_idx) {
 		
-	String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx  AND A.mb_idx = ? ORDER BY A.po_date_time"; 
+		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 2 UNION SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 3 ORDER BY po_date_time"; 
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	int count = 0;
@@ -1559,6 +1559,7 @@ public class MemberDAO {
 		//	}
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
+			pstmt.setString(2, mb_idx);
 			rs = pstmt.executeQuery();
 			System.out.println(pstmt);
 			rs.last();
