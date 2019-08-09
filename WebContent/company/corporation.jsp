@@ -654,7 +654,7 @@
     		 
     		 success : function(data){
     			 if(String(data.result) == "add_likebox_success"){
-//    				 alert('즐겨찾기에 추가되었습니다.');
+    				 alert('즐겨찾기에 추가되었습니다.');
     				 return false;
     			 }else if(String(data.result) == "add_likebox_fail"){
     				 alert('즐겨찾기 추가에 실패했습니다.\n다시 시도해주세요.');
