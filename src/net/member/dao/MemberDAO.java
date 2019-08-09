@@ -791,12 +791,12 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<Member_likeboxVO> boxs = new ArrayList<Member_likeboxVO>();
-		System.out.println(">>>>>>>>>>>>>>>>>"+mb_idx);
 		try {
 			// 쿼리 멤버 idx필요
-			String sql = "SELECT a.mb_idx, a.cp_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
+			String sql = "SELECT a.mb_idx, a.cp_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, concat(cf.cf_directory,cf.cf_image1) as cf_directory_image, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
 					+ "FROM member_likebox as a " 
 					+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.mb_idx = ? "
+					+ "JOIN company_file as cf ON b.cp_idx = cf.cp_idx "
 					+ "JOIN company_invest as c ON b.cp_idx = c.cp_idx";
 
 			pstmt = conn.prepareStatement(sql);
@@ -813,6 +813,7 @@ public class MemberDAO {
 				box.setCp_monthly_profit(rs.getString("cp_monthly_profit"));
 				box.setCp_branch(rs.getString("cp_branch"));
 				box.setCp_sector(rs.getString("cp_sector"));
+				box.setCf_image(rs.getString("cf_directory_image"));
 				// 현재 투자율 계산
 				box.setCp_like_percent(rs.getString("percent"));
 
