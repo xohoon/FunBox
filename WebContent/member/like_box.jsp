@@ -41,7 +41,7 @@
 	    			<li onclick="location.href='./CorporationAction.cp?cp_idx=${boxs.getCp_idx() }'">
 	    				<a href="#" class="delete"><i class="fas fa-times-circle"></i></a>
 	                        <div class="img">
-						    <img src="img/row1_anotherminae.jpg" alt="미네스">
+						    <img src="${boxs.getCf_image() }">
 						    </div>
 						    <div class="txt_box">
 							<span>${boxs.getCp_sector() }</span>
