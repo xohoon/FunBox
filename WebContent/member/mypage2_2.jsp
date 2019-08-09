@@ -238,14 +238,26 @@
 					<c:forEach var = "transaction" items="${transaction}">
 						<tr>
 						<c:choose>
+							<c:when test="${transaction.po_category == '1'}" >
+								<td>기업투자</td>																
+								<td>-<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /></td>								
+								<td>-<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /></td>
+								<td>${transaction.po_date_time}</td>					
+							</c:when>
 							<c:when test="${transaction.po_category == '2'}" >
-								<td class="plus">충전</td>																
+								<td class="plus">환전</td>																
 								<td>-<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /></td>								
 								<td>-<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /></td>
 								<td>${transaction.po_date_time}</td>					
 							</c:when>
 							<c:when test="${transaction.po_category == '3'}" >
-								<td class="plus">환전</td>
+								<td class="plus">충전</td>																
+								<td>-<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /></td>								
+								<td>-<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /></td>
+								<td>${transaction.po_date_time}</td>					
+							</c:when>
+							<c:when test="${transaction.po_category == '4'}" >
+								<td>투자철회</td>
 								<td>+<fmt:formatNumber value="${transaction.po_amount}" pattern="#,###" /></td>
 								<td>+<fmt:formatNumber value="${transaction.tk_amount}" pattern="#,###" /></td>
 								<td>${transaction.po_date_time}</td>
