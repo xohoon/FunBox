@@ -52,7 +52,7 @@ pageEncoding="UTF-8"%>
         <br>
         <input type="checkbox" id="chka"><label for="chka">모든 투자 위험을 확인했으며 위 내용에 모두 동의합니다.</label>
         <hr>
-        <input type="button" value="돌아가기" onclick="location.href='./CorporationAction.cp'">
+        <input type="button" value="돌아가기" onclick="location.href='./CorporationAction.cp?cp_idx=<%= companyBean.getCp_idx()%>'">
         <input type="button" value="계속 투자하기" class="gon" onclick="checkGo();">
       </div>
     </article>

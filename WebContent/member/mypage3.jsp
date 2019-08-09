@@ -172,20 +172,20 @@
 					     </tr>
 							<c:forEach var = "transactionP" items="${transactionP}">
 								<tr>
-								<c:choose>
-									<c:when test="${transactionP.po_category eq '2'}" >
-										<td class="minus">환전</td>
-										<td>+<fmt:formatNumber value="${transactionP.tk_amount}" pattern="#,###" /></td>
-										<td>-<fmt:formatNumber value="${transactionP.po_amount}" pattern="#,###" /></td>
-										<td>${transactionP.po_date_time}</td>
-									</c:when>
-									<c:when test="${transactionP.po_category eq '3'}" >
-										<td class="plus">충전</td>
-										<td>-<fmt:formatNumber value="${transactionP.tk_amount}" pattern="#,###" /></td>
-										<td>+<fmt:formatNumber value="${transactionP.po_amount}" pattern="#,###" /></td>
-										<td>${transactionP.po_date_time}</td>
-									</c:when>
-								</c:choose>
+								<c:choose>														
+							<c:when test="${transactionP.po_category == '2'}" >
+								<td class="minus">환전</td>																
+								<td>-<fmt:formatNumber value="${transactionP.tk_amount}" pattern="#,###" /> FBX</td>
+								<td>+<fmt:formatNumber value="${transactionP.po_amount}" pattern="#,###" /> P</td>								
+								<td>${transactionP.po_date_time}</td>					
+							</c:when>
+							<c:when test="${transactionP.po_category == '3'}" >
+								<td class="plus">충전</td>																
+								<td>+<fmt:formatNumber value="${transactionP.tk_amount}" pattern="#,###" /> FBX</td>
+								<td>-<fmt:formatNumber value="${transactionP.po_amount}" pattern="#,###" /> P</td>								
+								<td>${transactionP.po_date_time}</td>					
+							</c:when>						
+						</c:choose>
 							  </tr>
 							</c:forEach>
 						</table>

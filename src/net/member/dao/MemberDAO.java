@@ -1327,21 +1327,19 @@ public class MemberDAO {
 
 	// 박신규 시작~ ///////////////////////////////////////////////////
 	// 투자 회사 리스트 뽑깅
-	public ArrayList<MemberInvestCompanyVO> getInvestmentCompanyList(String mb_id) {
-		String sql = "select cp.cp_idx, cp.cp_name, mi.mb_idx, mi.mb_id, cp.cp_funding_status from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_id = ?";
+	public ArrayList<MemberInvestCompanyVO> getInvestmentCompanyList(int mb_idx) {
+		String sql = "select DISTINCT(cp.cp_idx),cp.cp_name, cp.cp_funding_status from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_idx = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mb_id);
+			pstmt.setInt(1, mb_idx);
 			rs = pstmt.executeQuery();
 			ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = new ArrayList<MemberInvestCompanyVO>();
 			while (rs.next()) {
 				MemberInvestCompanyVO memberInvestCompanyVO = new MemberInvestCompanyVO();
 				memberInvestCompanyVO.setCp_idx(rs.getInt("cp_idx"));
 				memberInvestCompanyVO.setCp_name(rs.getString("cp_name"));
-				memberInvestCompanyVO.setMb_idx(rs.getInt("mb_idx"));
-				memberInvestCompanyVO.setMb_id(rs.getString("mb_id"));
 				memberInvestCompanyVO.setCp_funding_status(rs.getString("cp_funding_status"));
 				memberInvestCompanyVOList.add(memberInvestCompanyVO);
 			}
@@ -1491,7 +1489,8 @@ public class MemberDAO {
 	
 	//////////////김윤식 추가 포인트 거래내역 가져오기 ///////////////////
 	public ArrayList<MypagePointTransactionVO> getPointTranscationList(String mb_idx, int startRow, int pageSize) {
-		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx  AND A.mb_idx = ? ORDER BY A.po_date_time limit " + startRow + "," + pageSize; 
+		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 2 UNION SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 3 ORDER BY po_date_time limit " + startRow + "," + pageSize; 
+					
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		System.out.println("mb idx : " + mb_idx);
@@ -1499,6 +1498,7 @@ public class MemberDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
+			pstmt.setString(2, mb_idx);
 			rs = pstmt.executeQuery();
 			
 			ArrayList<MypagePointTransactionVO> pointtransactionList = new ArrayList<MypagePointTransactionVO>();	
@@ -1507,10 +1507,10 @@ public class MemberDAO {
 				
 				MypagePointTransactionVO pointtransaction = new MypagePointTransactionVO();
 			
-				pointtransaction.setPo_category(rs.getString("A.po_category"));
-				pointtransaction.setPo_amount(rs.getString("A.po_amount"));
-				pointtransaction.setPo_date_time(rs.getString("A.po_date_time"));
-				pointtransaction.setTk_amount(rs.getString("B.tk_amount"));
+				pointtransaction.setPo_category(rs.getString("po_category"));
+				pointtransaction.setPo_amount(rs.getString("po_amount"));
+				pointtransaction.setPo_date_time(rs.getString("po_date_time"));
+				pointtransaction.setTk_amount(rs.getString("tk_amount"));
 				pointtransactionList.add(pointtransaction);
 								
 			}
@@ -1538,7 +1538,7 @@ public class MemberDAO {
 	//////////포인트 내역 count ///////////
 	public int getPointTranscationCount(String mb_idx) {
 		
-	String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx  AND A.mb_idx = ? ORDER BY A.po_date_time"; 
+		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 2 UNION SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 3 ORDER BY po_date_time"; 
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	int count = 0;
@@ -1557,6 +1557,7 @@ public class MemberDAO {
 		//	}
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
+			pstmt.setString(2, mb_idx);
 			rs = pstmt.executeQuery();
 			System.out.println(pstmt);
 			rs.last();

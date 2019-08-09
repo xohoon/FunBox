@@ -11,6 +11,9 @@ var current_page = 0;
 var companyListHTML;
 var count = 0;
 
+var wideBoxFlag = false;
+var wide_box = 'wide_box';
+
 // / check box ///
 $(document).ready(function() {
 	// 함수 실행
@@ -223,8 +226,13 @@ function makeMoreCompanyListHTML(resultData) {
 		Dday_text = "";
 		Dday = "편딩 기간 종료"
 	}
-	companyListHTML += "<div class='corp_box' onclick=location.href='./CorporationAction.cp?cp_idx="
-			+ resultData.cp_idx
+	//wide_box
+	if (wideBoxFlag == false) {
+		companyListHTML += "<div class='corp_box' onclick=location.href='./CorporationAction.cp?cp_idx=";
+	}else{
+		companyListHTML += "<div class='corp_box wide_box' onclick=location.href='./CorporationAction.cp?cp_idx=";
+	}
+	companyListHTML+= resultData.cp_idx
 			+ "'><div class='c_img'><img src='"+resultData.thumbnail_image+"' alt=''></div><div class='c_txt'><p>"
 			+ resultData.cp_sector
 			+ "</p><h5>"
@@ -453,8 +461,8 @@ function ckbox_list() {
 			list_status_box.push(item.value);
 		}
 	})
-
-	if ($('#con3_all').prop('checked')) {
+/*
+//	if ($('#con3_all').prop('checked')) {
 		$("input[id='con3_all']:checked").each(function(i) {
 			list_status_box = new Array;
 			$.each($('.status_ckbox'), function(index, item) {
@@ -462,7 +470,7 @@ function ckbox_list() {
 			})
 		});
 	}
-
+*/
 	sector_array = list_sector_box;
 	city_array = list_city_box;
 	city_status = list_status_box;
