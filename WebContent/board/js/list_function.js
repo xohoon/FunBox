@@ -453,8 +453,8 @@ function ckbox_list() {
 			list_status_box.push(item.value);
 		}
 	})
-
-	if ($('#con3_all').prop('checked')) {
+/*
+//	if ($('#con3_all').prop('checked')) {
 		$("input[id='con3_all']:checked").each(function(i) {
 			list_status_box = new Array;
 			$.each($('.status_ckbox'), function(index, item) {
@@ -462,7 +462,7 @@ function ckbox_list() {
 			})
 		});
 	}
-
+*/
 	sector_array = list_sector_box;
 	city_array = list_city_box;
 	city_status = list_status_box;
