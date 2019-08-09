@@ -27,7 +27,6 @@ public class MemberInvestmentListAction implements Action {
 		String mb_id = (String) session.getAttribute("id");
 		Integer mb_idx = Integer.parseInt((String) session.getAttribute("idx"));
 		
-		
 		if (mb_id == null || mb_idx == null ) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -40,10 +39,11 @@ public class MemberInvestmentListAction implements Action {
 		
 		String cp_idx_string = null;
 		cp_idx_string = request.getParameter("cp_idx");
+		
 		int cp_idx = 0;
 		
 		if (cp_idx_string == null) {
-			cp_idx = 2;
+			cp_idx = 1;
 		}else {
 			cp_idx = Integer.parseInt(cp_idx_string);
 		}
@@ -51,7 +51,7 @@ public class MemberInvestmentListAction implements Action {
 		boolean flag = false;		
 		MemberDAO memberDAO = new MemberDAO();
 		
-		ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = memberDAO.getInvestmentCompanyList(mb_id);
+		ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = memberDAO.getInvestmentCompanyList(mb_idx);
 		for (MemberInvestCompanyVO memberInvestVO : memberInvestCompanyVOList ) {
 			if (cp_idx_string == null) {
 				cp_idx = memberInvestVO.getCp_idx();

@@ -226,11 +226,13 @@
 
     $(function() {
       $('.view_type_ract').on('click', function() {
+    	wideBoxFlag = false;
         $('.view_type span').removeClass('on');
         $(this).addClass('on');
-        $('.corp_box').removeClass('wide_box')
+        $('.corp_box').removeClass('wide_box');
       });
       $('.view_type_wide').on('click', function() {
+    	  wideBoxFlag = true;
         $('.view_type span').removeClass('on');
         $(this).addClass('on');
         $('.corp_box').addClass('wide_box')

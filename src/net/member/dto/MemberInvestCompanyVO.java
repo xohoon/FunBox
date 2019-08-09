@@ -38,6 +38,12 @@ public class MemberInvestCompanyVO {
 	public void setMb_id(String mb_id) {
 		this.mb_id = mb_id;
 	}
+	@Override
+	public String toString() {
+		return "MemberInvestCompanyVO [cp_idx=" + cp_idx + ", cp_name=" + cp_name + ", mb_idx=" + mb_idx + ", mb_id="
+				+ mb_id + ", cp_funding_status=" + cp_funding_status + "]";
+	}
+	
 	
 	
 }

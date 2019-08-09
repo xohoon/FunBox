@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.mysql.jdbc.CallableStatement;
+
 import net.company.dto.ApplicationVO;
 import net.company.dto.CompanyBean;
 import net.company.dto.CompanyFileVO;
@@ -357,6 +359,44 @@ public class CompanyDAO {
 
 		return null;
 	}
+	
+	//대망의 포로시저 ~~~
+	//기업 투자하깅~
+	public boolean invest(int _mb_idx,int _cp_idx,int _po_amount,String _mi_hoiling_stock) {
+		CallableStatement cstmt = null;
+		int result = 0;
+		ResultSet rs = null;
+		try {
+			cstmt = (CallableStatement) conn.prepareCall("call INVEST(?,?,?,?,?)");
+			cstmt.setInt(1, _mb_idx);
+			cstmt.setInt(2, _cp_idx);
+			cstmt.setInt(3, _po_amount);
+			cstmt.setString(4, _mi_hoiling_stock);
+			cstmt.registerOutParameter(5,java.sql.Types.INTEGER);
+			cstmt.execute();
+			result = cstmt.getInt("@RESULT");
+			if (result != 0) {
+				return true;
+			}
+		} catch (Exception ex) {
+			System.out.println("invest 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (cstmt != null)
+					cstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return false;
+	}
+
+	
 	// 박신규 끝//////////////////////////
 
 	// 유정 추가 start ////////////////////////////
@@ -610,7 +650,7 @@ public class CompanyDAO {
 
 	// 투자하기 insert
 	public boolean MemberInvest(MemberInvestVO member_invest) {
-		String sql = "insert into member_invest(mb_idx,mb_id,mi_category,mi_name,mi_branch,mi_point,mi_hoiling_stock,cp_idx,mi_reg_date_time) values (?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
+		String sql = "insert into member_invest(mb_idx,mb_id,mi_category,mi_name,mi_branch,mi_point,mi_hoiling_stock,cp_idx,mi_reg_date_time) values (?,?,?,?,?,?,?,?,now())";
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

@@ -39,6 +39,7 @@
     		<ul>
     			<c:forEach var="boxs" items="${boxs }">
 	    			<li onclick="location.href='./CorporationAction.cp?cp_idx=${boxs.getCp_idx() }'">
+	    			<input type="hidden" id="cp_idx" value="${boxs.getCp_idx() }">
 	    				<a href="#" class="delete"><i class="fas fa-times-circle"></i></a>
 	                        <div class="img">
 						    <img src="${boxs.getCf_image() }">
@@ -65,15 +66,22 @@
     	</div><!--.fav-->
     	<script src="js/jquery.mousewheel.js"></script>
 	<script>
-      
+	var cp_idx = null;
         $('.fav a').on('click', function(){
-            $(this).parent('li').remove();
+            var delConfirm = confirm('즐겨찾기에서 제외하시겠습니까?');
+            if(delConfirm){
+	        	cp_idx = $("#cp_idx").val();
+	            $(this).parent('li').remove();
+	            bookmark(0);
+            }
+            return false;
         });
-        
+		
         $(".fav ul").mousewheel(function(event, delta) {
             this.scrollLeft -= (delta * 100);
             event.preventDefault();
         });
+        
 		$(function() {
 			$('.gage').each(function() {
 					var percent = $(this).find('.per > span').text();
@@ -83,4 +91,34 @@
 					}, 1500);
 			});
 		});
+		
+	      //찜하기 추가
+	      function bookmark(val){
+	    	  
+	    	  alert(cp_idx);
+
+	    	  $.ajax({
+	    		 url : "./BookmarkAction.cp",
+	    		 data : {
+	    			 "val" : val,
+	    			 "cp_idx" : cp_idx,
+	    		 },
+	    		 type : "POST",
+	    		 dataType : "JSON",
+	    		 
+	    		 success : function(data){
+	    			 if(String(data.result) == "remove_likebox_success"){
+	    				 alert('즐겨찾기에서 제외되었습니다.');
+	    				 return false;
+	    			 }else if(String(data.result) == "remove_likebox_fail"){
+	    				 alert('즐겨찾기 제외에 실패했습니다.\n다시 시도해주세요.');
+	    				 return false;
+	    			 }
+	    		 },
+	    		 error : function(e){
+	    			 alert('error');
+	    			 console.log(e.responseText);
+	    		 }
+	    	  });
+	    }
     </script>
