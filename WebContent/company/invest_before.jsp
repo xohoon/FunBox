@@ -164,11 +164,15 @@ pageEncoding="UTF-8"%>
        
      var amount = $('.quantity input').val();
      var sum = resultPrice * amount
- //    console.log("sum : "+ sum);
+     var summ;
+     summ = addComma(sum);
+     
+    //console.log("sum : "+ summ);
+     
      
         $('.sum span').text(sum)
         $('#invest_amount').val(amount); // 투자하기 넘길때 사용
-        $('#invest_point').val(sum); // 투자하기 넘길때 사용
+        $('#invest_point').val(summ); // 투자하기 넘길때 사용
       });
       
       setInterval(function(){
@@ -187,8 +191,14 @@ pageEncoding="UTF-8"%>
             point += 3; 
         }         
         $('.sum span').text(addCommaSum) // 여기에 합계 표시
-      },1000);
+      },10);
       
     });
+  </script>
+  <script>
+  	function addComma(num) {
+	  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+	  return num.toString().replace(regexp, ',');
+	}
   </script>
 </body></html>
