@@ -103,7 +103,7 @@
         </tr>
         <tr>
           <td>자본금</td>
-          <td><%=memberInvestVO.getCp_capital() %></td>
+          <td><fmt:formatNumber value ="<%=memberInvestVO.getCp_capital() %>" pattern="#,###" /></td>
         </tr>
         <tr>
           <td>본사주소</td>
