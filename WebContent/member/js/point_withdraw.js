@@ -22,6 +22,7 @@ function point_withdraw_btn() {
 		point_sum = $(".sumcomma2").text();
 		session_idx = $("#session_idx").val();
 		if(point_sum != 0 && session_idx != null) {
+			alert("point_sum: "+point_sum);
 			point_withdrawAjax();
 		}else {
 			console.log("point_sum:::"+point_sum);
@@ -47,7 +48,7 @@ function point_withdrawAjax() {
 				alert("환전신청이 완료되었습니다.");
 				location.href="./Mypage2_2.mb";
 			}else {
-				alert("환전 내용을 정확히 입력해주세요11");
+				alert("환전 내용을 정확히 입력해주세요.");
 				location.href="./Mypage2_2.mb";
 			}
 		},
@@ -55,7 +56,7 @@ function point_withdrawAjax() {
 			console.log("request>>"+request);
 			console.log("status>>"+status);
 			console.log("error>>" +error);
-			alert("입금 내용을 정확히 입력해주세요22");
+			alert("입금 내용을 정확히 입력해주세요.");
 			location.href="./Mypage2_2.mb";
 		}
 	});

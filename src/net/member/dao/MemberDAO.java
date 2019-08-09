@@ -1,5 +1,6 @@
 package net.member.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -1226,32 +1227,34 @@ public class MemberDAO {
 		
 		// 태훈 추가 - 자산관리 포인트 환전
 		public int Point_Withdraw(String point_sum, String session_idx) throws Exception{
-			PreparedStatement pstmt = null;
+			CallableStatement cstmt = null;
 			ResultSet rs = null;
 			int result = 0;
+			String new_point = point_sum.replaceAll(",", "");
 					
 			try {
-				String sql = "INSERT INTO  point_transaction(po_category, mb_idx, po_amount, po_date_time)"
-						+ "VALUES(2, ?, ?, now())";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, session_idx);
-				pstmt.setString(2, point_sum);
-				result = pstmt.executeUpdate();
-
-				if (result != 0) {
-					result = 1;
+				cstmt = conn.prepareCall("{call POINT_EXCHANGE(?,?,?)}");
+				cstmt.setString(1, session_idx);
+				cstmt.setString(2, new_point);
+				cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
+				
+				cstmt.execute();
+				result = cstmt.getInt("@RESULT");
+				
+				if (result == 1) {
+					result = 1;	// 환전신청 성공
 					return result;
-				}else {
+				}else {	// result가 -1 or 0이면
 					result = 0;
 				}
 			} catch (Exception ex) {
-				System.out.println("Token_Deposit 에러: " + ex);
+				System.out.println("Point_Withdraw 에러: " + ex);
 			} finally {
 				try {
 					if (rs != null)
 						rs.close();
-					if (pstmt != null)
-						pstmt.close();
+					if (cstmt != null)
+						cstmt.close();
 					if (conn != null)
 						conn.close();
 				} catch (Exception e) {
