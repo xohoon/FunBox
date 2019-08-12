@@ -1,6 +1,7 @@
 package net.member.dto;
 
 public class MemberInvestCompanyVO {
+	private int mi_idx;
 	private int cp_idx;
 	private String cp_name;
 	private int mb_idx;
@@ -8,6 +9,12 @@ public class MemberInvestCompanyVO {
 	private String cp_funding_status;
 	
 	
+	public int getMi_idx() {
+		return mi_idx;
+	}
+	public void setMi_idx(int mi_idx) {
+		this.mi_idx = mi_idx;
+	}
 	public String getCp_funding_status() {
 		return cp_funding_status;
 	}
