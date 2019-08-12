@@ -13,8 +13,9 @@
 <script type="text/javascript">
 window.onload = function () {
 
-	swal("Logout.");
-	setTimeout(function() { location.href = "../Index.mb"; }, 2000);
+	//swal("Logout.");
+	//setTimeout(function() { location.href = "../Index.mb"; }, 2000);
+	location.href = "../Index.mb";
 }
 </script>
 
