@@ -12,6 +12,7 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import net.member.dto.InvestDeleteVO;
 import net.member.dto.Main_CityVO;
 import net.member.dto.Main_LikeVO;
 import net.member.dto.Main_SlideVO;
@@ -664,8 +665,8 @@ public class MemberDAO {
 	
 	
 	// 펀딩 철회하기
-	public boolean deleteInvest(int mb_idx, int cp_idx) {
-		String sql = "delete from member_invest where mb_idx=? and cp_idx=?";
+	public boolean deleteInvest(int mb_idx, int cp_idx, int mi_idx) {
+		String sql = "delete from member_invest where mb_idx=? and cp_idx=? and mi_idx = ?";
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -673,6 +674,7 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mb_idx);
 			pstmt.setInt(2, cp_idx);
+			pstmt.setInt(3, mi_idx);
 
 			result = pstmt.executeUpdate();
 			System.out.println(pstmt);
@@ -1268,6 +1270,49 @@ public class MemberDAO {
 			}
 
 			return result;
+		}
+		
+		
+		public List<InvestDeleteVO> InvestDeleteInfo(int cp_idx, int mb_idx, int mi_idx) throws Exception {
+
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<InvestDeleteVO> DeleteList = new ArrayList<InvestDeleteVO>();
+
+			try {
+				String sql = "SELECT mi_name, mi_point, mi_idx "
+						+ "FROM member_invest "
+						+ "WHERE cp_idx = ? AND mi_idx = ? AND mi_idx = ?";
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, cp_idx);
+				pstmt.setInt(2, mb_idx);
+				pstmt.setInt(3, mi_idx);
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					InvestDeleteVO DeleteVO = new InvestDeleteVO();
+					DeleteVO.setCp_name(rs.getString("mi_name"));
+					DeleteVO.setMi_point(rs.getString("mi_point"));
+					DeleteVO.setMi_idx(rs.getInt("mi_idx"));
+					DeleteList.add(DeleteVO);
+				}
+				return DeleteList;
+			} catch (Exception ex) {
+				System.out.println("Main_SlideInfo ERROR: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+			return null;
 		}
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
