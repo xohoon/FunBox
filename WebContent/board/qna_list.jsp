@@ -73,14 +73,12 @@
 						<span>
 						<%
 							String reg_date_time = "";
-										
 								 			try {
 								 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 								 				reg_date_time = formatter.format(qna_list.get(i).getReg_date_time());
 								 			} catch (Exception ex) {
 								 				reg_date_time = "";
 								 			}
-								
 								 			out.print(reg_date_time);
 						%>
 							</span>

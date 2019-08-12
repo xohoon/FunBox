@@ -1,5 +1,5 @@
-<%@page import="net.company.dto.CompanyBean"%>
-<%@page import="net.company.dto.InvestPointVO"%>
+<%-- <%@page import="net.company.dto.CompanyBean"%>
+<%@page import="net.company.dto.InvestPointVO"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -27,8 +27,8 @@
 
 <%
 	request.setCharacterEncoding("utf-8"); // 한글처리
-	CompanyBean companyBean = (CompanyBean)request.getAttribute("company");
-	InvestPointVO invest_point = (InvestPointVO)request.getAttribute("inv_pointVO");
+	//CompanyBean companyBean = (CompanyBean)request.getAttribute("company");
+	//InvestPointVO inv_pointVO = (InvestPointVO)request.getAttribute("inv_pointVO");
 %>
   <div id="wrap">
     <header></header>
@@ -39,24 +39,24 @@
     <section id="inv_af">
       <div class="inner">
         <article class="inv_inbox">
-          <img src="<%=companyBean.getCf_image5() %>" alt="">
+          <img src="${companyBean.cf_image5}" alt="">
           <form class="inv_intxt" name="invest_after_form" action="./InvestAction.cp" method="post">
             <input type="hidden" name="mb_idx" value="${sessionScope.idx}">
             <input type="hidden" name="mb_id" value="${sessionScope.id}">
             <input type="hidden" name="mi_category" value="투자">
-            <input type="hidden" name="amount" value="<%=invest_point.getInvest_amount() %>">
-            <input type="hidden" name="point" value="<%=invest_point.getInvest_point() %>">
-            <input type="hidden" name="cp_name" value="<%=companyBean.getCp_name() %>">
-            <input type="hidden" name="cp_branch" value="<%=companyBean.getCp_branch() %>">
-            <input type="hidden" name="cp_idx" value="<%=companyBean.getCp_idx() %>">
+            <input type="hidden" name="amount" value="${inv_pointVO.invest_amount }">
+            <input type="hidden" name="point" value="${inv_pointVO.invest_point }">
+            <input type="hidden" name="cp_name" value="${company.cp_name }">
+            <input type="hidden" name="cp_branch" value="${company.cp_branch }">
+            <input type="hidden" name="cp_idx" value="${company.cp_idx }">
             <h2>투자 내역</h2>
-            <h3><%=companyBean.getCp_name() %><span><%=companyBean.getCp_branch() %></span></h3>
+            <h3>${company.cp_name }<span>${company.cp_branch }</span></h3>
 
             <div class="summary">
-              <div><span><fmt:formatNumber value="<%=companyBean.getIv_min_amount() %>" pattern="#,###" /></span> point</div>
-              <div>x <span><%=invest_point.getInvest_amount() %></span> 구좌</div>
+              <div><span><fmt:formatNumber value="${company.iv_min_amount }" pattern="#,###" /></span> point</div>
+              <div>x <span>${inv_pointVO.invest_amount }</span> 구좌</div>
               <hr>
-              <div><span><fmt:formatNumber value="<%=invest_point.getInvest_point() %>" pattern="#,###" /></span> point</div>
+              <div><span><fmt:formatNumber value="${inv_pointVO.invest_point }" pattern="#,###" /></span> point</div>
             </div>
 
             <div class="inv_noti">
@@ -95,8 +95,8 @@
 
     <footer></footer>
   </div>
-
-  <script>
+	<script type="text/javascript" src="company/js/invest_after.js"></script>
+  <!-- <script>
     $(function() {
       $('header').load('./header/header.jsp');
       $('footer').load('./footer/footer.jsp');
@@ -165,7 +165,7 @@
       }
     });
     
-  </script>
+  </script> -->
 </body>
 
 </html>

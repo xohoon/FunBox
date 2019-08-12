@@ -27,9 +27,6 @@ public class MemberInvestmentListAction implements Action {
 		String mb_id = (String) session.getAttribute("id");
 		Integer mb_idx = Integer.parseInt((String) session.getAttribute("idx"));
 		String mi_idx_string = request.getParameter("mi_idx");
-		System.out.println(">>>>>11>>>"+mb_id);
-		System.out.println(">>>>>22>>>"+mb_idx);
-		System.out.println(">>>>>33>>>"+request.getParameter("mi_idx"));
 		
 		if (mb_id == null || mb_idx == null || mi_idx_string == null) {
 			response.setContentType("text/html;charset=UTF-8");
@@ -46,12 +43,6 @@ public class MemberInvestmentListAction implements Action {
 		String cp_idx_string = null;
 		cp_idx_string = request.getParameter("cp_idx");
 		
-		/*
-		 * int cp_idx = 0;
-		 * 
-		 * if (cp_idx_string == null) { cp_idx = 1; }else { cp_idx =
-		 * Integer.parseInt(cp_idx_string); }
-		 */
 		boolean flag = false;		
 		MemberDAO memberDAO = new MemberDAO();
 		int cp_idx = 0;

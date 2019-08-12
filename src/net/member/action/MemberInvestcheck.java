@@ -17,7 +17,6 @@ public class MemberInvestcheck implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		JSONObject JSONdata = new JSONObject();
-		//String sessionID = request.getParameter("sessionID");
 		HttpSession session = request.getSession();
 		String mb_idx_String = (String) session.getAttribute("idx");
 		int mb_idx = -1;
