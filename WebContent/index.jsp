@@ -20,9 +20,6 @@
 
 <!DOCTYPE html>
 <html lang="kr">
-<%
-	//int count = (Integer)request.getAttribute("count");
-%>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">

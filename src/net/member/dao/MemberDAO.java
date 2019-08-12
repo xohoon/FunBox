@@ -12,6 +12,7 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import net.member.dto.InvestDeleteVO;
 import net.member.dto.Main_CityVO;
 import net.member.dto.Main_LikeVO;
 import net.member.dto.Main_SlideVO;
@@ -662,40 +663,6 @@ public class MemberDAO {
 		return null;
 	}
 	
-	
-	// 펀딩 철회하기
-	public boolean deleteInvest(int mb_idx, int cp_idx) {
-		String sql = "delete from member_invest where mb_idx=? and cp_idx=?";
-		int result = 0;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, mb_idx);
-			pstmt.setInt(2, cp_idx);
-
-			result = pstmt.executeUpdate();
-			System.out.println(pstmt);
-			if (result != 0) {
-				return true;
-			}
-		} catch (Exception ex) {
-			System.out.println("deleteInvest 에러: " + ex);
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				System.out.println("연결 해제 실패: " + e.getMessage());
-			}
-		}
-
-		return false;
-	}
 
 	/////////////////////// 유정 추가 end///////////////////////
 
@@ -986,26 +953,20 @@ public class MemberDAO {
 			return null;
 		}
 		
-		// 태훈 - 기업 투자 현황 페에지 제어
-		public String Member_Invest_check(String sessionID) {
+		// 태훈 - 기업 투자 현황 페에지 제어 // 신규수정
+		public int Member_Invest_check(int mb_idx) {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			String result = "0";
+			int result = -1;
 
 			try {
-				String sql = "SELECT count(*) FROM member_invest WHERE mb_id = ?";
+				String sql = "SELECT mi_idx FROM member_invest WHERE mb_idx = ? ORDER BY mi_reg_date_time DESC";
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, sessionID);
+				pstmt.setInt(1, mb_idx);
 				rs = pstmt.executeQuery();
 
 				if (rs.next()) {
-					if (rs.getInt("count(*)") > 0) {
-						result = "1"; 
-					} else {
-						result = "0";
-					}
-				} else {
-					result = "0";
+					result = rs.getInt("mi_idx");
 				}
 			} catch (Exception ex) {
 				System.out.println("Member_Invest_check 에러: " + ex);
@@ -1269,6 +1230,91 @@ public class MemberDAO {
 
 			return result;
 		}
+		
+		// 펀딩 철회하기
+		public int deleteInvest(int mb_idx, int cp_idx, int mi_idx) {
+			int result = 0;
+			CallableStatement cstmt = null;
+			ResultSet rs = null;
+			try {
+				cstmt = conn.prepareCall("{call RETRACT(?, ?, ?, ?)}");
+				cstmt.setInt(1, mb_idx);
+				cstmt.setInt(2, mi_idx);
+				cstmt.setInt(3, cp_idx);
+				cstmt.registerOutParameter(4, java.sql.Types.INTEGER);
+				
+				cstmt.execute();
+				result = cstmt.getInt("@RESULT");
+				
+				if (result == 1) {
+					System.out.println(">>>>1철회성공"+result);
+					result = 1;	// 철회성공
+					return result;
+				}else {	// 철회실패
+					System.out.println(">>>>2실패"+result);
+					result = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("deleteInvest 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (cstmt != null)
+						cstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
+		
+		
+		public List<InvestDeleteVO> InvestDeleteInfo(int cp_idx, int mb_idx, int mi_idx) throws Exception {
+
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<InvestDeleteVO> DeleteList = new ArrayList<InvestDeleteVO>();
+
+			try {
+				String sql = "SELECT mi_name, mi_point, mi_idx, cp_idx "
+						+ "FROM member_invest "
+						+ "WHERE cp_idx = ? AND mb_idx = ? AND mi_idx = ?";
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, cp_idx);
+				pstmt.setInt(2, mb_idx);
+				pstmt.setInt(3, mi_idx);
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					InvestDeleteVO DeleteVO = new InvestDeleteVO();
+					DeleteVO.setMi_name(rs.getString("mi_name"));
+					DeleteVO.setMi_point(rs.getString("mi_point"));
+					DeleteVO.setMi_idx(rs.getInt("mi_idx"));
+					DeleteVO.setCp_dix(rs.getInt("cp_idx"));
+					DeleteList.add(DeleteVO);
+				}
+				return DeleteList;
+			} catch (Exception ex) {
+				System.out.println("InvestDeleteInfo ERROR: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+			return null;
+		}
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
 	// 윤식 추가/////////////////////////////////////////////////
@@ -1328,7 +1374,7 @@ public class MemberDAO {
 	// 박신규 시작~ ///////////////////////////////////////////////////
 	// 투자 회사 리스트 뽑깅
 	public ArrayList<MemberInvestCompanyVO> getInvestmentCompanyList(int mb_idx) {
-		String sql = "select DISTINCT(cp.cp_idx),cp.cp_name, cp.cp_funding_status from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_idx = ?";
+		String sql = "select cp.cp_idx,cp.cp_name, cp.cp_funding_status,mi.mi_idx from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_idx = ? ORDER BY mi_reg_date_time DESC;";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -1338,9 +1384,11 @@ public class MemberDAO {
 			ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = new ArrayList<MemberInvestCompanyVO>();
 			while (rs.next()) {
 				MemberInvestCompanyVO memberInvestCompanyVO = new MemberInvestCompanyVO();
+				memberInvestCompanyVO.setMi_idx(rs.getInt("mi_idx"));
 				memberInvestCompanyVO.setCp_idx(rs.getInt("cp_idx"));
 				memberInvestCompanyVO.setCp_name(rs.getString("cp_name"));
 				memberInvestCompanyVO.setCp_funding_status(rs.getString("cp_funding_status"));
+				
 				memberInvestCompanyVOList.add(memberInvestCompanyVO);
 			}
 			return memberInvestCompanyVOList;

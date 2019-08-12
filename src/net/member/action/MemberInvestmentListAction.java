@@ -26,8 +26,12 @@ public class MemberInvestmentListAction implements Action {
 		
 		String mb_id = (String) session.getAttribute("id");
 		Integer mb_idx = Integer.parseInt((String) session.getAttribute("idx"));
+		String mi_idx_string = request.getParameter("mi_idx");
+		System.out.println(">>>>>11>>>"+mb_id);
+		System.out.println(">>>>>22>>>"+mb_idx);
+		System.out.println(">>>>>33>>>"+request.getParameter("mi_idx"));
 		
-		if (mb_id == null || mb_idx == null ) {
+		if (mb_id == null || mb_idx == null || mi_idx_string == null) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('1잘못된 접근 입니다.');</script>");
@@ -37,29 +41,25 @@ public class MemberInvestmentListAction implements Action {
 			return forward;
 		}
 		
+		int mi_idx = Integer.parseInt(mi_idx_string);
+		
 		String cp_idx_string = null;
 		cp_idx_string = request.getParameter("cp_idx");
 		
-		int cp_idx = 0;
-		
-		if (cp_idx_string == null) {
-			cp_idx = 1;
-		}else {
-			cp_idx = Integer.parseInt(cp_idx_string);
-		}
-		
+		/*
+		 * int cp_idx = 0;
+		 * 
+		 * if (cp_idx_string == null) { cp_idx = 1; }else { cp_idx =
+		 * Integer.parseInt(cp_idx_string); }
+		 */
 		boolean flag = false;		
 		MemberDAO memberDAO = new MemberDAO();
-		
+		int cp_idx = 0;
 		ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = memberDAO.getInvestmentCompanyList(mb_idx);
 		for (MemberInvestCompanyVO memberInvestVO : memberInvestCompanyVOList ) {
-			if (cp_idx_string == null) {
+			if (memberInvestVO.getMi_idx() == mi_idx) {
+				flag = true;
 				cp_idx = memberInvestVO.getCp_idx();
-				flag = true;
-				break;
-			}
-			if (memberInvestVO.getCp_idx() == cp_idx) {
-				flag = true;
 				break;
 			}
 		}
@@ -74,6 +74,7 @@ public class MemberInvestmentListAction implements Action {
 		}
 		memberDAO = new MemberDAO();
 		MemberInvestPageVO memberInvestVO = memberDAO.getMyPageInvestment(cp_idx,mb_idx);
+		
 		/// 윤식 추가
 		CompanyDAO companyDAO2 = new CompanyDAO();
 		ArrayList<Company_pay_scheduleVO> CompanyPayScheduleVO = companyDAO2.getCompanySchedule(cp_idx);
@@ -101,7 +102,8 @@ public class MemberInvestmentListAction implements Action {
 		ArrayList<MemberInvestVO> member_invest_list = null;
 		CompanyDAO company_dao = new CompanyDAO();
 		count = company_dao.getInvestmentCount(mb_id);// 전체 글의 수 불러오기
-
+		//count = memberInvestCompanyVOList.size();
+		//System.out.println(",박신규::"+memberInvestCompanyVOList.size());
 		if (count > 0) {
 			if (endRow > count)
 				endRow = count;
@@ -130,7 +132,8 @@ public class MemberInvestmentListAction implements Action {
 		request.setAttribute("currentPage", new Integer(currentPage));
 		request.setAttribute("startRow", new Integer(startRow));
 		request.setAttribute("endRow", new Integer(endRow));
-		request.setAttribute("count", new Integer(count));
+		//request.setAttribute("count", new Integer(count));
+		request.setAttribute("count", memberInvestCompanyVOList.size());
 		request.setAttribute("pageSize", new Integer(pageSize));
 
 		request.setAttribute("number", new Integer(number));
@@ -143,7 +146,7 @@ public class MemberInvestmentListAction implements Action {
 		request.setAttribute("memberInvestVO", memberInvestVO);
 		request.setAttribute("CompanyPayScheduleVO", CompanyPayScheduleVO);
 		request.setAttribute("memberInvestCompanyVOList", memberInvestCompanyVOList);
-		request.setAttribute("selectedCp_idx", cp_idx);		
+		request.setAttribute("selectedMi_idx", mi_idx);		
 		forward.setRedirect(false);
 		forward.setPath("./member/Investment_list.jsp");
 		return forward;

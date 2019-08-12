@@ -128,7 +128,7 @@
 			<div class="sch">
 				<form name="search" method="post" action="./search_faq.bd">
 					<label>키워드로 검색해보세요</label>
-					<input type="text" id="search_faq" name="keyword">
+					<input type="text" id="search_faq" name="keyword" onKeypress="javascript:if(event.keyCode==13) {searchCheck(this.form)}">
 					<input type="hidden" id="category" name="category" value="${categroyFlag}">
 					<input type="hidden" id="cate_color" name="cate_color" value="${category}">
 					<input type="button" onclick="searchCheck(this.form)">

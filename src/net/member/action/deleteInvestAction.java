@@ -14,40 +14,50 @@ public class deleteInvestAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
-		boolean result = false;
+		int result;
 		
 		System.out.println("mb_idx???"+Integer.parseInt((String)session.getAttribute("idx")));
 		System.out.println("cp_idx???"+Integer.parseInt(request.getParameter("cp_idx")));
+		System.out.println("mi_idx???"+Integer.parseInt(request.getParameter("mi_idx")));
 		
 		int mb_idx = Integer.parseInt((String)session.getAttribute("idx"));
 		int cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
+		int mi_idx = Integer.parseInt(request.getParameter("mi_idx"));
 		
 		MemberDAO mb_dao = new MemberDAO();
-		result = mb_dao.deleteInvest(mb_idx, cp_idx);
+		result = mb_dao.deleteInvest(mb_idx, cp_idx, mi_idx);
 		
-		if(result==false){
+		if(result == 0){
 			System.out.println("투자 철회하기 실패");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('투자 철회하기에 실패했습니다.\n다시 시도해주세요.');");
-			out.println("location.href='./MemberInvestmentList.mb';");
+			out.println("window.close()");
+			out.println("opener.location.replace('./Mypage4_1.mb')");
+//			out.println("opener.location.replace('./MemberInvestmentList.mb?mi_idx="+mi_idx+"')");
+//			out.println("location.href='./MemberInvestmentList.mb';");
+			out.println("</script>");
+			out.close();
+			
+			return null;
+		}else {
+			System.out.println("투자 철회하기 성공");
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('투자 철회하기가 완료되었습니다.');");
+			out.println("window.close()");
+			System.out.println();
+			out.println("opener.location.replace('./Mypage4_1.mb')");
+//			out.println("opener.location.replace('./MemberInvestmentList.mb?mi_idx="+mi_idx+"')");
+//			out.println("location.href='./MemberInvestmentList.mb';");
 			out.println("</script>");
 			out.close();
 			
 			return null;
 		}
 		
-		System.out.println("투자 철회하기 성공");
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println("<script>");
-		out.println("alert('투자 철회하기가 완료되었습니다.');");
-		out.println("location.href='./MemberInvestmentList.mb';");
-		out.println("</script>");
-		out.close();
-		
-		return null;
 	}
 
 }

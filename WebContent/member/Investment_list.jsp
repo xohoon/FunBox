@@ -30,7 +30,8 @@
   <link href="css/mypage.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/947fdcffe2.js"></script>
   <script src="js/jquery.mousewheel.js"></script>
-   <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="member/js/investment_status.js"></script> 
   <script>
     $(function() {
     	$('header').load('./header/header.jsp')
@@ -50,7 +51,7 @@
     <section>
     	<div class="like_box"></div>
     	<ul class="tab">
-    		<li class="on" onclick="location.href='./MemberInvestmentList.mb">투자현황</li>
+    		<li id="invest_check" class="on">투자현황</li>
     		<li onclick="location.href='./Mypage2_1.mb'">자산관리</li>
     		<li onclick="location.href='./Mypage3.mb'">거래내역</li>
     		<li onclick="location.href='./Mypage4_1.mb'">내정보</li>
@@ -169,23 +170,23 @@
   <ul>
       <c:forEach var="memberInvestCompanyVO" items="${memberInvestCompanyVOList}" >
       	<c:choose> 
-      		<c:when test="${memberInvestCompanyVO.cp_idx eq selectedCp_idx }">
-		      	<li class="on" id="cp_${memberInvestCompanyVO.cp_idx }">
+      		<c:when test="${memberInvestCompanyVO.mi_idx eq selectedMi_idx }">
+		      	<li class="on" id="cp_${memberInvestCompanyVO.mi_idx }">
 	      			<c:if test="${memberInvestCompanyVO.cp_funding_status eq '12'}">
-				      	<a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+				      	<a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.mi_idx }&mi_idx=${memberInvestCompanyVO.mi_idx}">${memberInvestCompanyVO.cp_name }</a>
     	  			</c:if>
     	  			<c:if test="${memberInvestCompanyVO.cp_funding_status eq '11'}">
-    	  				<a href="./MemberInvestmentDrop.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+    	  				<a href="./MemberInvestmentDrop.mb?cp_idx=${memberInvestCompanyVO.mi_idx }&mi_idx=${memberInvestCompanyVO.mi_idx}">${memberInvestCompanyVO.cp_name }</a>
     	  			</c:if>
 		      	</li>
       		</c:when>
       		<c:otherwise>
-      			<li id="cp_${memberInvestCompanyVO.cp_idx }">
+      			<li id="cp_${memberInvestCompanyVO.mi_idx }">
 	      			<c:if test="${memberInvestCompanyVO.cp_funding_status eq '12'}">
-      					<a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+      					<a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }&mi_idx=${memberInvestCompanyVO.mi_idx}">${memberInvestCompanyVO.cp_name }</a>
       				</c:if>
       				<c:if test="${memberInvestCompanyVO.cp_funding_status eq '11'}">
-      					<a href="./MemberInvestmentDrop.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+      					<a href="./MemberInvestmentDrop.mb?cp_idx=${memberInvestCompanyVO.cp_idx }&mi_idx=${memberInvestCompanyVO.mi_idx}">${memberInvestCompanyVO.cp_name }</a>
       				</c:if>
       			</li>
       		</c:otherwise>
