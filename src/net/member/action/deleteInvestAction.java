@@ -34,7 +34,8 @@ public class deleteInvestAction implements Action {
 			out.println("<script>");
 			out.println("alert('투자 철회하기에 실패했습니다.\n다시 시도해주세요.');");
 			out.println("window.close()");
-			out.println("opener.location.replace('./InvestAction.cp')");
+			out.println("opener.location.replace('./Mypage4_1.mb')");
+//			out.println("opener.location.replace('./MemberInvestmentList.mb?mi_idx="+mi_idx+"')");
 //			out.println("location.href='./MemberInvestmentList.mb';");
 			out.println("</script>");
 			out.close();
@@ -47,7 +48,9 @@ public class deleteInvestAction implements Action {
 			out.println("<script>");
 			out.println("alert('투자 철회하기가 완료되었습니다.');");
 			out.println("window.close()");
-			out.println("opener.location.replace('./InvestAction.cp')");
+			System.out.println();
+			out.println("opener.location.replace('./Mypage4_1.mb')");
+//			out.println("opener.location.replace('./MemberInvestmentList.mb?mi_idx="+mi_idx+"')");
 //			out.println("location.href='./MemberInvestmentList.mb';");
 			out.println("</script>");
 			out.close();
