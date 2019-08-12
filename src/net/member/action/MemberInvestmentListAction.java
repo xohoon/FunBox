@@ -43,12 +43,6 @@ public class MemberInvestmentListAction implements Action {
 		String cp_idx_string = null;
 		cp_idx_string = request.getParameter("cp_idx");
 		
-		/*
-		 * int cp_idx = 0;
-		 * 
-		 * if (cp_idx_string == null) { cp_idx = 1; }else { cp_idx =
-		 * Integer.parseInt(cp_idx_string); }
-		 */
 		boolean flag = false;		
 		MemberDAO memberDAO = new MemberDAO();
 		int cp_idx = 0;

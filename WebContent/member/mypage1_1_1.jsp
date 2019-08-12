@@ -36,7 +36,7 @@
         <input class="pincode" type="password" maxlength="1" id="pin06">
         <font id="pin_check" size="2" color="red"></font>
       </div>
-      <input type="hidden" name="cp_idx" value="<%=DeleteInfo.get(0).getCp_dix() %>" id="cp_idx">
+      <input type="hidden" name="cp_idx" value="<%=DeleteInfo.get(0).getCp_idx() %>" id="cp_idx">
       <input type="hidden" name="mi_idx" value="<%=DeleteInfo.get(0).getMi_idx() %>" id="mi_idx">
       <input type="button" value="철회하기" id="IvDrop_btn">
     </form>

@@ -19,17 +19,17 @@ public class FaqSearchAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); //한글처리
 	
-		System.out.println("FaqSearchAction OK");
+//		System.out.println("FaqSearchAction OK");
 		ActionForward forward = new ActionForward();
 		
 		//FAQ 키워드 검색
 		keyword = request.getParameter("keyword");
-		System.out.println("keyword :" + keyword);
+//		System.out.println("keyword :" + keyword);
 		
 		int category = Integer.parseInt(request.getParameter("category"));
-		System.out.println("검색할때category:"+category);
+//		System.out.println("검색할때category:"+category);
 		String categoryOfcount = request.getParameter("category");
-		System.out.println("category:"+categoryOfcount);
+//		System.out.println("category:"+categoryOfcount);
 		
 		try {
 			if(categoryOfcount.equals(null)) {
@@ -51,13 +51,13 @@ public class FaqSearchAction implements Action{
 		}
 		
 		int currentPage = Integer.parseInt(pageNum);
-		System.out.println("currentPage : "+currentPage);
+//		System.out.println("currentPage : "+currentPage);
 		
 		int startRow = (currentPage - 1) * pageSize + 1;// 한 페이지의 시작글 번호 / 1
-		System.out.println("startRow : "+startRow);
+//		System.out.println("startRow : "+startRow);
 		
 		int endRow = currentPage * pageSize;// 한 페이지의 마지막 글번호 / 10
-		System.out.println("endRow : "+endRow);
+//		System.out.println("endRow : "+endRow);
 		
 		int count = 0;
 		int number = 0;
@@ -66,7 +66,7 @@ public class FaqSearchAction implements Action{
 		BoardDAO qna_dao_count = new BoardDAO();		
 		count = qna_dao_count.searchFaqCount(keyword, category); // 전체 글의 수 불러오기 (선택시)
 				
-		System.out.println("해당 DB 글 개수 불러오기" + count);
+//		System.out.println("해당 DB 글 개수 불러오기" + count);
 		
 		if(count > 0) {
 			if (endRow > count) {
@@ -74,14 +74,14 @@ public class FaqSearchAction implements Action{
 			}			
 			BoardDAO dao = new BoardDAO();
 			ArrayList<FaqVO> faq_list = dao.searchFaq(keyword, category,  startRow - 1, pageSize);
-			System.out.println(faq_list);
+//			System.out.println(faq_list);
 			request.setAttribute("faq_list", faq_list);
 			request.setAttribute("cate", category);
 			
 		}else {
 			BoardDAO dao = new BoardDAO();
 			ArrayList<FaqVO> faq_list = dao.searchFaq(keyword, category,  startRow - 1, pageSize);
-			System.out.println(faq_list);
+//			System.out.println(faq_list);
 			request.setAttribute("faq_list", faq_list);
 			request.setAttribute("cate", category);
 		}
@@ -96,31 +96,31 @@ public class FaqSearchAction implements Action{
 		int numPageGroup = (int) Math.ceil((double) currentPage / pageGroupSize);
 		
 		request.setAttribute("currentPage", new Integer(currentPage));
-		System.out.println(currentPage); // 1
+//		System.out.println(currentPage); // 1
 		
 		request.setAttribute("startRow", new Integer(startRow));
-		System.out.println(startRow); //1
+//		System.out.println(startRow); //1
 		
 		request.setAttribute("endRow", new Integer(endRow));
-		System.out.println(endRow); //2
+//		System.out.println(endRow); //2
 		
 		request.setAttribute("count", new Integer(count));
-		System.out.println(count); //2
+//		System.out.println(count); //2
 		
 		request.setAttribute("pageSize", new Integer(pageSize));
-		System.out.println(pageSize); //10
+//		System.out.println(pageSize); //10
 
 		request.setAttribute("number", new Integer(number));
-		System.out.println(number); // 2
+//		System.out.println(number); // 2
 		
 		request.setAttribute("pageGroupSize", new Integer(pageGroupSize));
-		System.out.println(pageGroupSize); //5
+//		System.out.println(pageGroupSize); //5
 		
 		request.setAttribute("numPageGroup", new Integer(numPageGroup));
-		System.out.println(numPageGroup); // 1
+//		System.out.println(numPageGroup); // 1
 		
 		request.setAttribute("pageGroupCount", new Integer(pageGroupCount));
-		System.out.println(pageGroupCount); // 1
+//		System.out.println(pageGroupCount); // 1
 			
 		request.setAttribute("categroyFlag", categroyFlag);
 		request.setAttribute("keyword", keyword);

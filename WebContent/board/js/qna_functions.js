@@ -42,7 +42,7 @@
 		if (re.test(what.value)) {
 			return true;
 		}
-		alert(message);
+//		alert(message);
 		what.value = "";
 		what.focus();
 	}
@@ -50,7 +50,7 @@
 		if (re.test(what.value)) {
 			return true;
 		}
-		alert(message);
+//		alert(message);
 		what.value = "";
 		what.focus();
 	}

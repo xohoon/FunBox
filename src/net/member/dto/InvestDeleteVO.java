@@ -7,14 +7,14 @@ public class InvestDeleteVO {
 	private int mi_idx;
 	private String mi_name;
 	private String mi_point;
-	private int cp_dix;
+	private int cp_idx;
 	
 	
-	public int getCp_dix() {
-		return cp_dix;
+	public int getCp_idx() {
+		return cp_idx;
 	}
-	public void setCp_dix(int cp_dix) {
-		this.cp_dix = cp_dix;
+	public void setCp_idx(int cp_idx) {
+		this.cp_idx = cp_idx;
 	}
 	public String getMi_name() {
 		return mi_name;
@@ -36,8 +36,8 @@ public class InvestDeleteVO {
 	}
 	@Override
 	public String toString() {
-		return "InvestDeleteVO [mi_idx=" + mi_idx + ", mi_name=" + mi_name + ", mi_point=" + mi_point + ", cp_dix="
-				+ cp_dix + "]";
+		return "InvestDeleteVO [mi_idx=" + mi_idx + ", mi_name=" + mi_name + ", mi_point=" + mi_point + ", cp_idx="
+				+ cp_idx + "]";
 	}
 
 }

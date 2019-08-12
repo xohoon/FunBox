@@ -1,9 +1,9 @@
-<%@page import="net.company.dto.ApplicationVO"%>
+<%-- <%@page import="net.company.dto.ApplicationVO"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8"); // 한글처리
-	ApplicationVO company = (ApplicationVO)request.getAttribute("company");
+	//ApplicationVO company = (ApplicationVO)request.getAttribute("company");
 %>
     
     
@@ -29,19 +29,20 @@
   <div id="wrap">
     <h1><img src="./img/logo.svg" alt="logo" onclick="location.href='./Index.mb'"></h1>
     <form class="application" name="application02" method="post" action="./Application02Action.cp">
-    <input type="hidden" name="name" id="name" value="<%=company.getApp_cp_name()%>">
-    <input type="hidden" name="manager" id="manager" value="<%=company.getApp_cp_manager()%>">
-    <input type="hidden" name="phone" id="phone" value="<%=company.getApp_cp_hp()%>">
-    <input type="hidden" name="num" id="num" value="<%=company.getApp_cp_num()%>">
-    <input type="hidden" name="ch" id="ch" value="<%=company.getApp_cp_ch()%>">
-    <input type="hidden" name="more" id="more" value="<%=company.getApp_cp_more()%>">
-    <input type="hidden" name="extra" id="extra" value="<%=company.getApp_cp_extra()%>">
-    <input type="hidden" name="sector" id="sector" value="<%=company.getApp_cp_sector()%>">
-    <input type="hidden" name="open_datetime" id="open_datetime" value="<%=company.getApp_cp_open_date_time()%>">
-    <input type="hidden" name="prestige" id="prestige" value="<%=company.getApp_cp_prestige()%>">
-    <input type="hidden" name="deposit" id="deposit" value="<%=company.getApp_cp_deposit()%>">
-    <input type="hidden" name="monthly" id="monthly" value="<%=company.getApp_cp_monthly()%>">
-    <input type="hidden" name="status" id="status" value="<%=company.getApp_cp_status()%>">
+    <input type="hidden" name="name" id="name" value="${company.app_cp_name }">
+    <input type="hidden" name="manager" id="manager" value="${company.app_cp_manager }">
+    <input type="hidden" name="phone" id="phone" value="${company.app_cp_hp }">
+    <input type="hidden" name="num" id="num" value="${company.app_cp_num }">
+    <input type="hidden" name="ch" id="ch" value="${company.app_cp_ch }">
+    <input type="hidden" name="more" id="more" value="${company.app_cp_more }">
+    <input type="hidden" name="extra" id="extra" value="${company.app_cp_extra }">
+    <input type="hidden" name="sector" id="sector" value="${company.app_cp_sector }">
+    <input type="hidden" name="open_datetime" id="open_datetime" value="${company.app_cp_open_date_time }">
+    <input type="hidden" name="prestige" id="prestige" value="${company.app_cp_prestige }">
+    <input type="hidden" name="deposit" id="deposit" value="${company.app_cp_deposit }">
+    <input type="hidden" name="monthly" id="monthly" value="${company.app_cp_monthly }">
+    <input type="hidden" name="status" id="status" value="${company.app_cp_status }">
+    
     <h3>투자기업신청</h3>
      <div id="intro">
         <p class="tt1">

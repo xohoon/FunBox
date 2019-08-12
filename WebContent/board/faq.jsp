@@ -8,94 +8,33 @@
 <!DOCTYPE html>
 <html lang="kr">
 
+<head>
+<title>FAQ</title>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link href="css/common.css" rel="stylesheet" type="text/css">
+<link href="css/loader.css" rel="stylesheet" type="text/css">
+<link href="css/jquery.bxslider.css" rel="stylesheet">
+<link href="css/service.css" rel="stylesheet">
+<link href="css/list_box.css" rel="stylesheet">
+<link rel="stylesheet" href="../node_modules/dist/fakeLoader.min.css">
+
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/jquery.bxslider.min.js"></script>
+<script type="text/javascript" src="jquery-2.2.2.min.js"></script>
+<script type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="board/js/faq.js"></script>
+
 <%
 	ArrayList<FaqVO> faq = (ArrayList<FaqVO>)request.getAttribute("faq");
 	ArrayList<FaqVO> faq_list = (ArrayList<FaqVO>)request.getAttribute("faq_list");
 	int cate = (Integer)request.getAttribute("cate");
 	int category = (Integer)request.getAttribute("caetgory");
 %>
-<head>
-  <title>FAQ</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="css/common.css" rel="stylesheet" type="text/css">
-  <link href="css/loader.css" rel="stylesheet" type="text/css">
-  <link href="css/jquery.bxslider.css" rel="stylesheet">
-  <link href="css/service.css" rel="stylesheet">
-  <link href="css/list_box.css" rel="stylesheet">
-  <link rel="stylesheet" href="../node_modules/dist/fakeLoader.min.css">
-  <script src="js/jquery-3.1.1.min.js"></script>
-  <script src="js/jquery.bxslider.min.js"></script>
-  <script type="text/javascript" src="jquery-2.2.2.min.js"></script>
-  <script type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  
-  <script> 
-  
-  var Flag = 0;
-  
-  
-	  $(function(){
-		  var onOff = false;
-        $('.depth1').on('click',function(){
-            onOff = !onOff;
-            if(onOff==true){
-                $(this).siblings('.depth2').css({
-                    'display':'block'
-                });
-            }else{
-                $(this).siblings('.depth2').css({
-                    'display':'none'
-                });
-            }
-        });
-	  });
-	  	  
-	  $(function(){
-		  if($('#cate_color').val() == '0'){
-			$('.faq > button').removeClass('on');
-			$('#button1').addClass('on');
-		  }
-		  else if($('#cate_color').val() == '1'){
-	 		$('.faq > button').removeClass('on');
-	 		$('#button2').addClass('on');
-	 	  }
-		  else if($('#cate_color').val() == '2'){
-		 	$('.faq > button').removeClass('on');
-		 	$('#button3').addClass('on');
-		  }
-		  else if($('#cate_color').val() == '3'){
-		 	$('.faq > button').removeClass('on');
-		 	$('#button4').addClass('on');
-		  }
-	  });
-
-	  function searchCheck(frm){
-		  console.log(frm.keyword.value);
-		  
-		  if(frm.keyword.value==''){
-			alert('검색할 단어를 입력해주세요.');
-			frm.keyword.focus();
-			return false;
-		  }
-		  frm.submit();
-		  console.log("search test");
-	  }
-	  
-	  function cateval(button){
-		  // 페이징 링크 링크 연결 수정
-		  var category = button;
-		  var pageNum = 1;
-		  
-		  if(pageNum != "1"){
-			  var pageNum = document.getElementById("hiddenCategory").value;
-		  }
-		  
-		  $("#category").val(category); // 찾기를 위한 카테고리 변수
-		  location.href='./Faq.bd?category='+category+ '&pageNum='+pageNum;
-	}
-  </script>
 </head>
 
 <body> 
@@ -312,18 +251,4 @@
 
     <footer></footer>
   </div>
-<script type="text/javascript">
-	$( document ).ready(function() {
-		  // 제이쿼리 페이지 로딩 추가
-		 // alert("로딩 완료");
-		$('header').load('./header/header.jsp')
-    	$('footer').load('./footer/footer.jsp')
-	});
-  
-    $(function() {
-      setTimeout(function() {
-        $('.loader').fadeOut(1000);
-      }, 1000)
-    });
-</script>
 </body></html>

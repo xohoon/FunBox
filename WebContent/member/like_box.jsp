@@ -32,7 +32,7 @@
 									<fmt:parseNumber var="test" value="${boxs.getCp_like_percent()}" integerOnly = "true" />
                   					<span>${test}</span>%
 								</div>
-								<p>수익률 ${boxs.getCp_monthly_profit()}</p>
+								<p>수익률 ${boxs.getCp_monthly_profit()}%</p>
 								<div class="gage_full">							
 								  <div class="gage_fill">								  
 								  </div>

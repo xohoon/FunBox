@@ -109,9 +109,11 @@ function checkboxTrriger() {
 						}
 					},
 					error : function(request, status, error) {
+						/*
 						console.log("request>>" + request);
 						console.log("status>>" + status);
 						console.log("error>>" + error);
+						*/
 					}
 				});
 			});
@@ -177,9 +179,11 @@ function checkboxTrriger() {
 						}
 					},
 					error : function(request, status, error) {
+						/*
 						console.log("request>>" + request);
 						console.log("status>>" + status);
 						console.log("error>>" + error);
+						*/
 					}
 
 				});
@@ -282,24 +286,26 @@ function search_ajax() {
 				});
 				companyListHTML += "</div>";
 
-				alert(str);
+//				alert(str);
 				current_page++;
 
-				console.log(companyListHTML);
+//				console.log(companyListHTML);
 			} else if (data == null) {
-				alert('data null');
-				console.log(companyListHTML);
+//				alert('data null');
+//				console.log(companyListHTML);
 			}
-			console.log(companyListHTML);
+//			console.log(companyListHTML);
 		},
 		error : function(request, status, error) {
+			/*
 			console.log("request>>" + request);
 			console.log("status>>" + status);
 			console.log("error>>" + error);
+			*/
 		}
 
 	});
-	console.log(companyListHTML);
+//	console.log(companyListHTML);
 	return companyListHTML;
 }
 
@@ -310,19 +316,19 @@ function search_value() {
 	} else {
 		getKeyword = b;
 	}*/
-	console.log("text value:::" + getKeyword);
+//	console.log("text value:::" + getKeyword);
 }
 
 // select option 값 저장
 function option_value() {
 	var a = document.getElementById("select_option").value;
 	getSelect = a;
-	console.log("select value:::" + getSelect);
+//	console.log("select value:::" + getSelect);
 }
 
 function test() {
 	$.each($('.sector_ckbox'), function(index, item) {
-		console.log(item.checked);
+//		console.log(item.checked);
 	})
 };
 

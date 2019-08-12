@@ -16,6 +16,7 @@
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/intro.css" rel="stylesheet">
   <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="board/js/intro.js"></script>
 
 </head>
 
@@ -94,10 +95,4 @@
     <div class="MG80"></div>
     <footer></footer>
   </div>
-  <script>
-    $(function() {
-      $('header').load('./header/header.jsp')
-      $('footer').load('./footer/footer.jsp')
-    });
-  </script>
 </body></html>
