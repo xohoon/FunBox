@@ -14,7 +14,7 @@
 	session.removeAttribute("userID");
 %>
 <h2 align="center">접속자 수 :: <%=loginManager.getUserCount() %>명</h2>
-<form action="./Login_try.jsp" name="login">
+<form action="./login_try.jsp" name="login">
 	<div align="center">
 		아이디 :: <input type="text" name="userID"><br>
 		비밀번호 :: <input type="password" name="userPW"><br>
