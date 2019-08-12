@@ -1253,11 +1253,11 @@ public class MemberDAO {
 				result = cstmt.getInt("@RESULT");
 				
 				if (result == 1) {
-					System.out.println(">>>>1"+result);
+					System.out.println(">>>>1철회성공"+result);
 					result = 1;	// 철회성공
 					return result;
 				}else {	// 철회실패
-					System.out.println(">>>>2"+result);
+					System.out.println(">>>>2실패"+result);
 					result = 0;
 				}
 			} catch (Exception ex) {

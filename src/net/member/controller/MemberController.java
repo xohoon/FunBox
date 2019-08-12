@@ -266,10 +266,6 @@ public class MemberController extends HttpServlet implements Servlet {
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
-		}else if (command.equals("/MemberDropPage.mb")) {
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("./member/Investment_list.jsp");
 		}
 		
 		
