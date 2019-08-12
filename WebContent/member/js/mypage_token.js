@@ -1,3 +1,9 @@
+	$(function() {
+		$('header').load('./header/header.jsp')
+		$('footer').load('./footer/footer.jsp')
+		$('.like_box').load('./member/like_box.jsp')
+	});
+
 /////////////// 태훈 추가 //////////////////////////
 var token_sum = null;
 var token_wallet = null;

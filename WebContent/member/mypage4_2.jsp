@@ -11,24 +11,13 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <title></title>
-
-  <!--[if lt IE 9]>
-      <script src="./js/html5.js"></script>
-   <![endif]-->
+  
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/mypage.css" rel="stylesheet">
+  
   <script src="https://kit.fontawesome.com/947fdcffe2.js"></script>
-   <script src="js/jquery-3.1.1.min.js"></script>
-   <script src="member/js/update_functions.js"></script>
-  <script>
-    $(function() {
-      $('header').load('./header/header.jsp')
-      $('footer').load('./footer/footer.jsp')
-	  $('.like_box').load('./member/like_box.jsp')
-    }); 
-	  
-  </script>
-
+  <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="member/js/mypage4_2.js"></script>
 </head>
 
 <body>
@@ -108,26 +97,5 @@
 
     <footer></footer>
   </div>
-	<script>
-	/* 
-	  $(function(){
-		 $('.rev').on('click',function(){
-			 $(this).siblings('.rev_form').toggleClass('on');
-		 });
-	  });
-	 */  
-	  $(function() {
-		  $('.rev').click( function() {
-			$(this).siblings('.rev_form').toggleClass('on');
-			  
-			if( $(this).val() == '수정하기' ) {
-			  $(this).val('취소');
-			}
-			else if($(this).val() == '취소'){
-			  $(this).val('수정하기');
-			}
-		  });
-		});
-	</script>
 </body>
 </html>

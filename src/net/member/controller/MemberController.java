@@ -60,7 +60,6 @@ public class MemberController extends HttpServlet implements Servlet {
 		
 		///////////////////////유정 추가 start///////////////////////
 		if (command.equals("/Index.mb")) {
-			System.out.println(">>>");
 			action = new MainAction();
 			try {
 				forward = action.execute(request, response);
@@ -163,7 +162,6 @@ public class MemberController extends HttpServlet implements Servlet {
 				e.printStackTrace();
 			}
 		}else if (command.equals("/MypagePINCheckAction.mb")) { 
-			System.out.println("Controller>>>>>");
 			action = new MypagePINCheckAction();
 			try {
 				forward = action.execute(request, response);

@@ -433,3 +433,22 @@
     }
 
 	/////////////////////////////////////////////////////개인정보수정 유효성 검사////////////////////////////////////////////
+    
+    $(function() {
+        $('header').load('./header/header.jsp')
+        $('footer').load('./footer/footer.jsp')
+  	  $('.like_box').load('./member/like_box.jsp')
+      });
+    
+	  $(function() {
+		  $('.rev').click( function() {
+			$(this).siblings('.rev_form').toggleClass('on');
+			  
+			if( $(this).val() == '수정하기' ) {
+			  $(this).val('취소');
+			}
+			else if($(this).val() == '취소'){
+			  $(this).val('수정하기');
+			}
+		  });
+		});

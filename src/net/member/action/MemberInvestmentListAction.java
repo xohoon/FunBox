@@ -27,9 +27,6 @@ public class MemberInvestmentListAction implements Action {
 		String mb_id = (String) session.getAttribute("id");
 		Integer mb_idx = Integer.parseInt((String) session.getAttribute("idx"));
 		String mi_idx_string = request.getParameter("mi_idx");
-		System.out.println(">>>>>11>>>"+mb_id);
-		System.out.println(">>>>>22>>>"+mb_idx);
-		System.out.println(">>>>>33>>>"+request.getParameter("mi_idx"));
 		
 		if (mb_id == null || mb_idx == null || mi_idx_string == null) {
 			response.setContentType("text/html;charset=UTF-8");
@@ -132,7 +129,6 @@ public class MemberInvestmentListAction implements Action {
 		request.setAttribute("currentPage", new Integer(currentPage));
 		request.setAttribute("startRow", new Integer(startRow));
 		request.setAttribute("endRow", new Integer(endRow));
-		//request.setAttribute("count", new Integer(count));
 		request.setAttribute("count", memberInvestCompanyVOList.size());
 		request.setAttribute("pageSize", new Integer(pageSize));
 

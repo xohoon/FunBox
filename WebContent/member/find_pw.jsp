@@ -3,7 +3,7 @@
 <!doctype html>
 <html lang="ko">
 
- <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 
@@ -12,7 +12,7 @@
   <title>FUNBOX 비밀번호찾기</title>
   <link href="css/common.css" rel="stylesheet">
   <link href="css/form.css" rel="stylesheet">
-  <script src="member/js/find_functions.js"></script>
+  <script src="member/js/find.js"></script>
 </head>
 <!--head-->
 

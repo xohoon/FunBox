@@ -19,7 +19,7 @@ function invest_chk_ajax() {
 				if(resultData.mi_idx != -1 ) {
 					location.href="./MemberInvestmentList.mb?mi_idx="+resultData.mi_idx;
 				}else {
-					alert("투자현황이 존재하지 않습니다. 기업에 투자해보세요");
+					alert("투자현황이 존재하지 않습니다. 기업에 투자해보세요.");
 					location.href="./ListAction.bd";
 				}
 			},
@@ -30,3 +30,43 @@ function invest_chk_ajax() {
 			}
 		});
 }
+
+$(function(){
+	   var h = $('.con').height();
+	    var winW = $(window).width();
+	    var liOff = $('.list_show').offset().top;
+	    var liOffs = liOff*1+56
+	    if(winW>1200){
+	        $('.list').height(h);
+	    }else{
+	        $('.list').height(400);
+	        $('.list').offset({top:liOffs})
+	    }
+	});
+
+	 $('.list_show').on('click',function(){
+	     $('.list').toggleClass('on');
+	     if( $(this).text() == '투자리스트보기' ) {
+	      $(this).text('닫기');
+	    }
+	    else if($(this).text() == '닫기'){
+	      $(this).text('투자리스트보기');
+	    }
+	 });
+
+	$(function(){
+	    $(".rep").mousewheel(function(event, delta) {
+
+	      this.scrollLeft -= (delta * 100);
+
+	      event.preventDefault();
+	    });
+		
+		
+	});
+	var cf_financial_download = $('#cf_financial_download');
+	$(function(){
+	    $("#cf_financial_selector").change(function(){
+	    	cf_financial_download.attr("href", "./CompanyFileDownload?filename="+$("#cf_financial_selector").val()+"&cp_idx=${memberInvestVO.cp_idx}");
+	    });
+	});

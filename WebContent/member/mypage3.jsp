@@ -30,32 +30,10 @@
    <![endif]-->
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/mypage.css" rel="stylesheet">
+  <link href="css/mypage3.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/947fdcffe2.js"></script>
-   <script src="js/jquery-3.1.1.min.js"></script>
-   <script src="member/js/mypage_functions.js"></script>
-   <style>
-	td {
-  	overflow: hidden;
-  	text-overflow: ellipsis;
-  	white-space: nowrap;
-  	width: 300px;
-  	height: 20px;
-	}
-	</style>
-  <script>
-    $(function() {
-    	$('header').load('./header/header.jsp')
-        $('footer').load('./footer/footer.jsp')
-        $('.like_box').load('./member/like_box.jsp')
-    });
-
-  </script>
-  <script>
-  	function cateval(category){  		
-  		 location.href='./Mypage3.mb?category='+category;
-  	}
-  </script>
-
+  <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="member/js/mypage3.js"></script>
 </head>
 
 <body>
@@ -81,7 +59,6 @@
                     <button id = "button2" value = "2" onclick= "cateval(this.value)">포인트내역</button>
                     <button id = "button3" value = "3" onclick= "cateval(this.value)">투자내역</button>
                     <input type="hidden" id="cate_color" name="cate_color" value="${category}">
-                    
                 </div>
 			</div>
 			<c:if test = "${category == '1'}">
@@ -294,22 +271,5 @@
 
     <footer></footer>
   </div>
- 	  <script>
-		  $(function(){
-			  if($('#cate_color').val() == '1'){
-				$('.button > button').removeClass('on');
-				$('#button1').addClass('on');
-			  }
-			  else if($('#cate_color').val() == '2'){
-		 		$('.button > button').removeClass('on');
-		 		$('#button2').addClass('on');
-		 	  }
-			  else if($('#cate_color').val() == '3'){
-			 	$('.button > button').removeClass('on');
-			 	$('#button3').addClass('on');
-			  }
-			
-		  });
-	  </script>
 </body>
 </html>

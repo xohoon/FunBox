@@ -235,28 +235,7 @@
     		}
     	}
     %>
-    <!-- <tr>
-        <td class="plus">이자</td>
-        <td>바른생선회</td>
-        <td class="plus">+50,000P</td>
-        <td>2019.06.14<br>16:29:49</td>
-        <td>1/24</td>
-    </tr>
-    <tr>
-        <td class="plus">회수</td>
-        <td>바른생선회</td>
-        <td class="plus">+5,000,000P</td>
-        <td>2019.06.14<br>16:29:49</td>
-        <td></td>
-    </tr> -->
   </table>
-  <!-- <a href="#" class="prev"><i class="fas fa-caret-left"></i></a>
-  <ul class="pager">
-    <li class="on">1</li>
-    <li>2</li>
-    <li>3</li>
-  </ul>
-  <a href="#" class="next"><i class="fas fa-caret-right"></i></a> -->
   <c:if test="${count > 0}">
 		<c:set var="pageCount" value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />
 		<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
@@ -294,48 +273,5 @@
    
 <script src="js/jquery-3.1.1.min.js"></script>
 <script type='text/javascript' src='js/jquery.mousewheel.js'></script>
-<script>
-$(function(){
-   var h = $('.con').height();
-    var winW = $(window).width();
-    var liOff = $('.list_show').offset().top;
-    var liOffs = liOff*1+56
-    if(winW>1200){
-        $('.list').height(h);
-    }else{
-        $('.list').height(400);
-        $('.list').offset({top:liOffs})
-    }
-});
-
- $('.list_show').on('click',function(){
-     $('.list').toggleClass('on');
-     if( $(this).text() == '투자리스트보기' ) {
-      $(this).text('닫기');
-    }
-    else if($(this).text() == '닫기'){
-      $(this).text('투자리스트보기');
-    }
- });
-
-$(function(){
-    $(".rep").mousewheel(function(event, delta) {
-
-      this.scrollLeft -= (delta * 100);
-
-      event.preventDefault();
-    });
-	
-	
-});
-var cf_financial_download = $('#cf_financial_download');
-$(function(){
-    $("#cf_financial_selector").change(function(){
-    	cf_financial_download.attr("href", "./CompanyFileDownload?filename="+$("#cf_financial_selector").val()+"&cp_idx=${memberInvestVO.cp_idx}");
-    });
-});
-
-</script>
-
 </body>
 </html>
