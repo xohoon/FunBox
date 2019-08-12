@@ -103,13 +103,14 @@
 
 <%
 	List<InvestDeleteVO> DeleteInfo = (List<InvestDeleteVO>)request.getAttribute("DeleteInfo");
+	System.out.println(">>>>>>>"+DeleteInfo.toString());
 %>
   <section id="q">
     <p>투자를 철회하시겠습니까?</p>
     <form name="cancelFun">
       <div class="tit">
-        <p>${DeleteInfo.cp_name }</p>
-        <p><input type="text" value="${DeleteInfo.cp_point }" readonly="readonly" name="point">POINT</p>
+        <p><%=DeleteInfo.get(0).getMi_name() %></p>
+        <p><input type="text" value="<%=DeleteInfo.get(0).getMi_point() %>" readonly="readonly" name="point">POINT</p>
       </div>
       <div class="pin">
         <label>PINCODE</label>
@@ -121,8 +122,8 @@
         <input class="pincode" type="password" maxlength="1" id="pin06">
         <font id="pin_check" size="2" color="red"></font>
       </div>
-      <input type="hidden" name="cp_idx" value="${cp_idx }" id="cp_idx">
-      <input type="hidden" name="mi_idx" value="${DeleteInfo.mi_idx }" id="mi_idx">
+      <input type="hidden" name="cp_idx" value="<%=DeleteInfo.get(0).getCp_dix() %>" id="cp_idx">
+      <input type="hidden" name="mi_idx" value="<%=DeleteInfo.get(0).getMi_idx() %>" id="mi_idx">
       <input type="button" value="철회하기" id="IvDrop_btn">
     </form>
   </section>

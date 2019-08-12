@@ -5,20 +5,28 @@ package net.member.dto;
 public class InvestDeleteVO {
 	
 	private int mi_idx;
-	private String cp_name;
+	private String mi_name;
 	private String mi_point;
+	private int cp_dix;
 	
+	
+	public int getCp_dix() {
+		return cp_dix;
+	}
+	public void setCp_dix(int cp_dix) {
+		this.cp_dix = cp_dix;
+	}
+	public String getMi_name() {
+		return mi_name;
+	}
+	public void setMi_name(String mi_name) {
+		this.mi_name = mi_name;
+	}
 	public int getMi_idx() {
 		return mi_idx;
 	}
 	public void setMi_idx(int mi_idx) {
 		this.mi_idx = mi_idx;
-	}
-	public String getCp_name() {
-		return cp_name;
-	}
-	public void setCp_name(String cp_name) {
-		this.cp_name = cp_name;
 	}
 	public String getMi_point() {
 		return mi_point;
@@ -28,7 +36,8 @@ public class InvestDeleteVO {
 	}
 	@Override
 	public String toString() {
-		return "InvestDeleteVO [mi_idx=" + mi_idx + ", cp_name=" + cp_name + ", mi_point=" + mi_point + "]";
+		return "InvestDeleteVO [mi_idx=" + mi_idx + ", mi_name=" + mi_name + ", mi_point=" + mi_point + ", cp_dix="
+				+ cp_dix + "]";
 	}
 
 }
