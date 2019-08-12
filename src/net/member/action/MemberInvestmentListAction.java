@@ -31,7 +31,7 @@ public class MemberInvestmentListAction implements Action {
 		if (mb_id == null || mb_idx == null || mi_idx_string == null) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('1잘못된 접근 입니다.');</script>");
+			out.println("<script>alert('1잘못된 접근 입니다."+mb_id+mb_idx+mi_idx_string+"');</script>");
 			out.close();
 			forward.setRedirect(true);
 			forward.setPath("./Index.mb");

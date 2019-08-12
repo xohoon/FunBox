@@ -47,7 +47,7 @@
     <section>
       <div class="like_box"></div>
       <ul class="tab">
-        <li id="invest_check" class="on" onclick="location.href='./MemberInvestmentList.mb'">투자현황</li>
+        <li id="invest_check" class="on">투자현황</li>
 		<li onclick="location.href='./Mypage2_1.mb'">자산관리</li>
 		<li onclick="location.href='./Mypage3.mb'">거래내역</li>
 		<li onclick="location.href='./Mypage4_1.mb'">내정보</li>
@@ -176,6 +176,7 @@
 
       <script src="js/jquery-3.1.1.min.js"></script>
       <script type='text/javascript' src='js/jquery.mousewheel.js'></script>
+      <script type="text/javascript" src="member/js/investment_status.js"></script>
 </body>
 
 </html>

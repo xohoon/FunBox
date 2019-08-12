@@ -39,7 +39,7 @@
 			<input type="hidden" value="${sessionScope.id }" id="session_value">
 			<input type="hidden" value="${sessionScope.idx }" id="session_idx">
 			<ul class="tab">
-				<li id="invest_check" onclick="location.href='./MemberInvestmentList.mb'">투자현황</li>
+				<li id="invest_check">투자현황</li>
 				<li class="on" onclick="location.href='./Mypage2_1.mb'">자산관리</li>
 				<li onclick="location.href='./Mypage3.mb'">거래내역</li>
 				<li onclick="location.href='./Mypage4_1.mb'">내정보</li>
@@ -207,5 +207,6 @@
 	</div>
 	<script src="js/clipboard.min.js"></script>
 	<script src="member/js/mypage2_1.js"></script>
+	<script type="text/javascript" src="member/js/investment_status.js"></script>
 </body>
 </html>

@@ -272,4 +272,5 @@
     <footer></footer>
   </div>
 </body>
+<script type="text/javascript" src="member/js/investment_status.js"></script>
 </html>
