@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="net.company.dto.CompanyListVO"%>
-<%@page import="net.company.dto.CompanyBean"%>
+<%-- <%@page import="java.util.ArrayList"%> --%>
+<%-- <%@page import="net.company.dto.CompanyListVO"%> --%>
+<%-- <%@page import="net.company.dto.CompanyBean"%> --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
-	CompanyBean companyBean = (CompanyBean)request.getAttribute("companyBean");
-	ArrayList<CompanyListVO> leftCompanyList = (ArrayList<CompanyListVO>)request.getAttribute("leftCompanyList");
+	//CompanyBean companyBean = (CompanyBean)request.getAttribute("companyBean");
+	//ArrayList<CompanyListVO> leftCompanyList = (ArrayList<CompanyListVO>)request.getAttribute("leftCompanyList"); 
 	int sumPayPrincipal;	
   	String idx = (String)session.getAttribute("idx");
 	int count = (Integer)request.getAttribute("count");
@@ -92,17 +92,12 @@
             <h2 class="logo"></h2>
             <h3>${companyBean.cp_sector}</h3>
             <h1>${companyBean.cp_name}<span>${companyBean.cp_branch}</span></h1>
-            <%
-            if(count != 0){
-            %>
+            <c:if test="${ count != 0}">
             	<button class="like" value="1"><span class="icon"></span> 즐겨찾기</button>
-            <%
-            }else{
-            %>
+            </c:if>
+            <c:if test="${ count == 0}">
             	<button class="like" value="0"><span class="icon"></span> 즐겨찾기</button>
-            <%
-            }
-            %>
+            </c:if>
             <div class="info-content">
               <div class="data">..
                 <div>
@@ -115,30 +110,57 @@
                   <p>투자계약기간</p>
                   <p><span>펀딩종료부터</span>${companyBean.iv_contraction_during}</p>
                 </div>
+                <%-- 
                 <div>
                   <i><img src="img/corpor_icon3.png"></i>
                   <p>최소투자금액</p>
-                  <p><fmt:formatNumber value="<%=companyBean.getIv_min_amount() %>" pattern="#,###" /> Point</p>
+                  <p><fmt:formatNumber value="${companyBean.iv_min_amount }" pattern="#,###" /> Point</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon4.png"></i>
                   <p>잔여구좌</p>
-                  <p><fmt:formatNumber value="<%=companyBean.getIv_balance_stock() %>" pattern="#,###" /></p>
+                  <p><fmt:formatNumber value="${companyBean.iv_balance_stock}" pattern="#,###" /></p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon5.png"></i>
                   <p>현재모금액</p>
-                  <p><fmt:formatNumber value="<%=companyBean.getIv_current_amount() %>" pattern="#,###" /> Point</p>
+                  <p><fmt:formatNumber value="${companyBean.iv_current_amount}" pattern="#,###" /> Point</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon6.png"></i>
                   <p>투자가능금액</p>
-                  <p><fmt:formatNumber value="<%=companyBean.getIv_possible_amount() %>" pattern="#,###" /> Point</p>
+                  <p><fmt:formatNumber value="${companyBean.iv_possible_amount}" pattern="#,###" /> Point</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon7.png"></i>
                   <p>현재참여인원</p>
-                  <p><fmt:formatNumber value="<%=companyBean.getIv_current_participants() %>" pattern="#,###" />명</p>
+                  <p><fmt:formatNumber value="${companyBean.iv_current_participants}" pattern="#,###" />명</p>
+                </div> --%>
+                
+                <div>
+                  <i><img src="img/corpor_icon3.png"></i>
+                  <p>최소투자금액</p>
+                  <p><fmt:formatNumber value="${companyBean.iv_min_amount }" pattern="#,###" /> Point</p>
+                </div>
+                <div>
+                  <i><img src="img/corpor_icon4.png"></i>
+                  <p>잔여구좌</p>
+                  <p><fmt:formatNumber value="${companyBean.iv_balance_stock}" pattern="#,###" /></p>
+                </div>
+                <div>
+                  <i><img src="img/corpor_icon5.png"></i>
+                  <p>현재모금액</p>
+                  <p><fmt:formatNumber value="${companyBean.iv_current_amount}" pattern="#,###" /> Point</p>
+                </div>
+                <div>
+                  <i><img src="img/corpor_icon6.png"></i>
+                  <p>투자가능금액</p>
+                  <p><fmt:formatNumber value="${companyBean.iv_possible_amount}" pattern="#,###" /> Point</p>
+                </div>
+                <div>
+                  <i><img src="img/corpor_icon7.png"></i>
+                  <p>현재참여인원</p>
+                  <p><fmt:formatNumber value="${companyBean.iv_current_participants}" pattern="#,###" />명</p>
                 </div>
                 <div>
                   <i><img src="img/corpor_icon8.png"></i>
@@ -196,14 +218,14 @@
                 </div>
               </div>
               <div>
-                <p><fmt:formatNumber value="<%=companyBean.getIv_current_amount() %>" pattern="#,###" />P</p>
-                <p><fmt:formatNumber value="<%=companyBean.getIv_goal_amount() %>" pattern="#,###" />P</p>
+                <p><fmt:formatNumber value="${companyBean.iv_current_amount }" pattern="#,###" />P</p>
+                <p><fmt:formatNumber value="${companyBean.iv_goal_amount }" pattern="#,###" />P</p>
               </div>
             </div>
             <div class="bg">
              <p>
-             	<span><%=companyBean.getCp_intro_headline()%></span><br>
-             	<%=companyBean.getCp_intro_content()%>
+             	<span>${companyBean.cp_intro_headline}</span>
+             	<br>${companyBean.cp_intro_content}
              </p>
             </div>
             <div class="photo">
@@ -263,19 +285,19 @@
                   <table>
                     <tr>
                       <td>대표자</td>
-                      <td><%=companyBean.getCp_manager() %></td>
+                      <td>${companyBean.cp_manager}</td>
                     </tr>
                     <tr>
                       <td>사업자 등록번호</td>
-                      <td><%=companyBean.getCp_number() %></td>
+                      <td>${companyBean.cp_number}</td>
                     </tr>
                     <tr>
                       <td>자본금</td>
-                      <td><fmt:formatNumber value="<%=companyBean.getCp_capital() %>" pattern="#,###" /></td>
+                      <td><fmt:formatNumber value="${companyBean.cp_capital}" pattern="#,###" /></td>
                     </tr>
                     <tr>
                       <td>본사주소</td>
-                      <td><%=companyBean.getCp_add_ch() %> <%=companyBean.getCp_add_more() %></td>
+                      <td>${companyBean.cp_add_ch}${companyBean.cp_add_more}</td>
                     </tr>
                   </table>
                 </div>
@@ -291,7 +313,7 @@
                       <div class="box"><a href="#">
                           <div class="img"></div>
                           <div class="text">
-                            <a href="./CompanyFileDownload?filename=<%=companyBean.getCf_financial() %>&cp_idx=<%=companyBean.getCp_idx() %>" download>재무제표 다운로드</a>
+                            <a href="./CompanyFileDownload?filename=${companyBean.cf_financial}&cp_idx=${companyBean.cp_idx}" download>재무제표 다운로드</a>
                           </div>
                         </a>
                        </div>
@@ -304,7 +326,7 @@
                       <div class="box"><a href="#">
                           <div class="img"></div>
                           <div class="text">
-                            <a href="./CompanyFileDownload?filename=<%=companyBean.getCf_certificate() %>&=<%=companyBean.getCp_idx() %>" download>해당 업종 자격증 사본 다운로드</a>
+                            <a href="./CompanyFileDownload?filename=${companyBean.cf_certificate}&cp_idx=${companyBean.cp_idx}" download>해당 업종 자격증 사본 다운로드</a>
                           </div>
                         </a></div>
                     </li>
@@ -316,7 +338,7 @@
                       <div class="box"><a href="#">
                           <div class="img"></div>
                           <div class="text">
-                            <a href="./CompanyFileDownload?filename=<%=companyBean.getCf_estate_contract() %>&cp_idx=<%=companyBean.getCp_idx() %>" download>부동산 임대차 계약서 사본 다운로드</a>
+                            <a href="./CompanyFileDownload?filename=${companyBean.cf_estate_contract}&cp_idx=${companyBean.cp_idx}" download>부동산 임대차 계약서 사본 다운로드</a>
                           </div>
                         </a></div>
                     </li>
@@ -328,7 +350,7 @@
                       <div class="box"><a href="#">
                           <div class="img"></div>
                           <div class="text">
-                            <a href="./CompanyFileDownload?filename=<%=companyBean.getCf_registration() %>&cp_idx=<%=companyBean.getCp_idx() %>" download>사업자 등록증 사본 다운로드</a>
+                            <a href="./CompanyFileDownload?filename=${companyBean.cf_registration}&cp_idx=${companyBean.cp_idx}" download>사업자 등록증 사본 다운로드</a>
                           </div>
                         </a></div>
                     </li>
@@ -350,28 +372,28 @@
                 <tr>
                   <th colspan="2">매출</th>
 
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_sales() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_sales }" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th rowspan="4">비용</th>
                   <td>원재료(생선매입비용)</td>
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_stuff() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_stuff }" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <td>인건비</td>
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_costs_person() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_costs_person }" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <td>임대비</td>
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_lease_expenses() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_lease_expenses}" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <td>운영비</td>
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_operating_expenses() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_operating_expenses}" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th colspan="2">순수익</th>
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_net_income() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_net_income }" pattern="#,###" /> 원</td>
                 </tr>
               </table>
               <h4>월 평균 수익금 <span>(1구좌 당)</span><span>(단위 : 원 / 년)</span></h4>
@@ -379,26 +401,26 @@
                 <tr>
                   <th>현금 배당률</th>
                   <td>순수익의 50%</td>
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_cash_dividend_ratio() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_cash_dividend_ratio }" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th>지분</th>
                   <td>1%</td>
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_share() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_share }" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th>플랫폼 이용료</th>
                   <td>지분의 10.5%</td>
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_platform() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_platform }" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th>예상 수익금</th>
                   <td>지분 - 플랫폼 이용료</td>
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_proceeds() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_proceeds }" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th colspan="2">월 평균</th>
-                  <td style="color: #ff9123"><fmt:formatNumber value="<%=companyBean.getCp_pre_avg_monthly() %>" pattern="#,###" /> 원</td>
+                  <td style="color: #ff9123"><fmt:formatNumber value="${companyBean.cp_pre_avg_monthly }" pattern="#,###" /> 원</td>
                 </tr>
               </table>
               <h4>1금융권 정기 예금과 평균 비교</h4>
@@ -406,11 +428,11 @@
                 <tr>
                   <th>실 수익률</th>
                   <td>(지급이자 - 플랫폼 이용료) / 원금</td>
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_net_profit_ratio() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_net_profit_ratio }" pattern="#,###" /> 원</td>
                 </tr>
                 <tr>
                   <th colspan="2">1금융권 정기예금 평균 금리</th>
-                  <td><fmt:formatNumber value="<%=companyBean.getCp_pre_interest_rate() %>" pattern="#,###" /> 원</td>
+                  <td><fmt:formatNumber value="${companyBean.cp_pre_interest_rate }" pattern="#,###" /> 원</td>
                 </tr>
                 <tr></tr>
               </table>
@@ -433,18 +455,18 @@
                 <c:forEach var = "i" begin = "1" end = "12"> 
 	                <tr>
 	                  <td>${i}</td>
-	                  <td><%=companyBean.getCp_pay_expected_payment_date() %></td>
-	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_principal() %>" pattern="#,###" /></td>	                  
-	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_interest_paid() %>" pattern="#,###" /></td>
-	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_fees() %>" pattern="#,###" /></td>
-	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_actual_payment_amout() %>" pattern="#,###" /></td>
-	                  <td><fmt:formatNumber value="<%=companyBean.getCp_pay_actual_rate_return() %>" pattern="#,###" /></td>
+	                  <td>${companyBean.cp_pay_expected_payment_date}</td>
+	                  <td><fmt:formatNumber value="${companyBean.cp_pay_principal }" pattern="#,###" /></td>	                  
+	                  <td><fmt:formatNumber value="${companyBean.cp_pay_interest_paid }" pattern="#,###" /></td>
+	                  <td><fmt:formatNumber value="${companyBean.cp_pay_fees }" pattern="#,###" /></td>
+	                  <td><fmt:formatNumber value="${companyBean.cp_pay_actual_payment_amout }" pattern="#,###" /></td>
+	                  <td><fmt:formatNumber value="${companyBean.cp_pay_actual_rate_return }" pattern="#,###" /></td>
 	                </tr>
               	</c:forEach>
                 <tr>
                   <td>총 합계</td>
                   <td>-</td>
-                  <td><%=companyBean.getCp_pay_principal() %></td>
+                  <td>${companyBean.cp_pay_principal}</td>
                   <td>305,520원</td>
                   <td>32,080원</td>
                   <td>273,470원</td>
@@ -465,7 +487,7 @@
                 <p>
                 [원가상승] 현재까지 고등어 등의 생사료에 의존하고 있어 사료가격의 급등에 대한 위험성이 있습니다.
                  -->
-                <%=companyBean.getCp_business_risk() %>
+                ${companyBean.cp_business_risk }
                 </p>
               </div>
               <div>
@@ -477,7 +499,7 @@
                 <p>
                 [진입장벽/ 법적규제] 외해가두리 면허는 해양수산부의 인허가 사항이며 법적 절차를 준수하면 면허를  취득할 수 있으나, 육상 작업 중 어항내 작업 (시설공사, 사료 창고, 가공) 등에 있어서 지역 단체와의 긴밀한 협조 필요합니다.
                  -->
-                 <%=companyBean.getCp_company_risk() %>
+                 ${companyBean.cp_company_risk }
                 </p>
               </div>
               <div>
@@ -489,7 +511,7 @@
                 <p>
                 [독자적 투자판단의 필요성] 본 설명서에 기재된 사항 이외의 투자위험요소를 검토하여 투자자 개인의 독자적인 판단이 필요합니다.
                  -->
-                <%=companyBean.getCp_other_risks() %>
+                ${companyBean.cp_other_risks }
                 </p>
               </div>
             </div>

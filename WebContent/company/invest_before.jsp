@@ -1,4 +1,4 @@
-<%@page import="net.company.dto.CompanyBean"%>
+<%-- <%@page import="net.company.dto.CompanyBean"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -25,7 +25,7 @@ pageEncoding="UTF-8"%>
 
 <body>
 <%
-	CompanyBean companyBean = (CompanyBean)request.getAttribute("company");
+	//CompanyBean company = (CompanyBean)request.getAttribute("company");
 %>
   <div id="wrap">
     <header></header>
@@ -52,7 +52,7 @@ pageEncoding="UTF-8"%>
         <br>
         <input type="checkbox" id="chka"><label for="chka">모든 투자 위험을 확인했으며 위 내용에 모두 동의합니다.</label>
         <hr>
-        <input type="button" value="돌아가기" onclick="location.href='./CorporationAction.cp?cp_idx=<%= companyBean.getCp_idx()%>'">
+        <input type="button" value="돌아가기" onclick="location.href='./CorporationAction.cp?cp_idx=${company.cp_idx}'">
         <input type="button" value="계속 투자하기" class="gon" onclick="checkGo();">
       </div>
     </article>
@@ -62,12 +62,12 @@ pageEncoding="UTF-8"%>
           <img src="./img/con_img002.jpg" alt="">
           <form class="inv_intxt" name="inv_before" method="post" action="./Invest_point.cp">
             <h2>투자 조건 설정</h2>
-            <h3><%=companyBean.getCp_name() %><span><%=companyBean.getCp_add_ch() %></span></h3>
-            <p><%=companyBean.getCp_intro_content() %></p>
+            <h3>${company.cp_name}<span>${company.cp_add_ch}</span></h3>
+            <p>${company.cp_intro_content}</p>
             
             <div class="gage">
               <div class="per">
-              <fmt:parseNumber var="test" value="<%=companyBean.getIv_percent() %>" integerOnly = "true" />
+              <fmt:parseNumber var="test" value="${company.iv_percent }" integerOnly = "true" />
               	<span>${test}</span>%
               </div>
               <div class="gage_full">
@@ -77,7 +77,7 @@ pageEncoding="UTF-8"%>
             </div>
             
 			<div class="cost">
-				<fmt:formatNumber var="minAmount" value="<%=companyBean.getIv_min_amount() %>" pattern="#,###"/>
+				<fmt:formatNumber var="minAmount" value="${company.iv_min_amount }" pattern="#,###"/>
 				<span>${minAmount}</span> point</div>
             <div class="quantity">
               <input type="number" name="select" min="1" step="1" value="1">
@@ -88,7 +88,7 @@ pageEncoding="UTF-8"%>
             </div>
             <input type="hidden" name="invest_point" id="invest_point" value="20000"> 
             <input type="hidden" name="invest_amount" id="invest_amount" value="1"> 
-            <input type="hidden" name="cp_idx" value="<%=companyBean.getCp_idx()%>">
+            <input type="hidden" name="cp_idx" value="${company.cp_idx}">
             <input type="button" value="투자하기" onclick="invest_add();">
           </form>
         </article>
