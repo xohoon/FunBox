@@ -172,7 +172,7 @@ pageEncoding="UTF-8"%>
      
         $('.sum span').text(sum)
         $('#invest_amount').val(amount); // 투자하기 넘길때 사용
-        $('#invest_point').val(summ); // 투자하기 넘길때 사용
+        $('#invest_point').val(sum); // 투자하기 넘길때 사용
       });
       
       setInterval(function(){

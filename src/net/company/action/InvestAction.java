@@ -24,8 +24,11 @@ public class InvestAction implements Action {
 		int _cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
 		int _po_amount = Integer.parseInt(request.getParameter("point"));
 		String _mi_hoiling_stock = request.getParameter("amount");
+		String _cp_name = request.getParameter("cp_name");
 		
-		if (companyDAO.invest(_mb_idx, _cp_idx, _po_amount,_mi_hoiling_stock)) {
+		//System.out.println(_mb_idx+_cp_idx+_cp_name+_po_amount+_mi_hoiling_stock);
+		
+		if (companyDAO.invest(_mb_idx, _cp_idx,_cp_name ,_po_amount,_mi_hoiling_stock)) {
 			System.out.println("투자하기 성공");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
