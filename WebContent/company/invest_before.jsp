@@ -98,8 +98,7 @@ pageEncoding="UTF-8"%>
 
     <footer></footer>
   </div>
-
-  <script>
+ <!--  <script>
     $(function() {
       $('header').load('./header/header.jsp');
       $('footer').load('./footer/footer.jsp');
@@ -200,5 +199,7 @@ pageEncoding="UTF-8"%>
 	  var regexp = /\B(?=(\d{3})+(?!\d))/g;
 	  return num.toString().replace(regexp, ',');
 	}
-  </script>
-</body></html>
+  </script> -->
+</body>
+<script type="text/javascript" src="company/js/invest_before.js"></script>
+</html>

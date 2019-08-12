@@ -1,5 +1,5 @@
-<%@page import="net.company.dto.CompanyBean"%>
-<%@page import="net.company.dto.InvestPointVO"%>
+<%-- <%@page import="net.company.dto.CompanyBean"%>
+<%@page import="net.company.dto.InvestPointVO"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -27,8 +27,8 @@
 
 <%
 	request.setCharacterEncoding("utf-8"); // 한글처리
-	CompanyBean companyBean = (CompanyBean)request.getAttribute("company");
-	InvestPointVO inv_pointVO = (InvestPointVO)request.getAttribute("inv_pointVO");
+	//CompanyBean companyBean = (CompanyBean)request.getAttribute("company");
+	//InvestPointVO inv_pointVO = (InvestPointVO)request.getAttribute("inv_pointVO");
 %>
   <div id="wrap">
     <header></header>
@@ -95,8 +95,8 @@
 
     <footer></footer>
   </div>
-
-  <script>
+	<script type="text/javascript" src="company/js/invest_after.js"></script>
+  <!-- <script>
     $(function() {
       $('header').load('./header/header.jsp');
       $('footer').load('./footer/footer.jsp');
@@ -165,7 +165,7 @@
       }
     });
     
-  </script>
+  </script> -->
 </body>
 
 </html>

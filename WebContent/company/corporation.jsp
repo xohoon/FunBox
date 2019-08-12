@@ -525,13 +525,15 @@
   </div>
   <input type="hidden" value="${companyBean.cp_add_ch }" name="cp_add_ch" id="cp_add_ch">
   <input type="hidden" value="${companyBean.cp_name }" name="cp_name" id="cp_name">
+  <input type="hidden" value="${idx }" name="idx" id="idx">
+  
   <form name="investForm" action="./Invest_beforeAction.cp" method="post">
-  <input type="hidden" value="${companyBean.cp_idx }" name="cp_idx" id="cp_idx">
+  	<input type="hidden" value="${companyBean.cp_idx }" name="cp_idx" id="cp_idx">
   </form>
   </body>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3fd911319378df3f4ed86e94c8737483&libraries=services,clusterer,drawing"></script>
   <script type="text/javascript" src="company/js/map.js"></script>
-  <script>
+  <%-- <script>
     $(function() {
       $('header').load('./header/header.jsp')
       $('footer').load('./footer/footer.jsp')
@@ -696,10 +698,10 @@
     	  });
     }
     
-  </script>
+  </script> --%>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-   <script>
+   <%-- <script>
    	function investClick(){
    		var idx = <%= idx%>;
    		var f = document.investForm;
@@ -789,7 +791,7 @@
       	}, 1000)
       	
     });
-    
+    %-->
     $('#lightBox ul').mousewheel(function(event, delta) {
           this.scrollLeft -= (delta * 100);
           event.preventDefault();
@@ -826,7 +828,7 @@
       $('#lightBox').find('li').eq(slideIndex-1).addClass('on');
       
     }
-  </script>
+  </script> --%>
 	  
   <!-- <script charset="UTF-8">
     var mapWidth = $('.corpor-location').innerWidth();
@@ -839,5 +841,7 @@
       "mapHeight": mapHeight
     }).render();
   </script> -->
-  
+  <script type="text/javascript" src="company/js/corporation.js"></script>
+  <script type="text/javascript">
+  </script>
   </html>
