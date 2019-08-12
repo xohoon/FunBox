@@ -24,6 +24,7 @@
   <script src="https://kit.fontawesome.com/947fdcffe2.js"></script>
    <script src="js/jquery-3.1.1.min.js"></script>
 <script src="member/js/mypage_functions.js"></script>
+<script src="member/js/investment_status.js"></script>
   <script>
     $(function() {
       $('header').load('./header/header.jsp')

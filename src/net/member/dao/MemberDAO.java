@@ -953,26 +953,20 @@ public class MemberDAO {
 			return null;
 		}
 		
-		// 태훈 - 기업 투자 현황 페에지 제어
-		public String Member_Invest_check(String sessionID) {
+		// 태훈 - 기업 투자 현황 페에지 제어 // 신규수정
+		public int Member_Invest_check(int mb_idx) {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			String result = "0";
+			int result = -1;
 
 			try {
-				String sql = "SELECT count(*) FROM member_invest WHERE mb_id = ?";
+				String sql = "SELECT mi_idx FROM member_invest WHERE mb_idx = ? ORDER BY mi_reg_date_time DESC";
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, sessionID);
+				pstmt.setInt(1, mb_idx);
 				rs = pstmt.executeQuery();
 
 				if (rs.next()) {
-					if (rs.getInt("count(*)") > 0) {
-						result = "1"; 
-					} else {
-						result = "0";
-					}
-				} else {
-					result = "0";
+					result = rs.getInt("mi_idx");
 				}
 			} catch (Exception ex) {
 				System.out.println("Member_Invest_check 에러: " + ex);
@@ -1380,7 +1374,7 @@ public class MemberDAO {
 	// 박신규 시작~ ///////////////////////////////////////////////////
 	// 투자 회사 리스트 뽑깅
 	public ArrayList<MemberInvestCompanyVO> getInvestmentCompanyList(int mb_idx) {
-		String sql = "select cp.cp_idx,cp.cp_name, cp.cp_funding_status,mi.mi_idx from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_idx = ?";
+		String sql = "select cp.cp_idx,cp.cp_name, cp.cp_funding_status,mi.mi_idx from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_idx = ? ORDER BY mi_reg_date_time DESC;";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
