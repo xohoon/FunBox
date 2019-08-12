@@ -30,7 +30,7 @@
 		%>
 		<script>
 			alert("로그인 후 이용해주세요1");
-			location.href="LoginTest.jsp";
+			location.href="login_test.jsp";
 		</script>
 		<%
 	}

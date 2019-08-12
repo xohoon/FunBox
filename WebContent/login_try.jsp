@@ -22,7 +22,7 @@
 		if(loginManager.isUsing(userID)) {
 			%>
 			<a href="disconnect.jsp">예</a>
-			<a href="LoginTest.jsp">아니오</a>
+			<a href="login_test.jsp">아니오</a>
 			<%
 		}else {
 			loginManager.setSession(session, userID);
@@ -32,7 +32,7 @@
 		%>
 		<script>
 			alert("로그인 후 이용해주세요");
-			location.href="LoginTest.jsp";
+			location.href="login_test.jsp";
 		</script>
 		<%
 	}
