@@ -60,7 +60,6 @@ public class MemberController extends HttpServlet implements Servlet {
 		
 		///////////////////////유정 추가 start///////////////////////
 		if (command.equals("/Index.mb")) {
-			System.out.println(">>>");
 			action = new MainAction();
 			try {
 				forward = action.execute(request, response);

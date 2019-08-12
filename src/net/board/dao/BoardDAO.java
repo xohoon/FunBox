@@ -71,7 +71,7 @@ public class BoardDAO {
 			pstmt.setInt(9, qna.getMobile_chk());
 
 			result = pstmt.executeUpdate();
-			System.out.println(pstmt);
+//			System.out.println(pstmt);
 			if (result != 0) {
 				return true;
 			}
@@ -139,7 +139,7 @@ public class BoardDAO {
 		int count = 0;
 		ResultSet rs = null;
 		String sql = "select * from faq where category = ?";
-		System.out.println("boardDao:" + category);
+//		System.out.println("boardDao:" + category);
 
 		try {
 			if (category.equals("0")) {
@@ -152,7 +152,7 @@ public class BoardDAO {
 				rs = pstmt.executeQuery();
 			}
 
-			System.out.println(sql);
+//			System.out.println(sql);
 			rs.last();
 
 			count = rs.getRow();
@@ -421,7 +421,7 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, category);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+//			System.out.println(pstmt);
 
 			while (rs.next()) {
 				FaqVO faq = new FaqVO();
@@ -466,7 +466,7 @@ public class BoardDAO {
 
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+//			System.out.println(pstmt);
 
 			while (rs.next()) {
 				Board_Search_ListVO listVO = new Board_Search_ListVO();

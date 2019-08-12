@@ -1295,7 +1295,7 @@ public class MemberDAO {
 					DeleteVO.setMi_name(rs.getString("mi_name"));
 					DeleteVO.setMi_point(rs.getString("mi_point"));
 					DeleteVO.setMi_idx(rs.getInt("mi_idx"));
-					DeleteVO.setCp_dix(rs.getInt("cp_idx"));
+					DeleteVO.setCp_idx(rs.getInt("cp_idx"));
 					DeleteList.add(DeleteVO);
 				}
 				return DeleteList;
