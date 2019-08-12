@@ -28,29 +28,27 @@ public class deleteInvestAction implements Action {
 		result = mb_dao.deleteInvest(mb_idx, cp_idx, mi_idx);
 		
 		if(result == 0){
-			System.out.println("투자 철회하기 실패");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('투자 철회하기에 실패했습니다.\n다시 시도해주세요.');");
 			out.println("window.close()");
-			out.println("opener.location.replace('./Mypage4_1.mb')");
-//			out.println("opener.location.replace('./MemberInvestmentList.mb?mi_idx="+mi_idx+"')");
+//			out.println("opener.location.replace('./Mypage4_1.mb')");
+			out.println("opener.location.replace('./MemberInvestmentList.mb?mi_idx="+mi_idx+"')");
 //			out.println("location.href='./MemberInvestmentList.mb';");
 			out.println("</script>");
 			out.close();
 			
 			return null;
 		}else {
-			System.out.println("투자 철회하기 성공");
+			mb_dao = new MemberDAO();
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('투자 철회하기가 완료되었습니다.');");
 			out.println("window.close()");
-			System.out.println();
-			out.println("opener.location.replace('./Mypage4_1.mb')");
-//			out.println("opener.location.replace('./MemberInvestmentList.mb?mi_idx="+mi_idx+"')");
+//			out.println("opener.location.replace('./Mypage4_1.mb')");
+			out.println("opener.location.replace('./MemberInvestmentList.mb?mi_idx="+mb_dao.Member_Invest_check(mb_idx)+"')");
 //			out.println("location.href='./MemberInvestmentList.mb';");
 			out.println("</script>");
 			out.close();
