@@ -1,4 +1,7 @@
 $(function() {
+	$('header').load('./header/header.jsp');
+    $('footer').load('./footer/footer.jsp');
+	
 	$('.gage').each(function() {
 		var percent = $(this).find('span').text() + '%'
 
