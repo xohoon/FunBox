@@ -663,41 +663,6 @@ public class MemberDAO {
 		return null;
 	}
 	
-	
-	// 펀딩 철회하기
-	public boolean deleteInvest(int mb_idx, int cp_idx, int mi_idx) {
-		String sql = "delete from member_invest where mb_idx=? and cp_idx=? and mi_idx = ?";
-		int result = 0;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, mb_idx);
-			pstmt.setInt(2, cp_idx);
-			pstmt.setInt(3, mi_idx);
-
-			result = pstmt.executeUpdate();
-			System.out.println(pstmt);
-			if (result != 0) {
-				return true;
-			}
-		} catch (Exception ex) {
-			System.out.println("deleteInvest 에러: " + ex);
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				System.out.println("연결 해제 실패: " + e.getMessage());
-			}
-		}
-
-		return false;
-	}
 
 	/////////////////////// 유정 추가 end///////////////////////
 
@@ -1272,6 +1237,47 @@ public class MemberDAO {
 			return result;
 		}
 		
+		// 펀딩 철회하기
+		public int deleteInvest(int mb_idx, int cp_idx, int mi_idx) {
+			int result = 0;
+			CallableStatement cstmt = null;
+			ResultSet rs = null;
+			try {
+				cstmt = conn.prepareCall("{call RETRACT(?, ?, ?, ?)}");
+				cstmt.setInt(1, mb_idx);
+				cstmt.setInt(2, mi_idx);
+				cstmt.setInt(3, cp_idx);
+				cstmt.registerOutParameter(4, java.sql.Types.INTEGER);
+				
+				cstmt.execute();
+				result = cstmt.getInt("@RESULT");
+				
+				if (result == 1) {
+					System.out.println(">>>>1"+result);
+					result = 1;	// 철회성공
+					return result;
+				}else {	// 철회실패
+					System.out.println(">>>>2"+result);
+					result = 0;
+				}
+			} catch (Exception ex) {
+				System.out.println("deleteInvest 에러: " + ex);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (cstmt != null)
+						cstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("연결 해제 실패: " + e.getMessage());
+				}
+			}
+
+			return result;
+		}
+		
 		
 		public List<InvestDeleteVO> InvestDeleteInfo(int cp_idx, int mb_idx, int mi_idx) throws Exception {
 
@@ -1280,9 +1286,9 @@ public class MemberDAO {
 			List<InvestDeleteVO> DeleteList = new ArrayList<InvestDeleteVO>();
 
 			try {
-				String sql = "SELECT mi_name, mi_point, mi_idx "
+				String sql = "SELECT mi_name, mi_point, mi_idx, cp_idx "
 						+ "FROM member_invest "
-						+ "WHERE cp_idx = ? AND mi_idx = ? AND mi_idx = ?";
+						+ "WHERE cp_idx = ? AND mb_idx = ? AND mi_idx = ?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, cp_idx);
@@ -1292,14 +1298,15 @@ public class MemberDAO {
 
 				while (rs.next()) {
 					InvestDeleteVO DeleteVO = new InvestDeleteVO();
-					DeleteVO.setCp_name(rs.getString("mi_name"));
+					DeleteVO.setMi_name(rs.getString("mi_name"));
 					DeleteVO.setMi_point(rs.getString("mi_point"));
 					DeleteVO.setMi_idx(rs.getInt("mi_idx"));
+					DeleteVO.setCp_dix(rs.getInt("cp_idx"));
 					DeleteList.add(DeleteVO);
 				}
 				return DeleteList;
 			} catch (Exception ex) {
-				System.out.println("Main_SlideInfo ERROR: " + ex);
+				System.out.println("InvestDeleteInfo ERROR: " + ex);
 			} finally {
 				try {
 					if (rs != null)
