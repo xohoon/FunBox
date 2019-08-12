@@ -56,15 +56,13 @@
 	
 /////////////////////////////////////////// 태훈 추가////////////////////////
 
-var sessionID; 
+/*var sessionID; 
 $(document).ready(function() {
 	invest_click();
 });
 
 function invest_click() {
 	$("#invest_check").on('click', function() {
-		sessionID = $('#session_value').val();
-		console.log("sessionID>>>"+sessionID);
 		invest_chk_ajax();
 	});
 }
@@ -75,15 +73,10 @@ function invest_chk_ajax() {
 			url: "./MemberInvestcheck.mb",
 			dataType: "json",
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
-			data: {
-				sessionID: sessionID
-			},
-			success: function(data, result, response) {
-				console.log("data>>>"+data);
-				console.log("result>>>"+result);
-				console.log("response>>>"+response);
-				if(data.result == 1) {
-					location.href="./MemberInvestmentList.mb";
+			data: {},
+			success: function(resultData, result, response) {
+				if(resultData.mi_idx != -1 ) {
+					location.href="./MemberInvestmentList.mb?mi_idx="+resultData.mi_idx;
 				}else {
 					alert("투자현황이 존재하지 않습니다. 기업에 투자해보세요");
 					location.href="./ListAction.bd";
@@ -95,5 +88,5 @@ function invest_chk_ajax() {
 				console.log("error>>" +error);
 			}
 		});
-}
+}*/// 옮김 investment_status.js 로
 /////////////////////////////////////////// 태훈 추가////////////////////////
