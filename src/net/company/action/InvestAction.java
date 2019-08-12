@@ -34,7 +34,8 @@ public class InvestAction implements Action {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('투자가 완료되었습니다.');");
-			out.println("location.href='./MemberInvestmentList.mb';");
+			//out.println("location.href='./MemberInvestmentList.mb';");
+			out.println("location.href='./Mypage4_1.mb';");
 			out.println("</script>");
 			out.close();
 
