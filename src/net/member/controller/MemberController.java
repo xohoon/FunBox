@@ -162,7 +162,6 @@ public class MemberController extends HttpServlet implements Servlet {
 				e.printStackTrace();
 			}
 		}else if (command.equals("/MypagePINCheckAction.mb")) { 
-			System.out.println("Controller>>>>>");
 			action = new MypagePINCheckAction();
 			try {
 				forward = action.execute(request, response);

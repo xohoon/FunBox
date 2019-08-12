@@ -123,7 +123,6 @@ public class MemberInvestmentListAction implements Action {
 		request.setAttribute("currentPage", new Integer(currentPage));
 		request.setAttribute("startRow", new Integer(startRow));
 		request.setAttribute("endRow", new Integer(endRow));
-		//request.setAttribute("count", new Integer(count));
 		request.setAttribute("count", memberInvestCompanyVOList.size());
 		request.setAttribute("pageSize", new Integer(pageSize));
 

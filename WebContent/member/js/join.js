@@ -510,4 +510,33 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
+
+$(window).on('resize',function(){
+    var winh = $(window).height();
+    $('.pol').height(winh);
+});
+  
+  $(function(){
+      $('#agree1').click(function(){
+          $('.pol').removeClass('on');
+          $('.policy1').addClass('on');
+      });
+      $('#agree2').click(function(){
+          $('.pol').removeClass('on');
+          $('.policy2').addClass('on');
+      });
+      $('#agree3').click(function(){
+          $('.pol').removeClass('on');
+          $('.policy3').addClass('on');
+      });
+      $('.pol .closer').click(function(){
+          $('.pol').removeClass('on');
+      });
+		/* $('.add_btn').click(function(){
+			$('.sch_address').addClass('on');
+		});
+		$('.sch_address .closer').click(function(){
+          $('.sch_address').removeClass('on');
+      }); */
+  });      
 // ///////////////////////////////////////////////////회원가입 유효성 검사////////////////////////////////////////////

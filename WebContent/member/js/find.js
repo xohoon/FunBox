@@ -1,8 +1,3 @@
-/**
- * 
- */
-
-
 function send_id_sms(){	
 
 	var phone = document.find_id.ph.value;
@@ -40,7 +35,6 @@ function send_id_sms(){
             console.log(e.responseText);
         }
     });
-	
 }
 
 
@@ -86,7 +80,6 @@ function send_pw_sms(){
             console.log(e.responseText);
         }
     });
-	
 }
 
 
@@ -137,7 +130,6 @@ function send_tx_sms(){
             console.log(e.responseText);
         }
     });
-	
 }
 
 
@@ -203,10 +195,7 @@ function find_id_confirm() {
 	            console.log(e.responseText);
 	        }
 	    });
-		
-		
 	}
-	
 }
 
 
@@ -281,11 +270,7 @@ function find_pw_confirm() {
 	            console.log(e.responseText);
 	        }
 	    });
-		
-		
 	}
-	 
-	
 }
 
 
@@ -384,11 +369,7 @@ function find_tx_confirm() {
 	            console.log(e.responseText);
 	        }
 	    });
-		
-		
 	}
-	 
-	
 }
 
 	function check(re, what, message) {

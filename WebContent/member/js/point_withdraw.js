@@ -22,11 +22,9 @@ function point_withdraw_btn() {
 		point_sum = $(".sumcomma2").text();
 		session_idx = $("#session_idx").val();
 		if(point_sum != 0 && session_idx != null) {
-			alert("point_sum: "+point_sum);
 			point_withdrawAjax();
 		}else {
-			console.log("point_sum:::"+point_sum);
-			alert("환전할 포인트를 입력해주세요");
+			alert("환전할 포인트를 입력해주세요.");
 		}
 	});
 	btn.disabled = false;

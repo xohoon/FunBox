@@ -73,3 +73,41 @@ function DropCode_chk() {
 	});
 	
 }
+
+numWithCom();
+
+var $pincode = document.getElementsByClassName('pincode'),
+pinLeng = $pincode.length,
+$a = document.getElementById('a'),
+$q = document.getElementById('q'),
+$submit = document.getElementsByClassName('submit');
+
+
+window.onload = function(){
+for(var i=0;i<pinLeng; i++){
+$pincode[i].addEventListener('keyup', pinTab, false);
+}
+    
+$a.style.display ="none";
+}
+
+
+function numWithCom() {
+var num = cancelFun.point.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+cancelFun.point.value = num;
+}
+
+function pinTab(e){
+if (e.keyCode == 8) {
+  e.target.previousElementSibling.value = '';
+  e.target.previousElementSibling.focus();
+}else {
+  e.target.nextElementSibling.value = '';
+  e.target.nextElementSibling.focus();
+}
+}
+
+function pointReturned(){
+$q.style.display = 'none';
+$a.style.display = 'block';
+}

@@ -24,8 +24,7 @@ function point_deposit_btn() {
 		if(point_sum != 0 && session_idx != null) {
 			point_depositAjax();
 		}else {
-			console.log("point_sum:::"+point_sum);
-			alert("충전할 포인트를 입력해주세요1");
+			alert("충전할 포인트를 입력해주세요.");
 		}
 	});
 	btn.disabled = false;
@@ -47,7 +46,7 @@ function point_depositAjax() {
 				alert("포인트충전이 완료되었습니다.");
 				location.href="./Mypage2_2.mb";
 			}else {
-				alert("보유토큰이 부족합니다1.");
+				alert("보유토큰이 부족합니다.");
 				location.href="./Mypage2_2.mb";
 			}
 		},
@@ -55,7 +54,7 @@ function point_depositAjax() {
 			console.log("request>>"+request);
 			console.log("status>>"+status);
 			console.log("error>>" +error);
-			alert("보유토큰이 부족합니다2.");
+			alert("보유토큰이 부족합니다.");
 			location.href="./Mypage2_2.mb";
 		}
 	});
