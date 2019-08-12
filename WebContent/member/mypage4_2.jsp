@@ -66,27 +66,27 @@
    			<div>
    				<label for="mail">E-mail</label>
    				<input type="text" id="mail" name="mail" value="<%=memberBean.getEmail() %>" readonly="readonly">
-   				<input type="button" class="rev" value="수정하기">
+   				<input type="button" class="rev" id="rev_mail" value="수정하기">
    				<input type="text" class="rev_form" id="new_mail" name="new_mail" placeholder="새로운 이메일주소를 입력하세요">
    			</div>
    			<div>
    				<label for="pw">비밀번호</label>
    				<input type="password" id="pw" name="pw" maxlength="15" placeholder="현재 비밀번호를 입력하세요">
    				<input type="hidden" id="h_pw" name="h_pw" value="<%=memberBean.getPw() %>">
-   				<input type="button" class="rev" value="수정하기">
+   				<input type="button" class="rev" id="rev_pw" value="수정하기">
    				<input type="password" class="rev_form" id="new_pw" name="new_pw" maxlength="15" placeholder="새로운 비밀번호를 입력하세요">
    			</div>
    			<div>
    				<label for="pin">PIN</label>
    				<input type="password" id="pin" name="pin" maxlength="6" placeholder="현재 PIN번호를 입력하세요">
    				<input type="hidden" id="h_pin" name="h_pin" value="<%=memberBean.getPin() %>">
-   				<input type="button" class="rev" value="수정하기">
+   				<input type="button" class="rev" id="rev_pin" value="수정하기">
    				<input type="password" class="rev_form" id="new_pin" name="new_pin" maxlength="6" placeholder="새로운 PIN번호를 입력하세요">
    			</div>
    			<div>
    				<label for="ph">전화번호</label>
    				<input type="text" id="ph" name="ph" maxlength="11" value="<%=memberBean.getPh() %>" readonly="readonly">
-   				<input type="button" class="rev" value="수정하기">
+   				<input type="button" class="rev" id="rev_ph" value="수정하기">
    				<input type="text" class="rev_form" id="new_ph" name="new_ph" maxlength="11" placeholder="새로운 전화번호를 입력하세요">
    				<input type="button" class="letter rev_form" value="인증번호받기" onclick="check_to_phone();">
 		        <input type="text" class="verti_num rev_form" name="verti_num" placeholder="인증번호 6자리">
@@ -109,14 +109,17 @@
     <footer></footer>
   </div>
 	<script>
+	/* 
 	  $(function(){
 		 $('.rev').on('click',function(){
 			 $(this).siblings('.rev_form').toggleClass('on');
 		 });
 	  });
-	  
+	 */  
 	  $(function() {
 		  $('.rev').click( function() {
+			$(this).siblings('.rev_form').toggleClass('on');
+			  
 			if( $(this).val() == '수정하기' ) {
 			  $(this).val('취소');
 			}
