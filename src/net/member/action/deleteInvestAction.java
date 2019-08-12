@@ -21,9 +21,10 @@ public class deleteInvestAction implements Action {
 		
 		int mb_idx = Integer.parseInt((String)session.getAttribute("idx"));
 		int cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
+		int mi_idx = Integer.parseInt(request.getParameter("mi_idx"));
 		
 		MemberDAO mb_dao = new MemberDAO();
-		result = mb_dao.deleteInvest(mb_idx, cp_idx);
+		result = mb_dao.deleteInvest(mb_idx, cp_idx, mi_idx);
 		
 		if(result==false){
 			System.out.println("투자 철회하기 실패");

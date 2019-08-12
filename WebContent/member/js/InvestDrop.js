@@ -2,6 +2,7 @@
 var iv_pincode;
 var isRun = false;
 var cp_idx;
+var mi_idx;
 
 $(document).ready(function() {
 	Drop_key();
@@ -18,9 +19,10 @@ function btn_off() {
 // 철회 버튼
 function Invest_DropBtn() {
 	cp_idx = $("#cp_idx").val();
+	mi_idx = $("#mi_idx").val();
 	btn = document.getElementById('IvDrop_btn');
 	$("#IvDrop_btn").on('click', function() {
-		location.href="./MemberIvDrop.mb?cp_idx="+cp_idx;
+		location.href="./MemberIvDrop.mb?cp_idx="+cp_idx+"$mi_idx="+mi_idx;
 	});
 	btn.disabled = false;
 //	callback();
