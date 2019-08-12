@@ -40,7 +40,8 @@
       <span>간편하고 쉬운 자산관리 펀박스</span>
       <div class="logbox">
         반갑습니다. <span>${sessionScope.id}</span> 회원님
-        <a href="./member/logout.jsp">로그아웃</a>
+        <!-- <a href="./member/logout.jsp">로그아웃</a> -->
+        <a href="#" onclick="logOut();">로그아웃</a>
       </div>
       <div class="hdbtn">
         <div></div>
@@ -214,5 +215,11 @@
   	function go(){
   		alert('로그인이 필요한 서비스입니다.');
   		location.href='./LoginPage.mb';
+  	}
+  	function logOut(){
+  		var trueOrFalse = confirm('로그아웃 하시겠습니까?');
+  		if (trueOrFalse) {
+			location.href='./member/logout.jsp';
+		}
   	}
   </script>
