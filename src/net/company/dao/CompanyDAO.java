@@ -362,17 +362,18 @@ public class CompanyDAO {
 	
 	//대망의 포로시저 ~~~
 	//기업 투자하깅~
-	public boolean invest(int _mb_idx,int _cp_idx,int _po_amount,String _mi_hoiling_stock) {
+	public boolean invest(int _mb_idx,int _cp_idx,String _cp_name,int _po_amount,String _mi_hoiling_stock) {
 		CallableStatement cstmt = null;
 		int result = 0;
 		ResultSet rs = null;
 		try {
-			cstmt = (CallableStatement) conn.prepareCall("call INVEST(?,?,?,?,?)");
+			cstmt = (CallableStatement) conn.prepareCall("call INVEST(?,?,?,?,?,?)");
 			cstmt.setInt(1, _mb_idx);
 			cstmt.setInt(2, _cp_idx);
-			cstmt.setInt(3, _po_amount);
-			cstmt.setString(4, _mi_hoiling_stock);
-			cstmt.registerOutParameter(5,java.sql.Types.INTEGER);
+			cstmt.setString(3, _cp_name);
+			cstmt.setInt(4, _po_amount);
+			cstmt.setString(5, _mi_hoiling_stock);
+			cstmt.registerOutParameter(6,java.sql.Types.INTEGER);
 			cstmt.execute();
 			result = cstmt.getInt("@RESULT");
 			if (result != 0) {

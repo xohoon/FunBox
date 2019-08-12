@@ -1373,7 +1373,7 @@ public class MemberDAO {
 	// 박신규 시작~ ///////////////////////////////////////////////////
 	// 투자 회사 리스트 뽑깅
 	public ArrayList<MemberInvestCompanyVO> getInvestmentCompanyList(int mb_idx) {
-		String sql = "select DISTINCT(cp.cp_idx),cp.cp_name, cp.cp_funding_status from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_idx = ?";
+		String sql = "select cp.cp_idx,cp.cp_name, cp.cp_funding_status,mi.mi_idx from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_idx = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -1383,9 +1383,11 @@ public class MemberDAO {
 			ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = new ArrayList<MemberInvestCompanyVO>();
 			while (rs.next()) {
 				MemberInvestCompanyVO memberInvestCompanyVO = new MemberInvestCompanyVO();
+				memberInvestCompanyVO.setMi_idx(rs.getInt("mi_idx"));
 				memberInvestCompanyVO.setCp_idx(rs.getInt("cp_idx"));
 				memberInvestCompanyVO.setCp_name(rs.getString("cp_name"));
 				memberInvestCompanyVO.setCp_funding_status(rs.getString("cp_funding_status"));
+				
 				memberInvestCompanyVOList.add(memberInvestCompanyVO);
 			}
 			return memberInvestCompanyVOList;
