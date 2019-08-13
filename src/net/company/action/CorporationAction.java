@@ -20,7 +20,6 @@ public class CorporationAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		ActionForward forward = new ActionForward();
-		System.out.println("CorporationAction OK!");
 		HttpSession session = request.getSession();
 		
 		CompanyBean company = new CompanyBean();		
@@ -30,7 +29,6 @@ public class CorporationAction implements Action {
 		try {
 			String idx = request.getParameter("cp_idx");
 			cp_idx = Integer.parseInt(idx);
-			System.out.println("transidx 확인:" + cp_idx);	
 		}catch(NumberFormatException e) {
 			System.out.println("NumberFormatException 에러: " + e);
 		}

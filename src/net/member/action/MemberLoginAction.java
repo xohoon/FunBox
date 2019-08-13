@@ -79,8 +79,8 @@ public class MemberLoginAction implements Action {
 		System.out.println("로그인 성공");
 		System.out.println("ID >> " + id + "IDX>>" + mb_idx);
 		// 로그인 성공시 페이지 이동
-		//session.setAttribute("id", id); // 세션에 id등록
-		//session.setAttribute("idx", mb_idx);
+//		session.setAttribute("id", id); // 세션에 id등록
+//		session.setAttribute("idx", mb_idx);
 		forward.setRedirect(true);
 		forward.setPath("./Index.mb");
 		// return null;
