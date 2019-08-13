@@ -882,7 +882,7 @@ public class CompanyDAO {
 
 		try {
 
-			String sql = "SELECT cp_idx, cp_name,cp_recommand,cp_best FROM company";
+			String sql = "SELECT cp_idx, cp_name,cp_recommand,cp_best FROM company ORDER BY cp_recommand DESC ,cp_best DESC";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 

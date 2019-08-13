@@ -14,7 +14,7 @@ import net.member.function.Sha1_SecretCode;
 
 ///////////////////////유정 추가///////////////////////
 public class MemberLoginCheckAction implements Action {
-
+		
 	@SuppressWarnings("unchecked")
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
