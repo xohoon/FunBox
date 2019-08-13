@@ -22,14 +22,16 @@ public class MemberLoginAction implements Action {
 		String id = request.getParameter("id");
 		String saveId = request.getParameter("saveId");
 		
-		request.getSession().setAttribute("TAATLoginId", id);
-
+		String mb_idx = memberDAO.Session_idx(id);
+		
+		request.getSession().setAttribute("id", id);
+		request.getSession().setAttribute("idx", mb_idx);
+		//중복로그인 방지
 		EgovHttpSessionBindingListener httpSessionBindingListener = new EgovHttpSessionBindingListener();
 		
-		request.getSession().setAttribute(id, httpSessionBindingListener); 
-		
-		// 태훈
-		String mb_idx = memberDAO.Session_idx(id);
+		request.getSession().setAttribute(id, httpSessionBindingListener);
+		request.getSession().setAttribute(mb_idx, httpSessionBindingListener); 
+				
 
 		
 		// 아이디 저장 여부를 보고 쿠키로 아이디값 저장
@@ -76,8 +78,8 @@ public class MemberLoginAction implements Action {
 		System.out.println("로그인 성공");
 		System.out.println("ID >> " + id + "IDX>>" + mb_idx);
 		// 로그인 성공시 페이지 이동
-		session.setAttribute("id", id); // 세션에 id등록
-		session.setAttribute("idx", mb_idx);
+		//session.setAttribute("id", id); // 세션에 id등록
+		//session.setAttribute("idx", mb_idx);
 		forward.setRedirect(true);
 		forward.setPath("./Index.mb");
 		// return null;

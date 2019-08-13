@@ -23,7 +23,6 @@ public class EgovHttpSessionBindingListener implements HttpSessionBindingListene
 	 * */
 	@Override
 	public void valueBound(HttpSessionBindingEvent event) {
-		System.out.println("valueBound");
 		if (EgovMultiLoginPreventor.findByLoginId(event.getName())) {
 			EgovMultiLoginPreventor.invalidateByLoginId(event.getName());
 		}
@@ -38,7 +37,6 @@ public class EgovHttpSessionBindingListener implements HttpSessionBindingListene
 	 * */
 	@Override
 	public void valueUnbound(HttpSessionBindingEvent event) {
-		System.out.println("valueUnbound");
 		EgovMultiLoginPreventor.loginUsers.remove(event.getName(), event.getSession());
 	}
 }
