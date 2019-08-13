@@ -23,13 +23,17 @@ public class MemberLoginAction implements Action {
 		String saveId = request.getParameter("saveId");
 		
 		request.getSession().setAttribute("id", id);
-
+		String mb_idx = memberDAO.Session_idx(id);
+		
+		request.getSession().setAttribute("id", id);
+		request.getSession().setAttribute("idx", mb_idx);
+		//중복로그인 방지
+		
 		EgovHttpSessionBindingListener httpSessionBindingListener = new EgovHttpSessionBindingListener();
 		
-		request.getSession().setAttribute(id, httpSessionBindingListener); 
-		
-		// 태훈
-		String mb_idx = memberDAO.Session_idx(id);
+		request.getSession().setAttribute(id, httpSessionBindingListener);
+		request.getSession().setAttribute(mb_idx, httpSessionBindingListener); 
+				
 
 		
 		// 아이디 저장 여부를 보고 쿠키로 아이디값 저장
