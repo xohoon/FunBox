@@ -1,5 +1,7 @@
 package net.member.dto;
 
+import java.util.Date;
+
 ////////// 태훈 - 찜목록 리스트 //////////
 public class Member_likeboxVO {
 	
@@ -11,6 +13,7 @@ public class Member_likeboxVO {
 	private String cf_image;
 	private int mb_idx;
 	private int cp_idx;
+	private Date iv_appl_stop_date_time;
 	
 	
 	public String getCf_image() {
@@ -60,6 +63,12 @@ public class Member_likeboxVO {
 	}
 	public void setCp_like_percent(String cp_like_percent) {
 		this.cp_like_percent = cp_like_percent;
+	}
+	public Date getIv_appl_stop_date_time() {
+		return iv_appl_stop_date_time;
+	}
+	public void setIv_appl_stop_date_time(Date iv_appl_stop_date_time) {
+		this.iv_appl_stop_date_time = iv_appl_stop_date_time;
 	}
 	@Override
 	public String toString() {

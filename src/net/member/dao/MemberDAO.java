@@ -760,7 +760,7 @@ public class MemberDAO {
 		List<Member_likeboxVO> boxs = new ArrayList<Member_likeboxVO>();
 		try {
 			// 쿼리 멤버 idx필요
-			String sql = "SELECT a.mb_idx, a.cp_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, concat(cf.cf_directory,cf.cf_image1) as cf_directory_image, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent "
+			String sql = "SELECT a.mb_idx, a.cp_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, concat(cf.cf_directory,cf.cf_image1) as cf_directory_image, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent, c.iv_appl_stop_date_time "
 					+ "FROM member_likebox as a " 
 					+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.mb_idx = ? "
 					+ "JOIN company_file as cf ON b.cp_idx = cf.cp_idx "
@@ -783,7 +783,7 @@ public class MemberDAO {
 				box.setCf_image(rs.getString("cf_directory_image"));
 				// 현재 투자율 계산
 				box.setCp_like_percent(rs.getString("percent"));
-
+				box.setIv_appl_stop_date_time(rs.getDate("iv_appl_stop_date_time"));
 				boxs.add(box);
 			}
 		} catch (Exception ex) {
@@ -852,10 +852,7 @@ public class MemberDAO {
 			List<Main_LikeVO> LikeVO = new ArrayList<Main_LikeVO>();
 
 			try {
-				String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp_iv.iv_appl_stop_date_time, concat(cp_f.cf_directory,cp_f.cf_image1) as thumbnail_image "
-						+ "FROM company as cp, company_invest as cp_iv, company_file as cp_f "
-						+ "WHERE cp.cp_idx = cp_iv.cp_idx "
-						+ "ORDER BY cp_iv_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
+				String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp_iv.iv_appl_stop_date_time, concat(cp_f.cf_directory,cp_f.cf_image1) as thumbnail_image, cp.cp_recommand_count FROM company as cp, company_invest as cp_iv, company_file as cp_f WHERE cp.cp_idx = cp_iv.cp_idx AND cp_f.cp_idx = cp.cp_idx AND cp.cp_recommand = 1 ORDER BY cp.cp_recommand_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
 				
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
