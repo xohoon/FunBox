@@ -1,4 +1,9 @@
-	
+    $(function() {
+      $('header').load('./header/header.jsp')
+      $('footer').load('./footer/footer.jsp')
+      $('.like_box').load('./member/like_box.jsp')
+    });
+
 	function mypage4_1_check(){
 		var f = document.mypage4_1_form;
 		// 특수문자/문자/숫자 포함 형태의 8~15 이내의 비밀번호 정규식

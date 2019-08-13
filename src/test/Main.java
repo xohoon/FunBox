@@ -5,7 +5,7 @@ import net.company.dao.CompanyDAO;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		CompanyDAO companyDAO = new CompanyDAO();
+		LoginManager loginManager = LoginManager.getInstance();
 	}
 	
 	
