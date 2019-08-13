@@ -69,12 +69,12 @@
 									name="td_from_address" id="token_wallet">
 							</div>
 							<div>
-								<label>TX Hash</label> <input type="text" name="td_tx_hash" id="token_hash">
+								<label>TX Hash</label> <input type="text" name="td_tx_hash" id="token_hash" onkeyup="characterCheck()" onkeydown="characterCheck()">
 							</div>
 							<div>
-								<label>입금받을 수량</label> <input type="text" name="td_amount"
-									class="coin"
-									onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" /><span>Coin</span>
+								<label>입금받을 수량</label> <input type="text" id="td_amount" name="td_amount"
+									class="coin" value=""
+									onKeydown="depositAmount(this.value)" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/><span>Coin</span>
 								<div class="coinbtn">
 									<input type="button" value="+1백만" class="cob cob1"> <input
 										type="button" value="+5백만" class="cob cob2"> <input
