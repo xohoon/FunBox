@@ -25,7 +25,7 @@
   <link href="css/service.css" rel="stylesheet">
   <link href="css/loader.css" rel="stylesheet" type="text/css">
   <script src="js/jquery-3.1.1.min.js"></script>
-
+<script src="board/js/qna_list.js"></script>
 </head>
 
 <body>
@@ -73,14 +73,12 @@
 						<span>
 						<%
 							String reg_date_time = "";
-										
 								 			try {
 								 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 								 				reg_date_time = formatter.format(qna_list.get(i).getReg_date_time());
 								 			} catch (Exception ex) {
 								 				reg_date_time = "";
 								 			}
-								
 								 			out.print(reg_date_time);
 						%>
 							</span>
@@ -147,19 +145,4 @@
 
     <footer></footer>
   </div>
- <script>
-    $(function() {
-      $('header').load('./header/header.jsp')
-      $('footer').load('./footer/footer.jsp')
-    });
-	  
-	  $(function(){
-		  $('.depth1').on('click',function(){
-            $(this).siblings('.depth2').slideToggle(300);
-        });
-		  setTimeout(function() {
-		        $('.loader').fadeOut(1000);
-		   }, 1000)
-	  });
-  </script>
 </body></html>

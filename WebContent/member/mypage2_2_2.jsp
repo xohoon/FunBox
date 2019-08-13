@@ -23,11 +23,4 @@
       <input type="button" class="submit" value="환전하기" id="ex_pointBtn">
     </form>
   </div><!--.coin_send-->
-  
-  <script>
-	  $(function(){
-		  $('#coin_send button').on('click', function(){
-			 $(this).parent('#coin_send').hide();
-		  });
-	  });
-  </script>
+  <script src="member/js/mypage2_2_2.js"></script>

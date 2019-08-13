@@ -4,14 +4,13 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <title>FUNBOX 회원가입</title>
   <link href="./css/common.css" rel="stylesheet">
   <link href="./css/form.css" rel="stylesheet">
-  <script src="member/js/join_functions.js"></script>
+  <script src="member/js/join.js"></script>
   <script src="js/html5.js"></script>
   <script src="js/jquery-3.1.1.min.js"></script>
 </head>
@@ -50,12 +49,6 @@
         <input type="password" id="pwc" name="pwc" maxlength="15" placeholder="비밀번호를 한번 더 입력해주세요.">
       </div>
       <!--pwssword check-->
-      <!-- <div id="tx-group" class="group cf">
-        <label for="tx">TX비밀번호</label>
-        <input type="button" value="확인" class="tx_btn" onclick="tx_check();">
-        <input type="password" id="tx" name="tx"  maxlength="15" placeholder="영문/숫자/특수문자 조합, 8~15자리 등록가능합니다.">
-      </div> -->
-      <!--tx-->
       <div id="pin-group" class="group cf">
         <label for="pin">Pin code</label>
         <input type="password" id="pin" name="pin"  maxlength="6" placeholder="숫자 6자리 등록가능합니다.">
@@ -84,13 +77,7 @@
         <input type="button" class="num_ch" value="확인" onclick="certification_check();">
         <input type="text" id="verti_num" name="verti_num" placeholder="인증번호 6자리">
         </div><!--#verti-->
-        <!-- <div id="add-group" class="group cf">
-     		<label for="add">주소</label>
-     		<input type="button" value="주소검색" class="add_btn">
-     		<input type="text" id="add_num" readonly name="add_num">
-     		<input type="text" readonly id="add_ch" name="add_ch">
-     		<input type="text" id="add_more" name="add_more" placeholder="상세주소를 입력하세요.">
-     	</div> --><!--adderess-->
+        <!--adderess-->
      	<div id="add-group" class="group cf">
 			<label for="add">주소</label>
      		<input type="button" onclick="sample6_execDaumPostcode()" class="add_btn" value="우편번호 찾기">
@@ -200,56 +187,5 @@ a호 외 크라우드 펀딩 서비스 : 프로젝트 게시, 사이버거래장
       <div id="txt_box"></div><!--#txt_box-->
       </div>
   </div><!--#policy-->
-  
-  <!-- <div class="sch_address">
-  	<div class="sch_wrap">
-  		<p>주소검색</p>
-  		<button class="closer">
-  			<span></span> 
-  			<span></span> 
-  		</button>
-  		<div class="cf">
-  			<label for="sch_box">지번/도로명검색</label>
-  			<input type="button" value="검색">
-  			<input type="text" id="sch_box" name="sch_box"> 			
-  		</div>
-  		<div class="add_txt">
-  				<p>지번주소 : 동/읍/면/리 이름을 검색하세요.<span>예&#41; 역삼동, 화도읍, 둔내면</span></p>
-  				<p>도로명주소 : 도로명을 입력하세요.<span>예&#41; 중앙로, 불정로432번길</span></p>
-  			</div> 
-  	</div>
-  </div> --><!--.sch_address-->
    <script src="js/check_box.js"></script>
-
-  <script>
-  $(window).on('resize',function(){
-      var winh = $(window).height();
-      $('.pol').height(winh);
-  });
-    
-    $(function(){
-        $('#agree1').click(function(){
-            $('.pol').removeClass('on');
-            $('.policy1').addClass('on');
-        });
-        $('#agree2').click(function(){
-            $('.pol').removeClass('on');
-            $('.policy2').addClass('on');
-        });
-        $('#agree3').click(function(){
-            $('.pol').removeClass('on');
-            $('.policy3').addClass('on');
-        });
-        $('.pol .closer').click(function(){
-            $('.pol').removeClass('on');
-        });
-		/* $('.add_btn').click(function(){
-			$('.sch_address').addClass('on');
-		});
-		$('.sch_address .closer').click(function(){
-            $('.sch_address').removeClass('on');
-        }); */
-    });      
-  </script>
 </body></html>
-    

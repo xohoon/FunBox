@@ -2,12 +2,11 @@
 var iv_pincode;
 var isRun = false;
 var cp_idx;
+var mi_idx;
 
 $(document).ready(function() {
 	Drop_key();
 });
-
-
 
 //버튼 비활성
 function btn_off() {
@@ -18,9 +17,11 @@ function btn_off() {
 // 철회 버튼
 function Invest_DropBtn() {
 	cp_idx = $("#cp_idx").val();
+	mi_idx = $("#mi_idx").val();
+	console.log(">>"+mi_idx);
 	btn = document.getElementById('IvDrop_btn');
 	$("#IvDrop_btn").on('click', function() {
-		location.href="./MemberIvDrop.mb?cp_idx="+cp_idx;
+		location.href="./MemberIvDrop.mb?cp_idx="+cp_idx+"&mi_idx="+mi_idx;
 	});
 	btn.disabled = false;
 //	callback();
@@ -71,4 +72,42 @@ function DropCode_chk() {
 		}
 	});
 	
+}
+
+numWithCom();
+
+var $pincode = document.getElementsByClassName('pincode'),
+pinLeng = $pincode.length,
+$a = document.getElementById('a'),
+$q = document.getElementById('q'),
+$submit = document.getElementsByClassName('submit');
+
+
+window.onload = function(){
+for(var i=0;i<pinLeng; i++){
+$pincode[i].addEventListener('keyup', pinTab, false);
+}
+    
+$a.style.display ="none";
+}
+
+
+function numWithCom() {
+var num = cancelFun.point.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+cancelFun.point.value = num;
+}
+
+function pinTab(e){
+if (e.keyCode == 8) {
+  e.target.previousElementSibling.value = '';
+  e.target.previousElementSibling.focus();
+}else {
+  e.target.nextElementSibling.value = '';
+  e.target.nextElementSibling.focus();
+}
+}
+
+function pointReturned(){
+$q.style.display = 'none';
+$a.style.display = 'block';
 }

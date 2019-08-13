@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 var f = document.join_form;
 $(document).ready(function(){
 	$("#ag3").val("0");
@@ -22,5 +18,3 @@ $(document).ready(function(){
 		}
 	});
 });
-	
-

@@ -16,7 +16,7 @@ public class NoticeAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); //한글처리
 		
-		System.out.println("NoticeAction OK");
+//		System.out.println("NoticeAction OK");
 		ActionForward forward = new ActionForward();
 		// 페이징 처리 구문
 		int pageSize = 10; // 한페이지에 보여줄 List
@@ -29,13 +29,13 @@ public class NoticeAction implements Action{
 		}
 		
 		int currentPage = Integer.parseInt(pageNum);
-		System.out.println("currentPage : "+currentPage);
+//		System.out.println("currentPage : "+currentPage);
 		
 		int startRow = (currentPage - 1) * pageSize + 1;// 한 페이지의 시작글 번호 / 1
-		System.out.println("startRow : "+startRow);
+//		System.out.println("startRow : "+startRow);
 		
 		int endRow = currentPage * pageSize;// 한 페이지의 마지막 글번호 / 10
-		System.out.println("endRow : "+endRow);
+//		System.out.println("endRow : "+endRow);
 		
 		int count = 0;
 		int number = 0;
@@ -43,7 +43,7 @@ public class NoticeAction implements Action{
 		BoardDAO noitce_count = new BoardDAO();		
 		count = noitce_count.noticeCount(); // 전체 글의 수 불러오기 (선택시)
 		
-		System.out.println("해당 DB 글 개수 불러오기" + count);
+//		System.out.println("해당 DB 글 개수 불러오기" + count);
 		
 		if(count>0) {
 			if (endRow > count) {
@@ -51,13 +51,13 @@ public class NoticeAction implements Action{
 			}	
 			BoardDAO bd_dao = new BoardDAO();
 			ArrayList<NoticeVO> notice = bd_dao.getNotice(startRow - 1, pageSize);
-			System.out.println("notice>>>"+notice.toString());
+//			System.out.println("notice>>>"+notice.toString());
 			request.setAttribute("notice", notice);
 			
 		}else {
 			BoardDAO bd_dao = new BoardDAO();
 			ArrayList<NoticeVO> notice = bd_dao.getNotice(startRow - 1, pageSize);
-			System.out.println("notice>>>"+notice.toString());
+//			System.out.println("notice>>>"+notice.toString());
 			request.setAttribute("notice", notice);
 		}
 		
@@ -71,31 +71,31 @@ public class NoticeAction implements Action{
 		int numPageGroup = (int) Math.ceil((double) currentPage / pageGroupSize);
 		
 		request.setAttribute("currentPage", new Integer(currentPage));
-		System.out.println(currentPage); // 1
+//		System.out.println(currentPage); // 1
 		
 		request.setAttribute("startRow", new Integer(startRow));
-		System.out.println(startRow); //1
+//		System.out.println(startRow); //1
 		
 		request.setAttribute("endRow", new Integer(endRow));
-		System.out.println(endRow); //2
+//		System.out.println(endRow); //2
 		
 		request.setAttribute("count", new Integer(count));
-		System.out.println(count); //2
+//		System.out.println(count); //2
 		
 		request.setAttribute("pageSize", new Integer(pageSize));
-		System.out.println(pageSize); //10
+//		System.out.println(pageSize); //10
 
 		request.setAttribute("number", new Integer(number));
-		System.out.println(number); // 2
+//		System.out.println(number); // 2
 		
 		request.setAttribute("pageGroupSize", new Integer(pageGroupSize));
-		System.out.println(pageGroupSize); //5
+//		System.out.println(pageGroupSize); //5
 		
 		request.setAttribute("numPageGroup", new Integer(numPageGroup));
-		System.out.println(numPageGroup); // 1
+//		System.out.println(numPageGroup); // 1
 		
 		request.setAttribute("pageGroupCount", new Integer(pageGroupCount));
-		System.out.println(pageGroupCount); // 1
+//		System.out.println(pageGroupCount); // 1
 				
 			
 		forward.setRedirect(false);

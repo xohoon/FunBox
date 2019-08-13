@@ -36,7 +36,6 @@
 
 <%
 	String id = (String)session.getAttribute("id");
-
 	MemberDAO dao = new MemberDAO();
 	MemberBean memberBean = dao.getMemberInfo(id);
 %>

@@ -9,16 +9,11 @@
 <head>
 <meta charset="UTF-8">
 <title>LOGOUT</title>
-
 <script type="text/javascript">
-window.onload = function () {
-
-	swal("Logout.");
-	setTimeout(function() { location.href = "../Index.mb"; }, 2000);
+	window.onload = function (){
+	location.href = "../Index.mb";
 }
 </script>
-
-
 </head>
 <body>
 

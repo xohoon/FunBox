@@ -14,8 +14,6 @@ public class Mypage1_1_1Action implements Action {
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		ActionForward forward = new ActionForward();
 
-		System.out.println("Mypage1_1_1Action OK!");
-		
 		forward.setRedirect(false);
 		forward.setPath("./member/mypage1_1_1.jsp");
 		return forward;

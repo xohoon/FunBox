@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-  <link href="css/HF.css" rel="stylesheet" type="text/css">
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -16,14 +15,17 @@
   <!--[if lt IE 9]>
       <script src="./js/html5.js"></script>
    <![endif]-->
+  
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/jquery.bxslider.css" rel="stylesheet">
-
+  <link href="css/HF.css" rel="stylesheet" type="text/css">
   <link href="css/mypage.css" rel="stylesheet">
   <link href="css/list_box.css" rel="stylesheet">
+  
   <script src="https://kit.fontawesome.com/947fdcffe2.js"></script>
-   <script src="js/jquery-3.1.1.min.js"></script>
-<script src="member/js/mypage_functions.js"></script>
+  <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="member/js/mypage4_1.js"></script>
+  <script src="member/js/investment_status.js"></script>
   <script>
     $(function() {
       $('header').load('./header/header.jsp')
@@ -65,4 +67,5 @@
   </div>
 	
 </body>
+<script type="text/javascript" src="member/js/investment_status.js"></script>
 </html>

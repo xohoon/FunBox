@@ -150,7 +150,7 @@
 	// 개인정보수정
 	function update_check(){
 		var f = document.mypage4_2_form;
-
+		
 		if(f.pw.value != '' && f.new_pw.value != ''
 			&& f.pin.value != '' && f.new_pin.value != ''){
 			pw_pin_check(f.pw.value, f.pin.value);
@@ -177,7 +177,13 @@
 		// 공백 체크
 		var blank_pattern = /[\s]/g;
 		
-		if (f.pw.value != '' && f.new_pw.value == '') {
+		if($('#rev_pw').val() == '취소' && f.pw.value == '' && f.new_pw.value == ''){
+			alert('변경할 비밀번호를 입력해주세요.');
+			return false;
+		} else if($('#rev_pw').val() == '수정하기' && f.pw.value != '' && f.new_pw.value != ''){
+			alert('비밀번호 수정하기 버튼을 눌러주세요.');
+			return false;
+		} else if (f.pw.value != '' && f.new_pw.value == '') {
 			alert('새 비밀번호를 입력해주세요.');
 			f.new_pw.focus();
 			return false;
@@ -190,6 +196,12 @@
 			f.new_pw.focus(); // 텍스트 창의 경우, 커서를 위치시켜 바로 입력이 가능합니다.
 			return false;
 		} else if (f.pw.value != '' && !pw_check(pw, f.new_pw, "비밀번호는 8~15자리의 영문,숫자,특수문자 사용만 가능합니다.")) {
+			return false;
+		} else if($('#rev_pin').val() == '취소' && f.pin.value == '' && f.new_pin.value == ''){
+			alert('변경할 Pin code를 입력해주세요.');
+			return false;
+		} else if($('#rev_pin').val() == '수정하기' && f.pin.value != '' && f.new_pin.value != ''){
+			alert('Pin code 수정하기 버튼을 눌러주세요.');
 			return false;
 		} else if (f.pin.value != '' && f.new_pin.value == '') {
 			alert('새 Pin code를 입력해주세요.');
@@ -207,7 +219,19 @@
 			return false;
 		} else if (f.pin.value != '' && !pin_check(pinEx, f.new_pin, "Pin code는 숫자 6자리 등록가능합니다.")) {
 			return false;
-		} else if (f.new_mail.value != '' && !email_check(email, f.new_mail, "적합하지 않은 이메일 형식입니다.")) {
+		} else if($('#rev_mail').val() == '취소' && f.new_mail.value == ''){
+			alert('변경할 이메일을 입력해주세요.');
+			return false;
+		} else if ($('#rev_mail').val() == '취소' && f.new_mail.value != '' && !email_check(email, f.new_mail, "적합하지 않은 이메일 형식입니다.")) {
+			return false;
+		} else if($('#rev_mail').val() == '수정하기' && f.new_mail.value != ''){
+			alert('이메일 수정하기 버튼을 눌러주세요.');
+			return false;
+		} else if($('#rev_ph').val() == '취소' && f.new_ph.value == ''){
+			alert('변경할 휴대전화번호를 입력해주세요.');
+			return false;
+		} else if($('#rev_ph').val() == '수정하기' && f.new_ph.value != ''){
+			alert('휴대전화번호 수정하기 버튼을 눌러주세요.');
 			return false;
 		} else if(f.new_ph.value != '' && !ph_check(num, f.new_ph, "휴대전화번호는 숫자로만 입력 가능합니다.")) {
 			return false;
@@ -237,7 +261,7 @@
 			alert('상세주소를 입력해주세요.');
 			f.add_more.focus();
 			return false;
-		} else{
+		} else {
 			f.submit();
 		}
 	}
@@ -409,3 +433,22 @@
     }
 
 	/////////////////////////////////////////////////////개인정보수정 유효성 검사////////////////////////////////////////////
+    
+    $(function() {
+        $('header').load('./header/header.jsp')
+        $('footer').load('./footer/footer.jsp')
+  	  $('.like_box').load('./member/like_box.jsp')
+      });
+    
+	  $(function() {
+		  $('.rev').click( function() {
+			$(this).siblings('.rev_form').toggleClass('on');
+			  
+			if( $(this).val() == '수정하기' ) {
+			  $(this).val('취소');
+			}
+			else if($(this).val() == '취소'){
+			  $(this).val('수정하기');
+			}
+		  });
+		});
