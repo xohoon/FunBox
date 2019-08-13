@@ -219,38 +219,35 @@
     </tr>
     </c:forEach>
   </table>
-  <c:if test="${count > 0}">
-		<c:set var="pageCount" value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />
-		<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
-		<c:set var="endPage" value="${startPage + pageGroupSize-1}" />
-
-		<c:if test="${endPage > pageCount}">
-			<c:set var="endPage" value="${pageCount}" />
+  <ul class="pager">
+		<c:if test="${count > 0}">
+			<c:set var="pageCount"
+				value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />
+			<c:set var="startPage" value="${pageGroupSize*(numPageGroup-1)+1}" />
+			<c:set var="endPage" value="${startPage + pageGroupSize-1}" />
+				<c:if test="${endPage > pageCount}">
+				<c:set var="endPage" value="${pageCount}" />
+			</c:if>
+				<c:if test="${numPageGroup > 1}">
+				<a href="./MemberInvestmentList.mb?pageNum=${(numPageGroup-2)*pageGroupSize+1 }&mi_idx=${selectedMi_idx}" class="prev">◀</a>
+			</c:if>
+				<ul class="pager">
+				<c:forEach var="i" begin="${startPage}" end="${endPage}">
+					<c:choose>
+						<c:when test="${currentPage == i}">
+							<b><a class="on" href="./MemberInvestmentList.mb?pageNum=${i}&mi_idx=${selectedMi_idx}"><font size=3>${i}</font></a></b>
+						</c:when>
+						<c:otherwise>
+							<li><a href="./MemberInvestmentList.mb?pageNum=${i}&mi_idx=${selectedMi_idx}"><font size=3>${i}</font></a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</ul>
+				<c:if test="${numPageGroup < pageGroupCount}">
+				<a href="./MemberInvestmentList.mb.mb?pageNum=${numPageGroup*pageGroupSize+1}&mi_idx=${selectedMi_idx}" class="next">▶</a>
+				</c:if>
 		</c:if>
-		
-		<c:if test="${numPageGroup > 1}">
-			<a href="./MemberInvestmentList.mb?pageNum=${(numPageGroup-2)*pageGroupSize+1 }" class="prev">
-			<i class="fas fa-caret-left"></i></a>
-		</c:if>
-		
-		<ul class="pager">
-			<c:forEach var="i" begin="${startPage}" end="${endPage}">
-				<c:choose>
-					<c:when test="${currentPage == i}">
-						<li><a href="./MemberInvestmentList.mb?pageNum=${i}">${i}</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a href="./MemberInvestmentList.mb?pageNum=${i}">${i}</a></li>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		</ul>
-									
-		<c:if test="${numPageGroup < pageGroupCount}">
-			<a href="./MemberInvestmentList.mb?pageNum=${numPageGroup*pageGroupSize+1}" class="next">
-			<i class="fas fa-caret-right"></i></a>
-		</c:if>
-	</c:if>
+	</ul><!--.pager-->
 	</div>
 </div>
    

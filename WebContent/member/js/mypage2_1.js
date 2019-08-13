@@ -1,3 +1,23 @@
+		
+		function depositAmount(amount) {
+			  var transAmount;
+			  transAmount = amount.replace(/(^0+)/, "");
+			  console.log(transAmount);			  
+			  $('#td_amount').val(transAmount); 			  			  
+		}
+		
+		function characterCheck() {
+            
+			var RegExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;//정규식 구문
+            
+			var obj = document.getElementsByName("td_tx_hash")[0]
+            if (RegExp.test(obj.value)) {
+                alert("특수문자는 입력하실 수 없습니다.");
+                obj.value = obj.value.substring(0, obj.value.length - 1);//특수문자를 지우는 구문
+            }
+        }
+
+
 		$(function() {
 			var winW = $(window).width();
 			if (winW > 767) {
@@ -38,10 +58,12 @@
 		var clipboard = new ClipboardJS('.copybtn');
 		clipboard.on('success', function(e) {
 			console.log(e);
+			alert("내 지갑주소를 복사하였습니다.");
 		});
 
 		clipboard.on('error', function(e) {
 			console.log(e);
+			alert("복사하기를 실패하였습니다.");
 		});
 
 		function numberWithCommas(x) {

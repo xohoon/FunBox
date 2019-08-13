@@ -74,7 +74,7 @@ public class MemberInvestmentListAction implements Action {
 		// 투자현황 - 투자내역 불러오기
 		//////////////// 페이징 처리 ////////////////
 		// 한 페이지 당 보여줄 글 갯수
-		int pageSize = 5;
+		int pageSize = 10;
 		// 페이지그룹안의 페이지 갯수 ex) [이전] 1 2 3 4 5 [다음] 일 경우 페이지 갯수는 5
 		int pageGroupSize = 5;
 
@@ -86,18 +86,21 @@ public class MemberInvestmentListAction implements Action {
 		int currentPage = Integer.parseInt(pageNum);
 		int startRow = (currentPage - 1) * pageSize + 1;// 한 페이지의 시작글 번호
 		int endRow = currentPage * pageSize;// 한 페이지의 마지막 글번호
+		
 		int count = 0;
 		int number = 0;
-
-
-		ArrayList<MemberInvestVO> member_invest_list = null;
+		
 		CompanyDAO company_dao = new CompanyDAO();
-		count = company_dao.getInvestmentCount(mb_id);// 전체 글의 수 불러오기
+		count = company_dao.getInvestmentCount(mb_id);// 전체 글의 수 불러오기 // 1불러옴
+		
+		ArrayList<MemberInvestVO> member_invest_list = null;
+		
 		//count = memberInvestCompanyVOList.size();
 		//System.out.println(",박신규::"+memberInvestCompanyVOList.size());
 		if (count > 0) {
-			if (endRow > count)
+			if (endRow > count) {
 				endRow = count;
+			}			
 			member_invest_list = company_dao.getInvestment(mb_id, startRow - 1, endRow);// 현재 페이지에 해당하는 글 목록불러오기
 		} else {
 			member_invest_list = company_dao.getInvestment(mb_id, startRow - 1, endRow);
@@ -121,9 +124,14 @@ public class MemberInvestmentListAction implements Action {
 		
 		request.setAttribute("id", mb_id);
 		request.setAttribute("currentPage", new Integer(currentPage));
+		
 		request.setAttribute("startRow", new Integer(startRow));
+		
+		
 		request.setAttribute("endRow", new Integer(endRow));
-		request.setAttribute("count", memberInvestCompanyVOList.size());
+		
+		request.setAttribute("count", new Integer(count));
+		
 		request.setAttribute("pageSize", new Integer(pageSize));
 
 		request.setAttribute("number", new Integer(number));
