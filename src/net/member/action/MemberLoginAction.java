@@ -22,11 +22,13 @@ public class MemberLoginAction implements Action {
 		String id = request.getParameter("id");
 		String saveId = request.getParameter("saveId");
 		
+		request.getSession().setAttribute("id", id);
 		String mb_idx = memberDAO.Session_idx(id);
 		
 		request.getSession().setAttribute("id", id);
 		request.getSession().setAttribute("idx", mb_idx);
 		//중복로그인 방지
+		
 		EgovHttpSessionBindingListener httpSessionBindingListener = new EgovHttpSessionBindingListener();
 		
 		request.getSession().setAttribute(id, httpSessionBindingListener);
