@@ -110,33 +110,6 @@
                   <p>투자계약기간</p>
                   <p><span>펀딩종료부터</span>${companyBean.iv_contraction_during}</p>
                 </div>
-                <%-- 
-                <div>
-                  <i><img src="img/corpor_icon3.png"></i>
-                  <p>최소투자금액</p>
-                  <p><fmt:formatNumber value="${companyBean.iv_min_amount }" pattern="#,###" /> Point</p>
-                </div>
-                <div>
-                  <i><img src="img/corpor_icon4.png"></i>
-                  <p>잔여구좌</p>
-                  <p><fmt:formatNumber value="${companyBean.iv_balance_stock}" pattern="#,###" /></p>
-                </div>
-                <div>
-                  <i><img src="img/corpor_icon5.png"></i>
-                  <p>현재모금액</p>
-                  <p><fmt:formatNumber value="${companyBean.iv_current_amount}" pattern="#,###" /> Point</p>
-                </div>
-                <div>
-                  <i><img src="img/corpor_icon6.png"></i>
-                  <p>투자가능금액</p>
-                  <p><fmt:formatNumber value="${companyBean.iv_possible_amount}" pattern="#,###" /> Point</p>
-                </div>
-                <div>
-                  <i><img src="img/corpor_icon7.png"></i>
-                  <p>현재참여인원</p>
-                  <p><fmt:formatNumber value="${companyBean.iv_current_participants}" pattern="#,###" />명</p>
-                </div> --%>
-                
                 <div>
                   <i><img src="img/corpor_icon3.png"></i>
                   <p>최소투자금액</p>
@@ -526,6 +499,8 @@
   <input type="hidden" value="${companyBean.cp_add_ch }" name="cp_add_ch" id="cp_add_ch">
   <input type="hidden" value="${companyBean.cp_name }" name="cp_name" id="cp_name">
   <input type="hidden" value="${idx }" name="idx" id="idx">
+  <input type="hidden" value="${companyBean.cf_corporation_banner }" name="cf_corporation_banner" id="cf_corporation_banner">
+  <input type="hidden" value="${companyBean.cf_corporation_icon }" name="cf_corporation_icon" id="cf_corporation_icon">
   
   <form name="investForm" action="./Invest_beforeAction.cp" method="post">
   	<input type="hidden" value="${companyBean.cp_idx }" name="cp_idx" id="cp_idx">
@@ -843,5 +818,7 @@
   </script> -->
   <script type="text/javascript" src="company/js/corporation.js"></script>
   <script type="text/javascript">
+  	
+  	
   </script>
   </html>

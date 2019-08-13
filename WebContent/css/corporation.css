@@ -106,7 +106,7 @@ html{
 
 .content .info  > h2{
   width: 350px; height: 50px; 
-  background-image: url(../img/con001.jpg);
+  background-image: url(../img/con001.jpg); 
   background-position: center; background-size: 100% auto;
   margin-bottom: 20px;
 }
@@ -216,7 +216,7 @@ html{
    transition: all .2s;
 }
 .select-box:after {
-  content: '▼';
+  content: '�뼹';
   font-size: 10px;
   position: absolute;
   top: 50%;

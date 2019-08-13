@@ -1,11 +1,15 @@
 package test;
 
 import net.company.dao.CompanyDAO;
+import net.company.dto.CompanyBean;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		LoginManager loginManager = LoginManager.getInstance();
+		CompanyDAO companyDAO = new CompanyDAO();
+		CompanyBean companyBean = companyDAO.getCompanyInfo2(1);
+		System.out.println(companyBean.getCf_registration());
+		System.out.println(companyBean.getCf_estate_contract());
 	}
 	
 	
