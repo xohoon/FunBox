@@ -107,37 +107,28 @@
             <td>날짜</td>
             <td>회차</td>
           </tr>
-    <%
-    	if(member_invest_list != null){
-    		for(int i=0; i<member_invest_list.size(); i++){
-    %>
+    <c:forEach var="memberInvest" items="${member_invest_list}" >
     <tr>
-       	<c:set var="category" value="<%=member_invest_list.get(i).getMi_category() %>" />
        	<c:choose>
-       		<c:when test="${category == '투자'}">
-		        <td class="minus"><%=member_invest_list.get(i).getMi_category() %></td>
+       		<c:when test="${memberInvest.mi_category eq '투자'}">
+		        <td class="minus">${memberInvest.mi_category}</td>
 	        </c:when>
 	        <c:otherwise>
-	        	<td class="plus"><%=member_invest_list.get(i).getMi_category() %></td>
+	        	<td class="plus">${memberInvest.mi_category}</td>
 	        </c:otherwise>
        	</c:choose>
-    	
-        <td><%=member_invest_list.get(i).getName() %></td>
-        
+        <td>${memberInvest.name}</td>
         <c:choose>
-	        <c:when test="${category == '투자'}">
-		        <td class="minus">-<fmt:formatNumber value="<%=member_invest_list.get(i).getPoint() %>" pattern="#,###"/>P</td>
+	        <c:when test="${memberInvest.mi_category eq '투자'}">
+		        <td class="minus">-<fmt:formatNumber value="${memberInvest.point}" pattern="#,###"/>P</td>
 	        </c:when>
 	        <c:otherwise>
-	        	<td class="plus">+<fmt:formatNumber value="<%=member_invest_list.get(i).getPoint() %>" pattern="#,###"/>P</td>
+	        	<td class="plus">+<fmt:formatNumber value="${memberInvest.point}" pattern="#,###"/>P</td>
 	        </c:otherwise>
         </c:choose>
-        <td><fmt:formatDate value="<%=member_invest_list.get(i).getMi_reg_date_time() %>" pattern="yyyy-MM-dd"/></td>
+        <td><fmt:formatDate value="${memberInvest.mi_reg_date_time}" pattern="yyyy-MM-dd"/></td>
     </tr>
-    <%
-    		}
-    	}
-    %>
+    </c:forEach>
         </table>
   <c:if test="${count > 0}">
 		<c:set var="pageCount" value="${count / pageSize + ( count % pageSize == 0 ? 0 : 1)}" />

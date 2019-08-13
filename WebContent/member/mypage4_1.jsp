@@ -26,13 +26,6 @@
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="member/js/mypage4_1.js"></script>
   <script src="member/js/investment_status.js"></script>
-  <script>
-    $(function() {
-      $('header').load('./header/header.jsp')
-      $('footer').load('./footer/footer.jsp')
-      $('.like_box').load('./member/like_box.jsp')
-    });	  
-  </script>
 </head>
 
 <body>
