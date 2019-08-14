@@ -847,7 +847,7 @@ public class MemberDAO {
 		List<Main_LikeVO> LikeVO = new ArrayList<Main_LikeVO>();
 
 		try {
-			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp_iv.iv_appl_stop_date_time, concat(cp_f.cf_directory,cp_f.cf_image1) as thumbnail_image, cp.cp_recommand_count FROM company as cp, company_invest as cp_iv, company_file as cp_f WHERE cp.cp_idx = cp_iv.cp_idx AND cp_f.cp_idx = cp.cp_idx AND cp.cp_recommand = 1 ORDER BY cp.cp_recommand_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
+			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp_iv.iv_appl_stop_date_time, concat(cp_f.cf_directory,cp_f.cf_image1) as thumbnail_image, cp.cp_recommand_count FROM company as cp, company_invest as cp_iv, company_file as cp_f WHERE cp_iv.iv_appl_stop_date_time > now() AND cp.cp_idx = cp_iv.cp_idx AND cp_f.cp_idx = cp.cp_idx AND cp.cp_recommand = 1 ORDER BY cp.cp_recommand_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
 
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
