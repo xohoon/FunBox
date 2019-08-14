@@ -24,6 +24,9 @@ public class MemberInvestmentListAction implements Action {
 		ActionForward forward = new ActionForward();
 		HttpSession session = request.getSession();
 		
+		
+		
+		
 		String mb_id = (String) session.getAttribute("id");
 		Integer mb_idx = Integer.parseInt((String) session.getAttribute("idx"));
 		String mi_idx_string = request.getParameter("mi_idx");
@@ -31,22 +34,39 @@ public class MemberInvestmentListAction implements Action {
 		if (mb_id == null || mb_idx == null || mi_idx_string == null) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('1잘못된 접근 입니다."+mb_id+mb_idx+mi_idx_string+"');</script>");
+			out.println("<script>alert('잘못된 접근 입니다.');</script>");
 			out.close();
 			forward.setRedirect(true);
 			forward.setPath("./Index.mb");
 			return forward;
 		}
 		
+		
+		
 		int mi_idx = Integer.parseInt(mi_idx_string);
 		
+		boolean flag = false;
 		
-		boolean flag = false;		
 		MemberDAO memberDAO = new MemberDAO();
 		int cp_idx = 0;
 		ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = memberDAO.getInvestmentCompanyList(mb_idx);
 		for (MemberInvestCompanyVO memberInvestVO : memberInvestCompanyVOList ) {
 			if (memberInvestVO.getMi_idx() == mi_idx) {
+				if (memberInvestVO.getCp_funding_status().equals("11")) {
+					
+					response.setContentType("text/html;charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>alert('잘못된 접근 입니다.');location.href = './MemberInvestmentDrop.mb?mi_idx="+mi_idx+"'</script>");
+					out.close();
+					/*
+					 * forward.setRedirect(false);
+					 * forward.setPath("./MemberInvestmentDrop.mb?mi_idx="+mi_idx);
+					 */
+					forward.setRedirect(true);
+					forward.setPath("./Index.mb");
+					return forward;
+				}
+				System.out.println("실행");
 				flag = true;
 				cp_idx = memberInvestVO.getCp_idx();
 				break;
