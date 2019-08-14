@@ -1,13 +1,13 @@
 package net.board.dto;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 // 유정 추가  고객지원 - 공지사항 불러오기
 public class NoticeVO {
 	private int idx;
 	private String title;
 	private String content;
-	private String reg_date_time;
+	private Date reg_date_time;
 	public int getIdx() {
 		return idx;
 	}
@@ -26,10 +26,10 @@ public class NoticeVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getReg_date_time() {
+	public Date getReg_date_time() {
 		return reg_date_time;
 	}
-	public void setReg_date_time(String reg_date_time) {
+	public void setReg_date_time(Date reg_date_time) {
 		this.reg_date_time = reg_date_time;
 	}
 	

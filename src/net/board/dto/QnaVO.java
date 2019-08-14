@@ -1,6 +1,6 @@
 package net.board.dto;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class QnaVO {
 
@@ -14,7 +14,7 @@ public class QnaVO {
 	private String content;
 	private int email_chk;			//이메일 답변 알림 동의:1 미동의:0
 	private int mobile_chk;			//문자 답변 알림 동의:1 미동의:0
-	private Timestamp reg_date_time;
+	private Date reg_date_time;
 	private String qna_reply;
 	
 	
@@ -84,10 +84,10 @@ public class QnaVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Timestamp getReg_date_time() {
+	public Date getReg_date_time() {
 		return reg_date_time;
 	}
-	public void setReg_date_time(Timestamp reg_date_time) {
+	public void setReg_date_time(Date reg_date_time) {
 		this.reg_date_time = reg_date_time;
 	}
 }

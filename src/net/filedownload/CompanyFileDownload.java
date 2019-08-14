@@ -23,7 +23,7 @@ public class CompanyFileDownload extends HttpServlet {
 		// TODO Auto-generated method stub
 		// ① 파일명 가져오기
 		String fileName = request.getParameter("filename");
-		int cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
+		//int cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
 		CompanyDAO compnayDao = new CompanyDAO();
 		
 		// ② 경로 가져오기

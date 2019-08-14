@@ -12,7 +12,6 @@ import net.company.dao.CompanyDAO;
 import net.company.dto.CompanyBean;
 import net.company.dto.CompanyListVO;
 
-
 // 유정 추가
 // 투자하기 - 프랜차이즈 - 투자 상세보기
 public class CorporationAction implements Action {

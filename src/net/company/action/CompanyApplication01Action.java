@@ -33,7 +33,6 @@ public class CompanyApplication01Action implements Action{
 		int app_cp_status = Integer.parseInt(request.getParameter("status"));
 
 		ApplicationVO company = new ApplicationVO();
-		
 
 		//page1 company에 데이터 추가
 		company.setApp_cp_name(app_cp_name);
@@ -50,8 +49,6 @@ public class CompanyApplication01Action implements Action{
 		company.setApp_cp_monthly(app_cp_monthly);
 		company.setApp_cp_status(app_cp_status);
 		company.setMb_idx(idx);
-		
-		System.out.println(company.toString());
 		
 		// 다음페이지에 company 전달
 		request.setAttribute("company", company);
