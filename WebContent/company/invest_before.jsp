@@ -80,7 +80,7 @@ pageEncoding="UTF-8"%>
 				<fmt:formatNumber var="minAmount" value="${company.iv_min_amount }" pattern="#,###"/>
 				<span>${minAmount}</span> point</div>
             <div class="quantity">
-              <input type="number" name="select" min="1" step="1" value="1">
+              <input type="number" id="select" name="select" min="1" step="1" value="1" maxlength="11" oninput="maxLengthCheck(this)">
             </div>
             <hr>
             <div class="sum">합계

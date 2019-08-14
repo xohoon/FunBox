@@ -60,6 +60,9 @@ $(function() {
 	if ($('.like').val() == '1') {
 		$('.like').toggleClass('on');
 	}
+	
+	$('.content .info > h2').css('background-image','url('+$('#cf_corporation_icon').val()+')');
+	$('.info .bg').css('background-image','url('+$('#cf_corporation_banner').val()+')');
 
 });
 

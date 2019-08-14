@@ -22,7 +22,6 @@ public class MemberLoginAction implements Action {
 		String id = request.getParameter("id");
 		String saveId = request.getParameter("saveId");
 		
-		request.getSession().setAttribute("id", id);
 		String mb_idx = memberDAO.Session_idx(id);
 		
 		request.getSession().setAttribute("id", id);

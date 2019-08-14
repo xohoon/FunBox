@@ -39,7 +39,7 @@ public class MypagePINCheckAction implements Action {
         String select_pin = dao.get_Find_pin(id);
         
         if (select_pin.equals(pin)) {	// 비밀번호가 일치할 때
-        	System.out.println("핀코드 일치함");
+        	System.out.println("핀코드 일치함");        	
 			jsondata.put("result", "confirm_pin_success");
 			
 		}else {
