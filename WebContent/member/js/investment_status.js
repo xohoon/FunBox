@@ -42,6 +42,7 @@ function invest_chk_ajax() {
 		});
 }
 
+/*
 $(function(){
 	   var h = $('.con').height();
 	    var winW = $(window).width();
@@ -54,7 +55,7 @@ $(function(){
 	        $('.list').offset({top:liOffs})
 	    }
 	});
-
+ */
 	 $('.list_show').on('click',function(){
 	     $('.list').toggleClass('on');
 	     if( $(this).text() == '투자리스트보기' ) {
@@ -65,16 +66,7 @@ $(function(){
 	    }
 	 });
 
-	$(function(){
-	    $(".rep").mousewheel(function(event, delta) {
 
-	      this.scrollLeft -= (delta * 100);
-
-	      event.preventDefault();
-	    });
-		
-		
-	});
 	var cf_financial_download = $('#cf_financial_download');
 	$(function(){
 	    $("#cf_financial_selector").change(function(){
