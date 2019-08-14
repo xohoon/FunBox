@@ -80,6 +80,7 @@ function invest_chk_ajax() {
 	});
 }
 
+<<<<<<< HEAD
 $(function() {
 	/*
 	 * var h = $('.con').height(); var winW = $(window).width(); var liOff =
@@ -94,7 +95,33 @@ $(function() {
  * $(this).text() == '투자리스트보기' ) { $(this).text('닫기'); } else if($(this).text() ==
  * '닫기'){ $(this).text('투자리스트보기'); } });
  */
+=======
+/*
+$(function(){
+	   var h = $('.con').height();
+	    var winW = $(window).width();
+	    var liOff = $('.list_show').offset().top;
+	    var liOffs = liOff*1+56
+	    if(winW>1200){
+	        $('.list').height(h);
+	    }else{
+	        $('.list').height(400);
+	        $('.list').offset({top:liOffs})
+	    }
+	});
+ */
+	 $('.list_show').on('click',function(){
+	     $('.list').toggleClass('on');
+	     if( $(this).text() == '투자리스트보기' ) {
+	      $(this).text('닫기');
+	    }
+	    else if($(this).text() == '닫기'){
+	      $(this).text('투자리스트보기');
+	    }
+	 });
+>>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
 
+<<<<<<< HEAD
 $(function() {
 	/*
 	 * $(".rep").mousewheel(function(event, delta) {
@@ -103,7 +130,10 @@ $(function() {
 	 * 
 	 * event.preventDefault(); });
 	 */
+=======
+>>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git
 
+<<<<<<< HEAD
 });
 var cf_financial_download = $('#cf_financial_download');
 $(function() {
@@ -115,3 +145,11 @@ $(function() {
 								+ "&cp_idx=${memberInvestVO.cp_idx}");
 			});*/
 });
+=======
+	var cf_financial_download = $('#cf_financial_download');
+	$(function(){
+	    $("#cf_financial_selector").change(function(){
+	    	cf_financial_download.attr("href", "./CompanyFileDownload?filename="+$("#cf_financial_selector").val()+"&cp_idx=${memberInvestVO.cp_idx}");
+	    });
+	});
+>>>>>>> branch 'master' of https://github.com/xohoon/FunBox.git

@@ -252,6 +252,6 @@
 </div>
    <footer></footer>
 <script src="js/jquery-3.1.1.min.js"></script>
-<script type='text/javascript' src='js/jquery.mousewheel.js'></script>
+<script src="js/jquery.mousewheel.js"></script>
 </body>
 </html>
