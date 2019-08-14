@@ -20,7 +20,7 @@ public class MemberSelectKeyAction implements Action{
 		MemberDAO memberDAO = new MemberDAO();
 		JSONArray JSONarray = new JSONArray();
 		ArrayList<String> list = new ArrayList<String>();
-		System.out.println("위치테스트>>>"+Integer.parseInt(request.getParameter("select_key")));
+		//System.out.println("위치테스트>>>"+Integer.parseInt(request.getParameter("select_key")));
 		int select_key = Integer.parseInt(request.getParameter("select_key"));
 		// 수동인지 자동인지 확인
 		if(select_key == 0) {
