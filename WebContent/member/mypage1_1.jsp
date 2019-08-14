@@ -31,13 +31,6 @@
   <script src="member/js/mypage1_1.js"></script>
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/mypage1_1.css" rel="stylesheet">
-  <script>
-    $(function() {
-      $('header').load('./header/header.jsp')
-      $('footer').load('./footer/footer.jsp')
-      $('.like_box').load('./member/like_box.jsp')
-    });
-  </script>
 
 </head>
 
@@ -166,9 +159,6 @@
       </div>
       </div>
 
-      <script src="js/jquery-3.1.1.min.js"></script>
-      <script type='text/javascript' src='js/jquery.mousewheel.js'></script>
-      <script type="text/javascript" src="member/js/investment_status.js"></script>
 </body>
 
 </html>
