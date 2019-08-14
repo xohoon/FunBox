@@ -39,6 +39,7 @@
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="js/jquery.bxslider.min.js"></script>
   <script src="js/index_function.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
 </head>
 
 <body>
@@ -220,7 +221,7 @@
     </section>
     <footer></footer>
   </div>
-
+<!-- 
 <script>
 ////////////////////////////////////////// 태훈 추가
 $(document).ready(function() {
@@ -389,7 +390,8 @@ function city_click() {
       minute = second * 60,
       hour = minute * 60,
       day = hour * 24;
-	  
+	  -->
+	  <script type="text/javascript">
 	  $(document).ready(function(){
 		  <c:forEach var="slideVO" items="${slideVO}" varStatus="status">
 		  	document.getElementById('slide_${status.count}').style.background = 'url(${slideVO.banner_image}) no-repeat center top';
@@ -402,7 +404,8 @@ function city_click() {
 	      </c:forEach>
 	  });
 	  
-	  function setCountDown(cp_idx,stopDate){
+	 
+	 /* function setCountDown(cp_idx,stopDate){
 		  var timer_day = document.getElementById('timer_'+cp_idx).childNodes.item(1).childNodes.item(0);
 		  var timer_hour = document.getElementById('timer_'+cp_idx).childNodes.item(3).childNodes.item(0);
 		  var timer_minute = document.getElementById('timer_'+cp_idx).childNodes.item(5).childNodes.item(0);
@@ -463,7 +466,9 @@ function city_click() {
 		  }else{
 			  DDay_tag.innerText = Dday;
 		  }
-	  };
-  </script>
+	  }; */
+  </script> 
+  
+
 
 </body></html>
