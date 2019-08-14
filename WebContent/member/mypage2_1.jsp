@@ -22,6 +22,7 @@
    <![endif]-->
 <link href="css/common.css" rel="stylesheet" type="text/css">
 <link href="css/mypage.css" rel="stylesheet">
+<link href="css/mypage3.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/947fdcffe2.js"></script>
 <script src="js/clipboard.min.js"></script>
 <script src="js/jquery-3.1.1.min.js"></script>

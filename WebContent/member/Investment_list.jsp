@@ -29,8 +29,8 @@
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/mypage.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/947fdcffe2.js"></script>
-  <script src="js/jquery.mousewheel.js"></script>
-  <script src="js/jquery-3.1.1.min.js"></script>
+  <!--  <script src="js/jquery.mousewheel.js"></script>-->
+  <script src="js/jquery-3.1.1.min.js"></script>  
   <script src="member/js/investment_status.js"></script>
 </head>
 
