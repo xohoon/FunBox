@@ -590,41 +590,41 @@ public class MemberDAO {
 	}// end
 
 	// 회원정보 수정 시 비밀번호 확인
-		public String get_Find_pw(String id) {
-			String sql = "select mb_pw from member where mb_id=?";
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			System.out.println("get_Find_pw 실행 : " + id);
-			try {
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, id);
-				rs = pstmt.executeQuery();
-				System.out.println(pstmt);
-				if (rs.next()) {
+	public String get_Find_pw(String id) {
+		String sql = "select mb_pw from member where mb_id=?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("get_Find_pw 실행 : " + id);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+			if (rs.next()) {
 
-					String mb_pw = rs.getString("mb_pw");
-					return mb_pw;
-				}
-
-			} catch (Exception ex) {
-
-				System.out.println("get_Find_pw 에러: " + ex);
-
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("해제 실패 : " + e.getMessage());
-				}
+				String mb_pw = rs.getString("mb_pw");
+				return mb_pw;
 			}
 
-			return null;
+		} catch (Exception ex) {
+
+			System.out.println("get_Find_pw 에러: " + ex);
+
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
 		}
+
+		return null;
+	}
 
 	// 회원정보 수정 시 핀코드 확인
 	public String get_Find_pin(String id) {
@@ -662,12 +662,11 @@ public class MemberDAO {
 
 		return null;
 	}
-	
 
 	/////////////////////// 유정 추가 end///////////////////////
 
 	////////////////////////////// 태훈추가 start//////////////////////////////
-	
+
 	// 보유 토큰, 포인트, 누적수익
 	public Member_headerVO Member_accumulate(String mb_idx) throws Exception {
 		PreparedStatement pstmt = null;
@@ -676,8 +675,7 @@ public class MemberDAO {
 
 		try {
 			// 쿼리
-			String sql = "SELECT a.mb_token, a.mb_point, sum(b.mi_cumulative_profit) "
-					+ "FROM member as a "
+			String sql = "SELECT a.mb_token, a.mb_point, sum(b.mi_cumulative_profit) " + "FROM member as a "
 					+ "JOIN member_invest as b " + "ON a.mb_idx = b.mb_idx " + "WHERE a.mb_idx = ?";
 
 			pstmt = conn.prepareStatement(sql);
@@ -710,8 +708,7 @@ public class MemberDAO {
 
 		return null;
 	}
-	
-	
+
 	// session mb_idx
 	public String Session_idx(String mb_id) throws Exception {
 
@@ -761,8 +758,7 @@ public class MemberDAO {
 		try {
 			// 쿼리 멤버 idx필요
 			String sql = "SELECT a.mb_idx, a.cp_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, concat(cf.cf_directory,cf.cf_image1) as cf_directory_image, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent, c.iv_appl_stop_date_time "
-					+ "FROM member_likebox as a " 
-					+ "JOIN company as b ON a.cp_idx = b.cp_idx AND a.mb_idx = ? "
+					+ "FROM member_likebox as a " + "JOIN company as b ON a.cp_idx = b.cp_idx AND a.mb_idx = ? "
 					+ "JOIN company_file as cf ON b.cp_idx = cf.cp_idx "
 					+ "JOIN company_invest as c ON b.cp_idx = c.cp_idx";
 
@@ -813,7 +809,7 @@ public class MemberDAO {
 
 		try {
 			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_branch, cp.cp_intro_content, concat(cp_f.cf_directory,cp_f.cf_image2) as banner_image FROM company as cp, company_file as cp_f ORDER BY RAND() LIMIT 3";
-			
+
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			System.out.println(pstmt);
@@ -843,480 +839,517 @@ public class MemberDAO {
 		}
 		return slidVO;
 	}
-	
+
 	// 메인 페이지 추천 기업 리스트
-		public List<Main_LikeVO> Main_LikeInfo() throws Exception {
+	public List<Main_LikeVO> Main_LikeInfo() throws Exception {
 
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			List<Main_LikeVO> LikeVO = new ArrayList<Main_LikeVO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Main_LikeVO> LikeVO = new ArrayList<Main_LikeVO>();
 
-			try {
-				String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp_iv.iv_appl_stop_date_time, concat(cp_f.cf_directory,cp_f.cf_image1) as thumbnail_image, cp.cp_recommand_count FROM company as cp, company_invest as cp_iv, company_file as cp_f WHERE cp.cp_idx = cp_iv.cp_idx AND cp_f.cp_idx = cp.cp_idx AND cp.cp_recommand = 1 ORDER BY cp.cp_recommand_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
-				
-				pstmt = conn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
+		try {
+			String sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp_iv.iv_appl_stop_date_time, concat(cp_f.cf_directory,cp_f.cf_image1) as thumbnail_image, cp.cp_recommand_count FROM company as cp, company_invest as cp_iv, company_file as cp_f WHERE cp.cp_idx = cp_iv.cp_idx AND cp_f.cp_idx = cp.cp_idx AND cp.cp_recommand = 1 ORDER BY cp.cp_recommand_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
 
-				while (rs.next()) {
-					Main_LikeVO like = new Main_LikeVO();
-					like.setLk_cp_branch(rs.getString("cp_branch"));
-					like.setLk_cp_current_amount(rs.getString("iv_current_amount"));
-					like.setLk_cp_goal_amount(rs.getString("iv_goal_amount"));
-					like.setLk_cp_name(rs.getString("cp_name"));
-					like.setLk_cp_percent(rs.getString("percent"));
-					like.setLk_cp_profit(rs.getString("cp_monthly_profit"));
-					like.setLk_cp_sector(rs.getString("cp_sector"));
-					like.setLk_cp_idx(rs.getInt("cp_idx"));
-					like.setLk_appl_stop_date_time(rs.getDate("iv_appl_stop_date_time"));
-					like.setThumbnail_image(rs.getString("thumbnail_image"));
-					LikeVO.add(like);
-				}
-			} catch (Exception ex) {
-				System.out.println("Main_SlideInfo ERROR: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Main_LikeVO like = new Main_LikeVO();
+				like.setLk_cp_branch(rs.getString("cp_branch"));
+				like.setLk_cp_current_amount(rs.getString("iv_current_amount"));
+				like.setLk_cp_goal_amount(rs.getString("iv_goal_amount"));
+				like.setLk_cp_name(rs.getString("cp_name"));
+				like.setLk_cp_percent(rs.getString("percent"));
+				like.setLk_cp_profit(rs.getString("cp_monthly_profit"));
+				like.setLk_cp_sector(rs.getString("cp_sector"));
+				like.setLk_cp_idx(rs.getInt("cp_idx"));
+				like.setLk_appl_stop_date_time(rs.getDate("iv_appl_stop_date_time"));
+				like.setThumbnail_image(rs.getString("thumbnail_image"));
+				LikeVO.add(like);
 			}
-			return LikeVO;
-		}
-		
-		// 메인페이지에 지역별로  기업 count
-		public Main_CityVO Main_CityInfo() throws Exception {
-			
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			Main_CityVO cityVO = new Main_CityVO();
-
+		} catch (Exception ex) {
+			System.out.println("Main_SlideInfo ERROR: " + ex);
+		} finally {
 			try {
-				// 쿼리
-				String sql = "SELECT BusanCity.busan, SeoulCity.seoul, GyeonggiCity.gyeonggi, IncheonCity.incheon, GangwonCity.gangwon, DaeguCity.daegu, UlsanCity.ulsan, GyeongsangCity.gyeongsang, JejuCity.jeju, DaejeonCity.daejeon+ChungcheongCity.chungcheong as daejeonNchungcheong, GwangjuCity.gwangju+JeonlaCity.jeonla as gwangjuNjeonla "
-						+ "FROM"
-						+ "(SELECT count(*) busan FROM company WHERE left(`cp_add_ch`, 2) = \"부산\") BusanCity, "
-						+ "(SELECT count(*) seoul FROM company WHERE left(`cp_add_ch`, 2) = \"서울\") SeoulCity, "
-						+ "(SELECT count(*) gyeonggi FROM company WHERE left(`cp_add_ch`, 2) = \"경기\") GyeonggiCity, "
-						+ "(SELECT count(*) incheon FROM company WHERE left(`cp_add_ch`, 2) = \"인천\") IncheonCity, "
-						+ "(SELECT count(*) gangwon FROM company WHERE left(`cp_add_ch`, 2) = \"강원\") GangwonCity, "
-						+ "(SELECT count(*) daegu FROM company WHERE left(`cp_add_ch`, 2) = \"대구\") DaeguCity, "
-						+ "(SELECT count(*) ulsan FROM company WHERE left(`cp_add_ch`, 2) = \"울산\") UlsanCity, "
-						+ "(SELECT count(*) gyeongsang FROM company WHERE left(`cp_add_ch`, 2) = \"경상\") GyeongsangCity, "
-						+ "(SELECT count(*) jeju FROM company WHERE left(`cp_add_ch`, 2) = \"제주\") JejuCity, "
-						+ "(SELECT count(*) daejeon FROM company WHERE left(`cp_add_ch`, 2) = \"대전\") DaejeonCity, "
-						+ "(SELECT count(*) chungcheong FROM company WHERE left(`cp_add_ch`, 2) = \"충청\") ChungcheongCity, "
-						+ "(SELECT count(*) gwangju FROM company WHERE left(`cp_add_ch`, 2) = \"광주\") GwangjuCity, "
-						+ "(SELECT count(*) jeonla FROM company WHERE left(`cp_add_ch`, 2) = \"전라\") JeonlaCity";
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+		return LikeVO;
+	}
 
-				pstmt = conn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-				System.out.println(pstmt);
+	// 메인페이지에 지역별로 기업 count
+	public Main_CityVO Main_CityInfo() throws Exception {
 
-				if (rs.next()) {
-					cityVO.setSeoul(rs.getString("seoul"));
-					cityVO.setBusan(rs.getString("busan"));
-					cityVO.setGyeonggi(rs.getString("gyeonggi"));
-					cityVO.setIncheon(rs.getString("incheon"));
-					cityVO.setGangwon(rs.getString("gangwon"));
-					cityVO.setDaejeonNchungcheong(rs.getString("daejeonNchungcheong"));
-					cityVO.setDaegu(rs.getString("daegu"));
-					cityVO.setUlsan(rs.getString("ulsan"));
-					cityVO.setGyeongsang(rs.getString("gyeongsang"));
-					cityVO.setGwangjuNjeonla(rs.getString("gwangjuNjeonla"));
-					cityVO.setJeju(rs.getString("jeju"));
-				}
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Main_CityVO cityVO = new Main_CityVO();
 
-				return cityVO;
-			} catch (Exception ex) {
-				System.out.println("Main_CityInfo ERROR: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+		try {
+			// 쿼리
+			String sql = "SELECT BusanCity.busan, SeoulCity.seoul, GyeonggiCity.gyeonggi, IncheonCity.incheon, GangwonCity.gangwon, DaeguCity.daegu, UlsanCity.ulsan, GyeongsangCity.gyeongsang, JejuCity.jeju, DaejeonCity.daejeon+ChungcheongCity.chungcheong as daejeonNchungcheong, GwangjuCity.gwangju+JeonlaCity.jeonla as gwangjuNjeonla "
+					+ "FROM" + "(SELECT count(*) busan FROM company WHERE left(`cp_add_ch`, 2) = \"부산\") BusanCity, "
+					+ "(SELECT count(*) seoul FROM company WHERE left(`cp_add_ch`, 2) = \"서울\") SeoulCity, "
+					+ "(SELECT count(*) gyeonggi FROM company WHERE left(`cp_add_ch`, 2) = \"경기\") GyeonggiCity, "
+					+ "(SELECT count(*) incheon FROM company WHERE left(`cp_add_ch`, 2) = \"인천\") IncheonCity, "
+					+ "(SELECT count(*) gangwon FROM company WHERE left(`cp_add_ch`, 2) = \"강원\") GangwonCity, "
+					+ "(SELECT count(*) daegu FROM company WHERE left(`cp_add_ch`, 2) = \"대구\") DaeguCity, "
+					+ "(SELECT count(*) ulsan FROM company WHERE left(`cp_add_ch`, 2) = \"울산\") UlsanCity, "
+					+ "(SELECT count(*) gyeongsang FROM company WHERE left(`cp_add_ch`, 2) = \"경상\") GyeongsangCity, "
+					+ "(SELECT count(*) jeju FROM company WHERE left(`cp_add_ch`, 2) = \"제주\") JejuCity, "
+					+ "(SELECT count(*) daejeon FROM company WHERE left(`cp_add_ch`, 2) = \"대전\") DaejeonCity, "
+					+ "(SELECT count(*) chungcheong FROM company WHERE left(`cp_add_ch`, 2) = \"충청\") ChungcheongCity, "
+					+ "(SELECT count(*) gwangju FROM company WHERE left(`cp_add_ch`, 2) = \"광주\") GwangjuCity, "
+					+ "(SELECT count(*) jeonla FROM company WHERE left(`cp_add_ch`, 2) = \"전라\") JeonlaCity";
+
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			System.out.println(pstmt);
+
+			if (rs.next()) {
+				cityVO.setSeoul(rs.getString("seoul"));
+				cityVO.setBusan(rs.getString("busan"));
+				cityVO.setGyeonggi(rs.getString("gyeonggi"));
+				cityVO.setIncheon(rs.getString("incheon"));
+				cityVO.setGangwon(rs.getString("gangwon"));
+				cityVO.setDaejeonNchungcheong(rs.getString("daejeonNchungcheong"));
+				cityVO.setDaegu(rs.getString("daegu"));
+				cityVO.setUlsan(rs.getString("ulsan"));
+				cityVO.setGyeongsang(rs.getString("gyeongsang"));
+				cityVO.setGwangjuNjeonla(rs.getString("gwangjuNjeonla"));
+				cityVO.setJeju(rs.getString("jeju"));
 			}
 
-			return null;
-		}
-		
-		// 태훈 - 기업 투자 현황 페에지 제어 // 신규수정
-		public int Member_Invest_check(int mb_idx) {
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			int result = -1;
-
+			return cityVO;
+		} catch (Exception ex) {
+			System.out.println("Main_CityInfo ERROR: " + ex);
+		} finally {
 			try {
-				String sql = "SELECT mi_idx FROM member_invest WHERE mb_idx = ? ORDER BY mi_reg_date_time DESC";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, mb_idx);
-				rs = pstmt.executeQuery();
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
 
-				if (rs.next()) {
-					result = rs.getInt("mi_idx");
-				}
-			} catch (Exception ex) {
-				System.out.println("Member_Invest_check 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+		return null;
+	}
+
+	// 태훈 - 기업 투자 현황 페에지 제어 // 신규수정
+	public List<String> Member_Invest_check(int mb_idx) {
+		List<String> mi_idx_funding_status = new ArrayList<String>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		int mi_idx = -1;
+		String cp_funding_status = "";
+
+		try {
+			String sql = "SELECT mi_idx,cp_funding_status FROM member_invest mi, company cp WHERE mb_idx = ? ORDER BY mi_reg_date_time DESC";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mb_idx);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				mi_idx = rs.getInt("mi_idx");
+				cp_funding_status = rs.getString("cp_funding_status");
+			}
+			if (mi_idx != -1) {
+				mi_idx_funding_status.add(Integer.toString(mi_idx));
+				mi_idx_funding_status.add(cp_funding_status);
+				return mi_idx_funding_status;
 			}
 
-			return result;
-		}
-	
-		
-		// 태훈 추가 - 실시간 즐겨찾기 순서 AJAX 및 수동 자동 제어
-		public int getSelectKey() {
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			int select_key = 0;
-	
+		} catch (Exception ex) {
+			System.out.println("Member_Invest_check 에러: " + ex);
+		} finally {
 			try {
-				String sql = "SELECT cp_select_key FROM realtime_select_key";
-				pstmt = conn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-	
-				if (rs.next()) {
-					if (rs.getInt("cp_select_key") == 1) {
-						select_key = 1; 
-					} else if (rs.getInt("cp_select_key") == 2){
-						select_key = 2;
-					}
-				} else {
-					select_key = 0;
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return null;
+	}
+
+	public int getMemberLatelyInvestment(int mb_idx) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = -1;
+
+		try {
+			String sql = "SELECT mi_idx FROM member_invest WHERE mb_idx = ? ORDER BY mi_reg_date_time DESC";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mb_idx);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				result = rs.getInt("mi_idx");
+			}
+		} catch (Exception ex) {
+			System.out.println("Member_Invest_check 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+
+		return result;
+	}
+
+	// 태훈 추가 - 실시간 즐겨찾기 순서 AJAX 및 수동 자동 제어
+	public int getSelectKey() {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int select_key = 0;
+
+		try {
+			String sql = "SELECT cp_select_key FROM realtime_select_key";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				if (rs.getInt("cp_select_key") == 1) {
+					select_key = 1;
+				} else if (rs.getInt("cp_select_key") == 2) {
+					select_key = 2;
 				}
-			} catch (Exception ex) {
-				System.out.println("getSelectKey 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
+			} else {
+				select_key = 0;
+			}
+		} catch (Exception ex) {
+			System.out.println("getSelectKey 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
 				/*
 				 * if (conn != null) conn.close();
 				 */
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
-	
-			return select_key;
 		}
-		
-		// 탑10 SQL
-		@SuppressWarnings({ "unchecked", "unused" })
-		public JSONArray getRealList(int select_key) throws Exception {
-			
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			JSONArray jsonArr = new JSONArray();
-			
+
+		return select_key;
+	}
+
+	// 탑10 SQL
+	@SuppressWarnings({ "unchecked", "unused" })
+	public JSONArray getRealList(int select_key) throws Exception {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		JSONArray jsonArr = new JSONArray();
+
+		try {
+			// 쪼인해도되고안해도되고
+			String sql = "SELECT cp_name, cp_idx " + "FROM company " + "ORDER BY cp_recommand_count DESC limit 10";
+
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("cp_name", rs.getString("cp_name"));
+				jsonObj.put("cp_idx", rs.getString("cp_idx"));
+
+				jsonArr.add(jsonObj);
+			}
+			System.out.println(">>>json" + jsonArr);
+			return jsonArr;
+
+		} catch (Exception ex) {
+			System.out.println("getRealList ERROR: " + ex);
+		} finally {
 			try {
-				// 쪼인해도되고안해도되고
-				String sql = "SELECT cp_name, cp_idx "
-						+ "FROM company "
-						+ "ORDER BY cp_recommand_count DESC limit 10";
-				
-				pstmt = conn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-
-				while(rs.next()) {
-					JSONObject jsonObj = new JSONObject();
-					jsonObj.put("cp_name", rs.getString("cp_name"));
-					jsonObj.put("cp_idx", rs.getString("cp_idx"));
-					
-					jsonArr.add(jsonObj);
-				}
-				System.out.println(">>>json"+jsonArr);
-				return jsonArr;
-				
-			} catch (Exception ex) {
-				System.out.println("getRealList ERROR: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
-			return null;
 		}
-		
-		// 태훈 추가 - 자산관리 토큰 입금
-		public int Token_Deposit(String token_sum, String token_wallet, String token_hash, String session_idx, String bar) throws Exception{
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			int result = 0;
+		return null;
+	}
 
+	// 태훈 추가 - 자산관리 토큰 입금
+	public int Token_Deposit(String token_sum, String token_wallet, String token_hash, String session_idx, String bar)
+			throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+
+		try {
+			String sql = "INSERT INTO token_deposit(mb_idx, td_to_address, td_from_address, td_tx_hash, td_amount, td_status, td_date_time)"
+					+ "VALUES(?, ?, ?, ?, ?, 0, now())";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, session_idx);
+			pstmt.setString(2, token_wallet);
+			pstmt.setString(3, bar);
+			pstmt.setString(4, token_hash);
+			pstmt.setString(5, token_sum);
+			result = pstmt.executeUpdate();
+
+			if (result != 0) {
+				result = 1;
+				return result;
+			} else {
+				result = 0;
+			}
+		} catch (Exception ex) {
+			System.out.println("Token_Deposit 에러: " + ex);
+		} finally {
 			try {
-				String sql = "INSERT INTO token_deposit(mb_idx, td_to_address, td_from_address, td_tx_hash, td_amount, td_status, td_date_time)"
-						+ "VALUES(?, ?, ?, ?, ?, 0, now())";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, session_idx);
-				pstmt.setString(2, token_wallet);
-				pstmt.setString(3, bar);
-				pstmt.setString(4, token_hash);
-				pstmt.setString(5, token_sum);
-				result = pstmt.executeUpdate();
-
-				if (result != 0) {
-					result = 1;
-					return result;
-				}else {
-					result = 0;
-				}
-			} catch (Exception ex) {
-				System.out.println("Token_Deposit 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
-
-			return result;
 		}
-		
-		
-		// 태훈 추가 - 자산관리 토큰 출금
-		public int Token_Withdraw(String token_sum, String token_wallet, String session_idx, String bar) throws Exception{
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			int result = 0;
-				
+
+		return result;
+	}
+
+	// 태훈 추가 - 자산관리 토큰 출금
+	public int Token_Withdraw(String token_sum, String token_wallet, String session_idx, String bar) throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+
+		try {
+			String sql = "INSERT INTO token_withdraw(mb_idx, td_to_address, td_from_address, td_amount, td_status, td_date_time) "
+					+ "VALUES(?, ?, ?, ?, 0, now())";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, session_idx);
+			pstmt.setString(2, bar);
+			pstmt.setString(3, token_wallet);
+			pstmt.setString(4, token_sum);
+			result = pstmt.executeUpdate();
+
+			if (result != 0) {
+				result = 1;
+				return result;
+			} else {
+				result = 0;
+			}
+		} catch (Exception ex) {
+			System.out.println("Token_Withdraw 에러: " + ex);
+		} finally {
 			try {
-				String sql = "INSERT INTO token_withdraw(mb_idx, td_to_address, td_from_address, td_amount, td_status, td_date_time) "
-						+ "VALUES(?, ?, ?, ?, 0, now())";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, session_idx);
-				pstmt.setString(2, bar);
-				pstmt.setString(3, token_wallet);
-				pstmt.setString(4, token_sum);
-				result = pstmt.executeUpdate();
-				
-				if (result != 0) {
-					result = 1;
-					return result;
-				}else {
-					result = 0;
-				}
-			} catch (Exception ex) {
-				System.out.println("Token_Withdraw 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
-
-			return result;
 		}
-		
-		// 태훈 추가 - 자산관리 포인트 충전
-		public int Point_Deposit(String point_sum, String session_idx) throws Exception{
-			ResultSet rs = null;
-			int result = 0;
-			CallableStatement cstmt = null;
-			String re_point = point_sum.replaceAll(",", "");
+
+		return result;
+	}
+
+	// 태훈 추가 - 자산관리 포인트 충전
+	public int Point_Deposit(String point_sum, String session_idx) throws Exception {
+		ResultSet rs = null;
+		int result = 0;
+		CallableStatement cstmt = null;
+		String re_point = point_sum.replaceAll(",", "");
+		try {
+			cstmt = (CallableStatement) conn.prepareCall("call POINT_CHARGE(?,?,?)");
+			cstmt.setString(1, session_idx);
+			cstmt.setString(2, re_point);
+			cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
+
+			cstmt.execute();
+			result = cstmt.getInt("@RESULT");
+
+			if (result != 0) {
+				result = 1;
+				return result;
+			} else {
+				result = 0;
+			}
+		} catch (Exception ex) {
+			System.out.println("Token_Deposit 에러: " + ex);
+		} finally {
 			try {
-				cstmt = (CallableStatement)conn.prepareCall("call POINT_CHARGE(?,?,?)");
-				cstmt.setString(1, session_idx);
-				cstmt.setString(2, re_point);
-				cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
-				
-				cstmt.execute();
-				result = cstmt.getInt("@RESULT");
-
-				if (result != 0) {
-					result = 1;
-					return result;
-				}else {
-					result = 0;
-				}
-			} catch (Exception ex) {
-				System.out.println("Token_Deposit 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (cstmt != null)
-						cstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+				if (rs != null)
+					rs.close();
+				if (cstmt != null)
+					cstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
-
-			return result;
 		}
-		
-		// 태훈 추가 - 자산관리 포인트 환전
-		public int Point_Withdraw(String point_sum, String session_idx) throws Exception{
-			CallableStatement cstmt = null;
-			ResultSet rs = null;
-			int result = 0;
-			String new_point = point_sum.replaceAll(",", "");
-					
+
+		return result;
+	}
+
+	// 태훈 추가 - 자산관리 포인트 환전
+	public int Point_Withdraw(String point_sum, String session_idx) throws Exception {
+		CallableStatement cstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		String new_point = point_sum.replaceAll(",", "");
+
+		try {
+			cstmt = conn.prepareCall("{call POINT_EXCHANGE(?,?,?)}");
+			cstmt.setString(1, session_idx);
+			cstmt.setString(2, new_point);
+			cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
+
+			cstmt.execute();
+			result = cstmt.getInt("@RESULT");
+
+			if (result == 1) {
+				result = 1; // 환전신청 성공
+				return result;
+			} else { // result가 -1 or 0이면
+				result = 0;
+			}
+		} catch (Exception ex) {
+			System.out.println("Point_Withdraw 에러: " + ex);
+		} finally {
 			try {
-				cstmt = conn.prepareCall("{call POINT_EXCHANGE(?,?,?)}");
-				cstmt.setString(1, session_idx);
-				cstmt.setString(2, new_point);
-				cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
-				
-				cstmt.execute();
-				result = cstmt.getInt("@RESULT");
-				
-				if (result == 1) {
-					result = 1;	// 환전신청 성공
-					return result;
-				}else {	// result가 -1 or 0이면
-					result = 0;
-				}
-			} catch (Exception ex) {
-				System.out.println("Point_Withdraw 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (cstmt != null)
-						cstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+				if (rs != null)
+					rs.close();
+				if (cstmt != null)
+					cstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
-
-			return result;
 		}
-		
-		// 펀딩 철회하기
-		public int deleteInvest(int mb_idx, int cp_idx, int mi_idx) {
-			int result = 0;
-			CallableStatement cstmt = null;
-			ResultSet rs = null;
+
+		return result;
+	}
+
+	// 펀딩 철회하기
+	public int deleteInvest(int mb_idx, int cp_idx, int mi_idx) {
+		int result = 0;
+		CallableStatement cstmt = null;
+		ResultSet rs = null;
+		try {
+			cstmt = conn.prepareCall("{call RETRACT(?, ?, ?, ?)}");
+			cstmt.setInt(1, mb_idx);
+			cstmt.setInt(2, mi_idx);
+			cstmt.setInt(3, cp_idx);
+			cstmt.registerOutParameter(4, java.sql.Types.INTEGER);
+
+			cstmt.execute();
+			result = cstmt.getInt("@RESULT");
+
+			if (result == 1) {
+				System.out.println(">>>>1철회성공" + result);
+				result = 1; // 철회성공
+				return result;
+			} else { // 철회실패
+				System.out.println(">>>>2실패" + result);
+				result = 0;
+			}
+		} catch (Exception ex) {
+			System.out.println("deleteInvest 에러: " + ex);
+		} finally {
 			try {
-				cstmt = conn.prepareCall("{call RETRACT(?, ?, ?, ?)}");
-				cstmt.setInt(1, mb_idx);
-				cstmt.setInt(2, mi_idx);
-				cstmt.setInt(3, cp_idx);
-				cstmt.registerOutParameter(4, java.sql.Types.INTEGER);
-				
-				cstmt.execute();
-				result = cstmt.getInt("@RESULT");
-				
-				if (result == 1) {
-					System.out.println(">>>>1철회성공"+result);
-					result = 1;	// 철회성공
-					return result;
-				}else {	// 철회실패
-					System.out.println(">>>>2실패"+result);
-					result = 0;
-				}
-			} catch (Exception ex) {
-				System.out.println("deleteInvest 에러: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (cstmt != null)
-						cstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+				if (rs != null)
+					rs.close();
+				if (cstmt != null)
+					cstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
-
-			return result;
 		}
-		
-		
-		public List<InvestDeleteVO> InvestDeleteInfo(int cp_idx, int mb_idx, int mi_idx) throws Exception {
 
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			List<InvestDeleteVO> DeleteList = new ArrayList<InvestDeleteVO>();
+		return result;
+	}
 
+	public List<InvestDeleteVO> InvestDeleteInfo(int cp_idx, int mb_idx, int mi_idx) throws Exception {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<InvestDeleteVO> DeleteList = new ArrayList<InvestDeleteVO>();
+
+		try {
+			String sql = "SELECT mi_name, mi_point, mi_idx, cp_idx " + "FROM member_invest "
+					+ "WHERE cp_idx = ? AND mb_idx = ? AND mi_idx = ?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cp_idx);
+			pstmt.setInt(2, mb_idx);
+			pstmt.setInt(3, mi_idx);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				InvestDeleteVO DeleteVO = new InvestDeleteVO();
+				DeleteVO.setMi_name(rs.getString("mi_name"));
+				DeleteVO.setMi_point(rs.getString("mi_point"));
+				DeleteVO.setMi_idx(rs.getInt("mi_idx"));
+				DeleteVO.setCp_idx(rs.getInt("cp_idx"));
+				DeleteList.add(DeleteVO);
+			}
+			return DeleteList;
+		} catch (Exception ex) {
+			System.out.println("InvestDeleteInfo ERROR: " + ex);
+		} finally {
 			try {
-				String sql = "SELECT mi_name, mi_point, mi_idx, cp_idx "
-						+ "FROM member_invest "
-						+ "WHERE cp_idx = ? AND mb_idx = ? AND mi_idx = ?";
-				
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, cp_idx);
-				pstmt.setInt(2, mb_idx);
-				pstmt.setInt(3, mi_idx);
-				rs = pstmt.executeQuery();
-
-				while (rs.next()) {
-					InvestDeleteVO DeleteVO = new InvestDeleteVO();
-					DeleteVO.setMi_name(rs.getString("mi_name"));
-					DeleteVO.setMi_point(rs.getString("mi_point"));
-					DeleteVO.setMi_idx(rs.getInt("mi_idx"));
-					DeleteVO.setCp_idx(rs.getInt("cp_idx"));
-					DeleteList.add(DeleteVO);
-				}
-				return DeleteList;
-			} catch (Exception ex) {
-				System.out.println("InvestDeleteInfo ERROR: " + ex);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-					System.out.println("연결 해제 실패: " + e.getMessage());
-				}
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
-			return null;
 		}
+		return null;
+	}
 	////////////////////////////// 태훈추가 end//////////////////////////////
 
 	// 윤식 추가/////////////////////////////////////////////////
 	public MemberInvestPageVO getMyPageInvestment(int cp_idx, int mb_idx) {
-		
+
 		String sql = "select mb_iv.mi_idx, mb.mb_idx,mb_iv.mi_point, mb_iv.cp_idx, mb_iv.mi_hoiling_stock, mb_iv.mi_stock_value, mb_iv.mi_monthly_profit, mb_iv.mi_cumulative_profit, mb_iv.mi_hoiling_stock, mb_iv.mi_monthly_profit, mb_iv.mi_cumulative_profit, cp.cp_number,cp.cp_name,cp.cp_manager ,cp.cp_name, cp.cp_add_ch, cp_capital, cp_f.cf_certificate, cp_f.cf_estate_contract, cp_f.cf_registration, cp_f.cf_financial from member mb, member_invest mb_iv, company cp,company_file cp_f where cp.cp_idx = mb_iv.cp_idx AND mb.mb_idx = mb_iv.mb_idx AND cp_f.cp_idx = mb_iv.cp_idx AND mb.mb_idx = ? AND mb_iv.cp_idx = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -1329,7 +1362,7 @@ public class MemberDAO {
 				MemberInvestPageVO memberInvestVO = new MemberInvestPageVO();
 				memberInvestVO.setMi_idx(rs.getInt("mi_idx"));
 				memberInvestVO.setMb_idx(rs.getInt("mb_idx"));
-				//memberInvestVO.setMi_name(rs.getString("mi_name"));
+				// memberInvestVO.setMi_name(rs.getString("mi_name"));
 				memberInvestVO.setMi_point(rs.getString("mi_point"));
 				memberInvestVO.setCp_idx(rs.getInt("cp_idx"));
 				memberInvestVO.setMi_hoiling_stock(rs.getString("mi_hoiling_stock"));
@@ -1341,6 +1374,7 @@ public class MemberDAO {
 				memberInvestVO.setCp_add_ch(rs.getString("cp_add_ch"));
 				memberInvestVO.setCp_name(rs.getString("cp_name"));
 				memberInvestVO.setCp_manager(rs.getString("cp_manager"));
+
 				memberInvestVO.setCf_certificate(rs.getString("cf_certificate"));
 				memberInvestVO.setCf_estate_contract(rs.getString("cf_estate_contract"));
 				memberInvestVO.setCf_registration(rs.getString("cf_registration"));
@@ -1371,7 +1405,7 @@ public class MemberDAO {
 	// 박신규 시작~ ///////////////////////////////////////////////////
 	// 투자 회사 리스트 뽑깅
 	public ArrayList<MemberInvestCompanyVO> getInvestmentCompanyList(int mb_idx) {
-		String sql = "select cp.cp_idx,cp.cp_name, cp.cp_funding_status,mi.mi_idx from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_idx = ? ORDER BY mi_reg_date_time DESC;";
+		String sql = "select cp.cp_idx,cp.cp_name, cp.cp_funding_status,mi.mi_idx from member_invest mi, company cp where mi.cp_idx = cp.cp_idx AND mi.mb_idx = ? ORDER BY mi_reg_date_time DESC";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -1385,13 +1419,13 @@ public class MemberDAO {
 				memberInvestCompanyVO.setCp_idx(rs.getInt("cp_idx"));
 				memberInvestCompanyVO.setCp_name(rs.getString("cp_name"));
 				memberInvestCompanyVO.setCp_funding_status(rs.getString("cp_funding_status"));
-				
+
 				memberInvestCompanyVOList.add(memberInvestCompanyVO);
 			}
 			return memberInvestCompanyVOList;
 
 		} catch (Exception ex) {
-			
+
 		} finally {
 			try {
 				if (rs != null)
@@ -1407,7 +1441,7 @@ public class MemberDAO {
 
 		return null;
 	}
-	
+
 	public boolean insertMemberLoginLog(MemberIplog memberIplog) {
 		String sql = "INSERT INTO member_iplog(ip, id, date, content) VALUES (?,?,now(),?)";
 		int result = 0;
@@ -1419,7 +1453,6 @@ public class MemberDAO {
 			pstmt.setString(2, memberIplog.getId());
 			pstmt.setString(3, memberIplog.getContent());
 			result = pstmt.executeUpdate();
-			
 
 			if (result != 0) {
 				return true;
@@ -1441,39 +1474,41 @@ public class MemberDAO {
 
 		return false;
 	}
-	//////////////김윤식 추가 마이페이지 3 거래내역 가져오기 ///////////////////
+
+	////////////// 김윤식 추가 마이페이지 3 거래내역 가져오기 ///////////////////
 	public ArrayList<MemberTransactionVO> getTranscationList(String mb_idx, int startRow, int pageSize) {
-		String sql = "SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_deposit WHERE mb_idx = ? UNION " 
-					 +"SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_withdraw WHERE mb_idx = ? ORDER BY td_date_time DESC limit " + startRow +","+ pageSize; 
+		String sql = "SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_deposit WHERE mb_idx = ? UNION "
+				+ "SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_withdraw WHERE mb_idx = ? ORDER BY td_date_time DESC limit "
+				+ startRow + "," + pageSize;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		System.out.println("mb idx : " + mb_idx);
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
 			pstmt.setString(2, mb_idx);
 			rs = pstmt.executeQuery();
-			
-			ArrayList<MemberTransactionVO> membertransactionList = new ArrayList<MemberTransactionVO>();	
-			
+
+			ArrayList<MemberTransactionVO> membertransactionList = new ArrayList<MemberTransactionVO>();
+
 			while (rs.next()) {
-				
+
 				MemberTransactionVO membertransaction = new MemberTransactionVO();
-			
+
 				membertransaction.setTd_to_address(rs.getString("td_to_address"));
 				membertransaction.setTd_from_address(rs.getString("td_from_address"));
 				membertransaction.setTd_amount(rs.getString("td_amount"));
 				membertransaction.setTd_status(rs.getString("td_status"));
 				membertransaction.setTd_date_time(rs.getString("td_date_time"));
 				membertransactionList.add(membertransaction);
-								
+
 			}
-			
-			return membertransactionList;					
+
+			return membertransactionList;
 
 		} catch (Exception ex) {
-			System.out.println("getTranscationList 에러: " + ex);	
+			System.out.println("getTranscationList 에러: " + ex);
 		} finally {
 			try {
 				if (rs != null)
@@ -1489,19 +1524,20 @@ public class MemberDAO {
 
 		return null;
 	}
+
 	////////// 입출금 내역 count ///////////
 	public int getTranscationListCount(String mb_idx) {
-		
-	String sql = "SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_deposit WHERE mb_idx = ? UNION " 
-			 +"SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_withdraw WHERE mb_idx = ? ORDER BY td_date_time DESC"; 
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	int count = 0;
-	
-	System.out.println("mb idx : " + mb_idx);
+
+		String sql = "SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_deposit WHERE mb_idx = ? UNION "
+				+ "SELECT td_to_address, td_from_address, td_amount, td_status, td_date_time FROM token_withdraw WHERE mb_idx = ? ORDER BY td_date_time DESC";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+
+		System.out.println("mb idx : " + mb_idx);
 
 		try {
-		
+
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
 			pstmt.setString(2, mb_idx);
@@ -1531,39 +1567,40 @@ public class MemberDAO {
 		}
 		return 0;
 	}
-	
-	//////////////김윤식 추가 포인트 거래내역 가져오기 ///////////////////
+
+	////////////// 김윤식 추가 포인트 거래내역 가져오기 ///////////////////
 	public ArrayList<MypagePointTransactionVO> getPointTranscationList(String mb_idx, int startRow, int pageSize) {
-		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 2 UNION SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 3 ORDER BY po_date_time limit " + startRow + "," + pageSize; 
-					
+		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 2 UNION SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 3 ORDER BY po_date_time limit "
+				+ startRow + "," + pageSize;
+
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		System.out.println("mb idx : " + mb_idx);
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
 			pstmt.setString(2, mb_idx);
 			rs = pstmt.executeQuery();
-			
-			ArrayList<MypagePointTransactionVO> pointtransactionList = new ArrayList<MypagePointTransactionVO>();	
-			
+
+			ArrayList<MypagePointTransactionVO> pointtransactionList = new ArrayList<MypagePointTransactionVO>();
+
 			while (rs.next()) {
-				
+
 				MypagePointTransactionVO pointtransaction = new MypagePointTransactionVO();
-			
+
 				pointtransaction.setPo_category(rs.getString("po_category"));
 				pointtransaction.setPo_amount(rs.getString("po_amount"));
 				pointtransaction.setPo_date_time(rs.getString("po_date_time"));
 				pointtransaction.setTk_amount(rs.getString("tk_amount"));
 				pointtransactionList.add(pointtransaction);
-								
+
 			}
-			
-			return pointtransactionList;					
+
+			return pointtransactionList;
 
 		} catch (Exception ex) {
-			System.out.println("getTranscationList 에러: " + ex);	
+			System.out.println("getTranscationList 에러: " + ex);
 		} finally {
 			try {
 				if (rs != null)
@@ -1579,40 +1616,40 @@ public class MemberDAO {
 
 		return null;
 	}
-		
-	//////////포인트 내역 count ///////////
+
+	////////// 포인트 내역 count ///////////
 	public int getPointTranscationCount(String mb_idx) {
-		
-		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 2 UNION SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 3 ORDER BY po_date_time"; 
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	int count = 0;
-	
-	System.out.println("mb idx : " + mb_idx);
-	
+
+		String sql = "SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 2 UNION SELECT A.po_category, A.po_amount, A.po_date_time, B.tk_amount FROM point_transaction as A, token_transaction as B WHERE A.tk_idx = B.tk_idx AND A.mb_idx = ? AND A.po_category = 3 ORDER BY po_date_time";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+
+		System.out.println("mb idx : " + mb_idx);
+
 		try {
-		//	if (category.equals("0")) {
-		//		sql = "select * from faq ";
-		//		pstmt = conn.prepareStatement(sql);
-		//		rs = pstmt.executeQuery();
-		//	} else {
-		//		pstmt = conn.prepareStatement(sql);
-		//		pstmt.setString(1, category);
-		//		rs = pstmt.executeQuery();
-		//	}
+			// if (category.equals("0")) {
+			// sql = "select * from faq ";
+			// pstmt = conn.prepareStatement(sql);
+			// rs = pstmt.executeQuery();
+			// } else {
+			// pstmt = conn.prepareStatement(sql);
+			// pstmt.setString(1, category);
+			// rs = pstmt.executeQuery();
+			// }
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
 			pstmt.setString(2, mb_idx);
 			rs = pstmt.executeQuery();
 			System.out.println(pstmt);
 			rs.last();
-	
+
 			count = rs.getRow();
-	
+
 			rs.beforeFirst();
-	
+
 			return count;
-	
+
 		} catch (Exception ex) {
 			System.out.println("getTranscationListCount 에러: " + ex);
 		} finally {
@@ -1629,30 +1666,28 @@ public class MemberDAO {
 		}
 		return 0;
 	}
-	
-		//////////////김윤식 추가 당월, 누적 수익 가져오기 ///////////////////
-		public benefitVO benefit(String mb_idx) {
+
+	////////////// 김윤식 추가 당월, 누적 수익 가져오기 ///////////////////
+	public benefitVO benefit(String mb_idx) {
 		String sql = "SELECT SUM(mi_monthly_profit) AS month, SUM(mi_cumulative_profit) AS total FROM `member_invest` WHERE mb_idx = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		System.out.println("mb idx : " + mb_idx);
-				
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
 			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {				
+
+			while (rs.next()) {
 				benefitVO benefitArr = new benefitVO();
 				benefitArr.setMonth_benefit(rs.getString("month"));
-				benefitArr.setTotal_benefit(rs.getString("total"));								
-				return benefitArr;							
+				benefitArr.setTotal_benefit(rs.getString("total"));
+				return benefitArr;
 			}
-			
-							
+
 		} catch (Exception ex) {
-			System.out.println("benefit 에러: " + ex);	
+			System.out.println("benefit 에러: " + ex);
 		} finally {
 			try {
 				if (rs != null)
@@ -1665,12 +1700,16 @@ public class MemberDAO {
 				System.out.println("해제 실패 : " + e.getMessage());
 			}
 		}
-		
+
 		return null;
-		}
-		
-	//String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx, tk_price, po_amount, po_content, po_date_time) VALUES (2,1,1,100,?,?,now())";
-	//String sql = "INSERT INTO token_transaction(tk_category, po_idx, tk_amount, tk_price, po_amount, tk_content, tk_date_time) VALUES (3,1,?,10,?,'비고',now())";
-	//String sql = "UPDATE member SET mb_point = mb_point + ?, mb_token = mb_token - ? WHERE mb_idx = ?";
+	}
+
+	// String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx,
+	// tk_price, po_amount, po_content, po_date_time) VALUES (2,1,1,100,?,?,now())";
+	// String sql = "INSERT INTO token_transaction(tk_category, po_idx, tk_amount,
+	// tk_price, po_amount, tk_content, tk_date_time) VALUES
+	// (3,1,?,10,?,'비고',now())";
+	// String sql = "UPDATE member SET mb_point = mb_point + ?, mb_token = mb_token
+	// - ? WHERE mb_idx = ?";
 	// 박신규 끝~ ///////////////////////////////////////////////////
 }

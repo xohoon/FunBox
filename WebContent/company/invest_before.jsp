@@ -59,7 +59,7 @@ pageEncoding="UTF-8"%>
     <section id="inv_bf">
       <div class="inner">
         <article class="inv_inbox">
-          <img src="./img/con_img002.jpg" alt="">
+          <img src="${company.cf_invest_image }" alt="">
           <form class="inv_intxt" name="inv_before" method="post" action="./Invest_point.cp">
             <h2>투자 조건 설정</h2>
             <h3>${company.cp_name}<span>${company.cp_add_ch}</span></h3>

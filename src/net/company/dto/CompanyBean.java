@@ -90,9 +90,18 @@ public class CompanyBean {
 	private String cf_image6;
 	private String cf_corporation_banner;
 	private String cf_corporation_icon;
+	private String cf_invest_image;
 
 	private String cp_branch;
 	private String cp_intro_headline;
+
+	public String getCf_invest_image() {
+		return cf_invest_image;
+	}
+
+	public void setCf_invest_image(String cf_invest_image) {
+		this.cf_invest_image = cf_invest_image;
+	}
 
 	public boolean isCp_open_status() {
 		return cp_open_status;

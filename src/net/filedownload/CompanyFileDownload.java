@@ -27,7 +27,7 @@ public class CompanyFileDownload extends HttpServlet {
 		CompanyDAO compnayDao = new CompanyDAO();
 		
 		// ② 경로 가져오기
-		String saveDir = compnayDao.getUploadDirectory(cp_idx);
+		String saveDir = compnayDao.getUploadDirectory();
 		
 		//local 경로
 		//String saveDir = "C:/Users/user/Desktop/download_test";

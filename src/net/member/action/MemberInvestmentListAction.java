@@ -40,8 +40,6 @@ public class MemberInvestmentListAction implements Action {
 		
 		int mi_idx = Integer.parseInt(mi_idx_string);
 		
-		String cp_idx_string = null;
-		cp_idx_string = request.getParameter("cp_idx");
 		
 		boolean flag = false;		
 		MemberDAO memberDAO = new MemberDAO();
@@ -131,6 +129,7 @@ public class MemberInvestmentListAction implements Action {
 		request.setAttribute("endRow", new Integer(endRow));
 		
 		request.setAttribute("count", new Integer(count));
+		request.setAttribute("investListCount", memberInvestCompanyVOList.size());
 		
 		request.setAttribute("pageSize", new Integer(pageSize));
 

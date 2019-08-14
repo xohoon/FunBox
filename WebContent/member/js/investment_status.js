@@ -22,11 +22,16 @@ function invest_chk_ajax() {
 			contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			data: {},
 			success: function(resultData, result, response) {
-				if(resultData.mi_idx != -1 ) {
-					location.href="./MemberInvestmentList.mb?mi_idx="+resultData.mi_idx;
-				}else {
+				if (resultData.mi_idx == -1) {
 					alert("투자현황이 존재하지 않습니다. 기업에 투자해보세요.");
 					location.href="./ListAction.bd";
+				}else if (resultData.cp_funding_status == 11) {
+					location.href="./MemberInvestmentDrop.mb?mi_idx="+resultData.mi_idx;
+				}else if(resultData.cp_funding_status == 12) {
+					location.href="./MemberInvestmentList.mb?mi_idx="+resultData.mi_idx;
+				}else {
+					alert("잘못된 접급입니다.");
+					location.href="./Index.mb";
 				}
 			},
 			error: function(request, status, error){

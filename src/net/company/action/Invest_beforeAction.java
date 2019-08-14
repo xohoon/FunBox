@@ -16,20 +16,16 @@ public class Invest_beforeAction  implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		ActionForward forward = new ActionForward();
-
-		System.out.println("CorporationAction OK!");
 		
 		CompanyBean company = new CompanyBean();
 		
 		int cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
-		System.out.println("cp_idx: "+cp_idx);
 		
 		CompanyDAO company_dao = new CompanyDAO();
 		company = company_dao.getCompanyInfo2(cp_idx);
 				
 		request.setAttribute("company", company);
 		
-		System.out.println(company.toString());
 		
 		forward.setRedirect(false);
 		forward.setPath("./company/invest_before.jsp");

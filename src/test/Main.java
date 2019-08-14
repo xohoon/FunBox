@@ -7,9 +7,9 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		CompanyDAO companyDAO = new CompanyDAO();
-		CompanyBean companyBean = companyDAO.getCompanyInfo2(1);
-		System.out.println(companyBean.getCf_registration());
-		System.out.println(companyBean.getCf_estate_contract());
+		
+		System.out.println(companyDAO.getUploadDirectory());
+	
 	}
 	
 	

@@ -31,13 +31,14 @@ public class InvestAction implements Action {
 		
 		if (companyDAO.invest(_mb_idx, _cp_idx,_cp_name ,_po_amount,_mi_hoiling_stock)) {
 			MemberDAO memberDAO = new MemberDAO();
-			int mi_idx = memberDAO.Member_Invest_check(_mb_idx);
+			int mi_idx = memberDAO.getMemberLatelyInvestment(_mb_idx);
 			System.out.println("투자하기 성공");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('투자가 완료되었습니다.');");
-			out.println("location.href='./MemberInvestmentList.mb?mi_idx="+mi_idx+"';");
+			//out.println("location.href='./MemberInvestmentList.mb?mi_idx="+mi_idx+"';");
+			out.println("location.href='./MemberInvestmentDrop.mb?mi_idx="+mi_idx+"';");
 			out.println("</script>");
 			out.close();
 

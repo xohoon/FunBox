@@ -39,7 +39,7 @@
     <section id="inv_af">
       <div class="inner">
         <article class="inv_inbox">
-          <img src="${companyBean.cf_image5}" alt="">
+          <img src="${company.cf_invest_image}" alt="">
           <form class="inv_intxt" name="invest_after_form" action="./InvestAction.cp" method="post">
             <input type="hidden" name="mb_idx" value="${sessionScope.idx}">
             <input type="hidden" name="mb_id" value="${sessionScope.id}">
