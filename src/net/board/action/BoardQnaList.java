@@ -18,8 +18,6 @@ public class BoardQnaList implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); //한글처리
 		
-//		System.out.println("BoardQnaList OK");
-		
 		ActionForward forward = new ActionForward();
 		HttpSession session = request.getSession();
 		
@@ -37,7 +35,6 @@ public class BoardQnaList implements Action{
 			return null;
 		}
 		
-//		System.out.println("세션 아이디값 확인 : " + id);
 		
 		
 		////////////////페이징 처리 ////////////////
@@ -51,13 +48,10 @@ public class BoardQnaList implements Action{
 			pageNum = "1";
 		}
 		int currentPage = Integer.parseInt(pageNum);
-//		System.out.println("currentPage : "+currentPage);
 		
 		int startRow = (currentPage - 1) * pageSize + 1;// 한 페이지의 시작글 번호 / 1
-//		System.out.println("startRow : "+startRow);
 		
 		int endRow = currentPage * pageSize;// 한 페이지의 마지막 글번호 / 10
-//		System.out.println("endRow : "+endRow);
 		
 		int count = 0;
 		int number = 0;
@@ -68,7 +62,6 @@ public class BoardQnaList implements Action{
 		
 		// 여기 잘못 됨
 		count = qna_dao.qnaCount(id);// 전체 글의 수 불러오기
-//		System.out.println("해당 DB 글  개수"+count);
 		
 
 		if (count > 0) { // 있을때
@@ -94,32 +87,22 @@ public class BoardQnaList implements Action{
 		int numPageGroup = (int) Math.ceil((double) currentPage / pageGroupSize);
 		
 		request.setAttribute("currentPage", new Integer(currentPage)); //1
-//		System.out.println(currentPage);
 		
 		request.setAttribute("startRow", new Integer(startRow)); //1
-//		System.out.println(startRow);
 		
 		request.setAttribute("endRow", new Integer(endRow)); //7
-//		System.out.println(endRow);
 		
 		request.setAttribute("count", new Integer(count)); //7
-//		System.out.println(count);
 		
 		request.setAttribute("pageSize", new Integer(pageSize)); //10
-//		System.out.println(pageSize);
-
+		
 		request.setAttribute("number", new Integer(number)); //7
-//		System.out.println(number);
 		
 		request.setAttribute("pageGroupSize", new Integer(pageGroupSize)); //5
-//		System.out.println(pageGroupSize);
 		
 		request.setAttribute("numPageGroup", new Integer(numPageGroup)); //1
-//		System.out.println(numPageGroup);
 		
 		request.setAttribute("pageGroupCount", new Integer(pageGroupCount)); //1
-//		System.out.println(pageGroupCount);
-
 		
 		// 1:1문의 리스트 가져오기
 		request.setAttribute("qna_list", qna_list);

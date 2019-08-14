@@ -55,7 +55,6 @@ public class BoardQnaAction implements Action{
 		
 		
 		if(result==false){
-//			System.out.println("문의하기 실패");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -67,7 +66,6 @@ public class BoardQnaAction implements Action{
 			return null;
 		}
 		
-//		System.out.println("문의하기 성공");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.println("<script>");

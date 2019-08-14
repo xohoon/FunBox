@@ -26,8 +26,6 @@ public class CompanyApplication04Action implements Action {
 		boolean result = false;
 		HttpSession session = request.getSession();
 
-		System.out.println("CompanyApplication04Action");
-
 		// page1 파라미터값
 		String idx = (String) session.getAttribute("idx");
 		String app_cp_name = request.getParameter("name");
@@ -193,7 +191,6 @@ public class CompanyApplication04Action implements Action {
 
 		// return null;
 		if (result == false) {
-			System.out.println("기업신청 실패");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -205,7 +202,6 @@ public class CompanyApplication04Action implements Action {
 			return null;
 		}
 
-		System.out.println("기업신청 성공");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.println("<script>");

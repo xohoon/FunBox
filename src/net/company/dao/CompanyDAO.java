@@ -435,15 +435,15 @@ public class CompanyDAO {
 				company.setCp_lng(rs.getString("cp_lng"));
 				company.setCp_add_extra(rs.getString("cp_add_extra"));
 				company.setCp_capital(rs.getString("cp_capital"));
-				company.setCp_open_datetime(rs.getTimestamp("cp_open_datetime"));
+				company.setCp_open_datetime(rs.getDate("cp_open_datetime"));
 				company.setCp_avg_monthly_sales(rs.getString("cp_avg_monthly_sales"));
 				company.setCp_monthly_profit(rs.getString("cp_monthly_profit"));
-				company.setCp_reg_datetime(rs.getTimestamp("cp_reg_datetime"));
-				company.setCp_exit_datetime(rs.getTimestamp("cp_exit_datetime"));
+				company.setCp_reg_datetime(rs.getDate("cp_reg_datetime"));
+				company.setCp_exit_datetime(rs.getDate("cp_exit_datetime"));
 				company.setCp_intro_content(rs.getString("cp_intro_content"));
 				company.setCp_purpose(rs.getString("cp_purpose"));
 				company.setCp_point_comment(rs.getString("cp_point_comment"));
-				company.setCp_update_datetime(rs.getTimestamp("cp_update_datetime"));
+				company.setCp_update_datetime(rs.getDate("cp_update_datetime"));
 				company.setCp_business_risk(rs.getString("cp_business_risk"));
 				company.setCp_company_risk(rs.getString("cp_company_risk"));
 				company.setCp_other_risks(rs.getString("cp_other_risks"));
@@ -455,8 +455,8 @@ public class CompanyDAO {
 				company.setIv_current_amount(rs.getString("iv_current_amount"));
 				company.setIv_min_amount(rs.getString("iv_min_amount"));
 				company.setIv_balance_stock(rs.getString("iv_balance_stock"));
-				company.setIv_appl_start_date_time(rs.getTimestamp("iv_appl_start_date_time"));
-				company.setIv_appl_stop_date_time(rs.getTimestamp("iv_appl_stop_date_time"));
+				company.setIv_appl_start_date_time(rs.getDate("iv_appl_start_date_time"));
+				company.setIv_appl_stop_date_time(rs.getDate("iv_appl_stop_date_time"));
 				company.setIv_contraction_during(rs.getString("iv_contraction_during"));
 				company.setIv_possible_amount(rs.getString("iv_possible_amount"));
 				company.setIv_current_participants(rs.getString("iv_current_participants"));
@@ -560,15 +560,15 @@ public class CompanyDAO {
 				company.setCp_lng(rs.getString("cp_lng"));
 				company.setCp_add_extra(rs.getString("cp_add_extra"));
 				company.setCp_capital(rs.getString("cp_capital"));
-				company.setCp_open_datetime(rs.getTimestamp("cp_open_datetime"));
+				company.setCp_open_datetime(rs.getDate("cp_open_datetime"));
 				company.setCp_avg_monthly_sales(rs.getString("cp_avg_monthly_sales"));
 				company.setCp_monthly_profit(rs.getString("cp_monthly_profit"));
-				company.setCp_reg_datetime(rs.getTimestamp("cp_reg_datetime"));
-				company.setCp_exit_datetime(rs.getTimestamp("cp_exit_datetime"));
+				company.setCp_reg_datetime(rs.getDate("cp_reg_datetime"));
+				company.setCp_exit_datetime(rs.getDate("cp_exit_datetime"));
 				company.setCp_intro_content(rs.getString("cp_intro_content"));
 				company.setCp_purpose(rs.getString("cp_purpose"));
 				company.setCp_point_comment(rs.getString("cp_point_comment"));
-				company.setCp_update_datetime(rs.getTimestamp("cp_update_datetime"));
+				company.setCp_update_datetime(rs.getDate("cp_update_datetime"));
 				company.setCp_business_risk(rs.getString("cp_business_risk"));
 				company.setCp_company_risk(rs.getString("cp_company_risk"));
 				company.setCp_other_risks(rs.getString("cp_other_risks"));
@@ -582,8 +582,8 @@ public class CompanyDAO {
 				company.setIv_current_amount(rs.getString("iv_current_amount"));
 				company.setIv_min_amount(rs.getString("iv_min_amount"));
 				company.setIv_balance_stock(rs.getString("iv_balance_stock"));
-				company.setIv_appl_start_date_time(rs.getTimestamp("iv_appl_start_date_time"));
-				company.setIv_appl_stop_date_time(rs.getTimestamp("iv_appl_stop_date_time"));
+				company.setIv_appl_start_date_time(rs.getDate("iv_appl_start_date_time"));
+				company.setIv_appl_stop_date_time(rs.getDate("iv_appl_stop_date_time"));
 				company.setIv_contraction_during(rs.getString("iv_contraction_during"));
 				company.setIv_possible_amount(rs.getString("iv_possible_amount"));
 				company.setIv_current_participants(rs.getString("iv_current_participants"));
@@ -669,7 +669,6 @@ public class CompanyDAO {
 			pstmt.setString(7, member_invest.getHoiling_stock());
 			pstmt.setInt(8, member_invest.getCp_idx());
 			result = pstmt.executeUpdate();
-			System.out.println(pstmt);
 			if (result != 0) {
 				return true;
 			}
@@ -698,7 +697,6 @@ public class CompanyDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<MemberInvestVO> member_invest_list = new ArrayList<MemberInvestVO>();
-		System.out.println("getInvestment 실행 : "+ id);
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -712,7 +710,7 @@ public class CompanyDAO {
 				member_invest.setMi_category(rs.getString("mi_category"));
 				member_invest.setName(rs.getString("mi_name"));
 				member_invest.setPoint(rs.getString("mi_point"));
-				member_invest.setMi_reg_date_time(rs.getTimestamp("mi_reg_date_time"));
+				member_invest.setMi_reg_date_time(rs.getDate("mi_reg_date_time"));
 				member_invest.setMi_note(rs.getString("mi_note"));
 				
 				member_invest_list.add(member_invest);
@@ -819,7 +817,6 @@ public class CompanyDAO {
 			pstmt.setString(2, mb_idx);
 
 			result = pstmt.executeUpdate();
-			System.out.println(pstmt);
 			if (result != 0) {
 				return true;
 			}
@@ -871,7 +868,6 @@ public class CompanyDAO {
 				} catch (SQLException ex) {
 				}
 		}
-		System.out.println("total: "+total);
 		return total;
 	}
 	// 유정 추가 end ////////////////////////////

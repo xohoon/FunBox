@@ -29,7 +29,6 @@ public class BoardController extends HttpServlet implements Servlet{
 		String RequestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = RequestURI.substring(contextPath.length());
-//		System.out.println(command);
 		ActionForward forward = null;
 		Action action = null;
 		

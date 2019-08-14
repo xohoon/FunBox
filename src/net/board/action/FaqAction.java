@@ -26,17 +26,14 @@ public class FaqAction implements Action{
 		request.setCharacterEncoding("utf-8"); //한글처리
 		
 		//FAQ 불러오기
-//		System.out.println("FaqAction OK");
 		ActionForward forward = new ActionForward();
 		String category = request.getParameter("category");
-//		System.out.println("category:"+category);
 			
 		try {
 			if(category.equals(null)) {
 				category = "0";
 			}
 		}catch(NullPointerException e) {
-			//System.out.println("NullPointerException :" + e);
 			category = "0";			
 		}
 			
@@ -48,13 +45,10 @@ public class FaqAction implements Action{
 			pageNum = "1";
 		}
 		int currentPage = Integer.parseInt(pageNum);
-//		System.out.println("currentPage : "+currentPage);
 		
 		int startRow = (currentPage - 1) * pageSize + 1;// 한 페이지의 시작글 번호 / 1
-//		System.out.println("startRow : "+startRow);
 		
 		int endRow = currentPage * pageSize;// 한 페이지의 마지막 글번호 / 10
-//		System.out.println("endRow : "+endRow);
 		
 		int count = 0;
 		int number = 0;
@@ -70,7 +64,6 @@ public class FaqAction implements Action{
 			if(category.equals("0")) {//전체
 				BoardDAO bd_dao = new BoardDAO(); //입출금 관련 FAQ
 				ArrayList<FaqVO> faq = bd_dao.getFaq("0", startRow - 1, pageSize);
-//				System.out.println(faq.toString());				
 				request.setAttribute("faq", faq);		
 			}else if(category.equals("1")) {//입출금 관련 FAQ
 				BoardDAO bd_dao1 = new BoardDAO(); 
@@ -89,7 +82,6 @@ public class FaqAction implements Action{
 			if(category.equals("0")) {//전체
 				BoardDAO bd_dao = new BoardDAO(); //입출금 관련 FAQ
 				ArrayList<FaqVO> faq = bd_dao.getFaq("0", startRow - 1, pageSize);
-//				System.out.println(faq.toString());				
 				request.setAttribute("faq", faq);		
 			}else if(category.equals("1")) {//입출금 관련 FAQ
 				BoardDAO bd_dao1 = new BoardDAO(); 
@@ -117,38 +109,28 @@ public class FaqAction implements Action{
 		int numPageGroup = (int) Math.ceil((double) currentPage / pageGroupSize);
 		
 		request.setAttribute("currentPage", new Integer(currentPage));
-//		System.out.println(currentPage); // 1
 		
 		request.setAttribute("startRow", new Integer(startRow));
-//		System.out.println(startRow); //1
 		
 		request.setAttribute("endRow", new Integer(endRow));
-//		System.out.println(endRow); //10
 		
 		request.setAttribute("count", new Integer(count));
-//		System.out.println(count); //16
 		
 		request.setAttribute("pageSize", new Integer(pageSize));
-//		System.out.println(pageSize); //10
 
 		request.setAttribute("number", new Integer(number));
-//		System.out.println(number); // 16
 		
 		request.setAttribute("pageGroupSize", new Integer(pageGroupSize));
-//		System.out.println(pageGroupSize); //5
 		
 		request.setAttribute("numPageGroup", new Integer(numPageGroup));
-//		System.out.println(numPageGroup); // 1
 		
 		request.setAttribute("pageGroupCount", new Integer(pageGroupCount));
-//		System.out.println(pageGroupCount); // 1
 		
 		request.setAttribute("flag", new Integer(1));
+		
 		request.setAttribute("categroyFlag", categroyFlag);
-//		System.out.println("categroyFlag : "+ categroyFlag);
 		
 		request.setAttribute("category", category);
-//		System.out.println("categroy : "+ category);
 		forward.setRedirect(false);
 		forward.setPath("./board/faq.jsp");
 		

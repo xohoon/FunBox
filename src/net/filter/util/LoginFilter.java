@@ -10,10 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import net.common.action.ActionForward;
 
 public class LoginFilter implements Filter {
 
@@ -43,7 +40,7 @@ public class LoginFilter implements Filter {
 		}else{
 			//로그인 하지 않은 경우
 			//ServletResponse 객체를 자식 객체로 형변환 한다음
-			HttpServletResponse httpResponse=(HttpServletResponse)response;
+			//HttpServletResponse httpResponse=(HttpServletResponse)response;
 			//안내페이지 혹은 login 페이지로 강제 이동시킨다.
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();

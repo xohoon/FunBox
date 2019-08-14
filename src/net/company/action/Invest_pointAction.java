@@ -16,8 +16,6 @@ public class Invest_pointAction implements Action {
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		ActionForward forward = new ActionForward();
 		
-		System.out.println("Invest_pointAction OK!");
-		
 		// 투자포인트/구좌 양
 		String invest_point = request.getParameter("invest_point");
 		String invest_amount = request.getParameter("invest_amount");
@@ -36,7 +34,6 @@ public class Invest_pointAction implements Action {
 		CompanyBean company = new CompanyBean();
 		
 		int cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
-		System.out.println("cp_idx: "+cp_idx);
 		
 		CompanyDAO company_dao = new CompanyDAO();
 		company = company_dao.getCompanyInfo2(cp_idx);
