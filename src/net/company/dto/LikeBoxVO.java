@@ -1,6 +1,6 @@
 package net.company.dto;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class LikeBoxVO {
 
@@ -8,7 +8,7 @@ public class LikeBoxVO {
 	private String mb_idx;
 	private int cp_idx;
 	private String like_cp_name;
-	private Timestamp like_cp_date;
+	private Date like_cp_date;
 	public int getLike_idx() {
 		return like_idx;
 	}
@@ -33,10 +33,10 @@ public class LikeBoxVO {
 	public void setLike_cp_name(String like_cp_name) {
 		this.like_cp_name = like_cp_name;
 	}
-	public Timestamp getLike_cp_date() {
+	public Date getLike_cp_date() {
 		return like_cp_date;
 	}
-	public void setLike_cp_date(Timestamp like_cp_date) {
+	public void setLike_cp_date(Date like_cp_date) {
 		this.like_cp_date = like_cp_date;
 	}
 	

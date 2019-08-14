@@ -29,7 +29,6 @@ public class BoardDAO {
 
 	// 4.
 	private Connection conn;
-	// autoReconnect=true
 	private static String URL = "jdbc:mysql://52.79.240.236/funbox?serverTimezone=Asia/Seoul&useSSL=false&useUnicode=true&characterEncoding=utf8";
 	private static String USERNAME = "damonwin01";
 	private static String PASSWORD = "damon123!!";
@@ -71,7 +70,6 @@ public class BoardDAO {
 			pstmt.setInt(9, qna.getMobile_chk());
 
 			result = pstmt.executeUpdate();
-//			System.out.println(pstmt);
 			if (result != 0) {
 				return true;
 			}
@@ -139,7 +137,6 @@ public class BoardDAO {
 		int count = 0;
 		ResultSet rs = null;
 		String sql = "select * from faq where category = ?";
-//		System.out.println("boardDao:" + category);
 
 		try {
 			if (category.equals("0")) {
@@ -152,7 +149,6 @@ public class BoardDAO {
 				rs = pstmt.executeQuery();
 			}
 
-//			System.out.println(sql);
 			rs.last();
 
 			count = rs.getRow();
@@ -186,7 +182,6 @@ public class BoardDAO {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			// pstmt.setString(1, category);
 			rs = pstmt.executeQuery();
 
 			rs.last();
@@ -238,7 +233,7 @@ public class BoardDAO {
 				qna.setCategory(rs.getString("category"));
 				qna.setTitle(rs.getString("title"));
 				qna.setContent(rs.getString("content"));
-				qna.setReg_date_time(rs.getTimestamp("reg_date_time"));
+				qna.setReg_date_time(rs.getDate("reg_date_time"));
 				qna.setQna_reply(rs.getString("qna_reply"));
 				qna_list.add(qna);
 
@@ -281,7 +276,7 @@ public class BoardDAO {
 				notice.setIdx(rs.getInt("idx"));
 				notice.setTitle(rs.getString("title"));
 				notice.setContent(rs.getString("content"));
-				notice.setReg_date_time(rs.getString("reg_date_time"));
+				notice.setReg_date_time(rs.getDate("reg_date_time"));
 				notice_list.add(notice);
 			}
 			return notice_list;
@@ -307,7 +302,6 @@ public class BoardDAO {
 
 	// 윤식추가 쿼리문 통일
 	// 고객지원 - FAQ 불러오기
-	// @SuppressWarnings({ "unchecked", "unused" })
 	public ArrayList<FaqVO> getFaq(String category, int startRow, int pageSize) throws Exception {
 		ArrayList<FaqVO> faq_list = new ArrayList<FaqVO>();
 		// 0을 넣었을때 다른 sql 구문이 돌수 있게 하자
@@ -421,7 +415,6 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, category);
 			rs = pstmt.executeQuery();
-//			System.out.println(pstmt);
 
 			while (rs.next()) {
 				FaqVO faq = new FaqVO();
@@ -466,7 +459,6 @@ public class BoardDAO {
 
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-//			System.out.println(pstmt);
 
 			while (rs.next()) {
 				Board_Search_ListVO listVO = new Board_Search_ListVO();

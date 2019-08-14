@@ -1,6 +1,6 @@
 package net.company.dto;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class CompanyVO {
 	private int cp_idx;
@@ -20,15 +20,15 @@ public class CompanyVO {
 	private String cp_lng;
 	private String cp_add_extra;
 	private String cp_capital;
-	private Timestamp cp_open_datetime;
+	private Date cp_open_datetime;
 	private String cp_avg_monthly_sales;
 	private String cp_monthly_profit;
-	private Timestamp cp_reg_datetime;
-	private Timestamp cp_exit_datetime;
+	private Date cp_reg_datetime;
+	private Date cp_exit_datetime;
 	private String cp_intro_content;
 	private String cp_purpose;
 	private String cp_point_comment;
-	private Timestamp cp_update_datetime;
+	private Date cp_update_datetime;
 	private String cp_business_risk;
 	private String cp_company_risk;
 	private String cp_other_risks;
@@ -172,10 +172,10 @@ public class CompanyVO {
 	public void setCp_capital(String cp_capital) {
 		this.cp_capital = cp_capital;
 	}
-	public Timestamp getCp_open_datetime() {
+	public Date getCp_open_datetime() {
 		return cp_open_datetime;
 	}
-	public void setCp_open_datetime(Timestamp cp_open_datetime) {
+	public void setCp_open_datetime(Date cp_open_datetime) {
 		this.cp_open_datetime = cp_open_datetime;
 	}
 	public String getCp_avg_monthly_sales() {
@@ -190,16 +190,16 @@ public class CompanyVO {
 	public void setCp_monthly_profit(String cp_monthly_profit) {
 		this.cp_monthly_profit = cp_monthly_profit;
 	}
-	public Timestamp getCp_reg_datetime() {
+	public Date getCp_reg_datetime() {
 		return cp_reg_datetime;
 	}
-	public void setCp_reg_datetime(Timestamp cp_reg_datetime) {
+	public void setCp_reg_datetime(Date cp_reg_datetime) {
 		this.cp_reg_datetime = cp_reg_datetime;
 	}
-	public Timestamp getCp_exit_datetime() {
+	public Date getCp_exit_datetime() {
 		return cp_exit_datetime;
 	}
-	public void setCp_exit_datetime(Timestamp cp_exit_datetime) {
+	public void setCp_exit_datetime(Date cp_exit_datetime) {
 		this.cp_exit_datetime = cp_exit_datetime;
 	}
 	public String getCp_intro_content() {
@@ -220,10 +220,10 @@ public class CompanyVO {
 	public void setCp_point_comment(String cp_point_comment) {
 		this.cp_point_comment = cp_point_comment;
 	}
-	public Timestamp getCp_update_datetime() {
+	public Date getCp_update_datetime() {
 		return cp_update_datetime;
 	}
-	public void setCp_update_datetime(Timestamp cp_update_datetime) {
+	public void setCp_update_datetime(Date cp_update_datetime) {
 		this.cp_update_datetime = cp_update_datetime;
 	}
 	public String getCp_business_risk() {

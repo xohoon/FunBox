@@ -54,7 +54,7 @@
     <li>
       <img src="img/ico_fin1.jpg" alt="투자현황"><p>
         기업명</p>
-        <span><%=memberInvestVO.getCp_name() %><span><%=memberInvestVO.getCp_add_ch() %></span></span>
+        <span>${memberInvestVO.cp_name}<span>${memberInvestVO.cp_add_ch }</span></span>
     </li>
     <li>
       <img src="img/ico_fin2.jpg" alt="투자현황"><p>

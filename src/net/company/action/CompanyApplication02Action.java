@@ -64,8 +64,6 @@ public class CompanyApplication02Action implements Action {
 		company.setApp_cp_during(app_cp_during);
 		company.setApp_cp_inv_min_amount(app_cp_inv_min_amount);
 
-		System.out.println(company.toString());
-		
 		// 다음페이지에 company 전달
 		request.setAttribute("company", company);
 

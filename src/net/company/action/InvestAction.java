@@ -17,17 +17,12 @@ public class InvestAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		
-		//HttpSession session = request.getSession();
-		//String _mb_id = (String)session.getAttribute("id");
-		
 		CompanyDAO companyDAO = new CompanyDAO();
 		int _mb_idx = Integer.parseInt(request.getParameter("mb_idx"));
 		int _cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
 		int _po_amount = Integer.parseInt(request.getParameter("point"));
 		String _mi_hoiling_stock = request.getParameter("amount");
 		String _cp_name = request.getParameter("cp_name");
-		
-		//System.out.println(_mb_idx+_cp_idx+_cp_name+_po_amount+_mi_hoiling_stock);
 		
 		if (companyDAO.invest(_mb_idx, _cp_idx,_cp_name ,_po_amount,_mi_hoiling_stock)) {
 			MemberDAO memberDAO = new MemberDAO();
@@ -37,7 +32,6 @@ public class InvestAction implements Action {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('투자가 완료되었습니다.');");
-			//out.println("location.href='./MemberInvestmentList.mb?mi_idx="+mi_idx+"';");
 			out.println("location.href='./MemberInvestmentDrop.mb?mi_idx="+mi_idx+"';");
 			out.println("</script>");
 			out.close();

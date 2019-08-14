@@ -16,8 +16,6 @@ public class CompanyApplication03Action implements Action {
 		ActionForward forward = new ActionForward();
 		HttpSession session = request.getSession();
 
-		System.out.println("CompanyApplication03Action");
-
 		// page1 파라미터값
 		String idx = (String)session.getAttribute("idx");
 		String app_cp_name = request.getParameter("name");
@@ -75,8 +73,6 @@ public class CompanyApplication03Action implements Action {
 		company.setApp_cp_introduction(app_cp_introduction);
 		company.setApp_cp_purpose(app_cp_purpose);
 		company.setApp_cp_point(app_cp_point);
-		
-		System.out.println(company.toString());
 		
 		// 다음페이지에 company 전달
 		request.setAttribute("company", company);

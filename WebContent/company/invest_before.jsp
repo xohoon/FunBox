@@ -1,4 +1,3 @@
-<%-- <%@page import="net.company.dto.CompanyBean"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -12,9 +11,6 @@ pageEncoding="UTF-8"%>
 
   <title>투자 하기</title>
 
-  <!--[if lt IE 9]>
-      <script src="./js/html5.js"></script>
-   <![endif]-->
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/invest.css" rel="stylesheet">
   <script src="js/jquery-3.1.1.min.js"></script>
@@ -24,9 +20,6 @@ pageEncoding="UTF-8"%>
 </head>
 
 <body>
-<%
-	//CompanyBean company = (CompanyBean)request.getAttribute("company");
-%>
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div>
