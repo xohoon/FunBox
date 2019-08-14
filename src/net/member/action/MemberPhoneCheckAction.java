@@ -20,18 +20,18 @@ public class MemberPhoneCheckAction implements Action {
 	@SuppressWarnings("unchecked")
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception,ServletException, IOException {
-System.out.println("들어감");
+	//	System.out.println("들어감");
 		NexmoSms sms = new NexmoSms();
 		
 		JSONObject jsondata = new JSONObject();
 		
         String ph = request.getParameter("ph");
-        System.out.println("MemberPhoneCheckAction : " + ph);
+    //    System.out.println("MemberPhoneCheckAction : " + ph);
         int prvkey = sms.sms_code_making();
         String key = Integer.toString(prvkey);
         
         String phoneNum = "82"+sms.phoneNumber_format(ph);
-        System.out.println("phoneNum : "+phoneNum);
+     //   System.out.println("phoneNum : "+phoneNum);
         
         	
         	

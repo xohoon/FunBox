@@ -34,8 +34,8 @@ public class MemberInvestcheck implements Action {
 			JSONdata.put("mi_idx", mi_idx_funding_status.get(0));
 			JSONdata.put("cp_funding_status", mi_idx_funding_status.get(1));
 			
-			System.out.println("mi_idx"+mi_idx_funding_status.get(0));
-			System.out.println("mi_idx_funding_status"+mi_idx_funding_status.get(1));
+		//	System.out.println("mi_idx"+mi_idx_funding_status.get(0));
+		//	System.out.println("mi_idx_funding_status"+mi_idx_funding_status.get(1));
 			
 		}else {
 			JSONdata.put("mi_idx", "-1");

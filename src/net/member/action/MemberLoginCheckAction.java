@@ -40,7 +40,7 @@ public class MemberLoginCheckAction implements Action {
 		
 		if(result == 0) {
 			jsondata.put("result", 0);
-			System.out.println("비밀번호가 일치하지 않습니다.");
+		//	System.out.println("비밀번호가 일치하지 않습니다.");
 		}/*else if(result == 2) {
 			jsondata.put("result", 2);
 			System.out.println("tx비밀번호가 일치하지 않습니다.");
@@ -49,7 +49,7 @@ public class MemberLoginCheckAction implements Action {
 			System.out.println("비밀번호와 tx비밀번호가 모두 일치하지 않습니다.");
 		}*/else if(result == -1) {
 			jsondata.put("result", -1);
-			System.out.println("존재하지 않는 아이디입니다.");
+		//	System.out.println("존재하지 않는 아이디입니다.");
 		}else {
 			// 로그인 성공
 			jsondata.put("result", 1);

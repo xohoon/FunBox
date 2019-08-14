@@ -1,7 +1,6 @@
 package test;
 
 import net.company.dao.CompanyDAO;
-import net.company.dto.CompanyBean;
 
 public class Main {
 

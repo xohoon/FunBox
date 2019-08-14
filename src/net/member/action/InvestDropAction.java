@@ -67,7 +67,6 @@ public class InvestDropAction implements Action {
 			forward.setPath("./Index.mb");
 			return forward;
 		}
-		
 		memberDAO = new MemberDAO();
 		MemberInvestPageVO memberInvestVO = memberDAO.getMyPageInvestment(cp_idx,mb_idx);
 		/// 윤식 추가

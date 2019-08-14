@@ -38,11 +38,11 @@ public class MypagePWCheckAction implements Action {
         String select_pw = dao.get_Find_pw(id);
         
         if (select_pw.equals(pw)) {	// 비밀번호가 일치할 때
-        	System.out.println("비밀번호 일치함");
+        	//System.out.println("비밀번호 일치함");
 			jsondata.put("result", "confirm_pw_success");
 			
 		}else {
-			System.out.println("비밀번호 불일치");
+			//System.out.println("비밀번호 불일치");
 			jsondata.put("result", "confirm_pw_fail");
 			
 		}
