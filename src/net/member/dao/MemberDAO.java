@@ -769,7 +769,6 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
 
 			while (rs.next()) {
 				Member_likeboxVO box = new Member_likeboxVO();
