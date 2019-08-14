@@ -26,7 +26,7 @@ public class MemberIDCheckAction implements Action {
         
         
         if(result){
-        	System.out.println("아이디가 존재합니다.");
+        	//System.out.println("아이디가 존재합니다.");
         	jsondata.put("result", "id_check_fail");// 사용자 있으면 1을
         }else{
         	jsondata.put("result", "id_check_success");// 없으면 0을 반환.

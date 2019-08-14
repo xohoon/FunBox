@@ -32,7 +32,7 @@ public class NewPwSms extends HttpServlet implements Servlet {
 		request.setCharacterEncoding("utf-8"); // utf-8 인코딩
 		@SuppressWarnings("unused")
 		HttpSession session = request.getSession();
-		System.out.println("문자 전송 시작 ");
+		//System.out.println("문자 전송 시작 ");
 		JSONObject jsondata = new JSONObject();
 		String uuid = null;
 		String newpw = null;
@@ -57,7 +57,7 @@ public class NewPwSms extends HttpServlet implements Servlet {
 			
 				uuid = UUID.randomUUID().toString().replaceAll("-", ""); // -를 제거해 주었다.
 				uuid = uuid.substring(0, 8); // uuid를 앞에서부터 10자리 잘라줌.
-				System.out.println(uuid);
+			//	System.out.println(uuid);
 			
 			try {
 				newpw = sha1.sha1(uuid);
@@ -86,7 +86,7 @@ public class NewPwSms extends HttpServlet implements Servlet {
 			}
 
 			if (re == false) {
-				System.out.println("비밀번호 변경 실패  ");
+		//		System.out.println("비밀번호 변경 실패  ");
 				jsondata.put("result", "change_pw_fail");
 				response.setContentType("application/x-json; charset=UTF-8");
 				response.getWriter().print(jsondata);

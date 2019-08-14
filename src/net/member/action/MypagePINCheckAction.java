@@ -24,7 +24,7 @@ public class MypagePINCheckAction implements Action {
 		
 		JSONObject jsondata = new JSONObject();
 		String pin = request.getParameter("pin");
-		System.out.println("Action>>>>>>"+id+pin);
+	//	System.out.println("Action>>>>>>"+id+pin);
 		
 		try {
 			pin = Sha1_SecretCode.sha1(pin);
@@ -39,11 +39,11 @@ public class MypagePINCheckAction implements Action {
         String select_pin = dao.get_Find_pin(id);
         
         if (select_pin.equals(pin)) {	// 비밀번호가 일치할 때
-        	System.out.println("핀코드 일치함");        	
+       // 	System.out.println("핀코드 일치함");        	
 			jsondata.put("result", "confirm_pin_success");
 			
 		}else {
-			System.out.println("핀코드 불일치");
+		//	System.out.println("핀코드 불일치");
 			jsondata.put("result", "confirm_pin_fail");
 			
 		}

@@ -125,12 +125,12 @@ public class MemberDAO {
 				cnt = rs.getInt("cnt");
 
 				if (cnt != 0) {
-					System.out.println("아이디가 존재합니다.");
+			//		System.out.println("아이디가 존재합니다.");
 					x = true; // 해당 아이디 존재
 				}
 				return x;
 			} else {
-				System.out.println("duplicateIdCheck(DAO) 쿼리문 작동 실패");
+			//	System.out.println("duplicateIdCheck(DAO) 쿼리문 작동 실패");
 			}
 
 		} catch (Exception ex) {
@@ -173,13 +173,13 @@ public class MemberDAO {
 				cnt = rs.getInt("cnt");
 
 				if (cnt != 0) {
-					System.out.println("번호가 존재합니다.");
+				//	System.out.println("번호가 존재합니다.");
 					x = true; // 해당 번호 존재
 				}
-				System.out.println("사용가능한 번호입니다.");
+			//	System.out.println("사용가능한 번호입니다.");
 				return x;
 			} else {
-				System.out.println("duplicatePhoneCheck(DAO) 쿼리문 작동 실패");
+			//	System.out.println("duplicatePhoneCheck(DAO) 쿼리문 작동 실패");
 			}
 
 		} catch (Exception ex) {
@@ -245,14 +245,14 @@ public class MemberDAO {
 		String sql = "select mb_id from member where mb_name=? and mb_phone=?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("get_MemberId 실행 : " + phone);
+	//	System.out.println("get_MemberId 실행 : " + phone);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
 			pstmt.setString(2, phone);
 
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+	//		System.out.println(pstmt);
 			if (rs.next()) {
 
 				String mb_id = rs.getString("mb_id");
@@ -284,13 +284,13 @@ public class MemberDAO {
 		String sql = "select mb_id from member where mb_phone=? and mb_id=?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("get_MemberId 실행 : " + phone);
+	//	System.out.println("get_MemberId 실행 : " + phone);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, phone);
 			pstmt.setString(2, id);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+	//		System.out.println(pstmt);
 			if (rs.next()) {
 
 				String mb_id = rs.getString("mb_id");
@@ -329,7 +329,7 @@ public class MemberDAO {
 			pstmt.setString(1, pw);
 			pstmt.setString(2, id);
 			pstmt.executeUpdate();
-			System.out.println(pstmt);
+		//	System.out.println(pstmt);
 			return true;
 		} catch (Exception ex) {
 			System.out.println("setNewPw 에러: " + ex);
@@ -377,7 +377,7 @@ public class MemberDAO {
 				member.setAdd_extra(rs.getString("mb_add_extra"));
 
 			} else {
-				System.out.println("getMemberInfo(DAO) 쿼리문 작동 실패");
+	//			System.out.println("getMemberInfo(DAO) 쿼리문 작동 실패");
 			}
 
 			return member;
@@ -420,7 +420,7 @@ public class MemberDAO {
 			pstmt.setString(9, member.getId());
 
 			pstmt.executeUpdate();
-			System.out.println(pstmt);
+		//	System.out.println(pstmt);
 
 			return true;
 
@@ -447,12 +447,12 @@ public class MemberDAO {
 		String sql = "select mb_id from member where mb_id=?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("get_FindTx_id 실행 : " + id);
+	//	System.out.println("get_FindTx_id 실행 : " + id);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+	//		System.out.println(pstmt);
 			if (rs.next()) {
 
 				String mb_id = rs.getString("mb_id");
@@ -484,14 +484,14 @@ public class MemberDAO {
 		String sql = "select mb_pw from member where mb_id=? and mb_pw=?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("get_FindTx_pw 실행 : " + id);
-		System.out.println("get_FindTx_pw 실행 : " + pw);
+//		System.out.println("get_FindTx_pw 실행 : " + id);
+//		System.out.println("get_FindTx_pw 실행 : " + pw);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+//			System.out.println(pstmt);
 			if (rs.next()) {
 
 				String mb_pw = rs.getString("mb_pw");
@@ -523,14 +523,14 @@ public class MemberDAO {
 		String sql = "select mb_phone from member where mb_id=? and mb_phone=?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("get_MemberID 실행 : " + id);
-		System.out.println("get_MemberPhone 실행 : " + phone);
+	//	System.out.println("get_MemberID 실행 : " + id);
+	//	System.out.println("get_MemberPhone 실행 : " + phone);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, phone);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+	//		System.out.println(pstmt);
 			if (rs.next()) {
 
 				String mb_phone = rs.getString("mb_phone");
@@ -569,7 +569,7 @@ public class MemberDAO {
 			pstmt.setString(1, tx);
 			pstmt.setString(2, id);
 			pstmt.executeUpdate();
-			System.out.println(pstmt);
+		//	System.out.println(pstmt);
 			return true;
 		} catch (Exception ex) {
 			System.out.println("setNewPw 에러: " + ex);
@@ -594,12 +594,12 @@ public class MemberDAO {
 		String sql = "select mb_pw from member where mb_id=?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("get_Find_pw 실행 : " + id);
+	//	System.out.println("get_Find_pw 실행 : " + id);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+	//		System.out.println(pstmt);
 			if (rs.next()) {
 
 				String mb_pw = rs.getString("mb_pw");
@@ -631,12 +631,12 @@ public class MemberDAO {
 		String sql = "select mb_pincode from member where mb_id=?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("get_Find_pin 실행 : " + id);
+//		System.out.println("get_Find_pin 실행 : " + id);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+	//		System.out.println(pstmt);
 			if (rs.next()) {
 
 				String mb_pin = rs.getString("mb_pincode");
@@ -681,14 +681,14 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+		//	System.out.println(pstmt);
 
 			if (rs.next()) {
 				member.setMb_point(rs.getString("mb_point"));
 				member.setMb_token(rs.getString("mb_token"));
 				member.setMb_accumulate(rs.getString("sum(b.mi_cumulative_profit)"));
 			}
-			System.out.println(member.getMb_point() + member.getMb_token() + member.getMb_accumulate());
+	//		System.out.println(member.getMb_point() + member.getMb_token() + member.getMb_accumulate());
 
 			return member;
 		} catch (Exception ex) {
@@ -722,13 +722,13 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_id);
 			rs = pstmt.executeQuery();
-			System.out.println("session DAO>>>>>>>>>" + pstmt);
+		//	System.out.println("session DAO>>>>>>>>>" + pstmt);
 
 			if (rs.next()) {
 				mb_idx = rs.getString("mb_idx");
 			}
 
-			System.out.println("SELECT ERROR>>>>>");
+		//	System.out.println("SELECT ERROR>>>>>");
 			return mb_idx;
 
 		} catch (Exception ex) {
@@ -811,7 +811,7 @@ public class MemberDAO {
 
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+		//	System.out.println(pstmt);
 
 			while (rs.next()) {
 				Main_SlideVO slide = new Main_SlideVO();
@@ -909,7 +909,7 @@ public class MemberDAO {
 
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+		//	System.out.println(pstmt);
 
 			if (rs.next()) {
 				cityVO.setSeoul(rs.getString("seoul"));
@@ -1081,7 +1081,7 @@ public class MemberDAO {
 
 				jsonArr.add(jsonObj);
 			}
-			System.out.println(">>>json" + jsonArr);
+			//System.out.println(">>>json" + jsonArr);
 			return jsonArr;
 
 		} catch (Exception ex) {
@@ -1278,11 +1278,11 @@ public class MemberDAO {
 			result = cstmt.getInt("@RESULT");
 
 			if (result == 1) {
-				System.out.println(">>>>1철회성공" + result);
+			//	System.out.println(">>>>1철회성공" + result);
 				result = 1; // 철회성공
 				return result;
 			} else { // 철회실패
-				System.out.println(">>>>2실패" + result);
+			//	System.out.println(">>>>2실패" + result);
 				result = 0;
 			}
 		} catch (Exception ex) {
@@ -1481,7 +1481,7 @@ public class MemberDAO {
 				+ startRow + "," + pageSize;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("mb idx : " + mb_idx);
+		//System.out.println("mb idx : " + mb_idx);
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -1541,7 +1541,7 @@ public class MemberDAO {
 			pstmt.setString(1, mb_idx);
 			pstmt.setString(2, mb_idx);
 			rs = pstmt.executeQuery();
-			System.out.println(pstmt);
+			//System.out.println(pstmt);
 			rs.last();
 
 			count = rs.getRow();
@@ -1624,7 +1624,7 @@ public class MemberDAO {
 		ResultSet rs = null;
 		int count = 0;
 
-		System.out.println("mb idx : " + mb_idx);
+		//System.out.println("mb idx : " + mb_idx);
 
 		try {
 			// if (category.equals("0")) {

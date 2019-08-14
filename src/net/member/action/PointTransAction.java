@@ -30,13 +30,13 @@ public class PointTransAction implements Action {
 		}
 		
 		int currentPage = Integer.parseInt(pageNum);
-		System.out.println("currentPage : "+currentPage);
+	//	System.out.println("currentPage : "+currentPage);
 		
 		int startRow = (currentPage - 1) * pageSize + 1;// 한 페이지의 시작글 번호 / 1
-		System.out.println("startRow : "+startRow);
+	//	System.out.println("startRow : "+startRow);
 		
 		int endRow = currentPage * pageSize;// 한 페이지의 마지막 글번호 / 10
-		System.out.println("endRow : "+endRow);
+	//	System.out.println("endRow : "+endRow);
 		
 		int count = 0;
 		int number = 0;
@@ -44,9 +44,9 @@ public class PointTransAction implements Action {
 		MemberDAO member_dao0 = new MemberDAO();
 		count = member_dao0.getPointTranscationCount(mb_idx);
 		
-		System.out.println("해당 DB 글 개수 불러오기" + count);
-		System.out.println("id"+mb_id);
-		System.out.println("idx"+mb_idx);
+	//	System.out.println("해당 DB 글 개수 불러오기" + count);
+	//	System.out.println("id"+mb_id);
+	//	System.out.println("idx"+mb_idx);
 		
 		if (mb_id == null || mb_idx == null) {
 			//로그인 안된 사용자 접근 처리
@@ -59,12 +59,12 @@ public class PointTransAction implements Action {
 			}
 			MemberDAO member_dao = new MemberDAO();
 			transaction = member_dao.getPointTranscationList(mb_idx, startRow - 1, pageSize);			
-			System.out.println("pointtransaction : " + transaction.toString());
+	//		System.out.println("pointtransaction : " + transaction.toString());
 			
 		}else {
 			MemberDAO member_dao = new MemberDAO();
 			transaction = member_dao.getPointTranscationList(mb_idx, startRow - 1, pageSize);
-			System.out.println("pointtransaction : " + transaction.toString());
+	//		System.out.println("pointtransaction : " + transaction.toString());
 			
 		}
 		
@@ -78,31 +78,31 @@ public class PointTransAction implements Action {
 		int numPageGroup = (int) Math.ceil((double) currentPage / pageGroupSize);
 		
 		request.setAttribute("currentPage", new Integer(currentPage));
-		System.out.println(currentPage); // 
+		//System.out.println(currentPage); // 
 		
 		request.setAttribute("startRow", new Integer(startRow));
-		System.out.println(startRow); //
+		//System.out.println(startRow); //
 		
 		request.setAttribute("endRow", new Integer(endRow));
-		System.out.println(endRow); //
+		//System.out.println(endRow); //
 		
 		request.setAttribute("count", new Integer(count));
-		System.out.println(count); //
+		//System.out.println(count); //
 		
 		request.setAttribute("pageSize", new Integer(pageSize));
-		System.out.println(pageSize); //
+		//System.out.println(pageSize); //
 
 		request.setAttribute("number", new Integer(number));
-		System.out.println(number); // 
+		//System.out.println(number); // 
 		
 		request.setAttribute("pageGroupSize", new Integer(pageGroupSize));
-		System.out.println(pageGroupSize); //
+		//System.out.println(pageGroupSize); //
 		
 		request.setAttribute("numPageGroup", new Integer(numPageGroup));
-		System.out.println(numPageGroup); // 
+		//System.out.println(numPageGroup); // 
 		
 		request.setAttribute("pageGroupCount", new Integer(pageGroupCount));
-		System.out.println(pageGroupCount); // 
+		//System.out.println(pageGroupCount); // 
 		
 		request.setAttribute("transaction", transaction);	
 		

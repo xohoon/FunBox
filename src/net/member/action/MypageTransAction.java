@@ -34,10 +34,10 @@ public class MypageTransAction implements Action {
 		
 		//로그인 안된 사용자 접근 처리
 		if (mb_id == null || mb_idx == null) {
-			System.out.println("로그인 안됨");
+		//	System.out.println("로그인 안됨");
 		}else {
-			System.out.println("id : "+mb_id);
-			System.out.println("idx : "+mb_idx);
+		//	System.out.println("id : "+mb_id);
+		//	System.out.println("idx : "+mb_idx);
 		}
 				
 		// 페이지 번호 에외처리
@@ -49,23 +49,22 @@ public class MypageTransAction implements Action {
 		try {
 			if(category.equals(null) || category == null) {
 				category = "1";
-				System.out.println("들어오낭?");
 			}
 		}catch(NullPointerException e) {
 			//System.out.println("NullPointerException :" + e);
 			category = "1";			
 		}
 		
-		System.out.println("category :" + category);
+//		System.out.println("category :" + category);
 		
 		int currentPage = Integer.parseInt(pageNum);
-		System.out.println("currentPage : "+currentPage);
+//		System.out.println("currentPage : "+currentPage);
 		
 		int startRow = (currentPage - 1) * pageSize + 1;// 한 페이지의 시작글 번호 / 1
-		System.out.println("startRow : "+startRow);
+//		System.out.println("startRow : "+startRow);
 		
 		int endRow = currentPage * pageSize;// 한 페이지의 마지막 글번호 / 10
-		System.out.println("endRow : "+endRow);
+//		System.out.println("endRow : "+endRow);
 		
 		int count = 0;
 		int number = 0;
@@ -73,7 +72,7 @@ public class MypageTransAction implements Action {
 		
 		// 카테고리별 쿼리문 실행
 		if(category.equals("1")) { // 입출금 내역
-			System.out.println("MypageTransAction category 1 : OK!");
+	//		System.out.println("MypageTransAction category 1 : OK!");
 			
 			ArrayList<MemberTransactionVO> transaction = new ArrayList<MemberTransactionVO>();
 			MemberDAO member_dao0 = new MemberDAO();
@@ -104,31 +103,31 @@ public class MypageTransAction implements Action {
 			int numPageGroup = (int) Math.ceil((double) currentPage / pageGroupSize);
 			
 			request.setAttribute("currentPage", new Integer(currentPage));
-			System.out.println(currentPage); // 
+		//	System.out.println(currentPage); // 
 			
 			request.setAttribute("startRow", new Integer(startRow));
-			System.out.println(startRow); //
+		//	System.out.println(startRow); //
 			
 			request.setAttribute("endRow", new Integer(endRow));
-			System.out.println(endRow); //
+		//	System.out.println(endRow); //
 			
 			request.setAttribute("count", new Integer(count));
-			System.out.println(count); //
+		//	System.out.println(count); //
 			
 			request.setAttribute("pageSize", new Integer(pageSize));
-			System.out.println(pageSize); //
+		//	System.out.println(pageSize); //
 
 			request.setAttribute("number", new Integer(number));
-			System.out.println(number); // 
+		//	System.out.println(number); // 
 			
 			request.setAttribute("pageGroupSize", new Integer(pageGroupSize));
-			System.out.println(pageGroupSize); //
+		//	System.out.println(pageGroupSize); //
 			
 			request.setAttribute("numPageGroup", new Integer(numPageGroup));
-			System.out.println(numPageGroup); // 
+		//	System.out.println(numPageGroup); // 
 			
 			request.setAttribute("pageGroupCount", new Integer(pageGroupCount));
-			System.out.println(pageGroupCount); // 
+		//	System.out.println(pageGroupCount); // 
 			
 			request.setAttribute("category", category);
 			request.setAttribute("categroyFlag", categroyFlag);
@@ -136,12 +135,12 @@ public class MypageTransAction implements Action {
 
 					
 		}else if(category.equals("2")){
-			System.out.println("MypageTransAction category 2 : OK!");
+		//	System.out.println("MypageTransAction category 2 : OK!");
 			
 			ArrayList<MypagePointTransactionVO> transactionP = new ArrayList<MypagePointTransactionVO>();
 			MemberDAO member_dao0 = new MemberDAO();
 			count = member_dao0.getPointTranscationCount(mb_idx);
-			System.out.println("해당 DB 글 개수 불러오기" + count);
+		//	System.out.println("해당 DB 글 개수 불러오기" + count);
 			
 			if(count>0) {
 				if (endRow > count) {
@@ -149,12 +148,12 @@ public class MypageTransAction implements Action {
 				}
 				MemberDAO member_dao = new MemberDAO();
 				transactionP = member_dao.getPointTranscationList(mb_idx, startRow - 1, pageSize);			
-				System.out.println("pointtransaction : " + transactionP.toString());
+		//		System.out.println("pointtransaction : " + transactionP.toString());
 				
 			}else {
 				MemberDAO member_dao = new MemberDAO();
 				transactionP = member_dao.getPointTranscationList(mb_idx, startRow - 1, pageSize);
-				System.out.println("pointtransaction : " + transactionP.toString());
+		//		System.out.println("pointtransaction : " + transactionP.toString());
 			}
 				
 				number = count - (currentPage - 1) * pageSize;// 글목록에 표시할 글번호
@@ -167,31 +166,31 @@ public class MypageTransAction implements Action {
 				int numPageGroup = (int) Math.ceil((double) currentPage / pageGroupSize);
 				
 				request.setAttribute("currentPage", new Integer(currentPage));
-				System.out.println(currentPage); // 
+		//		System.out.println(currentPage); // 
 				
 				request.setAttribute("startRow", new Integer(startRow));
-				System.out.println(startRow); //
+		//		System.out.println(startRow); //
 				
 				request.setAttribute("endRow", new Integer(endRow));
-				System.out.println(endRow); //
+		//		System.out.println(endRow); //
 				
 				request.setAttribute("count", new Integer(count));
-				System.out.println(count); //
+		//		System.out.println(count); //
 				
 				request.setAttribute("pageSize", new Integer(pageSize));
-				System.out.println(pageSize); //
+		//		System.out.println(pageSize); //
 
 				request.setAttribute("number", new Integer(number));
-				System.out.println(number); // 
+		//		System.out.println(number); // 
 				
 				request.setAttribute("pageGroupSize", new Integer(pageGroupSize));
-				System.out.println(pageGroupSize); //
+		//		System.out.println(pageGroupSize); //
 				
 				request.setAttribute("numPageGroup", new Integer(numPageGroup));
-				System.out.println(numPageGroup); // 
+		//		System.out.println(numPageGroup); // 
 				
 				request.setAttribute("pageGroupCount", new Integer(pageGroupCount));
-				System.out.println(pageGroupCount); // 
+		//		System.out.println(pageGroupCount); // 
 				
 				request.setAttribute("category", category);
 				request.setAttribute("categroyFlag", categroyFlag);
@@ -199,7 +198,7 @@ public class MypageTransAction implements Action {
 				
 			
 		}else if(category.equals("3")){
-			System.out.println("MypageTransAction category 3 : OK!");
+		//	System.out.println("MypageTransAction category 3 : OK!");
 			
 			ArrayList<MemberInvestVO> member_invest_list = null;
 			CompanyDAO company_dao = new CompanyDAO();

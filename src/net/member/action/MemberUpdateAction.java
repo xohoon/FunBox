@@ -46,7 +46,7 @@ public class MemberUpdateAction implements Action {
 		}else if(add_extra.equals("")) {
 			add_extra = request.getParameter("add_extra");
 		}
-		System.out.println("add_ch: "+add_ch);
+		//System.out.println("add_ch: "+add_ch);
 		
 		//비밀번호 암호화
 		if(pw.equals("")) {
@@ -75,7 +75,7 @@ public class MemberUpdateAction implements Action {
 				if (ph.length() <= 8) {
 					ph = "010" + ph;
 				}
-				System.out.println("휴대폰 번호 : "+ ph);
+			//	System.out.println("휴대폰 번호 : "+ ph);
 			} 
 		}
 		
@@ -96,7 +96,7 @@ public class MemberUpdateAction implements Action {
 		result = member_dao.updateMember(member);
 		
 		if(result==false){
-			System.out.println("개인정보수정 실패");
+		//	System.out.println("개인정보수정 실패");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -108,7 +108,7 @@ public class MemberUpdateAction implements Action {
 			return null;
 		}
 		
-		System.out.println("개인정보수정 성공");
+	//	System.out.println("개인정보수정 성공");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.println("<script>");

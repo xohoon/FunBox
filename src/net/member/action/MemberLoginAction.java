@@ -3,7 +3,6 @@ package net.member.action;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.common.action.Action;
 import net.common.action.ActionForward;
@@ -15,7 +14,7 @@ import net.member.util.EgovHttpSessionBindingListener;
 public class MemberLoginAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = new ActionForward();
-		HttpSession session = request.getSession();
+		//HttpSession session = request.getSession();
 		// 태훈
 		MemberDAO memberDAO = new MemberDAO();
 
@@ -76,8 +75,8 @@ public class MemberLoginAction implements Action {
 		memberDAO = new MemberDAO();
 		memberDAO.insertMemberLoginLog(memberIplog);
 
-		System.out.println("로그인 성공");
-		System.out.println("ID >> " + id + "IDX>>" + mb_idx);
+	//	System.out.println("로그인 성공");
+	//	System.out.println("ID >> " + id + "IDX>>" + mb_idx);
 		// 로그인 성공시 페이지 이동
 //		session.setAttribute("id", id); // 세션에 id등록
 //		session.setAttribute("idx", mb_idx);

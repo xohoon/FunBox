@@ -38,7 +38,7 @@ public class MemberJoinAction implements Action {
 		if(request.getParameter("ag3") != null) {
 			ag3 = Integer.parseInt(request.getParameter("ag3"));
 		}else {
-			System.out.println("회원가입 실패");
+		//	System.out.println("회원가입 실패");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -51,7 +51,7 @@ public class MemberJoinAction implements Action {
 		if(request.getParameter("ag4") != null) {
 			ag4 = Integer.parseInt(request.getParameter("ag4"));
 		}else {
-			System.out.println("회원가입 실패");
+		//	System.out.println("회원가입 실패");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -71,7 +71,7 @@ public class MemberJoinAction implements Action {
 			}
 		} 
 		
-		System.out.println("휴대폰 번호 : "+ ph);
+	//	System.out.println("휴대폰 번호 : "+ ph);
 		
 		
 		
@@ -107,7 +107,7 @@ public class MemberJoinAction implements Action {
 		result = member_dao.insertMember(member);
 		
 		if(result==false){
-			System.out.println("회원가입 실패");
+			//System.out.println("회원가입 실패");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -119,7 +119,7 @@ public class MemberJoinAction implements Action {
 			return null;
 		}
 		
-		System.out.println("회원가입 성공");
+	//	System.out.println("회원가입 성공");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.println("<script>");

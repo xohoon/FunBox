@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import net.common.action.Action;
 import net.common.action.ActionForward;
-import net.member.dao.MemberDAO;
 import net.money.dto.TokenDepositVO;
 
 ///////////////////////박신규짱 추가///////////////////////
@@ -36,7 +35,7 @@ public class MypageDepositAction implements Action {
 		tokenDepositVO.setTd_amount(td_amount);
 		
 		
-		MemberDAO memberDAO = new MemberDAO();
+	//	MemberDAO memberDAO = new MemberDAO();
 		
 		forward.setRedirect(false);
 		forward.setPath("/Mypage2_1.mb");

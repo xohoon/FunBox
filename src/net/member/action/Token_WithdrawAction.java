@@ -25,7 +25,7 @@ public class Token_WithdrawAction implements Action {
 		int result = 0;
 		
 		if(token_sum != null && token_wallet != null && session_idx != null && bar != null) {
-			System.out.println("DAO>>>>>>>>>>>>>");
+		//	System.out.println("DAO>>>>>>>>>>>>>");
 			result = memberDAO.Token_Withdraw(token_sum, token_wallet, session_idx, bar);
 		}
 		

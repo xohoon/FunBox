@@ -37,7 +37,7 @@ public class FindSms extends HttpServlet implements Servlet{
         String key = Integer.toString(prvkey);
         
         String phoneNum = "82"+sms.phoneNumber_format(ph);
-        System.out.println("phoneNum : "+phoneNum);
+       // System.out.println("phoneNum : "+phoneNum);
 		
 		try {
 			
