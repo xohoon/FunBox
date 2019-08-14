@@ -8,6 +8,9 @@
   	<filter-name>LoginFilter</filter-name>
   	<url-pattern>/BoardQnaList.bd</url-pattern>
   	<url-pattern>/Application1.cp</url-pattern>
+  	<url-pattern>/Application01Action.cp</url-pattern>
+  	<url-pattern>/Application02Action.cp</url-pattern>
+  	<url-pattern>/Application03Action.cp</url-pattern>
   	<url-pattern>/Invest_beforeAction.cp</url-pattern>
   </filter-mapping>
   

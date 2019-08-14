@@ -40,7 +40,7 @@ $(function() {
 
 	    // 인포윈도우로 장소에 대한 설명을 표시합니다
 	    var infowindow = new kakao.maps.InfoWindow({
-	        content: '<div style="padding:4px;font-size:12px;">'+cp_name+'</div>'
+	        content: '<div style="padding:4px;font-size:12px;text-align:center;">'+cp_name+'</div>'
 	    });
 	    infowindow.open(map, marker);
 
