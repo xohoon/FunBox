@@ -8,6 +8,7 @@
 <%@page import="java.sql.Timestamp"%>
 <%@ page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -36,9 +37,7 @@
     <div class="loadercircle"></div>
     <div class="loadercircle"></div>
   </div>
-<%
-	List<QnaVO> qna_list = (List<QnaVO>)request.getAttribute("qna_list");
-%>
+
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div> 
@@ -62,54 +61,32 @@
 						<span>답변</span>
 					</p>
 				</div>
-				<%
-					if(qna_list != null){
-							for(int i=0; i<qna_list.size(); i++){
-				%>
+				 <c:forEach var="qna_list" items="${qna_list}" >
 				<div>
 					<p class="depth1">
-						<span><%=qna_list.get(i).getCategory()%></span>
-						<span><%=qna_list.get(i).getTitle()%></span>
-						<span>
-						<%
-							String reg_date_time = "";
-								 			try {
-								 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-								 				reg_date_time = formatter.format(qna_list.get(i).getReg_date_time());
-								 			} catch (Exception ex) {
-								 				reg_date_time = "";
-								 			}
-								 			out.print(reg_date_time);
-						%>
-							</span>
-						<span>
-						<%
-							if(qna_list.get(i).getQna_reply() != null){
-						%>
-						OK
-						<%
-							}else{	}
-						%>
-						</span>
+						<span>${qna_list.category}</span>
+						<span>${qna_list.title}</span>
+						<span>${qna_list.reg_date_time}</span>
+						<c:if test="${qna_list.qna_reply ne null}">
+							<span>OK</span>
+						</c:if>
+						<c:if test="${qna_list.qna_reply eq null}">
+							<span></span>
+						</c:if>
 					</p>
+					<% pageContext.setAttribute("newLineChar", "\r\n"); %>
 					<p class="depth2">
-						<span><%=qna_list.get(i).getContent().replace("\r\n", "<br>")%></span>
+						<span>${fn:replace(qna_list.content, newLineChar, '<br/>')}</span>
 						<!-- <span>답변입니다</span> -->
-						<span>
-						<%
-							if(qna_list.get(i).getQna_reply() != null){
-						%>
-						<%=qna_list.get(i).getQna_reply().replace("\r\n", "<br>") %>
-						<%
-							}else{	}
-						%>
-						</span>
+						<c:if test="${qna_list.qna_reply ne null}">
+							<span>${fn:replace(qna_list.qna_reply, newLineChar, '<br/>')}</span>
+						</c:if>
+						<c:if test="${qna_list.qna_reply eq null}">
+							<span></span>
+						</c:if>
 					</p> 
 				</div>
-				<%
-							}
-					}
-				%>
+				</c:forEach>
 			</div><!--.table-->
 			<ul class="pager">
 				<c:if test="${count > 0}">
