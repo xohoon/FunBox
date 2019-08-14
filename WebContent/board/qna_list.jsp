@@ -85,6 +85,7 @@
 							<span></span>
 						</c:if>
 					</p> 
+					
 				</div>
 				</c:forEach>
 			</div><!--.table-->
