@@ -26,8 +26,8 @@
   <!--[if lt IE 9]>
       <script src="./js/html5.js"></script>
    <![endif]-->
-  <script src="js/jquery.mousewheel.js"></script>
   <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="js/jquery.mousewheel.js"></script>
   <script src="member/js/mypage1_1.js"></script>
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link href="css/mypage1_1.css" rel="stylesheet">
