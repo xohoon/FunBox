@@ -1,5 +1,7 @@
 package net.member.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,9 +28,21 @@ public class MemberInvestcheck implements Action {
 		}
 		
 		MemberDAO memberDAO = new MemberDAO();
-		int mi_idx = memberDAO.Member_Invest_check(mb_idx);
+		List<String> mi_idx_funding_status = memberDAO.Member_Invest_check(mb_idx);
 		
-		JSONdata.put("mi_idx", mi_idx);
+		if (mi_idx_funding_status != null) {
+			JSONdata.put("mi_idx", mi_idx_funding_status.get(0));
+			JSONdata.put("cp_funding_status", mi_idx_funding_status.get(1));
+			
+			System.out.println("mi_idx"+mi_idx_funding_status.get(0));
+			System.out.println("mi_idx_funding_status"+mi_idx_funding_status.get(1));
+			
+		}else {
+			JSONdata.put("mi_idx", "-1");
+			JSONdata.put("cp_funding_status", "-1");
+		}
+		
+		
 		
 		
         response.setContentType("application/x-json; charset=UTF-8");

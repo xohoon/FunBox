@@ -67,28 +67,29 @@
 <div class="list">
   <p>
     내가 투자한 BOX<br>
-    <span>${count}건</span>
+    <span>${investListCount}건</span>
   </p>
   <ul>
       <c:forEach var="memberInvestCompanyVO" items="${memberInvestCompanyVOList}" >
       	<c:choose> 
-      		<c:when test="${memberInvestCompanyVO.cp_idx eq selectedCp_idx }">
-		      	<li class="on" id="cp_${memberInvestCompanyVO.cp_idx }">
+      		<%-- <c:when test="${memberInvestCompanyVO.cp_idx eq selectedCp_idx }"> --%>
+      		<c:when test="${memberInvestCompanyVO.mi_idx eq selectedMi_idx }">
+		      	<li class="on" id="cp_${memberInvestCompanyVO.mi_idx }">
 	      			<c:if test="${memberInvestCompanyVO.cp_funding_status eq '12'}">
-				      	<a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+				      	<a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }&mi_idx=${memberInvestCompanyVO.mi_idx }">${memberInvestCompanyVO.cp_name }</a>
     	  			</c:if>
     	  			<c:if test="${memberInvestCompanyVO.cp_funding_status eq '11'}">
-    	  				<a href="./MemberInvestmentDrop.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+    	  				<a href="./MemberInvestmentDrop.mb?cp_idx=${memberInvestCompanyVO.cp_idx }&mi_idx=${memberInvestCompanyVO.mi_idx }">${memberInvestCompanyVO.cp_name }</a>
     	  			</c:if>
 		      	</li>
       		</c:when>
       		<c:otherwise>
-      			<li id="cp_${memberInvestCompanyVO.cp_idx }">
+      			<li id="cp_${memberInvestCompanyVO.mi_idx }">
 	      			<c:if test="${memberInvestCompanyVO.cp_funding_status eq '12'}">
-      					<a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+      					<a href="./MemberInvestmentList.mb?cp_idx=${memberInvestCompanyVO.cp_idx }&mi_idx=${memberInvestCompanyVO.mi_idx }">${memberInvestCompanyVO.cp_name }</a>
       				</c:if>
       				<c:if test="${memberInvestCompanyVO.cp_funding_status eq '11'}">
-      					<a href="./MemberInvestmentDrop.mb?cp_idx=${memberInvestCompanyVO.cp_idx }">${memberInvestCompanyVO.cp_name }</a>
+      					<a href="./MemberInvestmentDrop.mb?cp_idx=${memberInvestCompanyVO.cp_idx }&mi_idx=${memberInvestCompanyVO.mi_idx }">${memberInvestCompanyVO.cp_name }</a>
       				</c:if>
       			</li>
       		</c:otherwise>

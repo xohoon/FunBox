@@ -26,48 +26,42 @@ public class InvestDropAction implements Action {
 		
 		String mb_id = (String) session.getAttribute("id");
 		Integer mb_idx = Integer.parseInt((String) session.getAttribute("idx"));
+		String mi_idx_string = request.getParameter("mi_idx");
 		
-		if (mb_id == null || mb_idx == null ) {
+		if (mb_id == null || mb_idx == null || mi_idx_string == null) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('1잘못된 접근 입니다.');</script>");
+			out.println("<script>alert('1잘못된 접근 입니다."+mb_id+mb_idx+mi_idx_string+"');</script>");
 			out.close();
 			forward.setRedirect(true);
 			forward.setPath("./Index.mb");
 			return forward;
 		}
 		
-		int cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
-		request.setAttribute("cp_idx", cp_idx);
+		int mi_idx = Integer.parseInt(mi_idx_string);
 		
-		String cp_idx_string = null;
-		cp_idx_string = request.getParameter("cp_idx");
-		
-		if (cp_idx_string == null) {
-			cp_idx = 2;
-		}else {
-			cp_idx = Integer.parseInt(cp_idx_string);
-		}
+		/*
+		 * int cp_idx = Integer.parseInt(request.getParameter("cp_idx"));
+		 * 
+		 * String cp_idx_string = null; cp_idx_string = request.getParameter("cp_idx");
+		 */
 		
 		boolean flag = false;		
 		MemberDAO memberDAO = new MemberDAO();
-		
+		int cp_idx = 0;
 		ArrayList<MemberInvestCompanyVO> memberInvestCompanyVOList = memberDAO.getInvestmentCompanyList(mb_idx);
 		for (MemberInvestCompanyVO memberInvestVO : memberInvestCompanyVOList ) {
-			if (cp_idx_string == null) {
+			if (memberInvestVO.getMi_idx() == mi_idx) {
+				flag = true;
 				cp_idx = memberInvestVO.getCp_idx();
-				flag = true;
-				break;
-			}
-			if (memberInvestVO.getCp_idx() == cp_idx) {
-				flag = true;
 				break;
 			}
 		}
+		
 		if (!flag) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('2잘못된 접근 입니다.');</script>");
+			out.println("<script>alert('23잘못된 접근 입니다.');</script>");
 			out.close();
 			forward.setRedirect(true);
 			forward.setPath("./Index.mb");
@@ -140,11 +134,14 @@ public class InvestDropAction implements Action {
 		request.setAttribute("numPageGroup", new Integer(numPageGroup));
 		request.setAttribute("pageGroupCount", new Integer(pageGroupCount));
 		
+		request.setAttribute("investListCount", memberInvestCompanyVOList.size());
 		request.setAttribute("member_invest_list", member_invest_list);
 		request.setAttribute("memberInvestVO", memberInvestVO);
 		request.setAttribute("CompanyPayScheduleVO", CompanyPayScheduleVO);
 		request.setAttribute("memberInvestCompanyVOList", memberInvestCompanyVOList);
+		request.setAttribute("selectedMi_idx", mi_idx);	
 		
+		request.setAttribute("cp_idx", cp_idx);
 		forward.setRedirect(false);
 		forward.setPath("./member/mypage1_1.jsp");
 		return forward;

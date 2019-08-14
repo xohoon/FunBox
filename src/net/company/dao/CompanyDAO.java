@@ -190,20 +190,19 @@ public class CompanyDAO {
 
 	// 20190723//
 	// compnay_file //
-	public String getUploadDirectory(int cp_idx) {
-		String sql = "SELECT cf_directory from company_file WHERE cp_idx = ?";
+	public String getUploadDirectory() {
+		String sql = "SELECT file_path FROM file_path WHERE file_category = 'document_path'";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cp_idx);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				String cf_directory = rs.getString("cf_directory");
-				return cf_directory;
+				String file_path = rs.getString("file_path");
+				return file_path;
 			}
 		} catch (Exception ex) {
 			System.out.println("getUploadFilePath 에러: " + ex);
@@ -531,7 +530,7 @@ public class CompanyDAO {
 		try {
 			// 쿼리
 			String sql = "SELECT *,"
-					+ "CONCAT(fp.file_path,b.cf_financial) as b_cf_financial, CONCAT(fp.file_path,b.cf_certificate) as b_cf_certificate, CONCAT(fp.file_path,b.cf_estate_contract) as b_cf_estate_contract,CONCAT(fp.file_path,b.cf_registration) as b_cf_registration, concat(b.cf_directory,b.cf_image1) as cf_directory_image1,concat(b.cf_directory,b.cf_image2) as cf_directory_image2,concat(b.cf_directory,b.cf_image3) as cf_directory_image3,concat(b.cf_directory,b.cf_image4) as cf_directory_image4,concat(b.cf_directory,b.cf_image5) as cf_directory_image5,concat(b.cf_directory,b.cf_image6) as cf_directory_image6, concat(b.cf_directory,b.cf_corporation_banner) as b_cf_corporation_banner ,concat(b.cf_directory,b.cf_corporation_icon) as b_cf_corporation_icon , c.iv_current_amount/iv_goal_amount*100 "
+					+ "concat(b.cf_directory,b.cf_invest_image) as b_cf_invest_image,concat(b.cf_directory,b.cf_image1) as cf_directory_image1,concat(b.cf_directory,b.cf_image2) as cf_directory_image2,concat(b.cf_directory,b.cf_image3) as cf_directory_image3,concat(b.cf_directory,b.cf_image4) as cf_directory_image4,concat(b.cf_directory,b.cf_image5) as cf_directory_image5,concat(b.cf_directory,b.cf_image6) as cf_directory_image6, concat(b.cf_directory,b.cf_corporation_banner) as b_cf_corporation_banner ,concat(b.cf_directory,b.cf_corporation_icon) as b_cf_corporation_icon , c.iv_current_amount/iv_goal_amount*100 "
 					+ "FROM file_path as fp, company as a " 
 					+ "JOIN company_file as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
 					+ "JOIN company_invest as c ON a.cp_idx = c.cp_idx "
@@ -614,10 +613,10 @@ public class CompanyDAO {
 				company.setCp_pre_interest_rate(rs.getInt("cp_pre_interest_rate"));
 
 				// CompanyFileVO
-				company.setCf_registration(rs.getString("b_cf_registration"));
-				company.setCf_certificate(rs.getString("b_cf_certificate"));
-				company.setCf_financial(rs.getString("b_cf_financial"));
-				company.setCf_estate_contract(rs.getString("b_cf_estate_contract"));
+				company.setCf_registration(rs.getString("cf_registration"));
+				company.setCf_certificate(rs.getString("cf_certificate"));
+				company.setCf_financial(rs.getString("cf_financial"));
+				company.setCf_estate_contract(rs.getString("cf_estate_contract"));
 				company.setCf_image1(rs.getString("cf_directory_image1"));
 				company.setCf_image2(rs.getString("cf_directory_image2"));
 				company.setCf_image3(rs.getString("cf_directory_image3"));
@@ -626,6 +625,7 @@ public class CompanyDAO {
 				company.setCf_image5(rs.getString("cf_directory_image6"));
 				company.setCf_corporation_banner(rs.getString("b_cf_corporation_banner"));
 				company.setCf_corporation_icon(rs.getString("b_cf_corporation_icon"));
+				company.setCf_invest_image(rs.getString("b_cf_invest_image"));
 				company.setCf_etc(rs.getString("cf_etc"));
 
 			} else {
