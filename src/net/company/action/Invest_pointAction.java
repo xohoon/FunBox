@@ -21,6 +21,9 @@ public class Invest_pointAction implements Action {
 		// 투자포인트/구좌 양
 		String invest_point = request.getParameter("invest_point");
 		String invest_amount = request.getParameter("invest_amount");
+		
+		System.out.println("투자 포인트 : " + invest_point);
+		System.out.println("투자 양 : " + invest_amount);
 
 		InvestPointVO inv_pointVO = new InvestPointVO();
 		

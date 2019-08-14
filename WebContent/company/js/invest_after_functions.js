@@ -47,6 +47,7 @@ function pincode_check(){
 	var f = document.invest_after_form;
 	var pincode = f.pincode1.value + f.pincode2.value + f.pincode3.value
 			+ f.pincode4.value + f.pincode5.value + f.pincode6.value;
+	console.log(pincode);
 	
 	$.ajax({
 		url : "./MypagePINCheckAction.mb",

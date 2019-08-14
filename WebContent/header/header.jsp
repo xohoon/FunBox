@@ -83,6 +83,8 @@
           </li>
           <li>기업신청
             <ul>
+            <li onclick="location.href='./Application1.cp'">기업용 신청서 작성</li>
+            <%-- 
             <c:choose>
 	              <c:when test="${sessionScope.id ne null}">
 	              <li onclick="location.href='./Application1.cp'">기업용 신청서 작성</li>
@@ -91,6 +93,7 @@
 	              <li onclick="go();">기업용 신청서 작성</li>
 	              </c:otherwise>
               </c:choose>
+               --%>
             </ul>
           </li>
           <li>회사소개
@@ -101,6 +104,8 @@
           <li>고객지원
             <ul>
               <li onclick="location.href='./Notice.bd'">공지사항</li>
+              <li onclick="location.href='./BoardQnaList.bd'">1:1상담</li>
+              <%-- 
               <c:choose>
 	              <c:when test="${sessionScope.id ne null}">
 	              <li onclick="location.href='./BoardQnaList.bd'">1:1상담</li>
@@ -109,6 +114,7 @@
 	              <li onclick="go();">1:1상담</li>
 	              </c:otherwise>
               </c:choose>
+               --%>
               <li onclick="location.href='./Faq.bd'">FAQ</li>
             </ul>
           </li>

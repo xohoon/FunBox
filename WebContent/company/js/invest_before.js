@@ -64,22 +64,21 @@ $(function() {
 	$('.quantity-button').click(function() {
 
 		var amount = $('.quantity input').val();
+		console.log(amount);
 		var sum = resultPrice * amount
-		var summ;
-		summ = addComma(sum);
-
-		// console.log("sum : "+ summ);
 
 		$('.sum span').text(sum)
-		$('#invest_amount').val(amount); // 투자하기 넘길때 사용
-		$('#invest_point').val(sum); // 투자하기 넘길때 사용
+		
 	});
 
 	setInterval(function() {
 		var amount = $('.quantity input').val();
 		var sum = resultPrice * amount
 		var addCommaSum;
-
+		
+		$('#invest_amount').val(amount); // 투자하기 넘길때 사용
+		$('#invest_point').val(sum); // 투자하기 넘길때 사용
+		
 		sum = sum + "";
 		point = sum.length % 3;
 		len = sum.length;
@@ -93,6 +92,7 @@ $(function() {
 		}
 		$('.sum span').text(addCommaSum) // 여기에 합계 표시
 	}, 10);
+	
 
 });
 

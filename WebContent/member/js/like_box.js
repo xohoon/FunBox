@@ -27,8 +27,6 @@
 	      //찜하기 추가
 	      function bookmark(val){
 	    	  
-	    	  alert(cp_idx);
-
 	    	  $.ajax({
 	    		 url : "./BookmarkAction.cp",
 	    		 data : {
