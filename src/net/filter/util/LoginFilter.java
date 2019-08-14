@@ -1,6 +1,7 @@
 package net.filter.util;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,6 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.common.action.ActionForward;
 
 public class LoginFilter implements Filter {
 
@@ -42,7 +45,11 @@ public class LoginFilter implements Filter {
 			//ServletResponse 객체를 자식 객체로 형변환 한다음
 			HttpServletResponse httpResponse=(HttpServletResponse)response;
 			//안내페이지 혹은 login 페이지로 강제 이동시킨다.
-			httpResponse.sendRedirect("./LoginPage.mb");
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('로그인이 필요한 서비스 입니다.'); location.href='./LoginPage.mb';</script>");
+			out.flush();
+			//httpResponse.sendRedirect("./LoginPage.mb");
 		}
 	}
 
