@@ -37,14 +37,17 @@ public class CorporationAction implements Action {
 		
 		CompanyDAO company_dao = new CompanyDAO();
 		company = company_dao.getCompanyInfo2(cp_idx);		
-		request.setAttribute("companyBean", company);
+		
 		
 		CompanyDAO company_dao2 = new CompanyDAO();
 		leftCompanyList = company_dao2.getCompanyList();
-		request.setAttribute("leftCompanyList", leftCompanyList);
+		
 		
 		CompanyDAO company_dao3 = new CompanyDAO();
 		int count = company_dao3.getLikeBoxCount(mb_idx, cp_idx);
+		
+		request.setAttribute("leftCompanyList", leftCompanyList);
+		request.setAttribute("companyBean", company);
 		request.setAttribute("count", count);
 		
 		forward.setRedirect(false);
