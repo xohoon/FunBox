@@ -64,7 +64,7 @@ public class MemberDAO {
 	/////////////////////// 유정 추가 start///////////////////////
 	// 회원가입 insert
 	public boolean insertMember(MemberBean member) {
-		String sql = "insert into member(mb_id,mb_pw,mb_pincode,mb_email,mb_name,mb_phone,mb_add_num,mb_add_ch,mb_add_more,mb_add_extra,mb_recommend,agree1,agree2,reg_date_time) values (?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
+		String sql = "insert into member(mb_id,mb_pw,mb_pincode,mb_email,mb_name,mb_phone,mb_add_num,mb_add_ch,mb_add_more,mb_add_extra,mb_recommend,agree1,agree2,reg_date_time) values (?,?,?,?,?,?,?,?,?,?,?,?,?,now())";
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -102,7 +102,6 @@ public class MemberDAO {
 				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
 		}
-
 		return false;
 	}
 
@@ -837,6 +836,41 @@ public class MemberDAO {
 			}
 		}
 		return slidVO;
+	}
+	
+	public boolean getMainBanner_1(List<Main_SlideVO> mainBanner_1_List) {
+		CallableStatement cstmt = null;
+		try {
+			cstmt = (CallableStatement) conn.prepareCall("CALL SELECT_MAIN_BANNER_1()");
+
+			rs = cstmt.executeQuery();
+
+			while (rs.next()) {
+				Main_SlideVO mainBanner_1 = new Main_SlideVO();
+				mainBanner_1.setSl_cp_content(rs.getString("cp_intro_content"));
+				mainBanner_1.setSl_cp_name(rs.getString("cp_name"));
+				mainBanner_1.setSl_cp_branch(rs.getString("cp_branch"));
+				mainBanner_1.setSl_cp_idx(rs.getInt("cp_idx"));
+				mainBanner_1.setBanner_image(rs.getString("banner_image"));
+				mainBanner_1_List.add(mainBanner_1);
+			}
+			return true;
+		} catch (Exception ex) {
+			System.out.println("getMainBanner_1 error: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (cstmt != null)
+					cstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("���� ���� ����: " + e.getMessage());
+			}
+		}
+
+		return false;
 	}
 
 	// 메인 페이지 추천 기업 리스트

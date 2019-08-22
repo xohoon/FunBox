@@ -106,7 +106,7 @@ html{
 
 .content .info  > h2{
   width: 350px; height: 50px; 
-  background-image: url(../img/con001.jpg); 
+/*   background-image: url(../img/con001.jpg);  */
   background-position: center; background-size: 100% auto;
   margin-bottom: 20px;
 }

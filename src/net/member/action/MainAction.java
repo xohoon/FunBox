@@ -22,7 +22,10 @@ public class MainAction implements Action {
 		
 		// 태훈 추가
 		MemberDAO slideDAO = new MemberDAO();
-		List<Main_SlideVO> slideVO = slideDAO.Main_SlideInfo();
+		
+		List<Main_SlideVO> mainBanner_1_List = new ArrayList<Main_SlideVO>(); 
+		slideDAO.getMainBanner_1(mainBanner_1_List);
+		
 		MemberDAO likeDAO = new MemberDAO();
 		List<Main_LikeVO> likeVO = likeDAO.Main_LikeInfo();
 		MemberDAO cityDAO = new MemberDAO();
@@ -30,7 +33,8 @@ public class MainAction implements Action {
 		
 		// 신규 추가
 		CompanyDAO companyDAO = new CompanyDAO();
-		ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = companyDAO.getCompanyDateOfOpen();
+		List<MainPageDateOfOpenVO> mainBanner_2_List = new ArrayList<MainPageDateOfOpenVO>();
+		companyDAO.getMainBanner_2(mainBanner_2_List);
 		companyDAO = new CompanyDAO();
 		ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = companyDAO.getCompanyDeadLine();
 		
@@ -38,8 +42,8 @@ public class MainAction implements Action {
 		
 		request.setAttribute("cityVO", cityVO);
 		request.setAttribute("likeVO", likeVO);
-		request.setAttribute("slideVO", slideVO);
-		request.setAttribute("mainPageDateOfOpenVOs", mainPageDateOfOpenVOs);
+		request.setAttribute("slideVO", mainBanner_1_List);
+		request.setAttribute("mainPageDateOfOpenVOs", mainBanner_2_List);
 		request.setAttribute("mainPageDeadLineVOs", mainPageDeadLineVOs);
 		
 		forward.setRedirect(false);
