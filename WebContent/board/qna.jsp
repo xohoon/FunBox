@@ -93,7 +93,7 @@
 						<label>내용</label>
 						<textarea id="content" name="content"></textarea>
 					</div>
-					<input type="button" value="제출하기" onclick="qna_check();">
+					<input type="button" value="문의하기" onclick="qna_check();">
 				</form>
 			</div><!--qna-->
 		</section>
