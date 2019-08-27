@@ -31,7 +31,6 @@
   	String idx = (String)session.getAttribute("idx");
    	MemberDAO memberDAO = new MemberDAO();
   	Member_headerVO member = (Member_headerVO)memberDAO.Member_accumulate(idx);
-   	
   %>
 
   <div class="hdbar">
