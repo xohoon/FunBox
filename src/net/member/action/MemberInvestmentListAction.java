@@ -56,7 +56,7 @@ public class MemberInvestmentListAction implements Action {
 					
 					response.setContentType("text/html;charset=UTF-8");
 					PrintWriter out = response.getWriter();
-					out.println("<script>alert('잘못된 접근 입니다.');location.href = './MemberInvestmentDrop.mb?mi_idx="+mi_idx+"'</script>");
+					out.println("<script>alert('투자목록에 펀딩종료된 기업이 없습니다.');location.href = './MemberInvestmentDrop.mb?mi_idx="+mi_idx+"'</script>");
 					out.close();
 					/*
 					 * forward.setRedirect(false);
@@ -66,7 +66,6 @@ public class MemberInvestmentListAction implements Action {
 					forward.setPath("./Index.mb");
 					return forward;
 				}
-				System.out.println("실행");
 				flag = true;
 				cp_idx = memberInvestVO.getCp_idx();
 				break;

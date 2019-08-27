@@ -12,7 +12,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 public class LoginFilter implements Filter {
 
 	@Override
@@ -40,6 +39,7 @@ public class LoginFilter implements Filter {
 			chain.doFilter(request, response);
 		}else{
 			//로그인 하지 않은 경우
+			//ServletResponse 객체를 자식 객체로 형변환 한다음
 			//안내페이지 혹은 login 페이지로 강제 이동시킨다.
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();

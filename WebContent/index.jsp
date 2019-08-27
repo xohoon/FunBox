@@ -44,6 +44,7 @@
 
 <body>
 <input type="hidden" id="select_k" value="0">
+<input type="hidden" id="select_k" value="0">
   <div id="wrap">
     <header></header>
     <div class="hdbck"></div>

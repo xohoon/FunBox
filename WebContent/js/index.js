@@ -114,8 +114,8 @@ function setLikeDday(cp_idx, stopDate) {
 	distance = countDown - now;
 
 	var DdayCount = Math.floor(distance / (day));
-
 	if (DdayCount <= 0) {
+		
 		DDay.parentElement.innerText = "편딩 기간 종료"
 	} else {
 		DDay.innerText = DdayCount;

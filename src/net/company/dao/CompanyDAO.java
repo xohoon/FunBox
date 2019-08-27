@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mysql.jdbc.CallableStatement;
 
@@ -15,6 +16,7 @@ import net.company.dto.CompanyFileVO;
 import net.company.dto.CompanyListVO;
 import net.company.dto.LikeBoxVO;
 import net.company.dto.Company_pay_scheduleVO;
+import net.member.dto.Main_SlideVO;
 import net.member.dto.MemberInvestVO;
 import net.page.dto.MainPageDateOfOpenVO;
 import net.page.dto.MainPageDeadLineVO;
@@ -269,47 +271,71 @@ public class CompanyDAO {
 	}
 
 	// Main page 에 필요한 오픈예정일 기업 들고오깅 
-	public ArrayList<MainPageDateOfOpenVO> getCompanyDateOfOpen() {
-		String sql = "select cp_f.cp_idx,cp.cp_name,cp.cp_intro_headline,cp.cp_intro_content,cp.cp_open_datetime,concat(cp_f.cf_directory,cp_f.cf_image2) as banner_image from company_file cp_f,company cp where cp.cp_idx = cp_f.cp_idx and cp.cp_open_status = 0 limit 3";
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = new ArrayList<MainPageDateOfOpenVO>();
-
+	/*
+	 * public ArrayList<MainPageDateOfOpenVO> getCompanyDateOfOpen() { String sql =
+	 * "select cp_f.cp_idx,cp.cp_name,cp.cp_intro_headline,cp.cp_intro_content,cp.cp_open_datetime,concat(cp_f.cf_directory,cp_f.cf_image2) as banner_image from company_file cp_f,company cp where cp.cp_idx = cp_f.cp_idx and cp.cp_open_status = 0 limit 3"
+	 * ; PreparedStatement pstmt = null; ResultSet rs = null;
+	 * ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = new
+	 * ArrayList<MainPageDateOfOpenVO>();
+	 * 
+	 * try { pstmt = conn.prepareStatement(sql); rs = pstmt.executeQuery();
+	 * 
+	 * while (rs.next()) {
+	 * 
+	 * MainPageDateOfOpenVO mainPageDateOfOpenVO = new MainPageDateOfOpenVO();
+	 * mainPageDateOfOpenVO.setCp_idx(rs.getInt("cp_idx"));
+	 * mainPageDateOfOpenVO.setCp_name(rs.getString("cp_name"));
+	 * mainPageDateOfOpenVO.setCp_intro_headline(rs.getString("cp_intro_headline"));
+	 * mainPageDateOfOpenVO.setCp_intro_content(rs.getString("cp_intro_content"));
+	 * mainPageDateOfOpenVO.setCp_open_datetime(rs.getDate("cp_open_datetime"));
+	 * mainPageDateOfOpenVO.setBanner_image(rs.getString("banner_image"));
+	 * mainPageDateOfOpenVOs.add(mainPageDateOfOpenVO);
+	 * 
+	 * }
+	 * 
+	 * return mainPageDateOfOpenVOs;
+	 * 
+	 * } catch (Exception ex) { System.out.println("getDateOfOpen 에러: " + ex); }
+	 * finally { if (rs != null) try { rs.close(); } catch (SQLException ex) { } if
+	 * (pstmt != null) try { pstmt.close(); } catch (SQLException ex) { } }
+	 * 
+	 * return null; }
+	 */
+	
+	public boolean getMainBanner_2(List<MainPageDateOfOpenVO> mainBanner_2_List) {
+		CallableStatement cstmt = null;
 		try {
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
+			cstmt = (CallableStatement) conn.prepareCall("CALL SELECT_MAIN_BANNER_2()");
+
+			rs = cstmt.executeQuery();
+
 			while (rs.next()) {
-
-				MainPageDateOfOpenVO mainPageDateOfOpenVO = new MainPageDateOfOpenVO();
-				mainPageDateOfOpenVO.setCp_idx(rs.getInt("cp_idx"));
-				mainPageDateOfOpenVO.setCp_name(rs.getString("cp_name"));
-				mainPageDateOfOpenVO.setCp_intro_headline(rs.getString("cp_intro_headline"));
-				mainPageDateOfOpenVO.setCp_intro_content(rs.getString("cp_intro_content"));
-				mainPageDateOfOpenVO.setCp_open_datetime(rs.getDate("cp_open_datetime"));
-				mainPageDateOfOpenVO.setBanner_image(rs.getString("banner_image"));
-				mainPageDateOfOpenVOs.add(mainPageDateOfOpenVO);
-
+				MainPageDateOfOpenVO mainBanner_2 = new MainPageDateOfOpenVO();
+				mainBanner_2.setCp_idx(rs.getInt("cp_idx"));
+				mainBanner_2.setCp_name(rs.getString("cp_name"));
+				mainBanner_2.setCp_intro_headline(rs.getString("cp_intro_headline"));
+				mainBanner_2.setCp_intro_content(rs.getString("cp_intro_content"));
+				mainBanner_2.setCp_open_datetime(rs.getDate("cp_open_datetime"));
+				mainBanner_2.setBanner_image(rs.getString("banner_image"));
+				mainBanner_2_List.add(mainBanner_2);
 			}
-
-			return mainPageDateOfOpenVOs;
-
+			return true;
 		} catch (Exception ex) {
-			System.out.println("getDateOfOpen 에러: " + ex);
+			System.out.println("getMainBanner_2 error: " + ex);
 		} finally {
-			if (rs != null)
-				try {
+			try {
+				if (rs != null)
 					rs.close();
-				} catch (SQLException ex) {
-				}
-			if (pstmt != null)
-				try {
-					pstmt.close();
-				} catch (SQLException ex) {
-				}
+				if (cstmt != null)
+					cstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("���� ���� ����: " + e.getMessage());
+			}
 		}
 
-		return null;
+		return false;
 	}
 	
 	public ArrayList<MainPageDeadLineVO> getCompanyDeadLine() {
