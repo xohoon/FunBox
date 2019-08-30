@@ -71,6 +71,7 @@
   <!--로그인 후-->
   <div class="hdbody">
     <div class="inner">
+     <h1><a href="./Index.mb"><img src="./img/logo.svg" alt="logo"></a></h1>
       <nav>
         <ul>
           <li>투자하기

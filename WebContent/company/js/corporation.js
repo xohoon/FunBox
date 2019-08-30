@@ -1,15 +1,42 @@
-$(function() {
+		$(function() {
 	      $('header').load('header/header.jsp');
 	      $('footer').load('footer/footer.jsp');
 	    });
 
 	    $(function() {
 	        var $win = $(window);
+
+	        if($(".like").val() == "1"){
+	        	$(".like").toggleClass('on');
+	        }
 	        
-	      // 즐겨찾기
-	      $('.like').on('click', function() {
-	        $(this).toggleClass('on');
-	      });
+	   	 	// 유정 추가 - 찜버튼에 값 넣기
+		    $(".like").click(function() {
+		    	if (!document.investForm.idx.value) {
+		    		alert('로그인이 필요한 서비스입니다.');
+		    	} else {
+		    		if ($(".like").val() == '0') {
+		    			like_q = confirm('즐겨찾기에 추가하시겠습니까?');
+		    			if (like_q) {
+		    				$(this).val('1');
+		    				$(this).toggleClass('on');
+		    				bookmark('1');
+		    			} else {
+		    				$(this).val('0');
+		    				$(this).removeClass('on');
+		    			}
+		    		} else {
+		    			like_q = confirm('즐겨찾기에서 제외하시겠습니까?');
+		    			if (like_q) {
+		    				$(this).val('0');
+		    				$(this).removeClass('on');
+		    				bookmark('0');
+		    			} else {
+		    				$(this).val('1');
+		    			}
+		    		}
+		    	}
+		    });
 
 	      // 리스트
 	      $(window).on('scroll resize', function() {
@@ -275,45 +302,8 @@ $(function() {
 	    
 	    
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	    
-	 // 유정 추가 - 찜버튼에 값 넣기
-	    $(".like").click(function() {
-	    	var idx = $('#idx');
-	    	if (idx == null) {
-	    		swal('로그인이 필요한 서비스입니다.');
-	    	} else {
-	    		if ($(".like").val() == '0') {
-	    			/*
-					 * swal({ title: "즐겨찾기에 추가하시겠습니까?", text: "나의 즐겨찾기 목록에
-					 * 추가됩니다.", icon: "warning", buttons: true }).then((like_q) = {
-					 * if(like_q) { swal("즐겨찾기에 추가되었습니다.", { icon: "success",
-					 * }); $(this).val('1'); $(this).toggleClass('on');
-					 * bookmark('1'); }else { swal("취소되었습니다.");
-					 * $(this).val('0'); $(this).removeClass('on'); } });
-					 */
-	    			like_q = confirm('즐겨찾기에 추가하시겠습니까?');
-	    			if (like_q) {
-	    				$(this).val('1');
-	    				$(this).toggleClass('on');
-	    				bookmark('1');
-	    			} else {
-	    				$(this).val('0');
-	    				$(this).removeClass('on');
-	    			}
-	    		} else {
-	    			like_q = confirm('즐겨찾기에서 제외하시겠습니까?');
-	    			if (like_q) {
-	    				$(this).val('0');
-	    				$(this).removeClass('on');
-	    				bookmark('0');
-	    			} else {
-	    				$(this).val('1');
-	    			}
-	    		}
-	    	}
-	    });
 
-	    // 찜하기 추가
+	    // 유정 찜하기 추가
 	    function bookmark(val) {
 	    	var cp_idx = $('#cp_idx').val();
 	    	var cp_name = $('#cp_name').val();

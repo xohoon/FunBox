@@ -5,7 +5,7 @@
 <%
 	//CompanyBean companyBean = (CompanyBean)request.getAttribute("companyBean");
 	//ArrayList<CompanyListVO> leftCompanyList = (ArrayList<CompanyListVO>)request.getAttribute("leftCompanyList"); 
-	int sumPayPrincipal;	
+	int sumPayPrincipal;
   	String idx = (String)session.getAttribute("idx");
 	int count = (Integer)request.getAttribute("count");
 %>
@@ -420,11 +420,11 @@
     <footer></footer>
     	<input type="hidden" value="${companyBean.cp_add_ch }" name="cp_add_ch" id="cp_add_ch">
 	  	<input type="hidden" value="${companyBean.cp_name }" name="cp_name" id="cp_name">
-	  	<input type="hidden" value="${idx }" name="idx" id="idx">
 	  	<input type="hidden" value="${companyBean.cf_corporation_banner }" name="cf_corporation_banner" id="cf_corporation_banner">
 	  	<input type="hidden" value="${companyBean.cf_corporation_icon }" name="cf_corporation_icon" id="cf_corporation_icon">
 	  
 		<form name="investForm" action="./Invest_beforeAction.cp" method="post">
+		  	<input type="hidden" value="${idx }" name="idx" id="idx">
 			<input type="hidden" value="${companyBean.cp_idx }" name="cp_idx" id="cp_idx">
 		</form>
     </div>    
