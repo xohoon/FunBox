@@ -411,7 +411,7 @@ public class CompanyDAO {
 	}
 
 	public ArrayList<MainPageDeadLineVO> getCompanyDeadLine() {
-		String sql = "select cp.cp_idx, cp.cp_monthly_profit, cp.cp_sector, cp.cp_name, cp.cp_branch,cp_i.iv_current_amount, cp_i.iv_goal_amount, cp_i.iv_appl_stop_date_time,concat(cp_f.cf_directory,cp_f.cf_image1) as thumbnail_image,round((iv_current_amount/iv_goal_amount)*100) as persent from company cp, company_file cp_f, company_invest cp_i where cp_i.iv_appl_stop_date_time > now() AND cp.cp_open_status = true AND cp.cp_idx = cp_i.cp_idx AND cp.cp_idx = cp_f.cp_idx order by cp_i.iv_appl_stop_date_time asc limit 3";
+		String sql = "SELECT cp_idx, cp_monthly_profit, cp_sector, cp_name, cp_branch, iv_current_amount, appl_stop_date_time, iv_goal_amount, thumbnail_image, persent FROM admin_deadLine";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = new ArrayList<MainPageDeadLineVO>();
@@ -429,7 +429,7 @@ public class CompanyDAO {
 				mainPageDeadLineVO.setCp_name(rs.getString("cp_name"));
 				mainPageDeadLineVO.setCp_branch(rs.getString("cp_branch"));
 				mainPageDeadLineVO.setIv_current_amount(rs.getString("iv_current_amount"));
-				mainPageDeadLineVO.setIv_appl_stop_date_time(rs.getDate("iv_appl_stop_date_time"));
+				mainPageDeadLineVO.setIv_appl_stop_date_time(rs.getDate("appl_stop_date_time"));
 				mainPageDeadLineVO.setIv_goal_amount(rs.getString("iv_goal_amount"));
 				mainPageDeadLineVO.setThumbnail_image(rs.getString("thumbnail_image"));
 				mainPageDeadLineVO.setPersent(rs.getString("persent"));

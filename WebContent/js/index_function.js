@@ -1,11 +1,12 @@
 ////////////////태훈 추가 - 메인페이지 실시간 순위
-$(document).ready(function() {
-	main_list();
-});
 var select_key = null;
 var real_list = null;
 var cp_name_list = new Array;
 var ajax_list = new Array;
+$(document).ready(function() {
+	
+	main_list();
+});
 
 function realtime_like() {
 	select_key = $('#select_k').val();

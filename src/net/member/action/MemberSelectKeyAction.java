@@ -21,14 +21,12 @@ public class MemberSelectKeyAction implements Action{
 		JSONArray JSONarray = new JSONArray();
 		ArrayList<String> list = new ArrayList<String>();
 		//System.out.println("위치테스트>>>"+Integer.parseInt(request.getParameter("select_key")));
-		int select_key = Integer.parseInt(request.getParameter("select_key"));
+		int select_key = memberDAO.getSelectKey();
 		// 수동인지 자동인지 확인
 		if(select_key == 0) {
-			select_key = memberDAO.getSelectKey();
-		}
-		
-		if(select_key == 1) {
-			list = memberDAO.getRealList(select_key);
+			list = memberDAO.getManualList();
+		}else if(select_key == 1){
+			list = memberDAO.getRealList();
 		}
 		
 		/* 수동 - 관리자 페이지 만들때 추가

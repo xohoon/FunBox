@@ -228,11 +228,11 @@
 								<c:otherwise>
 									<c:choose>
 										<c:when test="${flag == 1}">
-											<li><b><a class="on" href="./Faq.bd?pageNum=${i}&category=${categroyFlag}"><font size=3>${i}</font></a></b></li>
+											<li><a class="on" href="./Faq.bd?pageNum=${i}&category=${categroyFlag}"><font size=3>${i}</font></a></li>
 											<input type="hidden" id= "hiddenCategory"  name="hiddenCategory" value="${i}">
 										</c:when>
 										<c:otherwise>
-											<li><b><a class="on" href="./search_faq.bd?pageNum=${i}&category=${categroyFlag}&keyword=${keyword}"><font size=3>${i}</font></a></b></li>
+											<li><a class="on" href="./search_faq.bd?pageNum=${i}&category=${categroyFlag}&keyword=${keyword}"><font size=3>${i}</font></a></li>
 											<input type="hidden" id= "hiddenCategory"  name="hiddenCategory" value="${i}">
 										</c:otherwise>
 									</c:choose>
