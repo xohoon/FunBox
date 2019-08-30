@@ -19,31 +19,40 @@ import net.page.dto.MainPageDeadLineVO;
 public class MainAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
+		CompanyDAO companyDAO = new CompanyDAO();
+		List<Boolean> autoStatusList = new ArrayList<Boolean>();
 		
+		companyDAO.getAllAutoStatus(autoStatusList);
+		companyDAO = new CompanyDAO();
 		// 태훈 추가
-		MemberDAO slideDAO = new MemberDAO();
 		
-		List<Main_SlideVO> mainBanner_1_List = new ArrayList<Main_SlideVO>(); 
-		slideDAO.getMainBanner_1(mainBanner_1_List);
 		
-		MemberDAO likeDAO = new MemberDAO();
-		List<Main_LikeVO> likeVO = likeDAO.Main_LikeInfo();
+		List<Main_SlideVO> mainBanner1List = new ArrayList<Main_SlideVO>(); 
+		companyDAO.getMainBanner1(mainBanner1List,autoStatusList.get(3).booleanValue());
+		
+		//MemberDAO likeDAO = new MemberDAO();
+		//List<Main_LikeVO> likeVO = likeDAO.Main_LikeInfo();
+		
+		
 		MemberDAO cityDAO = new MemberDAO();
 		Main_CityVO cityVO = cityDAO.Main_CityInfo();
 		
 		// 신규 추가
-		CompanyDAO companyDAO = new CompanyDAO();
-		List<MainPageDateOfOpenVO> mainBanner_2_List = new ArrayList<MainPageDateOfOpenVO>();
-		companyDAO.getMainBanner_2(mainBanner_2_List);
+		companyDAO = new CompanyDAO();
+		List<Main_LikeVO> mainRecommandedCompanyList = new ArrayList<Main_LikeVO>();
+		companyDAO.getMainRecommandedCompanyList(mainRecommandedCompanyList,autoStatusList.get(1).booleanValue());
+		companyDAO = new CompanyDAO();
+		List<MainPageDateOfOpenVO> mainBanner2List = new ArrayList<MainPageDateOfOpenVO>();
+		companyDAO.getMainBanner2(mainBanner2List,autoStatusList.get(4).booleanValue());
 		companyDAO = new CompanyDAO();
 		ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = companyDAO.getCompanyDeadLine();
 		
 		ActionForward forward = new ActionForward();		
 		
 		request.setAttribute("cityVO", cityVO);
-		request.setAttribute("likeVO", likeVO);
-		request.setAttribute("slideVO", mainBanner_1_List);
-		request.setAttribute("mainPageDateOfOpenVOs", mainBanner_2_List);
+		request.setAttribute("likeVO", mainRecommandedCompanyList);
+		request.setAttribute("slideVO", mainBanner1List);
+		request.setAttribute("mainPageDateOfOpenVOs", mainBanner2List);
 		request.setAttribute("mainPageDeadLineVOs", mainPageDeadLineVOs);
 		
 		forward.setRedirect(false);

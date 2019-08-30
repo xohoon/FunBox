@@ -89,9 +89,11 @@ public class CompanyApplication04Action implements Action {
 		int document_count = 0;
 		for (Part part : request.getParts()) {
 			if (part.getContentType() != null) {
+				
 				String fileName = extractFileName(part);
 				String alias = UUID.randomUUID().toString().substring(0, 9);
 				String fileFormat = getFileFormat(part);
+				
 				switch (part.getName()) {
 				case "app_cp_registrantion":
 					company.setApp_cp_registrantion(fileName);

@@ -14,8 +14,9 @@ import net.company.dto.ApplicationVO;
 import net.company.dto.CompanyBean;
 import net.company.dto.CompanyFileVO;
 import net.company.dto.CompanyListVO;
-import net.company.dto.LikeBoxVO;
 import net.company.dto.Company_pay_scheduleVO;
+import net.company.dto.LikeBoxVO;
+import net.member.dto.Main_LikeVO;
 import net.member.dto.Main_SlideVO;
 import net.member.dto.MemberInvestVO;
 import net.page.dto.MainPageDateOfOpenVO;
@@ -114,7 +115,7 @@ public class CompanyDAO {
 			pstmt.setString(32, company.getApp_cp_other_document3());
 			pstmt.setString(33, company.getApp_cp_other_document4());
 			pstmt.setString(34, company.getApp_cp_other_document5());
-			
+
 			pstmt.setString(35, company.getApp_cp_alias_registrantion());
 			pstmt.setString(36, company.getApp_cp_alias_financial());
 			pstmt.setString(37, company.getApp_cp_alias_estate_contract());
@@ -128,10 +129,10 @@ public class CompanyDAO {
 			pstmt.setString(45, company.getApp_cp_alias_other_document3());
 			pstmt.setString(46, company.getApp_cp_alias_other_document4());
 			pstmt.setString(47, company.getApp_cp_alias_other_document5());
-			
+
 			pstmt.setString(48, company.getApp_cp_real_path());
 			pstmt.setString(49, company.getMb_idx());
-			
+
 			result = pstmt.executeUpdate();
 			System.out.println(pstmt);
 			if (result != 0) {
@@ -270,74 +271,145 @@ public class CompanyDAO {
 		return null;
 	}
 
-	// Main page 에 필요한 오픈예정일 기업 들고오깅 
-	/*
-	 * public ArrayList<MainPageDateOfOpenVO> getCompanyDateOfOpen() { String sql =
-	 * "select cp_f.cp_idx,cp.cp_name,cp.cp_intro_headline,cp.cp_intro_content,cp.cp_open_datetime,concat(cp_f.cf_directory,cp_f.cf_image2) as banner_image from company_file cp_f,company cp where cp.cp_idx = cp_f.cp_idx and cp.cp_open_status = 0 limit 3"
-	 * ; PreparedStatement pstmt = null; ResultSet rs = null;
-	 * ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = new
-	 * ArrayList<MainPageDateOfOpenVO>();
-	 * 
-	 * try { pstmt = conn.prepareStatement(sql); rs = pstmt.executeQuery();
-	 * 
-	 * while (rs.next()) {
-	 * 
-	 * MainPageDateOfOpenVO mainPageDateOfOpenVO = new MainPageDateOfOpenVO();
-	 * mainPageDateOfOpenVO.setCp_idx(rs.getInt("cp_idx"));
-	 * mainPageDateOfOpenVO.setCp_name(rs.getString("cp_name"));
-	 * mainPageDateOfOpenVO.setCp_intro_headline(rs.getString("cp_intro_headline"));
-	 * mainPageDateOfOpenVO.setCp_intro_content(rs.getString("cp_intro_content"));
-	 * mainPageDateOfOpenVO.setCp_open_datetime(rs.getDate("cp_open_datetime"));
-	 * mainPageDateOfOpenVO.setBanner_image(rs.getString("banner_image"));
-	 * mainPageDateOfOpenVOs.add(mainPageDateOfOpenVO);
-	 * 
-	 * }
-	 * 
-	 * return mainPageDateOfOpenVOs;
-	 * 
-	 * } catch (Exception ex) { System.out.println("getDateOfOpen 에러: " + ex); }
-	 * finally { if (rs != null) try { rs.close(); } catch (SQLException ex) { } if
-	 * (pstmt != null) try { pstmt.close(); } catch (SQLException ex) { } }
-	 * 
-	 * return null; }
-	 */
-	
-	public boolean getMainBanner_2(List<MainPageDateOfOpenVO> mainBanner_2_List) {
-		CallableStatement cstmt = null;
-		try {
-			cstmt = (CallableStatement) conn.prepareCall("CALL SELECT_MAIN_BANNER_2()");
+	// 메인 페이지 추천 기업 리스트
+	public boolean getMainRecommandedCompanyList(List<Main_LikeVO> mainRecommandedCompanyList,boolean auto_status) throws Exception {
 
-			rs = cstmt.executeQuery();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			
+			String sql = "";
+			
+			if (auto_status) {
+				sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp_iv.iv_appl_stop_date_time, concat(cp_f.cf_directory,cp_f.cf_image1) as thumbnail_image, cp.cp_recommand_count FROM company as cp, company_invest as cp_iv, company_file as cp_f WHERE cp_iv.iv_appl_stop_date_time > now() AND cp.cp_idx = cp_iv.cp_idx AND cp_f.cp_idx = cp.cp_idx AND cp.cp_recommand = 1 ORDER BY cp.cp_recommand_count DESC, cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100 DESC LIMIT 4";
+			}else {
+				sql = "SELECT * FROM recommended_company";
+			} 
+
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				MainPageDateOfOpenVO mainBanner_2 = new MainPageDateOfOpenVO();
-				mainBanner_2.setCp_idx(rs.getInt("cp_idx"));
-				mainBanner_2.setCp_name(rs.getString("cp_name"));
-				mainBanner_2.setCp_intro_headline(rs.getString("cp_intro_headline"));
-				mainBanner_2.setCp_intro_content(rs.getString("cp_intro_content"));
-				mainBanner_2.setCp_open_datetime(rs.getDate("cp_open_datetime"));
-				mainBanner_2.setBanner_image(rs.getString("banner_image"));
-				mainBanner_2_List.add(mainBanner_2);
+				Main_LikeVO mainRecommandedCompany = new Main_LikeVO();
+				mainRecommandedCompany.setLk_cp_branch(rs.getString("cp_branch"));
+				mainRecommandedCompany.setLk_cp_current_amount(rs.getString("iv_current_amount"));
+				mainRecommandedCompany.setLk_cp_goal_amount(rs.getString("iv_goal_amount"));
+				mainRecommandedCompany.setLk_cp_name(rs.getString("cp_name"));
+				mainRecommandedCompany.setLk_cp_percent(rs.getString("percent"));
+				mainRecommandedCompany.setLk_cp_profit(rs.getString("cp_monthly_profit"));
+				mainRecommandedCompany.setLk_cp_sector(rs.getString("cp_sector"));
+				mainRecommandedCompany.setLk_cp_idx(rs.getInt("cp_idx"));
+				mainRecommandedCompany.setLk_appl_stop_date_time(rs.getDate("iv_appl_stop_date_time"));
+				mainRecommandedCompany.setThumbnail_image(rs.getString("thumbnail_image"));
+				mainRecommandedCompanyList.add(mainRecommandedCompany);
 			}
 			return true;
 		} catch (Exception ex) {
-			System.out.println("getMainBanner_2 error: " + ex);
+			System.out.println("Main_SlideInfo ERROR: " + ex);
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
-				if (cstmt != null)
-					cstmt.close();
+				if (pstmt != null)
+					pstmt.close();
 				if (conn != null)
 					conn.close();
 			} catch (Exception e) {
-				System.out.println("���� ���� ����: " + e.getMessage());
+				System.out.println("연결 해제 실패: " + e.getMessage());
 			}
 		}
-
 		return false;
 	}
-	
+
+	public boolean getMainBanner1(List<Main_SlideVO> mainBanner1List, boolean auto_status) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			String sql = "";
+
+			if (auto_status) {
+				sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_branch, cp.cp_intro_content, concat(cp_f.cf_directory,cp_f.cf_image2) as banner_image FROM company as cp, company_file as cp_f ORDER BY RAND() LIMIT 3";
+			} else {
+				sql = "SELECT * FROM am_banner_1";
+			}
+
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Main_SlideVO mainBanner1 = new Main_SlideVO();
+				mainBanner1.setSl_cp_content(rs.getString("cp_intro_content"));
+				mainBanner1.setSl_cp_name(rs.getString("cp_name"));
+				mainBanner1.setSl_cp_branch(rs.getString("cp_branch"));
+				mainBanner1.setSl_cp_idx(rs.getInt("cp_idx"));
+				mainBanner1.setBanner_image(rs.getString("banner_image"));
+				mainBanner1List.add(mainBanner1);
+			}
+			return true;
+		} catch (Exception ex) {
+			System.out.println("getMainBanner1 ERROR: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+		return false;
+	}
+
+	public boolean getMainBanner2(List<MainPageDateOfOpenVO> mainBanner2List, boolean auto_status) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			String sql = "";
+
+			if (auto_status) {
+				sql = "select cp_f.cp_idx,cp.cp_name,cp.cp_intro_headline,cp.cp_intro_content,cp.cp_open_datetime,concat(cp_f.cf_directory,cp_f.cf_image2) as banner_image from company_file cp_f,company cp where cp.cp_idx = cp_f.cp_idx and cp.cp_open_status = 0 limit 3";
+			} else {
+				sql = "SELECT * FROM am_banner_2";
+			}
+
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				MainPageDateOfOpenVO mainBanner2 = new MainPageDateOfOpenVO();
+				mainBanner2.setCp_idx(rs.getInt("cp_idx"));
+				mainBanner2.setCp_name(rs.getString("cp_name"));
+				mainBanner2.setCp_intro_headline(rs.getString("cp_intro_headline"));
+				mainBanner2.setCp_intro_content(rs.getString("cp_intro_content"));
+				mainBanner2.setCp_open_datetime(rs.getDate("cp_open_datetime"));
+				mainBanner2.setBanner_image(rs.getString("banner_image"));
+				mainBanner2List.add(mainBanner2);
+			}
+			return true;
+		} catch (Exception ex) {
+			System.out.println("getMainBanner2 ERROR: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("연결 해제 실패: " + e.getMessage());
+			}
+		}
+		return false;
+	}
+
 	public ArrayList<MainPageDeadLineVO> getCompanyDeadLine() {
 		String sql = "select cp.cp_idx, cp.cp_monthly_profit, cp.cp_sector, cp.cp_name, cp.cp_branch,cp_i.iv_current_amount, cp_i.iv_goal_amount, cp_i.iv_appl_stop_date_time,concat(cp_f.cf_directory,cp_f.cf_image1) as thumbnail_image,round((iv_current_amount/iv_goal_amount)*100) as persent from company cp, company_file cp_f, company_invest cp_i where cp_i.iv_appl_stop_date_time > now() AND cp.cp_open_status = true AND cp.cp_idx = cp_i.cp_idx AND cp.cp_idx = cp_f.cp_idx order by cp_i.iv_appl_stop_date_time asc limit 3";
 		PreparedStatement pstmt = null;
@@ -347,7 +419,7 @@ public class CompanyDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 
 				MainPageDeadLineVO mainPageDeadLineVO = new MainPageDeadLineVO();
@@ -384,10 +456,10 @@ public class CompanyDAO {
 
 		return null;
 	}
-	
-	//대망의 포로시저 ~~~
-	//기업 투자하깅~
-	public boolean invest(int _mb_idx,int _cp_idx,String _cp_name,int _po_amount,String _mi_hoiling_stock) {
+
+	// 대망의 포로시저 ~~~
+	// 기업 투자하깅~
+	public boolean invest(int _mb_idx, int _cp_idx, String _cp_name, int _po_amount, String _mi_hoiling_stock) {
 		CallableStatement cstmt = null;
 		int result = 0;
 		ResultSet rs = null;
@@ -398,7 +470,7 @@ public class CompanyDAO {
 			cstmt.setString(3, _cp_name);
 			cstmt.setInt(4, _po_amount);
 			cstmt.setString(5, _mi_hoiling_stock);
-			cstmt.registerOutParameter(6,java.sql.Types.INTEGER);
+			cstmt.registerOutParameter(6, java.sql.Types.INTEGER);
 			cstmt.execute();
 			result = cstmt.getInt("@RESULT");
 			if (result != 0) {
@@ -422,7 +494,6 @@ public class CompanyDAO {
 		return false;
 	}
 
-	
 	// 박신규 끝//////////////////////////
 
 	// 유정 추가 start ////////////////////////////
@@ -557,7 +628,7 @@ public class CompanyDAO {
 			// 쿼리
 			String sql = "SELECT *,"
 					+ "concat(b.cf_directory,b.cf_invest_image) as b_cf_invest_image,concat(b.cf_directory,b.cf_image1) as cf_directory_image1,concat(b.cf_directory,b.cf_image2) as cf_directory_image2,concat(b.cf_directory,b.cf_image3) as cf_directory_image3,concat(b.cf_directory,b.cf_image4) as cf_directory_image4,concat(b.cf_directory,b.cf_image5) as cf_directory_image5,concat(b.cf_directory,b.cf_image6) as cf_directory_image6, concat(b.cf_directory,b.cf_corporation_banner) as b_cf_corporation_banner ,concat(b.cf_directory,b.cf_corporation_icon) as b_cf_corporation_icon , c.iv_current_amount/iv_goal_amount*100 "
-					+ "FROM file_path as fp, company as a " 
+					+ "FROM file_path as fp, company as a "
 					+ "JOIN company_file as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
 					+ "JOIN company_invest as c ON a.cp_idx = c.cp_idx "
 					+ "JOIN company_lease as d ON a.cp_idx = d.cp_idx "
@@ -716,10 +787,10 @@ public class CompanyDAO {
 		return false;
 	}
 
-	//투자현황 - 투자내역 불러오기
+	// 투자현황 - 투자내역 불러오기
 	public ArrayList<MemberInvestVO> getInvestment(String id, int startRow, int endRow) {// 시작페이지, 끝 페이지
 		String sql = "select mi_category,mi_name,mi_point,mi_reg_date_time,mi_note from member_invest where mb_id=? order by mi_idx desc limit "
-								+ startRow + ", " + endRow;
+				+ startRow + ", " + endRow;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<MemberInvestVO> member_invest_list = new ArrayList<MemberInvestVO>();
@@ -729,22 +800,22 @@ public class CompanyDAO {
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			System.out.println(pstmt);
-			
-			while(rs.next()) {
-				
+
+			while (rs.next()) {
+
 				MemberInvestVO member_invest = new MemberInvestVO();
 				member_invest.setMi_category(rs.getString("mi_category"));
 				member_invest.setName(rs.getString("mi_name"));
 				member_invest.setPoint(rs.getString("mi_point"));
 				member_invest.setMi_reg_date_time(rs.getDate("mi_reg_date_time"));
 				member_invest.setMi_note(rs.getString("mi_note"));
-				
+
 				member_invest_list.add(member_invest);
 
 			}
 
 			return member_invest_list;
-			
+
 		} catch (Exception ex) {
 			System.out.println("getInvestment 에러: " + ex);
 		} finally {
@@ -791,11 +862,10 @@ public class CompanyDAO {
 				} catch (SQLException ex) {
 				}
 		}
-		System.out.println("total: "+total);
+		System.out.println("total: " + total);
 		return total;
 	}
-	
-	
+
 	// 즐겨찾기 insert
 	public boolean insertLikeBox(LikeBoxVO likebox) {
 		String sql = "insert into member_likebox (mb_idx,cp_idx,like_cp_name,like_cp_date) values (?,?,?,CURRENT_TIMESTAMP)";
@@ -829,8 +899,7 @@ public class CompanyDAO {
 		}
 		return false;
 	}
-	
-	
+
 	// 즐겨찾기 delete
 	public boolean deleteLikeBox(int cp_idx, String mb_idx) {
 		String sql = "delete from member_likebox where cp_idx=? and mb_idx=?";
@@ -863,8 +932,7 @@ public class CompanyDAO {
 
 		return false;
 	}
-	
-	
+
 	// 즐겨찾기한 기업 수 - 찜한 기업 addClass('on') 되도록 하기
 	public int getLikeBoxCount(String mb_idx, int cp_idx) {
 		int total = 0;
@@ -939,7 +1007,7 @@ public class CompanyDAO {
 
 		return null;
 	}
-	
+
 	/// 윤식 추가 기업 스케줄 리스트 불러오기
 	public ArrayList<Company_pay_scheduleVO> getCompanySchedule(int cp_idx) {
 		String sql = " select * from company_pay_schedule WHERE cp_idx = ?";
@@ -947,8 +1015,8 @@ public class CompanyDAO {
 		ResultSet rs = null;
 		ArrayList<Company_pay_scheduleVO> CompanyScheduleList = new ArrayList<Company_pay_scheduleVO>();
 		System.out.println("get Comapnysche cp_idx : " + cp_idx);
-		
-		try {	
+
+		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cp_idx);
 			rs = pstmt.executeQuery();
@@ -956,7 +1024,7 @@ public class CompanyDAO {
 
 			while (rs.next()) {
 				Company_pay_scheduleVO companyscheduleVO = new Company_pay_scheduleVO();
-				
+
 				companyscheduleVO.setCp_pay_count(rs.getString("cp_pay_count"));
 				companyscheduleVO.setCp_pay_expected_payment_date(rs.getString("cp_pay_expected_payment_date"));
 				companyscheduleVO.setCp_pay_principal(rs.getString("cp_pay_principal"));
@@ -964,11 +1032,11 @@ public class CompanyDAO {
 				companyscheduleVO.setCp_pay_fees(rs.getString("cp_pay_fees"));
 				companyscheduleVO.setCp_pay_actual_payment_amout(rs.getString("cp_pay_actual_payment_amout"));
 				companyscheduleVO.setCp_pay_actual_rate_return(rs.getString("cp_pay_actual_rate_return"));
-							
+
 				CompanyScheduleList.add(companyscheduleVO);
-				
+
 			}
-			
+
 			return CompanyScheduleList;
 
 		} catch (Exception ex) {
@@ -985,9 +1053,40 @@ public class CompanyDAO {
 				System.out.println("해제 실패 : " + e.getMessage());
 			}
 		}
-				
+
 		return null;
 	}
 
-	
+	public boolean getAllAutoStatus(List<Boolean> autoStatusList) {
+		String sql = "SELECT aas_auto_status FROM admin_am_setting";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			int i = 0;
+			while (rs.next()) {
+				autoStatusList.add(rs.getBoolean("aas_auto_status"));
+				i++;
+			}
+			return true;
+
+		} catch (Exception ex) {
+			System.out.println("getAllAutoStatus 에러: " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("해제 실패 : " + e.getMessage());
+			}
+		}
+		return false;
+	}
+
 }

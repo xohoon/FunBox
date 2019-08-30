@@ -40,7 +40,6 @@
       <span>간편하고 쉬운 자산관리 펀박스</span>
       <div class="logbox">
         반갑습니다. <span>${sessionScope.id}</span> 회원님
-        <!-- <a href="./member/logout.jsp">로그아웃</a> -->
         <a href="#" onclick="logOut();">로그아웃</a>
       </div>
       <div class="hdbtn">
@@ -73,7 +72,6 @@
   <!--로그인 후-->
   <div class="hdbody">
     <div class="inner">
-      <h1><a href="./Index.mb"><img src="./img/logo.svg" alt="logo"></a></h1>
       <nav>
         <ul>
           <li>투자하기
@@ -83,17 +81,7 @@
           </li>
           <li>기업신청
             <ul>
-            <li onclick="location.href='./Application1.cp'">기업용 신청서 작성</li>
-            <%-- 
-            <c:choose>
-	              <c:when test="${sessionScope.id ne null}">
-	              <li onclick="location.href='./Application1.cp'">기업용 신청서 작성</li>
-	              </c:when>
-	              <c:otherwise>
-	              <li onclick="go();">기업용 신청서 작성</li>
-	              </c:otherwise>
-              </c:choose>
-               --%>
+              <li onclick="location.href='./Application1.cp'">기업용 신청서 작성</li>
             </ul>
           </li>
           <li>회사소개
@@ -105,16 +93,6 @@
             <ul>
               <li onclick="location.href='./Notice.bd'">공지사항</li>
               <li onclick="location.href='./BoardQnaList.bd'">1:1상담</li>
-              <%-- 
-              <c:choose>
-	              <c:when test="${sessionScope.id ne null}">
-	              <li onclick="location.href='./BoardQnaList.bd'">1:1상담</li>
-	              </c:when>
-	              <c:otherwise>
-	              <li onclick="go();">1:1상담</li>
-	              </c:otherwise>
-              </c:choose>
-               --%>
               <li onclick="location.href='./Faq.bd'">FAQ</li>
             </ul>
           </li>
@@ -160,7 +138,7 @@
         $('.hdbck').fadeOut(300);
       });
 
-      $(window).on('scroll', function() {
+      /* $(window).on('scroll', function() {
 
         if ($(window).width() >= 767) {
           nowScroll = $(window).scrollTop();
@@ -209,8 +187,22 @@
 
           lastScroll = $(window).scrollTop();
         }
-      });
+      }); */
+	
+      $(window).on('scroll', function() {
 
+          var $win = $(window),
+            scTop = $win.scrollTop(),
+            winWidth = $win.width();
+          if (winWidth > 767) {
+            if (scTop >= 150) {
+              $('header').addClass('on');
+            } else {
+              $('header').removeClass('on');
+            }
+          }
+        });
+      
       $('.hdbtn').on('click', function() {
         $('header').toggleClass('on');
         $('.hdbck').fadeToggle(300);

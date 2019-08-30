@@ -872,6 +872,7 @@ public class MemberDAO {
 
 		return false;
 	}
+	
 
 	// 메인 페이지 추천 기업 리스트
 	public List<Main_LikeVO> Main_LikeInfo() throws Exception {
@@ -1704,8 +1705,7 @@ public class MemberDAO {
 	public benefitVO benefit(String mb_idx) {
 		String sql = "SELECT SUM(mi_monthly_profit) AS month, SUM(mi_cumulative_profit) AS total FROM `member_invest` WHERE mb_idx = ?";
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		System.out.println("mb idx : " + mb_idx);
+		ResultSet rs = null;;
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -1736,7 +1736,9 @@ public class MemberDAO {
 
 		return null;
 	}
-
+	
+	
+	
 	// String sql = "INSERT INTO point_transaction(po_category,cp_idx, tk_idx,
 	// tk_price, po_amount, po_content, po_date_time) VALUES (2,1,1,100,?,?,now())";
 	// String sql = "INSERT INTO token_transaction(tk_category, po_idx, tk_amount,
