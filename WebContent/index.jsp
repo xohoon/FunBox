@@ -13,8 +13,6 @@
 <%
 	ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = (ArrayList<MainPageDateOfOpenVO>)request.getAttribute("mainPageDateOfOpenVOs");
 	ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = (ArrayList<MainPageDeadLineVO>)request.getAttribute("mainPageDeadLineVOs");
-	List<Main_SlideVO> slideVO = (List<Main_SlideVO>)request.getAttribute("slideVO");
-	List<Main_LikeVO> likeVO = (List<Main_LikeVO>)request.getAttribute("likeVO");
 	Main_CityVO cityVO = (Main_CityVO)request.getAttribute("cityVO");
 %>
 
