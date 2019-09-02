@@ -75,21 +75,16 @@ public class CompanyApplication04Action implements Action {
 		companyDAO1.getUploadFilePath(companyApplicationFilePath,app_cp_folder);
 
 		// 파일디렉토리
-		/*File fileSaveDir = new File(real_path);
-		if (!fileSaveDir.exists()) {
-			fileSaveDir.mkdir();
-		}*/
-		
 		File fileFolder = new File(companyApplicationFilePath.getApp_cp_file_path());
 		if (!fileFolder.exists()) {
-			fileFolder.mkdir();
+			fileFolder.mkdirs();
 		}
 		
 		File imageFolder = new File(companyApplicationFilePath.getApp_cp_image_path());
 		if (!imageFolder.exists()) {
-			imageFolder.mkdir();
+			imageFolder.mkdirs();
 		}
-
+		
 		// 받아온 파일들을 담는 ArrayList
 		ArrayList<String> app_cp_image_list = new ArrayList<String>();
 		ArrayList<String> app_cp_document_list = new ArrayList<String>();
@@ -137,11 +132,6 @@ public class CompanyApplication04Action implements Action {
 				default:
 					break;
 				}
-				
-				/*if (!fileName.equals("")) {
-					// part.write(real_path + "/" + fileName);
-					// part.write(real_path + "/" + fileName);
-				}*/
 			}
 		}
 
@@ -243,18 +233,6 @@ public class CompanyApplication04Action implements Action {
 			}
 		}
 		return "";
-	}
-	
-	private void makeDirectory(CompnayApplicationFilePath companyApplicationFilePath) {
-		File fileFolder = new File(companyApplicationFilePath.getApp_cp_file_path());
-		if (!fileFolder.exists()) {
-			fileFolder.mkdir();
-		}
-		
-		File imageFolder = new File(companyApplicationFilePath.getApp_cp_image_path());
-		if (!imageFolder.exists()) {
-			imageFolder.mkdir();
-		}
 	}
 
 }

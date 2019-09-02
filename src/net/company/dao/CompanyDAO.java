@@ -70,7 +70,7 @@ public class CompanyDAO {
 				// application03
 				+ "app_cp_introduction, app_cp_purpose, app_cp_point, "
 				// application04
-				+ "app_cp_registrantion, app_cp_financial, app_cp_estate_contract, app_cp_image1, app_cp_image2, app_cp_image3, app_cp_image4, app_cp_image5, app_cp_other_document1, app_cp_other_document2, app_cp_other_document3, app_cp_other_document4, app_cp_other_document5, app_cp_alias_registrantion,app_cp_alias_financial, app_cp_estate_alias_contract, app_cp_alias_image1, app_cp_alias_image2, app_cp_alias_image3, app_cp_alias_image4, app_cp_alias_image5, app_cp_alias_other_document1, app_cp_alias_other_document2, app_cp_alias_other_document3, app_cp_alias_other_document4, app_cp_alias_other_document5, app_cp_folder,mb_idx) "
+				+ "app_cp_registrantion, app_cp_financial, app_cp_estate_contract, app_cp_image1, app_cp_image2, app_cp_image3, app_cp_image4, app_cp_image5, app_cp_other_document1, app_cp_other_document2, app_cp_other_document3, app_cp_other_document4, app_cp_other_document5, app_cp_alias_registrantion,app_cp_alias_financial, app_cp_alias_estate_contract, app_cp_alias_image1, app_cp_alias_image2, app_cp_alias_image3, app_cp_alias_image4, app_cp_alias_image5, app_cp_alias_other_document1, app_cp_alias_other_document2, app_cp_alias_other_document3, app_cp_alias_other_document4, app_cp_alias_other_document5, app_cp_folder,mb_idx) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?  )";
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -142,7 +142,7 @@ public class CompanyDAO {
 				return true;
 			}
 		} catch (Exception ex) {
-			System.out.println("InsertCompany 에러: " + ex);
+			System.out.println("insertApp 에러: " + ex);
 		} finally {
 			try {
 				if (rs != null)
