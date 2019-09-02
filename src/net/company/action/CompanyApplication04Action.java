@@ -16,6 +16,7 @@ import net.common.action.Action;
 import net.common.action.ActionForward;
 import net.company.dao.CompanyDAO;
 import net.company.dto.ApplicationVO;
+import net.company.dto.CompnayApplicationFilePath;
 
 // 박신규 - CompanyFileUploadAction
 // 유정 수정 - 변수 추가 및 수정, alert 추가 
@@ -66,16 +67,27 @@ public class CompanyApplication04Action implements Action {
 		ApplicationVO company = new ApplicationVO();
 
 		// 폴더이름 변수
-		String company_path = app_cp_manager + "_" + app_cp_name + "_" + now;
+		String app_cp_folder = app_cp_manager + "_" + app_cp_name + "_" + now+"/";
 		// data 접근 객체 생성
 		CompanyDAO companyDAO1 = new CompanyDAO();
 		// company 기본경로 + 폴더 이름 -> 폴더 경로에 파일삽입위해서
-		String real_path = companyDAO1.getUploadFilePath("company_path") + "/" + company_path;
+		CompnayApplicationFilePath companyApplicationFilePath = new CompnayApplicationFilePath(); 
+		companyDAO1.getUploadFilePath(companyApplicationFilePath,app_cp_folder);
 
 		// 파일디렉토리
-		File fileSaveDir = new File(real_path);
+		/*File fileSaveDir = new File(real_path);
 		if (!fileSaveDir.exists()) {
 			fileSaveDir.mkdir();
+		}*/
+		
+		File fileFolder = new File(companyApplicationFilePath.getApp_cp_file_path());
+		if (!fileFolder.exists()) {
+			fileFolder.mkdir();
+		}
+		
+		File imageFolder = new File(companyApplicationFilePath.getApp_cp_image_path());
+		if (!imageFolder.exists()) {
+			imageFolder.mkdir();
 		}
 
 		// 받아온 파일들을 담는 ArrayList
@@ -98,34 +110,29 @@ public class CompanyApplication04Action implements Action {
 				case "app_cp_registrantion":
 					company.setApp_cp_registrantion(fileName);
 					company.setApp_cp_alias_registrantion(alias + "app_cp_registrantion"+fileFormat);
-					//System.out.println(real_path + "/" + alias+"app_cp_registrantion"+fileFormat);
-					part.write(real_path + "/" + alias+"app_cp_registrantion"+fileFormat);
+					part.write(companyApplicationFilePath.getApp_cp_file_path() + alias +"app_cp_registrantion"+fileFormat);
 					break;
 				case "app_cp_financial":
 					company.setApp_cp_financial(fileName);
 					company.setApp_cp_financial(alias + "app_cp_financial"+fileFormat);
-					//System.out.println(real_path + "/" + alias+"app_cp_financial"+fileFormat);
-					part.write(real_path + "/" + alias+"app_cp_financial"+fileFormat);
+					part.write(companyApplicationFilePath.getApp_cp_file_path() + alias +"app_cp_financial"+fileFormat);
 					break;
 				case "app_cp_estate_contract":
 					company.setApp_cp_estate_contract(fileName);
 					company.setApp_cp_alias_estate_contract(alias + "app_cp_estate_contract"+fileFormat);
-					//System.out.println(real_path + "/" + alias+"app_cp_estate_contract"+fileFormat);
-					part.write(real_path + "/" + alias+"app_cp_estate_contract"+fileFormat);
+					part.write(companyApplicationFilePath.getApp_cp_file_path() + alias+"app_cp_estate_contract"+fileFormat);
 					break;
 				case "app_cp_images":
 					image_count++;
 					app_cp_image_list.add(fileName);
 					app_cp_alias_image_list.add(alias + "app_cp_image"+ image_count+fileFormat);
-					//System.out.println(real_path + "/" + alias+"app_cp_image"+image_count+fileFormat);
-					part.write(real_path + "/" + alias+"app_cp_image"+image_count+fileFormat);
+					part.write(companyApplicationFilePath.getApp_cp_image_path() + alias+"app_cp_image"+image_count+fileFormat);
 					break;
 				case "app_cp_other_documents":
 					document_count++;
 					app_cp_document_list.add(fileName);
-					app_cp_alias_document_list.add(alias + "app_cp_other_document" + document_count+fileFormat);
-					//System.out.println(real_path + "/" + alias+"app_cp_other_document"+document_count+fileFormat);
-					part.write(real_path + "/" + alias+"app_cp_other_document"+document_count+fileFormat);
+					app_cp_alias_document_list.add(alias + "app_cp_other_document" + document_count+fileFormat);					
+					part.write(companyApplicationFilePath.getApp_cp_file_path() + alias+"app_cp_other_document"+document_count+fileFormat);
 					break;
 				default:
 					break;
@@ -185,7 +192,8 @@ public class CompanyApplication04Action implements Action {
 		company.setApp_cp_alias_images(app_cp_alias_image_list);
 		company.setApp_cp_other_documents(app_cp_image_list);
 		company.setApp_cp_alias_other_documents(app_cp_alias_document_list);
-		company.setApp_cp_real_path(real_path);
+		//company.setApp_cp_real_path(real_path);
+		company.setApp_cp_folder(app_cp_folder);
 
 		CompanyDAO companyDAO2 = new CompanyDAO();
 
@@ -235,6 +243,18 @@ public class CompanyApplication04Action implements Action {
 			}
 		}
 		return "";
+	}
+	
+	private void makeDirectory(CompnayApplicationFilePath companyApplicationFilePath) {
+		File fileFolder = new File(companyApplicationFilePath.getApp_cp_file_path());
+		if (!fileFolder.exists()) {
+			fileFolder.mkdir();
+		}
+		
+		File imageFolder = new File(companyApplicationFilePath.getApp_cp_image_path());
+		if (!imageFolder.exists()) {
+			imageFolder.mkdir();
+		}
 	}
 
 }
