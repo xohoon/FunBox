@@ -198,19 +198,20 @@ public class CompanyDAO {
 
 	// 20190723//
 	// compnay_file //
-	public String getUploadDirectory() {
-		String sql = "SELECT file_path FROM file_path WHERE file_category = 'document_path'";
+	public String getFileDirectory(int cp_idx) {
+		String sql = "SELECT CONCAT((SELECT file_path FROM file_path WHERE idx = 2), (SELECT cf_folder FROM company_file WHERE cp_idx = ?),(SELECT file_path FROM file_path WHERE idx = 4)) AS company_file_folder";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cp_idx);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				String file_path = rs.getString("file_path");
-				return file_path;
+				String company_file_folder = rs.getString("company_file_folder");
+				return company_file_folder;
 			}
 		} catch (Exception ex) {
 			System.out.println("getUploadFilePath 에러: " + ex);
