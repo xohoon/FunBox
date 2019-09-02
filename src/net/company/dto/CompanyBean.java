@@ -77,9 +77,6 @@ public class CompanyBean {
 	// CompanyFileVO
 	
 
-	private String cp_branch;
-	private String cp_intro_headline;
-
 	public String getCf_invest_image() {
 		return cf_invest_image;
 	}
