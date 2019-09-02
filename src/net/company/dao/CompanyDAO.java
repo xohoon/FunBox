@@ -511,10 +511,7 @@ public class CompanyDAO {
 
 		try {
 			// 쿼리
-			String sql = "SELECT " + "A.*, B.*, C.*, D.*, E.* " + "FROM " + "company A, " + "company_file B, "
-					+ "company_invest C, " + "company_pay_schedule D, " + "company_pre_revenue E "
-					+ "WHERE A.cp_idx = ? AND " + "A.cp_idx = B.cp_idx AND " + "B.cp_idx = C.cp_idx AND "
-					+ "C.cp_idx = D.cp_idx AND " + "D.cp_idx = E.cp_idx";
+			String sql = "SELECT * FROM company cp JOIN company_invest cp_iv ON cp.cp_idx = cp_iv.cp_idx JOIN company_pay_schedule cp_pay ON cp.cp_idx = cp_pay.cp_idx JOIN company_pre_revenue cp_rev  ON cp.cp_idx = cp_rev.cp_idx WHERE cp.cp_idx = ? AND cp_iv.cp_idx = cp.cp_idx AND cp_pay.cp_idx = cp.cp_idx AND cp_rev.cp_idx = cp.cp_idx";
 			pstm = conn.prepareStatement(sql);
 			pstm.setInt(1, idx);
 			rs = pstm.executeQuery();
