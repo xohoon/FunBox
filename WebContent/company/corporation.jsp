@@ -23,6 +23,8 @@
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="company/js/jquery.mousewheel.js"></script>
   <script type="text/javascript" src="company/js/corporation.js"></script>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3fd911319378df3f4ed86e94c8737483&libraries=services,clusterer,drawing"></script>
+  <script type="text/javascript" src="company/js/map.js"></script>
 </head>
 <body>
   <div id="wrap">
@@ -160,7 +162,7 @@
 	          	<div class="invest" onclick="investClick();">투자하기</div>
             </div>
             <div class="gauge_bar">
-            	<p>${test}%</p>
+            	<p><fmt:formatNumber value="${companyBean.iv_percent}" pattern="#" />%</p>
             	<div class="gauge">
             		<div></div>
             	</div>
@@ -199,7 +201,8 @@
 	            <li>${companyBean.cp_add_ch} ${companyBean.cp_add_more}</li>
 	          </ul>
 	          <div class="corpor-location">
-	            <div id="daumRoughmapContainer1567051096650" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+	            <!-- <div id="daumRoughmapContainer1567051096650" class="root_daum_roughmap root_daum_roughmap_landing"></div> -->
+	            <div id="map" style="width:400px;height:190px;" ></div>
 	          </div>
     	</article>
     	<article class="row2">
@@ -715,7 +718,7 @@
           $row6 = $('.row6');
       for(corFile=0;corFile<corL;corFile++){
         var addFile = document.createElement('a');
-        addFile.setAttribute('href',corFileArr[corFile]);
+        addFile.setAttribute('href','./CompanyFileDownload?filename='+corFileArr[corFile]+'&cp_idx='+${companyBean.cp_idx});
         addFile.className = 'corFile';
         $row6.append(addFile);
         
