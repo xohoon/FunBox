@@ -556,15 +556,16 @@
     }
     
   </script>
-
+	
   <script>
+  var test;
     //라이트박스
     $(function() {
     	var image_file_name_array = '${companyBean.cf_alias_store_images}'.split(',');
     	for (var i = 0; i < image_file_name_array.length; i++) {
-    		image_file_name_array[0] = company_image_path + image_file_name_array[0];
+    		image_file_name_array[i] = company_image_path + image_file_name_array[i];
 		}
-    	var i;
+    	var i;    	
         var imgArr = image_file_name_array,
           imgLeng = imgArr.length,
           $ul = $('.photo').find('ul'),
@@ -577,9 +578,9 @@
       for (i = 0; i < imgLeng; i++) {
         var addLi = document.createElement('li'),
             addImg = document.createElement('img');
-        addLi.style.backgroundImage = "url(" +company_image_path +imgArr[i] + ")";
+        addLi.style.backgroundImage = "url("+ imgArr[i] + ")";
         addImg.className = 'corImg';
-        addImg.setAttribute('src',+company_image_path+imgArr[i]);
+        addImg.setAttribute('src',imgArr[i]);
         $ul.append(addLi);
         $div.append(addImg);
       }
@@ -587,10 +588,10 @@
       for (i = 0; i < imgLeng; i++) {
         var addLi = document.createElement('li'),
             addImg = document.createElement('img');
-        addLi.style.backgroundImage = "url(" +company_image_path +imgArr[i] + ")";
+        addLi.style.backgroundImage = "url(" +imgArr[i] + ")";
         addLi.setAttribute('onclick', "currentSlide(" + (i + 1) + ")");
         addImg.className = 'corImg2';
-        addImg.setAttribute('src',+company_image_path+imgArr[i]);
+        addImg.setAttribute('src',imgArr[i]);
         $ul2.append(addLi);
           $div2.append(addImg);
       }
