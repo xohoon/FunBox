@@ -16,8 +16,6 @@ import net.company.dto.CompanyFileVO;
 import net.company.dto.CompanyListVO;
 import net.company.dto.Company_pay_scheduleVO;
 import net.company.dto.CompnayApplicationFilePath;
-import net.company.dto.CompnayApplicationFilePath;
-import net.company.dto.CompnayApplicationFilePath;
 import net.company.dto.LikeBoxVO;
 import net.member.dto.Main_LikeVO;
 import net.member.dto.Main_SlideVO;
@@ -348,7 +346,7 @@ public class CompanyDAO {
 			String sql = "";
 
 			if (auto_status) {
-				sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_branch, cp.cp_intro_content, concat(cp_f.cf_directory,cp_f.cf_image2) as banner_image FROM company as cp, company_file as cp_f ORDER BY RAND() LIMIT 3";
+				sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_branch, cp.cp_intro_content, concat(cp_f.cf_folder,(SELECT file_path FROM file_path WHERE idx = 3),cp_f.cf_pr_background) as banner_image FROM company as cp, company_file as cp_f, file_path as p ORDER BY RAND() LIMIT 3";
 			} else {
 				sql = "SELECT * FROM am_banner_1";
 			}
@@ -391,7 +389,7 @@ public class CompanyDAO {
 			String sql = "";
 
 			if (auto_status) {
-				sql = "select cp_f.cp_idx,cp.cp_name,cp.cp_intro_headline,cp.cp_intro_content,cp.cp_open_datetime,concat(cp_f.cf_directory,cp_f.cf_image2) as banner_image from company_file cp_f,company cp where cp.cp_idx = cp_f.cp_idx and cp.cp_open_status = 0 limit 3";
+				sql = "select cp_f.cp_idx,cp.cp_name,cp.cp_intro_headline,cp.cp_intro_content,cp.cp_open_datetime,concat(cp_f.cf_folder,(SELECT file_path FROM file_path WHERE idx = 3),cp_f.cf_pr_background) as banner_image from company_file cp_f,company cp where cp.cp_idx = cp_f.cp_idx and cp.cp_open_status = 0 limit 3";
 			} else {
 				sql = "SELECT * FROM am_banner_2";
 			}
