@@ -450,9 +450,9 @@
         var $win = $(window);
         
       //즐겨찾기
-      /* $('.like').on('click', function() {
+      $('.like').on('click', function() {
         $(this).toggleClass('on');
-      }); */
+      });
 
       //리스트
       $(window).on('scroll resize', function() {
