@@ -9,7 +9,10 @@ public class Main {
 		
 		CompanyDAO companyDAO = new CompanyDAO();
 		
-		CompanyBean companyBean = companyDAO.getCompanyInfo2(1);
+		CompanyBean companyBean = companyDAO.getCompanyInfo2(2);
+		
+		System.out.println(companyBean.getCf_store_images());
+		
 	}
 
 }

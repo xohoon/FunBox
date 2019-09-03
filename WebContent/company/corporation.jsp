@@ -434,6 +434,9 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script> -->
   </body>
+  <script type="text/javascript">
+  	var company_image_path = '${companyBean.company_image_path}';
+  </script>
   <script>
     $(function() {
       $('header').load('./header/header.jsp');
@@ -554,14 +557,18 @@
   <script>
     //라이트박스
     $(function() {
-      var i;
-      var imgArr = ['img/row1_anotherminae.jpg', 'img/row1_busancoffee.jpg', 'img/row1_soinsoo.jpg', 'img/row2_bokraeheon.jpg', 'img/row2_moon.jpg', 'img/row3_noodle.jpg', 'img/row2_myeonchaeum.jpg'],
-        imgLeng = imgArr.length,
-        $ul = $('.photo').find('ul'),
-        $div = $('.photo').find('div'),
-        $box = $('#lightBox'),
-        $ul2 = $box.find('ul'),
-        $div2 = $box.find('div');
+    	var image_file_name_array = '${companyBean.cf_alias_store_images}'.split(',');
+    	for (var i = 0; i < image_file_name_array.length; i++) {
+    		image_file_name_array[0] = company_image_path + image_file_name_array[0];
+		}
+    	var i;
+        var imgArr = image_file_name_array,
+          imgLeng = imgArr.length,
+          $ul = $('.photo').find('ul'),
+          $div = $('.photo').find('div'),
+          $box = $('#lightBox'),
+          $ul2 = $box.find('ul'),
+          $div2 = $box.find('div');
          
 
       for (i = 0; i < imgLeng; i++) {
@@ -584,7 +591,6 @@
         $ul2.append(addLi);
           $div2.append(addImg);
       }
-
       document.getElementById('caption').innerHTML = slideIndex + '&nbsp;/&nbsp;' + imgLeng;
       document.getElementById('caption2').innerHTML = slideIndex + '&nbsp;/&nbsp;' + imgLeng;
 
@@ -637,7 +643,10 @@
     });
 
     var slideIndex = 1;
-    showSlides();
+    $(document).ready(function(){
+    	showSlides();	
+    });
+    
 
 
     function plusSlides(n) {
@@ -676,7 +685,8 @@
     //사업계획서
     $(function() {
       var p,
-        pArr = ['img/store_info1.png', 'img/store_info1.png', 'img/store_info1.png', 'img/row1_anotherminae.jpg', 'img/row1_busancoffee.jpg', 'img/row1_soinsoo.jpg', 'img/row2_bokraeheon.jpg', 'img/row2_moon.jpg', 'img/row3_noodle.jpg', 'img/row2_myeonchaeum.jpg'],
+        //pArr = ['img/store_info1.png', 'img/store_info1.png', 'img/store_info1.png', 'img/row1_anotherminae.jpg', 'img/row1_busancoffee.jpg', 'img/row1_soinsoo.jpg', 'img/row2_bokraeheon.jpg', 'img/row2_moon.jpg', 'img/row3_noodle.jpg', 'img/row2_myeonchaeum.jpg'],
+        pArr ='${companyBean.cf_alias_business_plan_images}'.split(',');
         planL = pArr.length,
         $operPlan = $('.operPlan');
       for (p = 0; p < planL; p++) {
@@ -694,10 +704,13 @@
     });
   </script>
   <script>
+  	
     //참고자료
     $(function(){
+      var real_file_name_array= '${companyBean.cf_store_images}'.split(',');
       var corFile,
-          corFileArr = ['data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EC%82%AC%EC%97%85%EA%B3%84%ED%9A%8D%EC%84%9C.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%ED%8E%80%EB%94%A9%EA%B3%84%EC%95%BD%EC%84%9C.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EC%82%AC%EC%97%85%EC%9E%90%EB%93%B1%EB%A1%9D%EC%A6%9D.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EC%9E%84%EB%8C%80%EC%B0%A8%EA%B3%84%EC%95%BD%EC%84%9C.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EA%B0%80%EB%A7%B9%ED%97%88%EA%B0%80%EC%9E%90%EB%A3%8C.txt'],
+          //corFileArr = ['data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EC%82%AC%EC%97%85%EA%B3%84%ED%9A%8D%EC%84%9C.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%ED%8E%80%EB%94%A9%EA%B3%84%EC%95%BD%EC%84%9C.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EC%82%AC%EC%97%85%EC%9E%90%EB%93%B1%EB%A1%9D%EC%A6%9D.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EC%9E%84%EB%8C%80%EC%B0%A8%EA%B3%84%EC%95%BD%EC%84%9C.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EA%B0%80%EB%A7%B9%ED%97%88%EA%B0%80%EC%9E%90%EB%A3%8C.txt'],          
+          corFileArr = '${companyBean.cf_alias_store_images}'.split(',');
           corL = corFileArr.length,
           $row6 = $('.row6');
       for(corFile=0;corFile<corL;corFile++){
@@ -710,8 +723,8 @@
           fileUrlLeng =fileUrl.length,
           fileNameFull = fileUrl[fileUrlLeng-1],
           fileNameDec = decodeURI(fileNameFull);
-        addFile.setAttribute('download',fileNameDec);
-        addFile.innerHTML = '<i></i>' + fileNameDec + '<i></i>';
+        addFile.setAttribute('download',real_file_name_array[corFile]);
+        addFile.innerHTML = '<i></i>' + real_file_name_array[corFile] + '<i></i>';
         
       }
       

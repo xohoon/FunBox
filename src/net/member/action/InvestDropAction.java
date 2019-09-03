@@ -117,7 +117,7 @@ public class InvestDropAction implements Action {
 		
 		CompanyBean company = new CompanyBean();
 		CompanyDAO company_dao2 = new CompanyDAO();
-		company = company_dao2.getCompanyInfo(cp_idx);
+		company = company_dao2.getCompanyInfo2(cp_idx);
 		request.setAttribute("company", company);
 		
 		

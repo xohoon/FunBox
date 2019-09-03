@@ -100,11 +100,23 @@ public class CompanyBean {
 	private String cf_business_plan;
 	private String cf_alias_business_plan;
 	
+	private String company_file_path;
+	private String company_image_path;
 	
-	//다중파일
-	private String[] cf_alias_store_image_Array;
-	private String[] cf_alias_etc_files_Array;
-	private String[] cf_alias_business_plan_Array;
+	
+	
+	public String getCompany_file_path() {
+		return company_file_path;
+	}
+	public void setCompany_file_path(String company_file_path) {
+		this.company_file_path = company_file_path;
+	}
+	public String getCompany_image_path() {
+		return company_image_path;
+	}
+	public void setCompany_image_path(String company_image_path) {
+		this.company_image_path = company_image_path;
+	}
 	public int getCp_idx() {
 		return cp_idx;
 	}
@@ -592,25 +604,5 @@ public class CompanyBean {
 	public void setCf_alias_business_plan(String cf_alias_business_plan) {
 		this.cf_alias_business_plan = cf_alias_business_plan;
 	}
-	public String[] getCf_alias_store_image_Array() {
-		return cf_alias_store_image_Array;
-	}
-	public void setCf_alias_store_image_Array(String[] cf_alias_store_image_Array) {
-		this.cf_alias_store_image_Array = cf_alias_store_image_Array;
-	}
-	public String[] getCf_alias_etc_files_Array() {
-		return cf_alias_etc_files_Array;
-	}
-	public void setCf_alias_etc_files_Array(String[] cf_alias_etc_files_Array) {
-		this.cf_alias_etc_files_Array = cf_alias_etc_files_Array;
-	}
-	public String[] getCf_alias_business_plan_Array() {
-		return cf_alias_business_plan_Array;
-	}
-	public void setCf_alias_business_plan_Array(String[] cf_alias_business_plan_Array) {
-		this.cf_alias_business_plan_Array = cf_alias_business_plan_Array;
-	}
-	
-	
 	
 }
