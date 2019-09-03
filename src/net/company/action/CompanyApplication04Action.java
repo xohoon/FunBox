@@ -67,7 +67,8 @@ public class CompanyApplication04Action implements Action {
 		ApplicationVO company = new ApplicationVO();
 
 		// 폴더이름 변수
-		String app_cp_folder = app_cp_manager + "_" + app_cp_name + "_" + now+"/";
+		String rand_num = UUID.randomUUID().toString().substring(0, 17);
+		String app_cp_folder = rand_num + "_" + now + "/";
 		// data 접근 객체 생성
 		CompanyDAO companyDAO1 = new CompanyDAO();
 		// company 기본경로 + 폴더 이름 -> 폴더 경로에 파일삽입위해서
