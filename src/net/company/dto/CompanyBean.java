@@ -75,24 +75,7 @@ public class CompanyBean {
 	private int cp_pre_interest_rate;
 
 	// CompanyFileVO
-	private String cf_registration;
-	private String cf_financial;
-	private String cf_estate_contract;
-	private String cf_image1;
-	private String cf_image2;
-	private String cf_image3;
-	private String cf_image4;
-	private String cf_image5;
-	private String cf_etc;
-	// 20190723추가//
-	private String cf_certificate;
-	private String cf_image6;
-	private String cf_corporation_banner;
-	private String cf_corporation_icon;
-	private String cf_invest_image;
-
-	private String cp_branch;
-	private String cp_intro_headline;
+	
 
 	public String getCf_invest_image() {
 		return cf_invest_image;
