@@ -4,13 +4,19 @@
 	    });
 */
 	$(function(){
+	    //찜하기 되어 있으면 즐겨찾기 아이콘 클릭처리
+	      if($('.like').val() == '1'){
+	    	  $('.like').toggleClass('on');
+	      }	     	    
+	      
 		// 유정 추가 - 찜버튼에 값 넣기
 		    $(".like").click(function() {
 		    	if (!document.investForm.idx.value) {
 		    		alert('로그인이 필요한 서비스입니다.');
+		    		location.href='./LoginPage.mb';		    		
 		    	} else {
 		    		if ($(".like").val() == '0') {
-		    			like_q = confirm('즐겨찾기에 추가하시겠습니까?');
+		    			like_q = confirm('즐겨찾기에 추가하시겠습니까?');		    			
 		    			if (like_q) {
 		    				$(this).val('1');
 		    				$(this).toggleClass('on');
@@ -299,6 +305,6 @@
 	    		f.submit();
 	    	} else {
 	    		alert("로그인 후 사용해주세요.");
-	    		// location.href='./LoginPage.mb';
+	    		//location.href='./LoginPage.mb';
 	    	}
 	    }	    
