@@ -54,6 +54,7 @@
 	        <a href="./CorporationAction.cp?cp_idx=${slideVO.sl_cp_idx }">
 	          <div>
 	            <div class="slide" id="slide_${status.count }">
+	            <img src="<c:url value="${resourcePath }/CompanyFile/${slideVO.banner_image }"/>" alt="">
 	              <div class="owop"></div>
 	              <div class="txtbox">
 	                <h2>${slideVO.sl_cp_name }</h2>
@@ -152,7 +153,7 @@
             <c:forEach var="mainPageDateOfOpenVO" items="${mainPageDateOfOpenVOs}" varStatus="status">
             	<div>
             		<div class="slide slide${status.count}" onclick="location.href = './CorporationAction.cp?cp_idx=${mainPageDateOfOpenVO.cp_idx}';">
-            			<img src="${mainPageDateOfOpenVO.banner_image }" alt="">
+            			<img src="<c:url value="${resourcePath }/CompanyFile/${mainPageDateOfOpenVO.banner_image }"/>" alt="">
             			<div class="cb_inbox">
 		                    <h4>${mainPageDateOfOpenVO.cp_name } <span>${mainPageDateOfOpenVO.cp_open_datetime }오픈예정</span></h4>
 		                    <p><span>${mainPageDateOfOpenVO.cp_intro_headline }</span>${mainPageDateOfOpenVO.cp_intro_content }</p>
