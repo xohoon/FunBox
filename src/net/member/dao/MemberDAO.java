@@ -756,10 +756,7 @@ public class MemberDAO {
 		List<Member_likeboxVO> boxs = new ArrayList<Member_likeboxVO>();
 		try {
 			// 쿼리 멤버 idx필요
-			String sql = "SELECT a.mb_idx, a.cp_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, concat(cf.cf_directory,cf.cf_image1) as cf_directory_image, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent, c.iv_appl_stop_date_time "
-					+ "FROM member_likebox as a " + "JOIN company as b ON a.cp_idx = b.cp_idx AND a.mb_idx = ? "
-					+ "JOIN company_file as cf ON b.cp_idx = cf.cp_idx "
-					+ "JOIN company_invest as c ON b.cp_idx = c.cp_idx";
+			String sql = "SELECT a.mb_idx, a.cp_idx, a.like_cp_name, b.cp_monthly_profit, b.cp_branch, b.cp_sector, CONCAT(cf.cf_folder,(SELECT file_path FROM file_path WHERE idx = 3)) AS company_image_path,cf.cf_alias_thumbnail, round((c.iv_current_amount/c.iv_goal_amount*100)) as  percent, c.iv_appl_stop_date_time FROM member_likebox as a      JOIN company as b ON a.cp_idx = b.cp_idx AND a.mb_idx = ? JOIN company_file as cf ON b.cp_idx = cf.cp_idx JOIN company_invest as c ON b.cp_idx = c.cp_idx";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mb_idx);
@@ -774,10 +771,12 @@ public class MemberDAO {
 				box.setCp_monthly_profit(rs.getString("cp_monthly_profit"));
 				box.setCp_branch(rs.getString("cp_branch"));
 				box.setCp_sector(rs.getString("cp_sector"));
-				box.setCf_image(rs.getString("cf_directory_image"));
 				// 현재 투자율 계산
 				box.setCp_like_percent(rs.getString("percent"));
 				box.setIv_appl_stop_date_time(rs.getDate("iv_appl_stop_date_time"));
+				// 이미지 파일
+				box.setCf_alias_thumbnail(rs.getString("cf_alias_thumbnail"));
+				box.setCompany_image_path(rs.getString("company_image_path"));
 				boxs.add(box);
 			}
 		} catch (Exception ex) {

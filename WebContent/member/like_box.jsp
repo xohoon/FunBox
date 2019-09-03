@@ -29,7 +29,7 @@
 				<input type="hidden" id="cp_idx" value="${boxs.getCp_idx() }">
 				<a href="#" class="delete"><i class="fas fa-times-circle"></i></a>
 				<div class="img">
-					<img src="${boxs.getCf_image() }">
+					<img src="/CompanyFile/${boxs.company_image_path }${boxs.cf_alias_thumbnail }">
 				</div>
 				<div class="txt_box">
 					<span>${boxs.getCp_sector() }</span>

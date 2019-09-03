@@ -346,7 +346,7 @@ public class CompanyDAO {
 			String sql = "";
 
 			if (auto_status) {
-				sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_branch, cp.cp_intro_content, concat(cp_f.cf_folder,(SELECT file_path FROM file_path WHERE idx = 3),cp_f.cf_alias_pr_background) as banner_image FROM company as cp, company_file as cp_f, file_path as p ORDER BY RAND() LIMIT 3";
+				sql = "SELECT cp.cp_idx, cp.cp_name, cp.cp_branch, cp.cp_intro_content, concat(cp_f.cf_folder,(SELECT file_path FROM file_path WHERE idx = 3),cp_f.cf_pr_background) as banner_image FROM company as cp, company_file as cp_f, file_path as p ORDER BY RAND() LIMIT 3";
 			} else {
 				sql = "SELECT * FROM am_banner_1";
 			}
@@ -389,7 +389,7 @@ public class CompanyDAO {
 			String sql = "";
 
 			if (auto_status) {
-				sql = "select cp_f.cp_idx,cp.cp_name,cp.cp_intro_headline,cp.cp_intro_content,cp.cp_open_datetime,concat(cp_f.cf_folder,(SELECT file_path FROM file_path WHERE idx = 3),cp_f.cf_alias_pr_background) as banner_image from company_file cp_f,company cp where cp.cp_idx = cp_f.cp_idx and cp.cp_open_status = 0 limit 3";
+				sql = "select cp_f.cp_idx,cp.cp_name,cp.cp_intro_headline,cp.cp_intro_content,cp.cp_open_datetime,concat(cp_f.cf_folder,(SELECT file_path FROM file_path WHERE idx = 3),cp_f.cf_pr_background) as banner_image from company_file cp_f,company cp where cp.cp_idx = cp_f.cp_idx and cp.cp_open_status = 0 limit 3";
 			} else {
 				sql = "SELECT * FROM am_banner_2";
 			}
@@ -521,7 +521,7 @@ public class CompanyDAO {
 
 		try {
 			// 쿼리
-			String sql = "SELECT *,(iv_current_amount/iv_goal_amount*100) AS iv_percent, CONCAT((SELECT file_path FROM file_path WHERE idx = 2),cf.cf_folder,(SELECT file_path FROM file_path WHERE idx = 4)) AS company_file_path ,CONCAT((SELECT file_path FROM file_path WHERE idx = 2),cf.cf_folder,(SELECT file_path FROM file_path WHERE idx = 3)) AS company_image_path  FROM company cp JOIN company_invest cp_iv ON cp.cp_idx = cp_iv.cp_idx JOIN company_pay_schedule cp_pay ON cp.cp_idx = cp_pay.cp_idx JOIN company_pre_revenue cp_rev ON cp.cp_idx = cp_rev.cp_idx JOIN company_file cf ON cp.cp_idx = cf.cp_idx WHERE cp.cp_idx = ? AND cp_iv.cp_idx = cp.cp_idx AND cp_pay.cp_idx = cp.cp_idx AND cp_rev.cp_idx = cp.cp_idx AND cf.cp_idx = cp.cp_idx";
+			String sql = "SELECT *,(iv_current_amount/iv_goal_amount*100) AS iv_percent, CONCAT((SELECT file_path FROM file_path WHERE idx = 2),cf.cf_folder,(SELECT file_path FROM file_path WHERE idx = 4)) AS company_file_path ,CONCAT(cf.cf_folder,(SELECT file_path FROM file_path WHERE idx = 3)) AS company_image_path  FROM company cp JOIN company_invest cp_iv ON cp.cp_idx = cp_iv.cp_idx JOIN company_pay_schedule cp_pay ON cp.cp_idx = cp_pay.cp_idx JOIN company_pre_revenue cp_rev ON cp.cp_idx = cp_rev.cp_idx JOIN company_file cf ON cp.cp_idx = cf.cp_idx WHERE cp.cp_idx = ? AND cp_iv.cp_idx = cp.cp_idx AND cp_pay.cp_idx = cp.cp_idx AND cp_rev.cp_idx = cp.cp_idx AND cf.cp_idx = cp.cp_idx";
 			pstm = conn.prepareStatement(sql);
 			pstm.setInt(1, idx);
 			rs = pstm.executeQuery();

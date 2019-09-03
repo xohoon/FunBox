@@ -438,7 +438,7 @@
 	<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script> -->
   </body>
   <script type="text/javascript">
-  	var company_image_path = '${companyBean.company_image_path}';
+  	var company_image_path = '/CompanyFile/'+'${companyBean.company_image_path}';
   </script>
   <script>
     $(function() {
@@ -450,9 +450,9 @@
         var $win = $(window);
         
       //즐겨찾기
-      /* $('.like').on('click', function() {
+      $('.like').on('click', function() {
         $(this).toggleClass('on');
-      }); */
+      });
 
       //리스트
       $(window).on('scroll resize', function() {
@@ -556,15 +556,16 @@
     }
     
   </script>
-
+	
   <script>
+  var test;
     //라이트박스
     $(function() {
     	var image_file_name_array = '${companyBean.cf_alias_store_images}'.split(',');
     	for (var i = 0; i < image_file_name_array.length; i++) {
-    		image_file_name_array[0] = company_image_path + image_file_name_array[0];
+    		image_file_name_array[i] = company_image_path + image_file_name_array[i];
 		}
-    	var i;
+    	var i;    	
         var imgArr = image_file_name_array,
           imgLeng = imgArr.length,
           $ul = $('.photo').find('ul'),
@@ -577,7 +578,7 @@
       for (i = 0; i < imgLeng; i++) {
         var addLi = document.createElement('li'),
             addImg = document.createElement('img');
-        addLi.style.backgroundImage = "url(" + imgArr[i] + ")";
+        addLi.style.backgroundImage = "url("+ imgArr[i] + ")";
         addImg.className = 'corImg';
         addImg.setAttribute('src',imgArr[i]);
         $ul.append(addLi);
@@ -587,7 +588,7 @@
       for (i = 0; i < imgLeng; i++) {
         var addLi = document.createElement('li'),
             addImg = document.createElement('img');
-        addLi.style.backgroundImage = "url(" + imgArr[i] + ")";
+        addLi.style.backgroundImage = "url(" +imgArr[i] + ")";
         addLi.setAttribute('onclick', "currentSlide(" + (i + 1) + ")");
         addImg.className = 'corImg2';
         addImg.setAttribute('src',imgArr[i]);
@@ -694,15 +695,15 @@
         $operPlan = $('.operPlan');
       for (p = 0; p < planL; p++) {
         var addP = document.createElement('li');
-        addP.style.backgroundImage = "url(" + pArr[p] + ")";
+        addP.style.backgroundImage = "url(" +company_image_path + pArr[p] + ")";
         $operPlan.find('ul').append(addP);
       }
-      document.getElementById('planView').style.backgroundImage = "url(" + pArr[0] + ")";
+      document.getElementById('planView').style.backgroundImage = "url("+ company_image_path+ pArr[0] + ")";
 
       $operPlan.find('li').on('click', function() {
         var liIn = $(this).index();
 
-        document.getElementById('planView').style.backgroundImage = "url(" + pArr[liIn] + ")";
+        document.getElementById('planView').style.backgroundImage = "url(" +company_image_path+ pArr[liIn] + ")";
       });
     });
   </script>
@@ -710,10 +711,10 @@
   	
     //참고자료
     $(function(){
-      var real_file_name_array= '${companyBean.cf_store_images}'.split(',');
+      var real_file_name_array= '${companyBean.cf_etc_files}'.split(',');
       var corFile,
           //corFileArr = ['data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EC%82%AC%EC%97%85%EA%B3%84%ED%9A%8D%EC%84%9C.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%ED%8E%80%EB%94%A9%EA%B3%84%EC%95%BD%EC%84%9C.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EC%82%AC%EC%97%85%EC%9E%90%EB%93%B1%EB%A1%9D%EC%A6%9D.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EC%9E%84%EB%8C%80%EC%B0%A8%EA%B3%84%EC%95%BD%EC%84%9C.txt','data/%EB%B0%94%EB%A5%B8%EC%83%9D%EC%84%A0%ED%9A%8C_%EA%B0%80%EB%A7%B9%ED%97%88%EA%B0%80%EC%9E%90%EB%A3%8C.txt'],          
-          corFileArr = '${companyBean.cf_alias_store_images}'.split(',');
+          corFileArr = '${companyBean.cf_alias_etc_files}'.split(',');
           corL = corFileArr.length,
           $row6 = $('.row6');
       for(corFile=0;corFile<corL;corFile++){

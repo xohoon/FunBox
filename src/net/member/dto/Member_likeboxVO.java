@@ -10,18 +10,13 @@ public class Member_likeboxVO {
 	private String cp_branch;			// 지점
 	private String cp_sector;			// 업종
 	private String cp_like_percent;		// 현재 투자률(sql 계산)
-	private String cf_image;
 	private int mb_idx;
 	private int cp_idx;
 	private Date iv_appl_stop_date_time;
+	private String cf_alias_thumbnail;
+	private String company_image_path;
 	
 	
-	public String getCf_image() {
-		return cf_image;
-	}
-	public void setCf_image(String cf_image) {
-		this.cf_image = cf_image;
-	}
 	public int getMb_idx() {
 		return mb_idx;
 	}
@@ -70,12 +65,19 @@ public class Member_likeboxVO {
 	public void setIv_appl_stop_date_time(Date iv_appl_stop_date_time) {
 		this.iv_appl_stop_date_time = iv_appl_stop_date_time;
 	}
-	@Override
-	public String toString() {
-		return "Member_likebox [like_cp_name=" + like_cp_name + ", cp_monthly_profit=" + cp_monthly_profit
-				+ ", cp_branch=" + cp_branch + ", cp_sector=" + cp_sector + ", cp_like_percent=" + cp_like_percent
-				+ "]";
+	public String getCf_alias_thumbnail() {
+		return cf_alias_thumbnail;
 	}
+	public void setCf_alias_thumbnail(String cf_alias_thumbnail) {
+		this.cf_alias_thumbnail = cf_alias_thumbnail;
+	}
+	public String getCompany_image_path() {
+		return company_image_path;
+	}
+	public void setCompany_image_path(String company_image_path) {
+		this.company_image_path = company_image_path;
+	}
+	
 	
 	
 }

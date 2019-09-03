@@ -11,7 +11,7 @@ public class Main {
 		
 		CompanyBean companyBean = companyDAO.getCompanyInfo2(2);
 		
-		System.out.println(companyBean.getCf_store_images());
+		System.out.println(companyBean.getCompany_image_path());
 		
 	}
 

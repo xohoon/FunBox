@@ -9,7 +9,7 @@
 <%@page import="net.page.dto.MainPageDeadLineVO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<!-- wedqdwq -->
 <%
 	ArrayList<MainPageDateOfOpenVO> mainPageDateOfOpenVOs = (ArrayList<MainPageDateOfOpenVO>)request.getAttribute("mainPageDateOfOpenVOs");
 	ArrayList<MainPageDeadLineVO> mainPageDeadLineVOs = (ArrayList<MainPageDeadLineVO>)request.getAttribute("mainPageDeadLineVOs");
