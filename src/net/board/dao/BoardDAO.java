@@ -523,7 +523,7 @@ public class BoardDAO {
 
 		try {
 			// 쪼인해도되고안해도되고
-			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime, cp_iv.iv_appl_stop_date_time,  concat(cp_f.cf_directory,cp_f.cf_image1) as thumbnail_image FROM company as cp JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx JOIN company_file as cp_f ON cp.cp_idx = cp_f.cp_idx ";
+			String sql = "SELECT cp.cp_recommand_count, cp.cp_overdue_status, cp.cp_revenue_distribution_status, cp.cp_add_ch, cp.cp_idx, cp.cp_name, cp.cp_sector, cp.cp_branch, cp.cp_monthly_profit, round((cp_iv.iv_current_amount/cp_iv.iv_goal_amount*100)) as percent, cp_iv.iv_goal_amount, cp_iv.iv_current_amount, cp.cp_reg_datetime, cp_iv.iv_appl_stop_date_time,  CONCAT((SELECT file_path FROM file_path WHERE idx = 2),cf.cf_folder,(SELECT file_path FROM file_path WHERE idx = 3),cf.cf_alias_thumbnail) as thumbnail_image FROM company as cp JOIN company_invest as cp_iv ON cp.cp_idx = cp_iv.cp_idx JOIN company_file as cf ON cp.cp_idx = cf.cp_idx ";
 
 			if (list_all != null) {				
 				for (int i = 0; i < list_all.size(); i++) {
@@ -596,7 +596,6 @@ public class BoardDAO {
 				
 			}
 			rs = pstmt.executeQuery();
-			//System.out.println(sql);
 			while (rs.next()) {
 				JSONObject jsonObj = new JSONObject();
 				jsonObj.put("cp_branch", rs.getString("cp_branch"));
