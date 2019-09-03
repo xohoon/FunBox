@@ -247,16 +247,27 @@ public class CompanyDAO {
 
 			if (rs.next()) {
 				CompanyFileVO companyFileVO = new CompanyFileVO();
-				companyFileVO.setCf_registration(rs.getString("cf_registration"));
-				companyFileVO.setCf_financial(rs.getString("cf_financial"));
-				companyFileVO.setCf_estate_contract(rs.getString("cf_estate_contract"));
-				companyFileVO.setCf_certificate(rs.getString("cf_certificate"));
-				companyFileVO.setCf_image1(rs.getString("cf_image1"));
-				companyFileVO.setCf_image2(rs.getString("cf_image2"));
-				companyFileVO.setCf_image3(rs.getString("cf_image3"));
-				companyFileVO.setCf_image4(rs.getString("cf_image4"));
-				companyFileVO.setCf_image5(rs.getString("cf_image5"));
-				companyFileVO.setCf_image6(rs.getString("cf_image6"));
+				companyFileVO.setCf_store_image(rs.getString("cf_store_image"));
+				companyFileVO.setCf_alias_store_image(rs.getString("cf_alias_store_image"));
+				companyFileVO.setCf_corporation_banner(rs.getString("cf_corporation_banner"));
+				companyFileVO.setCf_alias_corporation_banner(rs.getString("cf_alias_corporation_banner"));
+				companyFileVO.setCf_corporation_icon(rs.getString("cf_corporation_icon"));
+				companyFileVO.setCf_alias_corporation_icon(rs.getString("cf_alias_corporation_icon"));
+				companyFileVO.setCf_invest_image(rs.getString("cf_invest_image"));
+				companyFileVO.setCf_alias_invest_image(rs.getString("cf_alias_invest_image"));
+				companyFileVO.setCf_folder(rs.getString("cf_folder"));
+				companyFileVO.setCf_business_plan_images(rs.getString("cf_business_plan_images"));
+				companyFileVO.setCf_alias_business_plan_images(rs.getString("cf_alias_business_plan_images"));
+				companyFileVO.setCf_ect_files(rs.getString("cf_ect_files"));
+				companyFileVO.setCf_alias_etc_files(rs.getString("cf_alias_etc_files"));
+				companyFileVO.setCf_thumbnail(rs.getString("cf_thumbnail"));
+				companyFileVO.setCf_alias_thumbnail(rs.getString("cf_alias_thumbnail"));
+				companyFileVO.setCf_pr_background(rs.getString("cf_pr_background"));
+				companyFileVO.setCf_alias_pr_background(rs.getString("cf_alias_pr_background"));
+				companyFileVO.setCf_funding_contract(rs.getString("cf_funding_contract"));
+				companyFileVO.setCf_alias_funding_contract(rs.getString("cf_alias_funding_contract"));
+				companyFileVO.setCf_business_plan(rs.getString("cf_business_plan"));
+				companyFileVO.setCf_alias_business_plan(rs.getString("cf_alias_business_plan"));
 				return companyFileVO;
 			}
 		} catch (Exception ex) {
@@ -511,7 +522,7 @@ public class CompanyDAO {
 
 		try {
 			// 쿼리
-			String sql = "SELECT * FROM company cp JOIN company_invest cp_iv ON cp.cp_idx = cp_iv.cp_idx JOIN company_pay_schedule cp_pay ON cp.cp_idx = cp_pay.cp_idx JOIN company_pre_revenue cp_rev  ON cp.cp_idx = cp_rev.cp_idx WHERE cp.cp_idx = ? AND cp_iv.cp_idx = cp.cp_idx AND cp_pay.cp_idx = cp.cp_idx AND cp_rev.cp_idx = cp.cp_idx";
+			String sql = "SELECT *,(iv_current_amount/iv_goal_amount*100) AS percent FROM company cp JOIN company_invest cp_iv ON cp.cp_idx = cp_iv.cp_idx JOIN company_pay_schedule cp_pay ON cp.cp_idx = cp_pay.cp_idx JOIN company_pre_revenue cp_rev  ON cp.cp_idx = cp_rev.cp_idx JOIN company_file cf ON cp.cp_idx = cf.cp_idx WHERE cp.cp_idx = ? AND cp_iv.cp_idx = cp.cp_idx AND cp_pay.cp_idx = cp.cp_idx AND cp_rev.cp_idx = cp.cp_idx AND cf.cp_idx = cp.cp_idx";
 			pstm = conn.prepareStatement(sql);
 			pstm.setInt(1, idx);
 			rs = pstm.executeQuery();
@@ -586,15 +597,27 @@ public class CompanyDAO {
 				company.setCp_pre_interest_rate(rs.getInt("cp_pre_interest_rate"));
 
 				// CompanyFileVO
-				company.setCf_registration(rs.getString("cf_registration"));
-				company.setCf_financial(rs.getString("cf_financial"));
-				company.setCf_estate_contract(rs.getString("cf_estate_contract"));
-				company.setCf_image1(rs.getString("cf_image1"));
-				company.setCf_image2(rs.getString("cf_image2"));
-				company.setCf_image3(rs.getString("cf_image3"));
-				company.setCf_image4(rs.getString("cf_image4"));
-				company.setCf_image5(rs.getString("cf_image5"));
-				company.setCf_etc(rs.getString("cf_etc"));
+				company.setCf_store_images(rs.getString("cf_store_images"));
+				company.setCf_alias_store_images(rs.getString("cf_alias_store_images"));
+				company.setCf_corporation_banner(rs.getString("cf_corporation_banner"));
+				company.setCf_alias_corporation_banner(rs.getString("cf_alias_corporation_banner"));
+				company.setCf_corporation_icon(rs.getString("cf_corporation_icon"));
+				company.setCf_alias_corporation_icon(rs.getString("cf_alias_corporation_icon"));
+				company.setCf_invest_image(rs.getString("cf_invest_image"));
+				company.setCf_alias_invest_image(rs.getString("cf_alias_invest_image"));
+				company.setCf_folder(rs.getString("cf_folder"));
+				company.setCf_business_plan_images(rs.getString("cf_business_plan_images"));
+				company.setCf_alias_business_plan_images(rs.getString("cf_alias_business_plan_images"));
+				company.setCf_etc_files(rs.getString("cf_ect_files"));
+				company.setCf_alias_etc_files(rs.getString("cf_alias_etc_files"));
+				company.setCf_thumbnail(rs.getString("cf_thumbnail"));
+				company.setCf_alias_thumbnail(rs.getString("cf_alias_thumbnail"));
+				company.setCf_pr_background(rs.getString("cf_pr_background"));
+				company.setCf_alias_pr_background(rs.getString("cf_alias_pr_background"));
+				company.setCf_funding_contract(rs.getString("cf_funding_contract"));
+				company.setCf_alias_funding_contract(rs.getString("cf_alias_funding_contract"));
+				company.setCf_business_plan(rs.getString("cf_business_plan"));
+				company.setCf_alias_business_plan(rs.getString("cf_alias_business_plan"));
 
 			} else {
 				System.out.println("getCompanyInfo(DAO) 쿼리문 작동 실패");
@@ -629,14 +652,7 @@ public class CompanyDAO {
 
 		try {
 			// 쿼리
-			String sql = "SELECT *,"
-					+ "concat(b.cf_directory,b.cf_invest_image) as b_cf_invest_image,concat(b.cf_directory,b.cf_image1) as cf_directory_image1,concat(b.cf_directory,b.cf_image2) as cf_directory_image2,concat(b.cf_directory,b.cf_image3) as cf_directory_image3,concat(b.cf_directory,b.cf_image4) as cf_directory_image4,concat(b.cf_directory,b.cf_image5) as cf_directory_image5,concat(b.cf_directory,b.cf_image6) as cf_directory_image6, concat(b.cf_directory,b.cf_corporation_banner) as b_cf_corporation_banner ,concat(b.cf_directory,b.cf_corporation_icon) as b_cf_corporation_icon , c.iv_current_amount/iv_goal_amount*100 "
-					+ "FROM file_path as fp, company as a "
-					+ "JOIN company_file as b ON a.cp_idx = b.cp_idx AND a.cp_idx = ? "
-					+ "JOIN company_invest as c ON a.cp_idx = c.cp_idx "
-					+ "JOIN company_lease as d ON a.cp_idx = d.cp_idx "
-					+ "JOIN company_pay_schedule as e ON a.cp_idx = e.cp_idx "
-					+ "JOIN company_pre_revenue as f ON a.cp_idx = f.cp_idx WHERE file_category = 'document_path'";
+			String sql = "SELECT *,(iv_current_amount/iv_goal_amount*100) AS percent FROM company cp JOIN company_invest cp_iv ON cp.cp_idx = cp_iv.cp_idx JOIN company_pay_schedule cp_pay ON cp.cp_idx = cp_pay.cp_idx JOIN company_pre_revenue cp_rev ON cp.cp_idx = cp_rev.cp_idx JOIN company_file cf ON cp.cp_idx = cf.cp_idx WHERE cp.cp_idx = ? AND cp_iv.cp_idx = cp.cp_idx AND cp_pay.cp_idx = cp.cp_idx AND cp_rev.cp_idx = cp.cp_idx AND cf.cp_idx = cp.cp_idx";
 			pstm = conn.prepareStatement(sql);
 			pstm.setInt(1, idx);
 			rs = pstm.executeQuery();
@@ -677,7 +693,7 @@ public class CompanyDAO {
 
 				// InvestVO
 				// 태훈 추가 - 투자율
-				company.setIv_percent(rs.getString("c.iv_current_amount/iv_goal_amount*100"));
+				company.setIv_percent(rs.getString("percent"));
 				company.setIv_goal_amount(rs.getString("iv_goal_amount"));
 				company.setIv_current_amount(rs.getString("iv_current_amount"));
 				company.setIv_min_amount(rs.getString("iv_min_amount"));
@@ -713,25 +729,29 @@ public class CompanyDAO {
 				company.setCp_pre_interest_rate(rs.getInt("cp_pre_interest_rate"));
 
 				// CompanyFileVO
-				company.setCf_registration(rs.getString("cf_registration"));
-				company.setCf_certificate(rs.getString("cf_certificate"));
-				company.setCf_financial(rs.getString("cf_financial"));
-				company.setCf_estate_contract(rs.getString("cf_estate_contract"));
-				company.setCf_image1(rs.getString("cf_directory_image1"));
-				company.setCf_image2(rs.getString("cf_directory_image2"));
-				company.setCf_image3(rs.getString("cf_directory_image3"));
-				company.setCf_image4(rs.getString("cf_directory_image4"));
-				company.setCf_image5(rs.getString("cf_directory_image5"));
-				company.setCf_image5(rs.getString("cf_directory_image6"));
-				company.setCf_corporation_banner(rs.getString("b_cf_corporation_banner"));
-				company.setCf_corporation_icon(rs.getString("b_cf_corporation_icon"));
-				company.setCf_invest_image(rs.getString("b_cf_invest_image"));
-				company.setCf_etc(rs.getString("cf_etc"));
+				company.setCf_store_images(rs.getString("cf_store_images"));
+				company.setCf_alias_store_images(rs.getString("cf_alias_store_images"));
+				company.setCf_corporation_banner(rs.getString("cf_corporation_banner"));
+				company.setCf_alias_corporation_banner(rs.getString("cf_alias_corporation_banner"));
+				company.setCf_corporation_icon(rs.getString("cf_corporation_icon"));
+				company.setCf_alias_corporation_icon(rs.getString("cf_alias_corporation_icon"));
+				company.setCf_invest_image(rs.getString("cf_invest_image"));
+				company.setCf_alias_invest_image(rs.getString("cf_alias_invest_image"));
+				company.setCf_folder(rs.getString("cf_folder"));
+				company.setCf_business_plan_images(rs.getString("cf_business_plan_images"));
+				company.setCf_alias_business_plan_images(rs.getString("cf_alias_business_plan_images"));
+				company.setCf_etc_files(rs.getString("cf_etc_files"));
+				company.setCf_alias_etc_files(rs.getString("cf_alias_etc_files"));
+				company.setCf_thumbnail(rs.getString("cf_thumbnail"));
+				company.setCf_alias_thumbnail(rs.getString("cf_alias_thumbnail"));
+				company.setCf_pr_background(rs.getString("cf_pr_background"));
+				company.setCf_alias_pr_background(rs.getString("cf_alias_pr_background"));
+				company.setCf_funding_contract(rs.getString("cf_funding_contract"));
+				company.setCf_alias_funding_contract(rs.getString("cf_alias_funding_contract"));
+				company.setCf_business_plan(rs.getString("cf_business_plan"));
+				company.setCf_alias_business_plan(rs.getString("cf_alias_business_plan"));
 
-			} else {
-				System.out.println("getCompanyInfo(DAO) 쿼리문 작동 실패");
 			}
-
 			return company;
 
 		} catch (Exception ex) {
